@@ -1,0 +1,84 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:gwt="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+	
+	.labelhtml{
+		align:left;
+	}
+	.HTMLheader{
+		padding-top:50px
+	}
+	</ui:style>
+	<gwt:HTMLPanel addStyleNames='{style.HTMLheader}'>
+		
+	
+		<!-- perfil info -->
+	    <div class="row">
+	
+	        <!-- perfil widget -->
+	        <div class="col-lg-12">
+	            <div class="profile-widget profile-widget-info">
+	                <div class="panel-body">
+	
+	                    <!-- INFO USUARIO -->
+	                    <div class="col-lg-4 col-sm-4 follow-info">
+	                        <gwt:HTML ui:field="pNameLabel"/>
+	                        <gwt:HTML ui:field="pMailLabel"/>
+	                        <gwt:HTML ui:field="pUniversityLabel"/>
+	                        <h6><span><gwt:HTML ui:field="pCountryLabel"/></span></h6>
+	                    </div>
+	                </div>
+	                
+	                <!-- header botones -->
+	                <header class="panel-heading tab-bg-info">
+	                    <ul class="nav nav-tabs">
+	                        <li>
+	                            <a data-toggle="tab" href="#profile">
+	                                Profile
+	                            </a>
+	                        </li>
+	                    </ul>
+	                </header>
+	                
+	            </div>
+	        </div>
+	    </div>
+	
+	    <!-- perfil pestaña-->
+	    <div class="row" >
+	        <div class="col-lg-12">
+	            <section class="panel">
+	
+	                <div class="panel-body">
+	                    <div class="tab-content">
+	
+	                        <!-- perfil -->
+	                        <div id="profile" class="tab-pane active">
+	                            <section class="panel">
+	
+	                                <div class="panel-body bio-graph-info">
+	                                    <h1>Biography</h1>
+	                                    <div class="row">
+	                                        <gwt:HTML ui:field="nameLabel" addStyleNames='{style.labelhtml}' />
+	                                        <gwt:HTML ui:field="lastnameLabel" addStyleNames='{style.labelhtml}'/>
+	                                        <gwt:HTML ui:field="countryLabel" addStyleNames='{style.labelhtml}'/>
+	                                        <gwt:HTML ui:field="ocupationLabel" addStyleNames='{style.labelhtml}'/>
+	                                        <gwt:HTML ui:field="mailLabel" addStyleNames='{style.labelhtml}'/>
+	                                        <gwt:HTML ui:field="webLabel" addStyleNames='{style.labelhtml}'/>
+	                                    </div>
+	                                </div>
+	                                
+	                            </section>
+	                        </div>
+	                        
+	                        
+	                    </div>
+	                </div>
+	                
+	            </section>
+	        </div>
+	    </div>
+	
+	</gwt:HTMLPanel>
+</ui:UiBinder> 

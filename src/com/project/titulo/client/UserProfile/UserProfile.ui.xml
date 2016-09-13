@@ -1,0 +1,148 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:gwt="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+	.editInput{
+		width:100%;
+	}
+	.labelhtml{
+		align:left;
+	}
+	.HTMLheader{
+		padding-top:50px
+	}
+	</ui:style>
+	<gwt:HTMLPanel addStyleNames='{style.HTMLheader}'>
+		
+	
+		<!-- perfil info -->
+	    <div class="row">
+	
+	        <!-- perfil widget -->
+	        <div class="col-lg-12">
+	            <div class="profile-widget profile-widget-info">
+	                <div class="panel-body">
+	
+	                    <!-- INFO USUARIO -->
+	                    <div class="col-lg-4 col-sm-4 follow-info">
+	                        <gwt:HTML ui:field="pNameLabel"/>
+	                        <gwt:HTML ui:field="pMailLabel"/>
+	                        <gwt:HTML ui:field="pUniversityLabel"/>
+	                        <h6><span><gwt:HTML ui:field="pCountryLabel"/></span></h6>
+	                    </div>
+	                </div>
+	                
+	                <!-- header botones -->
+	                <header class="panel-heading tab-bg-info">
+	                    <ul class="nav nav-tabs">
+	                        <li>
+	                            <a data-toggle="tab" href="#profile">
+	                                Profile
+	                            </a>
+	                        </li>
+	                        <li class="">
+	                            <a data-toggle="tab" href="#edit-profile"> 
+	                                Edit Profile
+	                            </a>
+	                        </li>
+	                    </ul>
+	                </header>
+	                
+	            </div>
+	        </div>
+	    </div>
+	
+	    <!-- perfil pestaña-->
+	    <div class="row" >
+	        <div class="col-lg-12">
+	            <section class="panel">
+	
+	                <div class="panel-body">
+	                    <div class="tab-content">
+	
+	                        <!-- perfil -->
+	                        <div id="profile" class="tab-pane active">
+	                            <section class="panel">
+	
+	                                <div class="panel-body bio-graph-info">
+	                                    <h1>Biography</h1>
+	                                    <div class="row">
+	                                        <gwt:HTML ui:field="nameLabel" addStyleNames='{style.labelhtml}' />
+	                                        <gwt:HTML ui:field="lastnameLabel" addStyleNames='{style.labelhtml}'/>
+	                                        <gwt:HTML ui:field="countryLabel" addStyleNames='{style.labelhtml}'/>
+	                                        <gwt:HTML ui:field="ocupationLabel" addStyleNames='{style.labelhtml}'/>
+	                                        <gwt:HTML ui:field="mailLabel" addStyleNames='{style.labelhtml}'/>
+	                                        <gwt:HTML ui:field="webLabel" addStyleNames='{style.labelhtml}'/>
+	                                    </div>
+	                                </div>
+	                                
+	                            </section>
+	                        </div>
+	                        
+	                        <!-- editar perfil -->
+	                        <div id="edit-profile" class="tab-pane">
+	                            <section class="panel">
+	                                <div class="panel-body bio-graph-info">
+	
+	                                    <h1 width="100%" align="left"> My Info</h1>
+	                                    <form class="form-horizontal" role="form" align="center">
+	
+	                                        <div class="form-group" align="center">
+	                                            <label class="col-lg-2 control-label">Name</label>
+	                                            <div class="col-lg-6">
+	                                            	<gwt:TextBox ui:field="nameInput" addStyleNames='{style.editInput}' maxLength="50"  visibleLength="50"></gwt:TextBox>
+	                                            	<gwt:Label ui:field="labelError1" width="100%" direction="RTL" horizontalAlignment="ALIGN_CENTER"  text="minimum lenght 6" visible="false"/>
+	                                            </div>
+	                                        </div>
+	
+	                                        <div class="form-group">
+	                                            <label class="col-lg-2 control-label">Lastname</label>
+	                                            <div class="col-lg-6">
+	                                            	<gwt:TextBox ui:field="lastnameInput" addStyleNames='{style.editInput}' maxLength="50" visibleLength="50"></gwt:TextBox>
+	                                            	<gwt:Label ui:field="labelError2" width="100%" direction="RTL" horizontalAlignment="ALIGN_CENTER"  text="minimum lenght 6" visible="false"/>
+	                                            </div>
+	                                        </div>
+	
+	                                        <div class="form-group">
+	                                            <label class="col-lg-2 control-label">Country</label>
+	                                            <div class="col-lg-6">
+	                                            	<gwt:ListBox ui:field="countryBox"  addStyleNames='{style.editInput}' />
+	                                            </div>
+	                                        </div>
+	
+	                                        <div class="form-group">
+	                                            <label class="col-lg-2 control-label">Ocupation</label>
+	                                            <div class="col-lg-6">
+	                                            	<gwt:TextBox ui:field="ocupationInput" addStyleNames='{style.editInput}' maxLength="30"  visibleLength="30"></gwt:TextBox>
+	                                            </div>
+	                                        </div>
+	
+	                                        <div class="form-group">
+	                                            <label class="col-lg-2 control-label">Web URL</label>
+	                                            <div class="col-lg-6">
+	                                            	<gwt:TextBox ui:field="webInput" addStyleNames='{style.editInput}' maxLength="50"  visibleLength="50"></gwt:TextBox>
+	                                            </div>
+	                                        </div>
+	
+	                                        <div class="form-group">
+	                                            <div class="col-lg-12 col-lg-9 col-lg-6">
+	                                            	<gwt:Button ui:field="submitBTN" >Save</gwt:Button>
+	                                            	<gwt:Button ui:field="cancelBTN" >Reset</gwt:Button>
+	                                            </div>
+	                                        </div>
+	
+	                                    </form>
+	                                </div>
+	                            </section>
+	                        </div>
+	                        
+	                    </div>
+	                </div>
+	                
+	            </section>
+	        </div>
+	    </div>
+	
+	
+	</gwt:HTMLPanel>
+</ui:UiBinder> 

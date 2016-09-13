@@ -1,0 +1,111 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:gwt="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.sessionlink{
+			color:#646567;
+		}
+		.btnMenu {
+		  padding:12px;
+		  display: inline;
+		  align : center;
+		  width:25%;
+		  height:50px;
+		  cursor: pointer;
+		  cursor: hand;
+		  font-weight: bold;
+		  font-size: 20px;
+		  background-color:white;
+    	  border: 0.5px solid white ;
+    	  color:#646567;
+		}
+		.btnMenu:active {
+		  border-bottom: 5px solid #d12421 ;
+		  color:#d12421;
+		}
+		
+		.btnMenu:hover {
+		  border-bottom: 5px solid #d12421 ;
+		  color:#d12421;
+		}
+		.btnMenu2 {
+		  padding:15px;
+		  border: 1px solid #646567 ;
+		  width:60px;
+		  height:70px;
+		  cursor: pointer;
+		  cursor: hand;
+		  font-weight: bold;
+		  font-size: 15px;
+		  align: center;
+		  background: #0d0d0d;
+    	  color:white;
+		}
+		.btnMenu2:hover {
+		  color:#646567;
+		  border-bottom: 5px solid #d12421 ;
+		}
+		.flowPanel{
+		  width: 100%;
+		}
+		.panelItem{
+    	  position: relative;
+		  top: 0px;
+		  left: 0px;
+		  z-index: 99999;
+		}
+	</ui:style>
+	
+	<gwt:HTMLPanel>
+	
+		<header class="header white-bg">
+        
+            <div class="col-lg-6 col-md-6 col-sm-9 col-xs-9">
+	            <!--logotipo o nombre aplicacion inicia-->
+	            <a href="" class="logo"> 
+	            	<span class="lite"></span>
+	            </a>
+	            <!--logo fin-->
+			</div>
+			
+            <!--seccion session-->
+            <div class="col-lg-6 col-md-6 col-sm-3 col-xs-3">
+            	<div id="GWTusername" class="top-nav notification-row">
+	            	 <!-- seccion para dropdown-->
+			        <ul class="nav pull-right top-menu" align="right">
+			            <!-- Usuario dropdown inicia-->
+			            <li class="dropdown">
+	                    	<gwt:Hyperlink ui:field="profileLink" addStyleNames='{style.sessionlink}' targetHistoryToken="" text="User X" width="117px"/>
+	                    	
+	                    	<gwt:Hyperlink ui:field="exitLink" addStyleNames='{style.sessionlink}' targetHistoryToken="" text="Exit" width="117px"/>
+			                    	
+			            </li>
+			            <!-- usuario dropdown fin -->
+			        </ul>
+            	</div>
+            </div>
+            
+             <!--seccion menu de usuario-->
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+	            <div align="center" class="panel-menu-user" >
+					<gwt:VerticalPanel width="100%" horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" spacing="10" height="40px">
+						<gwt:MenuBar width="100%" animationEnabled="true" autoOpen="true" height="50px">
+							<gwt:MenuItem ui:field="homeBTN" addStyleNames='{style.btnMenu}' text="Home" height="50px" width="60px"/>
+							<gwt:MenuItem addStyleNames='{style.btnMenu}' text="Tools" height="50px" width="60px">
+								<gwt:MenuBar addStyleNames='{style.panelItem}' vertical="true" autoOpen="true" animationEnabled="true">
+									<gwt:MenuItem ui:field="filesBTN" addStyleNames='{style.btnMenu2}' text="Files" width="45px" height="28px"/>
+									<gwt:MenuItem ui:field="plotBTN" addStyleNames='{style.btnMenu2}' text="Plot" width="45px" height="28px"/>
+									<gwt:MenuItem ui:field="metricBTN" addStyleNames='{style.btnMenu2}' text="Metric" width="45px" height="28px"/>
+								</gwt:MenuBar>
+							</gwt:MenuItem>
+							<gwt:MenuItem ui:field="communityBTN" addStyleNames='{style.btnMenu}' text="Forum" height="50px" width="60px"/>
+							<gwt:MenuItem ui:field="faqBTN" addStyleNames='{style.btnMenu}' text="FAQ" height="50px" width="60px"/>
+						</gwt:MenuBar>
+					</gwt:VerticalPanel>
+				</div>
+            </div>
+        </header>
+	
+	</gwt:HTMLPanel>
+	
+</ui:UiBinder> 

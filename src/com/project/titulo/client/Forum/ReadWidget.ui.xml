@@ -1,0 +1,54 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:gwt="urn:import:com.google.gwt.user.client.ui" >
+	<ui:style>
+	.TopicPanel{
+		width:100%;
+	}
+	.CommentPanel{
+		width:100%;
+	}
+	.HTMLheader{
+		padding-top:50px
+	}
+	</ui:style>
+	<gwt:HTMLPanel addStyleNames='{style.HTMLheader}'>
+	
+	<!-- PANELE INICIO-->
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        Forum
+                    </header>
+                    <div class="panel-body">
+                    
+                    	<!-- TOPIC PRINCIPAL -->
+                    	<gwt:VerticalPanel ui:field="topicpanel" addStyleNames='{style.TopicPanel}'>
+                    	
+                    	</gwt:VerticalPanel>
+                        
+                    </div>
+                </section>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        Comments
+                    </header>
+                    <div class="panel-body">
+                    	<!-- comment PRINCIPAL -->
+                    	<gwt:VerticalPanel ui:field="commentpanel" addStyleNames='{style.CommentPanel}' >
+                    	
+                    	</gwt:VerticalPanel>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <!-- WIDGET END -->
+	
+	</gwt:HTMLPanel>
+</ui:UiBinder> 

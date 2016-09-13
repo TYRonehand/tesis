@@ -1,0 +1,78 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder 
+  xmlns:ui="urn:ui:com.google.gwt.uibinder"
+  xmlns:g="urn:import:com.google.gwt.user.client.ui"
+  xmlns:c="urn:import:com.google.gwt.user.cellview.client">
+	<ui:style>
+	    .cellTable {
+		  padding:4px
+	      border-bottom: 1px solid #ccc;
+	      text-align: left;
+	      margin-bottom: 4px;
+	      width:100%;
+	    }
+	    .pagerTable {
+	      text-align: center;
+	      align:center;
+	    }
+	    .panel{
+	      text-align: center;
+	      align:center;
+	      width:100%;
+	    }
+		.submitBtn{
+			padding-top:5px;
+			width:100%;
+			margin:2px;
+		    border-color: #245580
+		}
+		.HTMLheader{
+			padding-top:50px
+		}
+		
+	</ui:style>
+	<g:HTMLPanel addStyleNames='{style.HTMLheader}'>
+		
+		<!-- MODAL - Menu opciones edición-->
+        <div class="row">
+        
+            <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                    <h3 class="panel-title">Tools</h3>
+                    </header>
+                    <div class="panel-body">
+                    
+                    	<div class="btn-group btn-group-justified">
+                        <g:VerticalPanel ui:field="menu" addStyleNames='{style.panel}' width="100%">
+                        	<g:Button ui:field="uploadBtn" addStyleNames='{style.submitBtn}' width="100%" >Create File</g:Button>
+							<g:Button ui:field="helpBtn" addStyleNames='{style.submitBtn}' width="100%" >Help</g:Button>
+                        </g:VerticalPanel>
+                        </div>
+                            
+                    </div>
+                </section>
+            </div>
+            
+        	<div class="col-lg-10 col-md-9 col-sm-8 col-xs-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        <h3 class="panel-title">My Files</h3>
+                    </header>
+                    <div class="panel-body">
+                    
+                   		<g:ScrollPanel width="100%">
+	                        <g:VerticalPanel ui:field="panel" addStyleNames='{style.cellTable}' width="100%">
+	                        
+	                        </g:VerticalPanel>
+                       	</g:ScrollPanel>
+                       	
+                    </div>
+                </section>
+            </div>
+        </div>
+        
+	
+	
+	</g:HTMLPanel>
+</ui:UiBinder> 
