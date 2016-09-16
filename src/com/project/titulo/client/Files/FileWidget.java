@@ -137,8 +137,10 @@ public class FileWidget extends Composite {
 		Column<UserFile, String> buttonPlotColumn = new Column<UserFile, String>(buttonPlot) {
 		  @Override
 		  public String getValue(UserFile object) {
-			  
-			  return "Add";
+			  if(object.getPlot().equals("1"))
+				  return "Added";
+			  else
+				  return "Add";
 		  }
 		};
 		buttonPlotColumn.setFieldUpdater(new FieldUpdater<UserFile, String>() 
@@ -155,9 +157,10 @@ public class FileWidget extends Composite {
 						public void onSuccess(Boolean result) 
 						{
 							if(result){
+								ErrorVerify.getErrorAlert("plotfileadd");
 								LoadFilesData();
 							}else{
-								ErrorVerify.getErrorAlert("faildel");
+								ErrorVerify.getErrorAlert("failadd");
 							}
 						}}); 
 			  }
@@ -169,8 +172,10 @@ public class FileWidget extends Composite {
 		Column<UserFile, String> buttonMetricColumn = new Column<UserFile, String>(buttonMetric) {
 		  @Override
 		  public String getValue(UserFile object) {
-			  
-			  return "Add";
+			  if(object.getMetric().equals("1"))
+				  return "Added";
+			  else
+				  return "Add";
 		  }
 		};
 		buttonMetricColumn.setFieldUpdater(new FieldUpdater<UserFile, String>() 
@@ -187,9 +192,10 @@ public class FileWidget extends Composite {
 						public void onSuccess(Boolean result) 
 						{
 							if(result){
+								ErrorVerify.getErrorAlert("metricfileadd");
 								LoadFilesData();
 							}else{
-								ErrorVerify.getErrorAlert("faildel");
+								ErrorVerify.getErrorAlert("failadd");
 							}
 						}}); 
 			  }
@@ -235,7 +241,7 @@ public class FileWidget extends Composite {
 		panel.setBorderWidth(0);
 		panel.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
 		panel.setWidth("350");
-		panel.add(new Label("*push item for options"));
+		panel.add(new Label("*select action"));
 		panel.add(table);
 		panel.add(pager);
 		Button reload = new Button("Reload Table");

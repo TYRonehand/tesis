@@ -13,6 +13,8 @@ public class UserFile  implements IsSerializable{
 	private String description;
 	private String creation;
 	private String data;
+	private String plot;
+	private String metric;
 
 	@SuppressWarnings("unused")
 	private UserFile(){
@@ -31,7 +33,7 @@ public class UserFile  implements IsSerializable{
 		this.setData(Data);
 	}
 	//get file
-	public UserFile(String Idfile, String Title,String Dimension,String Labelx,String Labely,String Labelz,  String Description, String Iduser, String Creation, String Data){
+	public UserFile(String Idfile, String Title,String Dimension,String Labelx,String Labely,String Labelz,  String Description, String Iduser, String Creation, String Data,String Plot,String Metric){
 		this.setIddatafile(Idfile);
 		this.setIduser(Iduser);
 		this.setTitle(Title);
@@ -42,6 +44,8 @@ public class UserFile  implements IsSerializable{
 		this.setDescription(Description);
 		this.setCreation(Creation);
 		this.setData(Data);
+		this.setPlot(Plot);
+		this.setMetric(Metric);
 		
 	}
 
@@ -123,5 +127,21 @@ public class UserFile  implements IsSerializable{
 
 	public void setLabelz(String labelz) {
 		this.labelz = labelz;
+	}
+
+	public String getPlot() {
+		return plot;
+	}
+
+	public void setPlot(String plot) {
+		this.plot = plot;
+	}
+
+	public String getMetric() {
+		return metric;
+	}
+
+	public void setMetric(String metric) {
+		this.metric = metric;
 	}
 }

@@ -190,6 +190,7 @@ public class PlotWidget extends Composite {
 						public void onSuccess(Boolean result) 
 						{
 							if(result){
+								ErrorVerify.getErrorAlert("fileremove");
 								LoadFilesData();
 							}
 							else
@@ -210,7 +211,7 @@ public class PlotWidget extends Composite {
 		panel.setBorderWidth(0);
 		panel.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
 		panel.setWidth("350");
-		panel.add(new Label("*push item for options"));
+		panel.add(new Label("*select action"));
 		panel.add(table);
 		panel.add(pager);
 		Button reload = new Button("Reload Table");

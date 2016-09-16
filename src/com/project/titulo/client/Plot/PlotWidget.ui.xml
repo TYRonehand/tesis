@@ -76,7 +76,7 @@
                         </h3>
                     </div>
                     <!--Texto-->
-                    <div id="collapseTwo" class="panel-collapse collapse">
+                    <div id="collapseTwo" class="panel-collapse collapse in">
                         <div class="panel-body">
 	                    	<div class="btn-group btn-group-justified">
 	                            <gwt:FlowPanel width="100%">	
@@ -103,7 +103,7 @@
                         </h3>
                     </div>
                     <!--Texto-->
-                    <div id="collapseThree" class="panel-collapse collapse ">
+                    <div id="collapseThree" class="panel-collapse collapse in">
                         <div class="panel-body">
                         
 							<!-- checkbox -->
@@ -143,7 +143,7 @@
                             </a>
                         </h3>
                     </div>
-                    <div id="collapseFive" class="panel-collapse collapse ">
+                    <div id="collapseFive" class="panel-collapse collapse in">
 	                    <div class="panel-body">
 	                        <!-- limit -->
 	                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">

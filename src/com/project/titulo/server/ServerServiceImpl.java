@@ -44,7 +44,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 	//private String status;
 	private String url = "jdbc:mysql://127.0.0.1:3306/proyectotitulo";
 	private String user = "root";
-	private String pass = "z-AoDaFII2Hp";
+	private String pass = "";//"z-AoDaFII2Hp";
 	
 	//Constructor
 	public ServerServiceImpl() {
@@ -592,7 +592,9 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 								 			result.getString("description"),  
 								 			result.getString("iduser"), 
 								 			result.getString("creation"),
-								 			result.getString("data")
+								 			result.getString("data"),
+								 			result.getString("plotselection"),
+								 			result.getString("metricselection")
 								 			));
 			 }
 			 result.close();
@@ -630,7 +632,9 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 								 			result.getString("description"),  
 								 			result.getString("iduser"), 
 								 			result.getString("creation"),
-								 			result.getString("data")
+								 			result.getString("data"),
+								 			"",
+								 			""
 								 			));
 				 
 				//create user files in directory files
@@ -680,7 +684,9 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 								 			result.getString("description"),  
 								 			result.getString("iduser"), 
 								 			result.getString("creation"),
-								 			result.getString("data")
+								 			result.getString("data"),
+								 			"",
+								 			""
 								 			));
 			 }
 			 result.close();

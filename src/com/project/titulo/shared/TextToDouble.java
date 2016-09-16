@@ -2,49 +2,39 @@ package com.project.titulo.shared;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.rpc.IsSerializable;
+import com.project.titulo.shared.model.Points;
 
 public class TextToDouble implements IsSerializable {
 
-	private double[][] values=null;
+	private List<Points> listvalues = new ArrayList<>();
 	
-	public TextToDouble(String numbers,int dim)
+	public TextToDouble(){}
+	
+	//data text to double
+	public void create(String datastring,int dimension)
 	{
-		try{
-			List<String> valores = new ArrayList<String>();
-			
-			String delim = "[\n ]"; //insert here all delimitators
-			String[] st = numbers.split(delim);
-			for(String s:st) 
-			{
-				valores.add(s);
-			}
-			//size of array
-			int sizeX = valores.size()/dim;
-			//string to double
-			values = new double[sizeX][dim];
-			for(int i=0;i<sizeX;i++)
-			{
-				for(int j=0;j<dim;j++)
-				{
-				    values[i][j] = Double.parseDouble(valores.get(i+j).replace(",","."));
-				}
-			}
-
-			
-		}
-		catch(Exception ex)
+		//insert here all delimitators
+		String delim = "[\n ;]"; 
+		String[] values = datastring.split(delim);
+		//doubles coordenates
+		for(int i=0;i<values.length;i=i+dimension) //jump every dimension size
 		{
-			GWT.log("error: "+ex.toString());
+			//create point
+			Points axis = new Points();
+			//all points from size dimension are add to one point
+			for(int j=i;j<i+dimension;j++)
+			{
+				axis.add(Double.parseDouble(values[j].replace(",",".")));//add axis to point
+			}
+			this.listvalues.add(axis);//add point to list of points
 		}
 	}
 	
 	
-	public double[][] getValues()
+	public List<Points> getListPoints()
 	{
-		return this.values;
+		return this.listvalues;
 	}
 	
 }

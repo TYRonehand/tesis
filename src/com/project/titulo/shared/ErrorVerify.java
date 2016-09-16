@@ -97,6 +97,15 @@ public class ErrorVerify {
 			case "nofilemetric":
 				Window.alert("There's no file selected to use metric");
 				break;
+			case "plotfileadd":
+				Window.alert("File add to plot");
+				break;
+			case "metricfileadd":
+				Window.alert("File add to evaluate");
+				break;
+			case "fileremove":
+				Window.alert("File removed");
+				break;
 			default:
 				Window.alert("Unknow error!!");
 				break;

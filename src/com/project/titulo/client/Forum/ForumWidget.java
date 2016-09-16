@@ -217,7 +217,7 @@ public class ForumWidget extends Composite {
 		panel.setBorderWidth(0);
 		panel.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
 		//panel.setWidth("350");
-		panel.add(new Label("*push item for options"));
+		panel.add(new Label("*press topic to open"));
 		panel.add(table);
 		panel.add(pager);
 		
