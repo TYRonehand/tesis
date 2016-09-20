@@ -26,6 +26,7 @@ import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
 import com.project.titulo.shared.ErrorVerify;
 import com.project.titulo.shared.model.UserFile;
+import com.google.gwt.uibinder.client.UiHandler;
 
 public class MetricWidget extends Composite {
 
@@ -37,7 +38,19 @@ public class MetricWidget extends Composite {
 	@UiField Button metric3Btn;
 	@UiField Button metric4Btn;
 	@UiField Button metric5Btn;
+
+	@UiField Button EntropyBtn;
+	@UiField Button SpacingBtn;
+	@UiField Button ERBtn;
+	@UiField Button GDistanceBtn;
+	@UiField Button CoverBtn;
+	
 	@UiField VerticalPanel panel;
+	@UiField VerticalPanel EntropyPanel;
+	@UiField VerticalPanel SpacingPanel;
+	@UiField VerticalPanel ERPanel;
+	@UiField VerticalPanel GDistancePanel;
+	@UiField VerticalPanel CoverPanel;
 	
 	//Create a CellTable.
 	private CellTable<UserFile> table = null;
@@ -187,5 +200,62 @@ public class MetricWidget extends Composite {
 	}
 	
 	
+	/*SELECT METRIC INFO*/
+	@UiHandler("metric1Btn")
+	void onMetric1BtnClick(ClickEvent event) {
+		this.EntropyPanel.setVisible(true);
+		this.SpacingPanel.setVisible(false);
+		this.ERPanel.setVisible(false);
+		this.GDistancePanel.setVisible(false);
+		this.CoverPanel.setVisible(false);
+	}
+	@UiHandler("metric2Btn")
+	void onMetric2BtnClick(ClickEvent event) {
+		this.EntropyPanel.setVisible(false);
+		this.SpacingPanel.setVisible(true);
+		this.ERPanel.setVisible(false);
+		this.GDistancePanel.setVisible(false);
+		this.CoverPanel.setVisible(false);
+	}
+	@UiHandler("metric3Btn")
+	void onMetric3BtnClick(ClickEvent event) {
+		this.EntropyPanel.setVisible(false);
+		this.SpacingPanel.setVisible(false);
+		this.ERPanel.setVisible(true);
+		this.GDistancePanel.setVisible(false);
+		this.CoverPanel.setVisible(false);
+	}
+	@UiHandler("metric4Btn")
+	void onMetric4BtnClick(ClickEvent event) {
+		this.EntropyPanel.setVisible(false);
+		this.SpacingPanel.setVisible(false);
+		this.ERPanel.setVisible(false);
+		this.GDistancePanel.setVisible(true);
+		this.CoverPanel.setVisible(false);
+	}
+	@UiHandler("metric5Btn")
+	void onMetric5BtnClick(ClickEvent event) {
+		this.EntropyPanel.setVisible(false);
+		this.SpacingPanel.setVisible(false);
+		this.ERPanel.setVisible(false);
+		this.GDistancePanel.setVisible(false);
+		this.CoverPanel.setVisible(true);
+	}
 	
+	/*METRIC CALCULATE*/
+	@UiHandler("EntropyBtn")
+	void onEntropyBtnClick(ClickEvent event) {
+	}
+	@UiHandler("SpacingBtn")
+	void onSpacingBtnClick(ClickEvent event) {
+	}
+	@UiHandler("ERBtn")
+	void onERBtnClick(ClickEvent event) {
+	}
+	@UiHandler("GDistanceBtn")
+	void onGDistanceBtnClick(ClickEvent event) {
+	}
+	@UiHandler("CoverBtn")
+	void onCoverBtnClick(ClickEvent event) {
+	}
 }

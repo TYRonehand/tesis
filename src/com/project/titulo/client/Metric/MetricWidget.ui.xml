@@ -49,7 +49,7 @@
 							<g:Button ui:field="metric2Btn" addStyleNames='{style.submitBtn}' width="100%" >Spacing</g:Button>
 							<g:Button ui:field="metric3Btn" addStyleNames='{style.submitBtn}' width="100%" >Error-Ratio</g:Button>
 							<g:Button ui:field="metric4Btn" addStyleNames='{style.submitBtn}' width="100%" >GDistance</g:Button>
-							<g:Button ui:field="metric5Btn" addStyleNames='{style.submitBtn}' width="100%" >Coverture</g:Button>
+							<g:Button ui:field="metric5Btn" addStyleNames='{style.submitBtn}' width="100%" >Cover</g:Button>
                         </g:VerticalPanel>
                         </div>
                             
@@ -57,7 +57,101 @@
                 </section>
             </div>
             
-        	<div class="col-lg-10 col-md-9 col-sm-8 col-xs-12">
+            <div class="col-lg-10 col-md-9 col-sm-8 col-xs-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        <h3 class="panel-title">Metric Info</h3>
+                    </header>
+                    <div class="panel-body">
+                    
+                    	<g:VerticalPanel ui:field="EntropyPanel" width="100%">
+                    		<g:VerticalPanel width="100%">
+                    			<g:Label width="100%" direction="LTR" horizontalAlignment="ALIGN_LEFT">The entropy (E) metric, is responsible for studying the divergence in a Pareto front . It is based on the definition of a niche solution S , this represents all solutions that are close to or in the vicinity of the solution S. This metric is given by :</g:Label> 
+                    		</g:VerticalPanel>
+                    		<g:VerticalPanel horizontalAlignment="ALIGN_CENTER" width="100%">
+	                    		<g:Image url="assets/img/metric/E1.png"></g:Image>
+                    		</g:VerticalPanel>
+                    		<g:VerticalPanel width="100%">
+                    			<g:Label width="100%" direction="LTR" horizontalAlignment="ALIGN_LEFT">Where, PO1 and PO2 : Two Pareto solution set. Consideration should be given to PO* as the set of optimal solutions within the union of sets PO1 U PO2. N(i): Is the cardinality of solutions PO1 U PO* , where i-th solution PO1 U PO* are in the niche. n(i): This is the cardinal value of PO1 solutions where they are in the niche of the ith solution PO1 U PO*. C: It is the cardinality of PO1 U PO* solutions. Y: The sum of coefficients applied to each solution.</g:Label>
+                    		</g:VerticalPanel>
+                    		<g:VerticalPanel horizontalAlignment="ALIGN_CENTER" width="100%">
+	                    		<g:Image url="assets/img/metric/E2.png"></g:Image>
+                    		</g:VerticalPanel>
+                    		<g:VerticalPanel width="100%">
+                    			<g:Label width="100%" direction="LTR" horizontalAlignment="ALIGN_LEFT">The result values ​​of entropy vary between 0 and 1 , if the value is closer to 1 this means that will be better diversified Pareto solution set .</g:Label>
+                    		</g:VerticalPanel>
+                    		
+                    		<g:Button ui:field="EntropyBtn" text="Calculate"></g:Button>
+                    	</g:VerticalPanel>
+                    	
+                    	
+                    	
+                    	<g:VerticalPanel ui:field="SpacingPanel" visible="false" width="100%">
+                    		<g:VerticalPanel>
+                    			<g:Label>The spacing (S) metric numerically describes the spread of the vectors in PFknown. This Pareto noncompliant metric measures the distance variance of neighboring vectors in PFknown. Equations define this metric.</g:Label> 
+                    		</g:VerticalPanel>
+                    		<g:VerticalPanel horizontalAlignment="ALIGN_CENTER" width="100%">
+	                    		<g:Image url="assets/img/metric/SP.png"></g:Image>
+                    		</g:VerticalPanel>
+                    		<g:VerticalPanel>
+                    			<g:Label>where di is the mean of all di, and n is the number of vectors in PFknown . When S = 0, all members are spaced evenly apart. Note that this becomes important in the deception problems where all Pareto front vectors are equally spaced. This metric does not require the researcher to know PFtrue, although it is normally assumed that a MOEA has already converged prior to applying this metric. Most experimental MOEAs perform fitness sharing (niching or crowding) in an attempt to spread each generational population (PFcurrent (t)) evenly along the known front. Because PFknown ’s “beginning” and “end” are known, a suitably defined metric judges how well PFknown is distributed.</g:Label>
+                    		</g:VerticalPanel>
+                    		<g:Button ui:field="SpacingBtn" text="Calculate"></g:Button>
+                    	</g:VerticalPanel>
+                    	
+                    	
+                    	
+                    	<g:VerticalPanel ui:field="ERPanel" visible="false" width="100%">
+                    		<g:VerticalPanel>
+                    			<g:Label>The Error Ratio (ER) metric reports the number of vectors in PFknown that are not members of PFtrue. This metric which is Pareto compliant, requires that PFtrue is known and that the MOEA approaches the Pareto front. Mathematically, this metric is represented in equation.</g:Label>
+                    		</g:VerticalPanel>
+                    		<g:VerticalPanel horizontalAlignment="ALIGN_CENTER" width="100%">
+	                    		<g:Image url="assets/img/metric/ER.png"></g:Image>
+                    		</g:VerticalPanel>
+                    		<g:VerticalPanel>
+                    			<g:Label>where ei is zero when the ith vector of PFknown is an element of PFtrue or ei is one if the ith vector of PFknown is not an element of PFtrue. If ER = 0, the PFknown is the same as PFtrue; but when ER = 1, this indicates that none of the points in PFknown are in PFtrue. A lower ER is better.</g:Label>
+                    		</g:VerticalPanel>
+                    		<g:Button ui:field="ERBtn" text="Calculate"></g:Button>
+                    	</g:VerticalPanel>
+                    	
+                    	
+                    	
+                    	<g:VerticalPanel ui:field="GDistancePanel" visible="false" width="100%">
+                    		<g:VerticalPanel>
+                    			<g:Label>The Generational Distance (GD) reports how far, on average, PFknown is from PFtrue. This metric which is Pareto noncompliant requires that the PFtrue be known. It is mathematically defined in equation.</g:Label>
+                    		</g:VerticalPanel>
+                    		<g:VerticalPanel horizontalAlignment="ALIGN_CENTER" width="100%">
+	                    		<g:Image url="assets/img/metric/GD.png"></g:Image>
+                    		</g:VerticalPanel>
+                    		<g:VerticalPanel>
+                    			<g:Label>where |PFknown| is the number of vectors in PFknown, p = 2, and di is the Euclidean phenotypic distance between each member, i, of PFknown and the closest member in PFtrue to that member, i. When GD = 0, PFknown = PFtrue.</g:Label>
+							</g:VerticalPanel>
+                    		<g:Button ui:field="GDistanceBtn" text="Calculate"></g:Button>
+                    	</g:VerticalPanel>
+                    	
+                    	
+                    	
+                    	<g:VerticalPanel ui:field="CoverPanel" visible="false" width="100%">
+                    		<g:VerticalPanel>
+                    			<g:Label>In Coverage ( C ) metrica seeks to compare two sets of non - dominated vectors by calculating the fraction of each that is covered or dominated by another . With this you can compare performance between algorithms from their solutions.
+Consider that X', X'' are contained in X and are two sets of decision variables . The function of coverage ( C ) will map the ordered pair (X', X'') to the interval [0,1].</g:Label> 
+                    		</g:VerticalPanel>
+                    		<g:VerticalPanel horizontalAlignment="ALIGN_CENTER" width="100%">
+	                    		<g:Image url="assets/img/metric/C.png"></g:Image>
+                    		</g:VerticalPanel>
+                    		<g:VerticalPanel>
+                    			<g:Label>C = 1 , then it means that all points in X' are dominated by or are equal to the points in X'.</g:Label>
+                    			<g:Label>C = 0 , then it means that none of the points X'' are covered by the set X'.</g:Label>
+                    			<g:Label>This metric is used to show whether the result of an algorithm dominates the result of another without indicating how good it is . So , with this metric you can not check the uniformity of solutions along the Pareto front.</g:Label>
+                    		</g:VerticalPanel>
+                    		<g:Button ui:field="CoverBtn" text="Calculate"></g:Button>
+                    	</g:VerticalPanel>
+                    	
+                    	
+                   		
+                    </div>
+                </section>
+
                 <section class="panel">
                     <header class="panel-heading">
                         <h3 class="panel-title">Selected Files</h3>

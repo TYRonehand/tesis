@@ -6,7 +6,7 @@ import com.project.titulo.shared.TextToDouble;
 import com.project.titulo.shared.model.Points;
 import com.project.titulo.shared.model.UserFile;
 
-	@SuppressWarnings("unused")
+@SuppressWarnings("unused")
 public class Spacing {
 
 	private UserFile file1;
