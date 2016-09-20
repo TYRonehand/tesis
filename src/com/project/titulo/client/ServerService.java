@@ -6,6 +6,7 @@ import java.util.List;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.project.titulo.shared.model.Answer;
+import com.project.titulo.shared.model.MetricResults;
 import com.project.titulo.shared.model.ResumeTopic;
 import com.project.titulo.shared.model.Topic;
 import com.project.titulo.shared.model.User;
@@ -104,7 +105,10 @@ public interface ServerService extends RemoteService
 	//set coment
 	Boolean setComment(Answer myAnswer) throws IllegalArgumentException;
 
-	//PLOT
+	//SEND EMAIL VERIFY
+	Boolean sendEmailVerify(String email) throws IllegalArgumentException;
+	
+	/*------------PLOT---------------*/
 	
 	//Live Plot
 	Boolean LivePlot(String iduser,List<String> idfiles) throws IllegalArgumentException;
@@ -113,9 +117,13 @@ public interface ServerService extends RemoteService
 	String CreateImage2D(Boolean points, Boolean lines, String fileFormat, String title, List<String> labelxyz, List<String> limitxyz, String iduser) throws IllegalArgumentException;
 	String CreateImage3D(Boolean points, Boolean lines, String fileFormat, String title, List<String> labelxyz, List<String> limitxyz, String iduser) throws IllegalArgumentException;
 	
-	//SEND EMAIL VERIFY
-	Boolean sendEmailVerify(String email) throws IllegalArgumentException;
-	
+	/*------------METRICS---------------*/
+
+	MetricResults CalculateER(String idpftrue, String iduser) throws IllegalArgumentException;
+	MetricResults CalculateSP(String idpftrue, String iduser) throws IllegalArgumentException;
+	MetricResults CalculateGD(String idpftrue, String iduser) throws IllegalArgumentException;
+	MetricResults CalculateC(String idpftrue, String iduser) throws IllegalArgumentException;
+	MetricResults CalculateE(String idpftrue, String iduser) throws IllegalArgumentException;
 	
 	
 }

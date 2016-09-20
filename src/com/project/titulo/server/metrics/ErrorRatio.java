@@ -9,6 +9,8 @@ import com.project.titulo.shared.model.UserFile;
 
 public class ErrorRatio {
 
+	private String Message;
+	
 	private int axis_size;
 	
 	private UserFile PFtrue_File;
@@ -16,7 +18,7 @@ public class ErrorRatio {
 	
 	private List<Points> PFtrue_data;//pf true points doubles
 	
-	private List<Float> ResultList = new ArrayList<Float>();//result are added here	
+	private List<String> ResultList = new ArrayList<String>();//result are added here	
 	
 	//load files for metric
 	public ErrorRatio(UserFile PFtrue, List<UserFile> listPFcalc,int axis_size){
@@ -41,20 +43,31 @@ public class ErrorRatio {
 		{
 			for(UserFile file : this.FileList)
 			{
-				TextToDouble paretoOp = new TextToDouble();
-				paretoOp.create(file.getData(), this.axis_size);
-				Calculate(paretoOp.getListPoints());//calculate file data
+				if(this.PFtrue_File.getDimension().equals(file.getDimension()))
+				{
+					TextToDouble paretoOp = new TextToDouble();
+					paretoOp.create(file.getData(), this.axis_size);
+					Calculate(paretoOp.getListPoints());//calculate file data
+				}
+				else{
+					this.ResultList.add("different dimensions");
+				}
 			}
+		}
+		else{
+			this.setMessage("No data inf Pareto Front");
 		}
 	}
 	
 	//calculate one file at time
-	private String Calculate(List<Points> paretoOp)
+	private void Calculate(List<Points> paretoOp)
 	{
+		System.err.println("NEW DATA");
 		//count equals points
 		float errori = 0;
 		if(paretoOp.size()>0)
 		{
+			System.err.println("contains elements");
 			//pareto front optime points
 			for(Points po: paretoOp)
 			{
@@ -64,43 +77,60 @@ public class ErrorRatio {
 					//same dimension for axies
 					if(po.getDimension()==pf.getDimension())
 					{
-						boolean axies_equal = true;
+						int conterr=0;
 						//elements from axies
 						for(int i = 0; i < po.getDimension(); i++)
 						{
 							//if x!=X y!=Y ...z!=Z
-							if(po.getAxieIndex(i)!=pf.getAxieIndex(i)){
-								axies_equal = false;//all axies aren't equal
+							if(po.getAxieIndex(i)!=pf.getAxieIndex(i))
+							{
+								conterr++;//all axies aren't equal
 							}
 						}
+						
 						//if axies arent equal +1 error
-						if(!axies_equal){
+						if(conterr<po.getDimension()){
 							errori++;
+							
 						}
 					}
 					else//diferent dimension error to calculate
 					{
-						return "Dimension Pareto Front True: "+pf.getDimension()+" differs from Pareto Optime: "+po.getDimension();
+						this.setMessage("Dimension Pareto Front True: "+pf.getDimension()+" differs from Pareto Optime: "+po.getDimension());
+						
 					}
 				}
 			}
 
 			//formula
 			float Nsize = paretoOp.size();
-			this.ResultList.add( (errori/Nsize));
+			System.err.println("ei = "+errori );
+			
+			System.err.println("N = "+Nsize);
+
+			System.err.println("ER = "+(1-(errori/Nsize)));
+			float ER=(1-(errori/Nsize));
+			this.ResultList.add( ER+"");
 			
 		}
 		else//diferent dimension error to calculate
 		{
-			return "Dimension from file is zero";
+			this.setMessage( "Dimension from file is zero");
 		}
-		return null;
 	}
 	
 	//get result calculated
-	public List<Float> getResults()
+	public List<String> getResults()
 	{
 		return this.ResultList;
+	}
+
+	public String getMessage() {
+		return Message;
+	}
+
+	public void setMessage(String message) {
+		Message = message;
 	}
 	
 }

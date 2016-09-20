@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.project.titulo.shared.model.Answer;
+import com.project.titulo.shared.model.MetricResults;
 import com.project.titulo.shared.model.ResumeTopic;
 import com.project.titulo.shared.model.Topic;
 import com.project.titulo.shared.model.User;
@@ -82,7 +83,7 @@ public interface ServerServiceAsync {
 	//user verify
 	void sendEmailVerify(String email, AsyncCallback<Boolean> callback) throws IllegalArgumentException;
 	
-	//PLOT
+	/*------------PLOT---------------*/
 	
 	//live plot
 	void LivePlot(String iduser,List<String> idfiles, AsyncCallback<Boolean> callback) throws IllegalArgumentException;
@@ -91,4 +92,11 @@ public interface ServerServiceAsync {
 	void CreateImage2D(Boolean points,Boolean lines, String fileFormat, String title, List<String> labelxyz, List<String> limitxyz, String iduser, AsyncCallback<String> callback) throws IllegalArgumentException;
 	void CreateImage3D(Boolean points,Boolean lines, String fileFormat, String title, List<String> labelxyz, List<String> limitxyz, String iduser, AsyncCallback<String> callback) throws IllegalArgumentException;
 	
+	/*------------METRICS---------------*/
+
+	void CalculateER(String idpftrue, String iduser, AsyncCallback<MetricResults> callback) throws IllegalArgumentException;
+	void CalculateSP(String idpftrue, String iduser, AsyncCallback<MetricResults> callback) throws IllegalArgumentException;
+	void CalculateGD(String idpftrue, String iduser, AsyncCallback<MetricResults> callback) throws IllegalArgumentException;
+	void CalculateC(String idpftrue, String iduser, AsyncCallback<MetricResults> callback) throws IllegalArgumentException;
+	void CalculateE(String idpftrue, String iduser, AsyncCallback<MetricResults> callback) throws IllegalArgumentException;
 }

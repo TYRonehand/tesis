@@ -15,8 +15,10 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 import com.project.titulo.client.ServerService;
+import com.project.titulo.server.metrics.ErrorRatio;
 import com.project.titulo.shared.SecretCode;
 import com.project.titulo.shared.model.Answer;
+import com.project.titulo.shared.model.MetricResults;
 import com.project.titulo.shared.model.ResumeTopic;
 import com.project.titulo.shared.model.Topic;
 import com.project.titulo.shared.model.User;
@@ -1290,6 +1292,73 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 	
 	
 	
+	@Override
+	public MetricResults CalculateER(String idpftrue, String iduser) throws IllegalArgumentException {
+
+		//result object
+		MetricResults results = new MetricResults();
+		try{
+			//declaration of Pareto Front true
+			UserFile PFtrueFile = null;
+			//search files from user in metric selected
+			List<UserFile> myfiles = getFullFilesMetric(iduser);
+			//find from selected wich is PFTRUE
+			for(UserFile aux: myfiles){
+				//if is PFTRUE set it
+				if(aux.getIddatafile().equals(idpftrue)){
+					PFtrueFile = aux;
+				}
+			}
+			//control exist both objects
+			if(PFtrueFile!=null && !myfiles.isEmpty()){
+				//start calculation
+				ErrorRatio er = new ErrorRatio(PFtrueFile, myfiles, Integer.parseInt(PFtrueFile.getDimension()) );
+				results.setResults(er.getResults());
+				results.setMessage(er.getMessage());
+			}
+			
+		}catch(Exception e){
+			results.setResults(null);
+			results.setMessage("Error: "+e.toString());
+			
+		}
+		
+		return results;
+	}
+
+	@Override
+	public MetricResults CalculateSP(String idpftrue, String iduser) throws IllegalArgumentException {
+
+		return null;
+	}
+
+	@Override
+	public MetricResults CalculateGD(String idpftrue, String iduser) throws IllegalArgumentException {
+
+		return null;
+	}
+
+	@Override
+	public MetricResults CalculateC(String idpftrue, String iduser) throws IllegalArgumentException {
+
+		return null;
+	}
+
+	@Override
+	public MetricResults CalculateE(String idpftrue, String iduser) throws IllegalArgumentException {
+
+		return null;
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/* functions properly from server */
 	
@@ -1336,6 +1405,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 		return true;
 		*/
 	}
+	
 	//clear pin from user
 	private void eraseUserPin(String email)
 	{
@@ -1358,5 +1428,53 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 		}
 	}
 
+	//get user files selecterd for metrics
+	private List<UserFile> getFullFilesMetric(String user){
+		 List<UserFile> listFiles = new ArrayList<UserFile>();
+		 try 
+		 {
+			 //consultamos a base de datos
+			 String Query= "SELECT * FROM datafile WHERE iduser = '"+user+"' AND metricselection = 1";
+			 PreparedStatement ps = conn.prepareStatement(Query);
+			 ResultSet result = ps.executeQuery();
+			 //recorremos resultado
+			 while (result.next()) 
+			 {
+				 //add element to list String Idfile, String Title, String Description, String Iduser, String Creation
+				 listFiles.add(new UserFile(result.getString("iddatafile"), 
+						 					result.getString("title"),
+						 					result.getString("dimension"),
+						 					"",
+						 					"",
+						 					"",
+								 			result.getString("description"),  
+								 			result.getString("iduser"), 
+								 			result.getString("creation"),
+								 			result.getString("data"),
+								 			"",
+								 			""
+								 			));
+				 
+				//create user files in directory files
+			   	ServletContext context = this.getServletContext();
+				try (PrintStream out = new PrintStream(new FileOutputStream(context.getRealPath("files")+"/"+result.getString("iddatafile")+".txt"))) 
+				{
+				    out.print(result.getString("data"));
+				} 
+				catch (FileNotFoundException e) 
+				{
+					e.printStackTrace();
+				}
+			 }
+			 result.close();
+			 ps.close();
+		 } 
+		 catch (SQLException sqle) 
+		 {
+		 	GWT.log(sqle.toString());
+		 	sqle.printStackTrace();
+		 }
+		 return listFiles;
+	} 
 	
 }//end class

@@ -60,8 +60,15 @@ public class UploadModal  extends DialogBox  {
 	private void LoadModal(){
 
 		//list box
-		dimensionList.addItem("2D");
-		dimensionList.addItem("3D");
+		dimensionList.addItem("2");
+		dimensionList.addItem("3");
+		dimensionList.addItem("4");
+		dimensionList.addItem("5");
+		dimensionList.addItem("6");
+		dimensionList.addItem("7");
+		dimensionList.addItem("8");
+		dimensionList.addItem("9");
+		dimensionList.addItem("10");
 		//dialogbox
 		dialogBox.setAnimationEnabled(true);
 		dialogBox.setAutoHideEnabled(true);

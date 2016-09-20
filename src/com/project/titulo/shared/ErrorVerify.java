@@ -14,7 +14,7 @@ public class ErrorVerify {
 				Window.alert("Missing website");
 				break;
 			case "offline":
-				Window.alert("Sorry, no response from database.");
+				Window.alert("Sorry, no response from the server.");
 				break;
 			case "banned":
 				Window.alert("Sorry but this account is temporaly banned");
@@ -106,12 +106,12 @@ public class ErrorVerify {
 			case "fileremove":
 				Window.alert("File removed");
 				break;
+			case "NoParetoFront":
+				Window.alert("First select Pareto Front True from files down here");
+				break;
 			default:
 				Window.alert("Unknow error!!");
 				break;
-				
-				
-
 				
 		}
 		

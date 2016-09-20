@@ -1,5 +1,6 @@
 package com.project.titulo.client.Metric;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.cell.client.ButtonCell;
@@ -15,6 +16,7 @@ import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.SimplePager.TextLocation;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -25,12 +27,20 @@ import com.project.titulo.client.GoToUrl;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
 import com.project.titulo.shared.ErrorVerify;
+import com.project.titulo.shared.model.MetricResults;
 import com.project.titulo.shared.model.UserFile;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SingleSelectionModel;
 
 public class MetricWidget extends Composite {
 
 	private String IDUSER=null;
+	
+	//files id
+	private String PFtrueFile=null;
+	@SuppressWarnings("unused")
+	private List<String> listPFknow=new ArrayList<String>();
 	
 	//uifields	
 	@UiField Button metric1Btn;
@@ -70,11 +80,16 @@ public class MetricWidget extends Composite {
 		this.IDUSER = iduser;
 		initWidget(uiBinder.createAndBindUi(this));
 		//set style to buttons from bootstrap
-		metric1Btn.addStyleName("btn btn-primary");
-		metric2Btn.addStyleName("btn btn-primary");
-		metric3Btn.addStyleName("btn btn-primary");
-		metric4Btn.addStyleName("btn btn-primary");
-		metric5Btn.addStyleName("btn btn-primary");
+		this.metric1Btn.addStyleName("btn btn-primary");
+		this.metric2Btn.addStyleName("btn btn-primary");
+		this.metric3Btn.addStyleName("btn btn-primary");
+		this.metric4Btn.addStyleName("btn btn-primary");
+		this.metric5Btn.addStyleName("btn btn-primary");
+		this.SpacingBtn.addStyleName("btn btn-success");
+		this.EntropyBtn.addStyleName("btn btn-success");
+		this.ERBtn.addStyleName("btn btn-success");
+		this.GDistanceBtn.addStyleName("btn btn-success");
+		this.CoverBtn.addStyleName("btn btn-success");
 		//load data table
 		LoadFilesData();
 	}
@@ -166,10 +181,7 @@ public class MetricWidget extends Composite {
 							if(result){
 								ErrorVerify.getErrorAlert("fileremove");
 								LoadFilesData();
-							}
-							else
-							{
-
+							}else{
 								ErrorVerify.getErrorAlert("faildel");
 							}
 						}}
@@ -178,6 +190,19 @@ public class MetricWidget extends Composite {
 		});
 		table.addColumn(buttonColumn, "Action");
 		
+		// Add a selection model to handle user selection.
+	    final SingleSelectionModel<UserFile> selectionModel = new SingleSelectionModel<UserFile>();
+	    table.setSelectionModel(selectionModel);
+	    selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+	      public void onSelectionChange(SelectionChangeEvent event) {
+	    	  UserFile selected = selectionModel.getSelectedObject();
+	        if (selected != null) {
+	          Window.alert("Your PF true is file: " + selected.getTitle());
+	          PFtrueFile = selected.getIddatafile();
+	        }
+	      }
+	    });
+		
 
 		// Push the data into the widget.
 		table.setRowCount(DATAINFO.size(), true);
@@ -185,7 +210,7 @@ public class MetricWidget extends Composite {
 		panel.setBorderWidth(0);
 		panel.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
 		panel.setWidth("350");
-		panel.add(new Label("*select action"));
+		panel.add(new Label("*Press to select Pareto Front True (PFtrue)"));
 		panel.add(table);
 		panel.add(pager);
 		Button reload = new Button("Reload Table");
@@ -244,18 +269,57 @@ public class MetricWidget extends Composite {
 	
 	/*METRIC CALCULATE*/
 	@UiHandler("EntropyBtn")
-	void onEntropyBtnClick(ClickEvent event) {
+	void onEntropyBtnClick(ClickEvent event) 
+	{
+		
 	}
 	@UiHandler("SpacingBtn")
-	void onSpacingBtnClick(ClickEvent event) {
+	void onSpacingBtnClick(ClickEvent event) 
+	{
+		
 	}
 	@UiHandler("ERBtn")
-	void onERBtnClick(ClickEvent event) {
+	void onERBtnClick(ClickEvent event) 
+	{
+		if(this.PFtrueFile!=null)
+		{
+			serverService.CalculateER(this.PFtrueFile, this.IDUSER, new AsyncCallback<MetricResults>(){
+
+				@Override
+				public void onFailure(Throwable caught) {
+					ErrorVerify.getErrorAlert("offline");
+				}
+
+				@Override
+				public void onSuccess(MetricResults result) {
+					
+					if(result.getResults().size()>0)
+					{
+						//get results
+						String textresult = "";
+						for(String data:result.getResults()){
+							textresult +=data.toString()+"\n";
+						}
+						Window.alert(textresult);
+					}
+					if(!result.getMessage().isEmpty()){
+						Window.alert(result.getMessage());
+					}
+					
+				}});
+			
+		}else{
+			ErrorVerify.getErrorAlert("NoParetoFront");
+		}
 	}
 	@UiHandler("GDistanceBtn")
-	void onGDistanceBtnClick(ClickEvent event) {
+	void onGDistanceBtnClick(ClickEvent event) 
+	{
+		
 	}
 	@UiHandler("CoverBtn")
-	void onCoverBtnClick(ClickEvent event) {
+	void onCoverBtnClick(ClickEvent event) 
+	{
+		
 	}
 }
