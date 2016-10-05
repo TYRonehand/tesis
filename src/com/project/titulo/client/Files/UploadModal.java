@@ -89,22 +89,8 @@ public class UploadModal  extends DialogBox  {
 		cancelBtn.addStyleName("btn btn-danger");
 		
 	}
-	
-	//show data input
-	@UiHandler("nextBtn")
-	void onNextBtnClick(ClickEvent event) 
-	{
-		if(this.titleInput.getText().isEmpty() && this.descriptionInput.getText().isEmpty())
-			ErrorVerify.getErrorAlert("empty");
-		else{
-			panel1.setVisible(false);
-			panel2.setVisible(true);
-		}
-	}
-	
-	//handler push upload
-	@UiHandler("createBtn")
-	void onCreateBtnClick(ClickEvent event) 
+	//create file and upload
+	private void CreateDataFile()
 	{
 		if(this.dataInput.getText().isEmpty())
 			ErrorVerify.getErrorAlert("empty");
@@ -153,6 +139,25 @@ public class UploadModal  extends DialogBox  {
 		}
 	}
 	
+	//show data input
+	@UiHandler("nextBtn")
+	void onNextBtnClick(ClickEvent event) 
+	{
+		if(this.titleInput.getText().isEmpty() && this.descriptionInput.getText().isEmpty())
+			ErrorVerify.getErrorAlert("empty");
+		else{
+			panel1.setVisible(false);
+			panel2.setVisible(true);
+		}
+	}
+	
+	//handler push upload
+	@UiHandler("createBtn")
+	void onCreateBtnClick(ClickEvent event) 
+	{
+		CreateDataFile();
+	}
+	
 	
 	//evento cambio valor  input
 	@UiHandler("cancelBtn")
@@ -160,6 +165,7 @@ public class UploadModal  extends DialogBox  {
 	{
 		dialogBox.hide();
     }
+	
 	
 	
 }

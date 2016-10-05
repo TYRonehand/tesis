@@ -1,23 +1,22 @@
 function proyectotitulo(){
-  var $intern_14 = '', $intern_11 = ' top: -1000px;', $intern_37 = '" for "gwt:onLoadErrorFn"', $intern_35 = '" for "gwt:onPropertyErrorFn"', $intern_20 = '");', $intern_38 = '#', $intern_65 = '.cache.js', $intern_40 = '/', $intern_46 = '//', $intern_59 = '98E225339247219DA75E68E9B9841708', $intern_60 = '9B03EE07C62E4F15A5C29BAA2429647E', $intern_61 = '9E1CF64749C4358B4114D189E8C7251D', $intern_64 = ':', $intern_29 = '::', $intern_79 = ':moduleBase', $intern_13 = '<!doctype html>', $intern_15 = '<html><head><\/head><body><\/body><\/html>', $intern_32 = '=', $intern_39 = '?', $intern_62 = 'A6FC2930282CB366973DC1F875C8A245', $intern_34 = 'Bad handler "', $intern_12 = 'CSS1Compat', $intern_18 = 'Chrome', $intern_63 = 'D5CB5CFA89CFE85BFDEBE9D8FD32B6EC', $intern_17 = 'DOMContentLoaded', $intern_6 = 'DUMMY', $intern_78 = 'Ignoring non-whitelisted Dev Mode URL: ', $intern_77 = '__gwtDevModeHook:proyectotitulo', $intern_76 = '_gwt_dummy_', $intern_45 = 'base', $intern_43 = 'baseUrl', $intern_1 = 'begin', $intern_7 = 'body', $intern_0 = 'bootstrap', $intern_42 = 'clear.cache.gif', $intern_31 = 'content', $intern_71 = 'css/bootstrap-3.3.7.min.cache.css', $intern_72 = 'css/font-awesome-4.6.3.min.cache.css', $intern_73 = 'end', $intern_19 = 'eval("', $intern_75 = 'file:', $intern_54 = 'gecko', $intern_55 = 'gecko1_8', $intern_2 = 'gwt.codesvr.proyectotitulo=', $intern_3 = 'gwt.codesvr=', $intern_36 = 'gwt:onLoadErrorFn', $intern_33 = 'gwt:onPropertyErrorFn', $intern_30 = 'gwt:property', $intern_25 = 'head', $intern_69 = 'href', $intern_74 = 'http:', $intern_51 = 'ie10', $intern_53 = 'ie8', $intern_52 = 'ie9', $intern_8 = 'iframe', $intern_41 = 'img', $intern_22 = 'javascript', $intern_9 = 'javascript:""', $intern_66 = 'link', $intern_70 = 'loadExternalRefs', $intern_26 = 'meta', $intern_24 = 'moduleRequested', $intern_23 = 'moduleStartup', $intern_50 = 'msie', $intern_27 = 'name', $intern_10 = 'position:absolute; width:0; height:0; border:none; left: -1000px;', $intern_4 = 'proyectotitulo', $intern_58 = 'proyectotitulo.devmode.js', $intern_44 = 'proyectotitulo.nocache.js', $intern_28 = 'proyectotitulo::', $intern_67 = 'rel', $intern_49 = 'safari', $intern_21 = 'script', $intern_57 = 'selectingPermutation', $intern_5 = 'startup', $intern_68 = 'stylesheet', $intern_16 = 'undefined', $intern_56 = 'unknown', $intern_47 = 'user.agent', $intern_48 = 'webkit';
-  var $wnd = window;
-  var $doc = document;
-  sendStats($intern_0, $intern_1);
+  var $wnd_0 = window;
+  var $doc_0 = document;
+  sendStats('bootstrap', 'begin');
   function isHostedMode(){
-    var query = $wnd.location.search;
-    return query.indexOf($intern_2) != -1 || query.indexOf($intern_3) != -1;
+    var query = $wnd_0.location.search;
+    return query.indexOf('gwt.codesvr.proyectotitulo=') != -1 || query.indexOf('gwt.codesvr=') != -1;
   }
 
   function sendStats(evtGroupString, typeString){
-    if ($wnd.__gwtStatsEvent) {
-      $wnd.__gwtStatsEvent({moduleName:$intern_4, sessionId:$wnd.__gwtStatsSessionId, subSystem:$intern_5, evtGroup:evtGroupString, millis:(new Date).getTime(), type:typeString});
+    if ($wnd_0.__gwtStatsEvent) {
+      $wnd_0.__gwtStatsEvent({moduleName:'proyectotitulo', sessionId:$wnd_0.__gwtStatsSessionId, subSystem:'startup', evtGroup:evtGroupString, millis:(new Date).getTime(), type:typeString});
     }
   }
 
   proyectotitulo.__sendStats = sendStats;
-  proyectotitulo.__moduleName = $intern_4;
+  proyectotitulo.__moduleName = 'proyectotitulo';
   proyectotitulo.__errFn = null;
-  proyectotitulo.__moduleBase = $intern_6;
+  proyectotitulo.__moduleBase = 'DUMMY';
   proyectotitulo.__softPermutationId = 0;
   proyectotitulo.__computePropValue = null;
   proyectotitulo.__getPropMap = null;
@@ -37,8 +36,8 @@ function proyectotitulo(){
   }
   ;
   __propertyErrorFunction = null;
-  var activeModules = $wnd.__gwt_activeModules = $wnd.__gwt_activeModules || {};
-  activeModules[$intern_4] = {moduleName:$intern_4};
+  var activeModules = $wnd_0.__gwt_activeModules = $wnd_0.__gwt_activeModules || {};
+  activeModules['proyectotitulo'] = {moduleName:'proyectotitulo'};
   var frameDoc;
   function getInstallLocationDoc(){
     setupInstallLocation();
@@ -47,36 +46,36 @@ function proyectotitulo(){
 
   function getInstallLocation(){
     setupInstallLocation();
-    return frameDoc.getElementsByTagName($intern_7)[0];
+    return frameDoc.getElementsByTagName('body')[0];
   }
 
   function setupInstallLocation(){
     if (frameDoc) {
       return;
     }
-    var scriptFrame = $doc.createElement($intern_8);
-    scriptFrame.src = $intern_9;
-    scriptFrame.id = $intern_4;
-    scriptFrame.style.cssText = $intern_10 + $intern_11;
+    var scriptFrame = $doc_0.createElement('iframe');
+    scriptFrame.src = 'javascript:""';
+    scriptFrame.id = 'proyectotitulo';
+    scriptFrame.style.cssText = 'position:absolute; width:0; height:0; border:none; left: -1000px;' + ' top: -1000px;';
     scriptFrame.tabIndex = -1;
-    $doc.body.appendChild(scriptFrame);
+    $doc_0.body.appendChild(scriptFrame);
     frameDoc = scriptFrame.contentDocument;
     if (!frameDoc) {
       frameDoc = scriptFrame.contentWindow.document;
     }
     frameDoc.open();
-    var doctype = document.compatMode == $intern_12?$intern_13:$intern_14;
-    frameDoc.write(doctype + $intern_15);
+    var doctype = document.compatMode == 'CSS1Compat'?'<!doctype html>':'';
+    frameDoc.write(doctype + '<html><head><\/head><body><\/body><\/html>');
     frameDoc.close();
   }
 
   function installScript(filename){
     function setupWaitForBodyLoad(callback){
       function isBodyLoaded(){
-        if (typeof $doc.readyState == $intern_16) {
-          return typeof $doc.body != $intern_16 && $doc.body != null;
+        if (typeof $doc_0.readyState == 'undefined') {
+          return typeof $doc_0.body != 'undefined' && $doc_0.body != null;
         }
-        return /loaded|complete/.test($doc.readyState);
+        return /loaded|complete/.test($doc_0.readyState);
       }
 
       var bodyDone = isBodyLoaded();
@@ -88,8 +87,8 @@ function proyectotitulo(){
         if (!bodyDone) {
           bodyDone = true;
           callback();
-          if ($doc.removeEventListener) {
-            $doc.removeEventListener($intern_17, onBodyDone, false);
+          if ($doc_0.removeEventListener) {
+            $doc_0.removeEventListener('DOMContentLoaded', onBodyDone, false);
           }
           if (onBodyDoneTimerId) {
             clearInterval(onBodyDoneTimerId);
@@ -97,8 +96,8 @@ function proyectotitulo(){
         }
       }
 
-      if ($doc.addEventListener) {
-        $doc.addEventListener($intern_17, onBodyDone, false);
+      if ($doc_0.addEventListener) {
+        $doc_0.addEventListener('DOMContentLoaded', onBodyDone, false);
       }
       var onBodyDoneTimerId = setInterval(function(){
         if (isBodyLoaded()) {
@@ -115,24 +114,24 @@ function proyectotitulo(){
       var docbody = getInstallLocation();
       var doc = getInstallLocationDoc();
       var script;
-      if (navigator.userAgent.indexOf($intern_18) > -1 && window.JSON) {
+      if (navigator.userAgent.indexOf('Chrome') > -1 && window.JSON) {
         var scriptFrag = doc.createDocumentFragment();
-        scriptFrag.appendChild(doc.createTextNode($intern_19));
+        scriptFrag.appendChild(doc.createTextNode('eval("'));
         for (var i = 0; i < code_0.length; i++) {
           var c = window.JSON.stringify(code_0[i]);
           scriptFrag.appendChild(doc.createTextNode(c.substring(1, c.length - 1)));
         }
-        scriptFrag.appendChild(doc.createTextNode($intern_20));
-        script = doc.createElement($intern_21);
-        script.language = $intern_22;
+        scriptFrag.appendChild(doc.createTextNode('");'));
+        script = doc.createElement('script');
+        script.language = 'javascript';
         script.appendChild(scriptFrag);
         docbody.appendChild(script);
         removeScript(docbody, script);
       }
        else {
         for (var i = 0; i < code_0.length; i++) {
-          script = doc.createElement($intern_21);
-          script.language = $intern_22;
+          script = doc.createElement('script');
+          script.language = 'javascript';
           script.text = code_0[i];
           docbody.appendChild(script);
           removeScript(docbody, script);
@@ -147,10 +146,10 @@ function proyectotitulo(){
       );
     }
     ;
-    sendStats($intern_23, $intern_24);
-    var script = $doc.createElement($intern_21);
-    script.src = filename;
-    $doc.getElementsByTagName($intern_25)[0].appendChild(script);
+    sendStats('moduleStartup', 'moduleRequested');
+    var script_0 = $doc_0.createElement('script');
+    script_0.src = filename;
+    $doc_0.getElementsByTagName('head')[0].appendChild(script_0);
   }
 
   proyectotitulo.__startLoadingFragment = function(fragmentFile){
@@ -159,8 +158,8 @@ function proyectotitulo(){
   ;
   proyectotitulo.__installRunAsyncCode = function(code_0){
     var docbody = getInstallLocation();
-    var script = getInstallLocationDoc().createElement($intern_21);
-    script.language = $intern_22;
+    var script = getInstallLocationDoc().createElement('script');
+    script.language = 'javascript';
     script.text = code_0;
     docbody.appendChild(script);
   }
@@ -169,48 +168,48 @@ function proyectotitulo(){
     var metaProps = {};
     var propertyErrorFunc;
     var onLoadErrorFunc;
-    var metas = $doc.getElementsByTagName($intern_26);
+    var metas = $doc_0.getElementsByTagName('meta');
     for (var i = 0, n = metas.length; i < n; ++i) {
-      var meta = metas[i], name_0 = meta.getAttribute($intern_27), content;
-      if (name_0) {
-        name_0 = name_0.replace($intern_28, $intern_14);
-        if (name_0.indexOf($intern_29) >= 0) {
+      var meta = metas[i], name_1 = meta.getAttribute('name'), content_0;
+      if (name_1) {
+        name_1 = name_1.replace('proyectotitulo::', '');
+        if (name_1.indexOf('::') >= 0) {
           continue;
         }
-        if (name_0 == $intern_30) {
-          content = meta.getAttribute($intern_31);
-          if (content) {
-            var value_0, eq = content.indexOf($intern_32);
+        if (name_1 == 'gwt:property') {
+          content_0 = meta.getAttribute('content');
+          if (content_0) {
+            var value_1, eq = content_0.indexOf('=');
             if (eq >= 0) {
-              name_0 = content.substring(0, eq);
-              value_0 = content.substring(eq + 1);
+              name_1 = content_0.substring(0, eq);
+              value_1 = content_0.substring(eq + 1);
             }
              else {
-              name_0 = content;
-              value_0 = $intern_14;
+              name_1 = content_0;
+              value_1 = '';
             }
-            metaProps[name_0] = value_0;
+            metaProps[name_1] = value_1;
           }
         }
-         else if (name_0 == $intern_33) {
-          content = meta.getAttribute($intern_31);
-          if (content) {
+         else if (name_1 == 'gwt:onPropertyErrorFn') {
+          content_0 = meta.getAttribute('content');
+          if (content_0) {
             try {
-              propertyErrorFunc = eval(content);
+              propertyErrorFunc = eval(content_0);
             }
              catch (e) {
-              alert($intern_34 + content + $intern_35);
+              alert('Bad handler "' + content_0 + '" for "gwt:onPropertyErrorFn"');
             }
           }
         }
-         else if (name_0 == $intern_36) {
-          content = meta.getAttribute($intern_31);
-          if (content) {
+         else if (name_1 == 'gwt:onLoadErrorFn') {
+          content_0 = meta.getAttribute('content');
+          if (content_0) {
             try {
-              onLoadErrorFunc = eval(content);
+              onLoadErrorFunc = eval(content_0);
             }
              catch (e) {
-              alert($intern_34 + content + $intern_37);
+              alert('Bad handler "' + content_0 + '" for "gwt:onLoadErrorFn"');
             }
           }
         }
@@ -227,69 +226,69 @@ function proyectotitulo(){
 
   function computeScriptBase(){
     function getDirectoryOfFile(path){
-      var hashIndex = path.lastIndexOf($intern_38);
+      var hashIndex = path.lastIndexOf('#');
       if (hashIndex == -1) {
         hashIndex = path.length;
       }
-      var queryIndex = path.indexOf($intern_39);
+      var queryIndex = path.indexOf('?');
       if (queryIndex == -1) {
         queryIndex = path.length;
       }
-      var slashIndex = path.lastIndexOf($intern_40, Math.min(queryIndex, hashIndex));
-      return slashIndex >= 0?path.substring(0, slashIndex + 1):$intern_14;
+      var slashIndex = path.lastIndexOf('/', Math.min(queryIndex, hashIndex));
+      return slashIndex >= 0?path.substring(0, slashIndex + 1):'';
     }
 
     function ensureAbsoluteUrl(url_0){
       if (url_0.match(/^\w+:\/\//)) {
       }
        else {
-        var img = $doc.createElement($intern_41);
-        img.src = url_0 + $intern_42;
+        var img = $doc_0.createElement('img');
+        img.src = url_0 + 'clear.cache.gif';
         url_0 = getDirectoryOfFile(img.src);
       }
       return url_0;
     }
 
     function tryMetaTag(){
-      var metaVal = __gwt_getMetaProperty($intern_43);
+      var metaVal = __gwt_getMetaProperty('baseUrl');
       if (metaVal != null) {
         return metaVal;
       }
-      return $intern_14;
+      return '';
     }
 
     function tryNocacheJsTag(){
-      var scriptTags = $doc.getElementsByTagName($intern_21);
+      var scriptTags = $doc_0.getElementsByTagName('script');
       for (var i = 0; i < scriptTags.length; ++i) {
-        if (scriptTags[i].src.indexOf($intern_44) != -1) {
+        if (scriptTags[i].src.indexOf('proyectotitulo.nocache.js') != -1) {
           return getDirectoryOfFile(scriptTags[i].src);
         }
       }
-      return $intern_14;
+      return '';
     }
 
     function tryBaseTag(){
-      var baseElements = $doc.getElementsByTagName($intern_45);
+      var baseElements = $doc_0.getElementsByTagName('base');
       if (baseElements.length > 0) {
         return baseElements[baseElements.length - 1].href;
       }
-      return $intern_14;
+      return '';
     }
 
     function isLocationOk(){
-      var loc = $doc.location;
-      return loc.href == loc.protocol + $intern_46 + loc.host + loc.pathname + loc.search + loc.hash;
+      var loc = $doc_0.location;
+      return loc.href == loc.protocol + '//' + loc.host + loc.pathname + loc.search + loc.hash;
     }
 
     var tempBase = tryMetaTag();
-    if (tempBase == $intern_14) {
+    if (tempBase == '') {
       tempBase = tryNocacheJsTag();
     }
-    if (tempBase == $intern_14) {
+    if (tempBase == '') {
       tempBase = tryBaseTag();
     }
-    if (tempBase == $intern_14 && isLocationOk()) {
-      tempBase = getDirectoryOfFile($doc.location.href);
+    if (tempBase == '' && isLocationOk()) {
+      tempBase = getDirectoryOfFile($doc_0.location.href);
     }
     tempBase = ensureAbsoluteUrl(tempBase);
     return tempBase;
@@ -333,41 +332,41 @@ function proyectotitulo(){
       throw null;
     }
 
-    providers[$intern_47] = function(){
+    providers['user.agent'] = function(){
       var ua = navigator.userAgent.toLowerCase();
       var makeVersion = function(result){
         return parseInt(result[1]) * 1000 + parseInt(result[2]);
       }
       ;
       if (function(){
-        return ua.indexOf($intern_48) != -1;
+        return ua.indexOf('webkit') != -1;
       }
       ())
-        return $intern_49;
+        return 'safari';
       if (function(){
-        return ua.indexOf($intern_50) != -1 && $doc.documentMode >= 10;
+        return ua.indexOf('msie') != -1 && $doc_0.documentMode >= 10;
       }
       ())
-        return $intern_51;
+        return 'ie10';
       if (function(){
-        return ua.indexOf($intern_50) != -1 && $doc.documentMode >= 9;
+        return ua.indexOf('msie') != -1 && $doc_0.documentMode >= 9;
       }
       ())
-        return $intern_52;
+        return 'ie9';
       if (function(){
-        return ua.indexOf($intern_50) != -1 && $doc.documentMode >= 8;
+        return ua.indexOf('msie') != -1 && $doc_0.documentMode >= 8;
       }
       ())
-        return $intern_53;
+        return 'ie8';
       if (function(){
-        return ua.indexOf($intern_54) != -1;
+        return ua.indexOf('gecko') != -1;
       }
       ())
-        return $intern_55;
-      return $intern_56;
+        return 'gecko1_8';
+      return 'unknown';
     }
     ;
-    values[$intern_47] = {gecko1_8:0, ie10:1, ie8:2, ie9:3, safari:4};
+    values['user.agent'] = {gecko1_8:0, ie10:1, ie8:2, ie9:3, safari:4};
     __gwt_isKnownPropertyValue = function(propName, propValue){
       return propValue in values[propName];
     }
@@ -383,20 +382,20 @@ function proyectotitulo(){
     }
     ;
     proyectotitulo.__computePropValue = computePropValue;
-    $wnd.__gwt_activeModules[$intern_4].bindings = proyectotitulo.__getPropMap;
-    sendStats($intern_0, $intern_57);
+    $wnd_0.__gwt_activeModules['proyectotitulo'].bindings = proyectotitulo.__getPropMap;
+    sendStats('bootstrap', 'selectingPermutation');
     if (isHostedMode()) {
-      return computeUrlForResource($intern_58);
+      return computeUrlForResource('proyectotitulo.devmode.js');
     }
     var strongName;
     try {
-      unflattenKeylistIntoAnswers([$intern_51], $intern_59);
-      unflattenKeylistIntoAnswers([$intern_53], $intern_60);
-      unflattenKeylistIntoAnswers([$intern_49], $intern_61);
-      unflattenKeylistIntoAnswers([$intern_52], $intern_62);
-      unflattenKeylistIntoAnswers([$intern_55], $intern_63);
-      strongName = answers[computePropValue($intern_47)];
-      var idx = strongName.indexOf($intern_64);
+      unflattenKeylistIntoAnswers(['gecko1_8'], '1EE413D18A3D2EE11C3F10C46E517EC5');
+      unflattenKeylistIntoAnswers(['ie8'], '35B53153E2F06882D468C011CE98B6AA');
+      unflattenKeylistIntoAnswers(['safari'], '5A71C35C991036FCB1CB29B3409AB7A0');
+      unflattenKeylistIntoAnswers(['ie9'], '5FA9F3B899E5E0B13F71A805920CE9EE');
+      unflattenKeylistIntoAnswers(['ie10'], 'FABD2D881D8EB928EB866BDC153D2388');
+      strongName = answers[computePropValue('user.agent')];
+      var idx = strongName.indexOf(':');
       if (idx != -1) {
         softPermutationId = parseInt(strongName.substring(idx + 1), 10);
         strongName = strongName.substring(0, idx);
@@ -405,41 +404,41 @@ function proyectotitulo(){
      catch (e) {
     }
     proyectotitulo.__softPermutationId = softPermutationId;
-    return computeUrlForResource(strongName + $intern_65);
+    return computeUrlForResource(strongName + '.cache.js');
   }
 
   function loadExternalStylesheets(){
-    if (!$wnd.__gwt_stylesLoaded) {
-      $wnd.__gwt_stylesLoaded = {};
+    if (!$wnd_0.__gwt_stylesLoaded) {
+      $wnd_0.__gwt_stylesLoaded = {};
     }
     function installOneStylesheet(stylesheetUrl){
       if (!__gwt_stylesLoaded[stylesheetUrl]) {
-        var l = $doc.createElement($intern_66);
-        l.setAttribute($intern_67, $intern_68);
-        l.setAttribute($intern_69, computeUrlForResource(stylesheetUrl));
-        $doc.getElementsByTagName($intern_25)[0].appendChild(l);
+        var l = $doc_0.createElement('link');
+        l.setAttribute('rel', 'stylesheet');
+        l.setAttribute('href', computeUrlForResource(stylesheetUrl));
+        $doc_0.getElementsByTagName('head')[0].appendChild(l);
         __gwt_stylesLoaded[stylesheetUrl] = true;
       }
     }
 
-    sendStats($intern_70, $intern_1);
-    installOneStylesheet($intern_71);
-    installOneStylesheet($intern_72);
-    sendStats($intern_70, $intern_73);
+    sendStats('loadExternalRefs', 'begin');
+    installOneStylesheet('css/bootstrap-3.3.7.min.cache.css');
+    installOneStylesheet('css/font-awesome-4.6.3.min.cache.css');
+    sendStats('loadExternalRefs', 'end');
   }
 
   processMetas();
   proyectotitulo.__moduleBase = computeScriptBase();
-  activeModules[$intern_4].moduleBase = proyectotitulo.__moduleBase;
-  var filename = getCompiledCodeFilename();
-  if ($wnd) {
-    var devModePermitted = !!($wnd.location.protocol == $intern_74 || $wnd.location.protocol == $intern_75);
-    $wnd.__gwt_activeModules[$intern_4].canRedirect = devModePermitted;
+  activeModules['proyectotitulo'].moduleBase = proyectotitulo.__moduleBase;
+  var filename_0 = getCompiledCodeFilename();
+  if ($wnd_0) {
+    var devModePermitted = !!($wnd_0.location.protocol == 'http:' || $wnd_0.location.protocol == 'file:');
+    $wnd_0.__gwt_activeModules['proyectotitulo'].canRedirect = devModePermitted;
     function supportsSessionStorage(){
-      var key = $intern_76;
+      var key = '_gwt_dummy_';
       try {
-        $wnd.sessionStorage.setItem(key, key);
-        $wnd.sessionStorage.removeItem(key);
+        $wnd_0.sessionStorage.setItem(key, key);
+        $wnd_0.sessionStorage.removeItem(key);
         return true;
       }
        catch (e) {
@@ -448,28 +447,28 @@ function proyectotitulo(){
     }
 
     if (devModePermitted && supportsSessionStorage()) {
-      var devModeKey = $intern_77;
-      var devModeUrl = $wnd.sessionStorage[devModeKey];
+      var devModeKey = '__gwtDevModeHook:proyectotitulo';
+      var devModeUrl = $wnd_0.sessionStorage[devModeKey];
       if (!/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?\/.*$/.test(devModeUrl)) {
         if (devModeUrl && (window.console && console.log)) {
-          console.log($intern_78 + devModeUrl);
+          console.log('Ignoring non-whitelisted Dev Mode URL: ' + devModeUrl);
         }
-        devModeUrl = $intern_14;
+        devModeUrl = '';
       }
-      if (devModeUrl && !$wnd[devModeKey]) {
-        $wnd[devModeKey] = true;
-        $wnd[devModeKey + $intern_79] = computeScriptBase();
-        var devModeScript = $doc.createElement($intern_21);
+      if (devModeUrl && !$wnd_0[devModeKey]) {
+        $wnd_0[devModeKey] = true;
+        $wnd_0[devModeKey + ':moduleBase'] = computeScriptBase();
+        var devModeScript = $doc_0.createElement('script');
         devModeScript.src = devModeUrl;
-        var head = $doc.getElementsByTagName($intern_25)[0];
+        var head = $doc_0.getElementsByTagName('head')[0];
         head.insertBefore(devModeScript, head.firstElementChild || head.children[0]);
         return false;
       }
     }
   }
   loadExternalStylesheets();
-  sendStats($intern_0, $intern_73);
-  installScript(filename);
+  sendStats('bootstrap', 'end');
+  installScript(filename_0);
   return true;
 }
 

@@ -81,9 +81,8 @@ public class EditTopicModal extends DialogBox {
 		titleInput.setFocus(true);
 	}
 	
-	//click update
-	@UiHandler("createBtn")
-	void onCreateBtnClick(ClickEvent event) 
+		
+	private void EditTopic()
 	{
 		//validar algo escrito
 		if(titleInput.getText().length()>3 && descriptionInput.getText().length()>20)
@@ -121,7 +120,13 @@ public class EditTopicModal extends DialogBox {
 		{
 			ErrorVerify.getErrorAlert("empty");
 		}
-		
+	}
+	
+	//click update
+	@UiHandler("createBtn")
+	void onCreateBtnClick(ClickEvent event) 
+	{
+		EditTopic();
     }
 	
 	//evento cambio valor  input

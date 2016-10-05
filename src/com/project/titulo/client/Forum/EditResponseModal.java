@@ -77,9 +77,7 @@ public class EditResponseModal extends DialogBox {
 		dialogBox.center();
 	}
 	
-	//click update
-	@UiHandler("createBtn")
-	void onCreateBtnClick(ClickEvent event) 
+	private void EditComment()
 	{
 		//validar algo escrito
 		if(descriptionInput.getText().length()>20)
@@ -114,6 +112,13 @@ public class EditResponseModal extends DialogBox {
 		{
 			ErrorVerify.getErrorAlert("empty");
 		}
+	}
+	
+	//click update
+	@UiHandler("createBtn")
+	void onCreateBtnClick(ClickEvent event) 
+	{
+		EditComment();
     }
 	
 	//evento cambio valor  input

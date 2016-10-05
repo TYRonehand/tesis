@@ -72,11 +72,11 @@ public class ForumWidget extends Composite {
 		modalNewestTopic.addStyleName("btn btn-primary");
 		modalOldestTopic.addStyleName("btn btn-primary");
 		//load data and table (ASC, USER, COMENTED)
-		LoadNewestData();
+		LoadNewestTopic();
 	}
 	//------------------------------------
 	//load data from database
-	private void LoadNewestData()
+	private void LoadNewestTopic()
 	{
 		serverService.NewestResumeTopic(new AsyncCallback<List<ResumeTopic>>(){
 			@Override
@@ -90,7 +90,7 @@ public class ForumWidget extends Composite {
 		});
 	}
 	
-	private void LoadOldestData()
+	private void LoadOldestTopic()
 	{
 		serverService.OldestResumeTopic(new AsyncCallback<List<ResumeTopic>>(){
 			@Override
@@ -104,7 +104,7 @@ public class ForumWidget extends Composite {
 		});
 	}
 	
-	private void LoadMyData(String iduser)
+	private void LoadMyTopic(String iduser)
 	{
 		serverService.MyResumeTopic( iduser, new AsyncCallback<List<ResumeTopic>>(){
 			@Override
@@ -118,7 +118,7 @@ public class ForumWidget extends Composite {
 		});
 	}
 	
-	private void LoadSearchData(String search)
+	private void LoadSearchTopic(String search)
 	{
 		serverService.SearchResumeTopic( search, new AsyncCallback<List<ResumeTopic>>(){
 			@Override
@@ -225,7 +225,7 @@ public class ForumWidget extends Composite {
 		reloadBtn.addClickHandler(new ClickHandler(){
 			@Override
 			public void onClick(ClickEvent event) {
-				LoadNewestData();
+				LoadNewestTopic();
 			}});
 		
 		panel.add(reloadBtn);
@@ -244,23 +244,23 @@ public class ForumWidget extends Composite {
 	@UiHandler("modalMyTopic")
 	void onModalMyTopicClick(ClickEvent event) 
 	{
-		LoadMyData(this.IDUSER);
+		LoadMyTopic(this.IDUSER);
 	}
 	@UiHandler("modalNewestTopic")
 	void onModalNewestTopicClick(ClickEvent event) 
 	{
-		LoadNewestData();
+		LoadNewestTopic();
 	}
 	@UiHandler("modalOldestTopic")
 	void onModalOldestTopicClick(ClickEvent event) 
 	{
-		LoadOldestData();
+		LoadOldestTopic();
 	}
 	@UiHandler("modalSearchTopic")
 	void onModalSearchTopicClick(ClickEvent event) 
 	{
 		if(this.searchInput.getText().length()>0)
-			LoadSearchData(this.searchInput.getText());
+			LoadSearchTopic(this.searchInput.getText());
 		else
 			ErrorVerify.getErrorAlert("empty");
 	}

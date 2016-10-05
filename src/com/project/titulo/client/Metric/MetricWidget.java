@@ -85,11 +85,11 @@ public class MetricWidget extends Composite {
 		this.metric3Btn.addStyleName("btn btn-primary");
 		this.metric4Btn.addStyleName("btn btn-primary");
 		this.metric5Btn.addStyleName("btn btn-primary");
-		this.SpacingBtn.addStyleName("btn btn-success");
-		this.EntropyBtn.addStyleName("btn btn-success");
+		this.SpacingBtn.addStyleName("btn btn-danger");
+		this.EntropyBtn.addStyleName("btn btn-danger");
 		this.ERBtn.addStyleName("btn btn-success");
-		this.GDistanceBtn.addStyleName("btn btn-success");
-		this.CoverBtn.addStyleName("btn btn-success");
+		this.GDistanceBtn.addStyleName("btn btn-danger");
+		this.CoverBtn.addStyleName("btn btn-danger");
 		//load data table
 		LoadFilesData();
 	}

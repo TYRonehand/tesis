@@ -20,10 +20,6 @@ public interface ServerService extends RemoteService
 {
 
 	/*ADMIN*/
-
-	//autenticacion
-	User authenticateAdmin(String user, String pass) throws IllegalArgumentException;
-	
 	//list of users
 	List<User> getUserList(String opcion) throws IllegalArgumentException;
 

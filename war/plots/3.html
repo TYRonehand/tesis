@@ -1,0 +1,300 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Gnuplot Canvas Graph</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
+<script src="./js/canvastext.js"></script>
+<script src="./js/gnuplot_common.js"></script>
+<script src="./js/gnuplot_dashedlines.js"></script>
+<script src="./js/gnuplot_mouse.js"></script>
+<script type="text/javascript"> gnuplot.help_URL = "./js//canvas_help.html"; </script>
+<script type="text/javascript">
+var canvas, ctx;
+gnuplot.grid_lines = true;
+gnuplot.zoomed = false;
+gnuplot.active_plot_name = "gnuplot_canvas";
+
+function gnuplot_canvas() {
+canvas = document.getElementById("gnuplot_canvas");
+ctx = canvas.getContext("2d");
+// Gnuplot version 5.0.3
+// short forms of commands provided by gnuplot_common.js
+function DT  (dt)  {gnuplot.dashtype(dt);};
+function DS  (x,y) {gnuplot.dashstart(x,y);};
+function DL  (x,y) {gnuplot.dashstep(x,y);};
+function M   (x,y) {if (gnuplot.pattern.length > 0) DS(x,y); else gnuplot.M(x,y);};
+function L   (x,y) {if (gnuplot.pattern.length > 0) DL(x,y); else gnuplot.L(x,y);};
+function Dot (x,y) {gnuplot.Dot(x/10.,y/10.);};
+function Pt  (N,x,y,w) {gnuplot.Pt(N,x/10.,y/10.,w/10.);};
+function R   (x,y,w,h) {gnuplot.R(x,y,w,h);};
+function T   (x,y,fontsize,justify,string) {gnuplot.T(x,y,fontsize,justify,string);};
+function TR  (x,y,angle,fontsize,justify,string) {gnuplot.TR(x,y,angle,fontsize,justify,string);};
+function bp  (x,y) {gnuplot.bp(x,y);};
+function cfp () {gnuplot.cfp();};
+function cfsp() {gnuplot.cfsp();};
+
+gnuplot.hypertext_list = [];
+gnuplot.on_hypertext = -1;
+function Hypertext(x,y,w,text) {
+    newtext = {x:x, y:y, w:w, text:text};
+    gnuplot.hypertext_list.push(newtext);
+}
+gnuplot.dashlength = 400;
+ctx.lineCap = "round"; ctx.lineJoin = "round";
+CanvasTextFunctions.enable(ctx);
+ctx.strokeStyle = "rgb(215,215,215)";
+ctx.lineWidth = 1;
+
+ctx.lineWidth = 1;
+ctx.strokeStyle = "rgb(000,000,000)";
+ctx.beginPath();
+M(440,3800);
+L(540,3800);
+M(5759,3800);
+L(5659,3800);
+ctx.stroke();
+ctx.closePath();
+ctx.fillStyle = "rgb(000,000,000)";
+T(360,3850,10.0,"Right"," 26");
+ctx.beginPath();
+M(440,3345);
+L(540,3345);
+M(5759,3345);
+L(5659,3345);
+ctx.stroke();
+ctx.closePath();
+T(360,3395,10.0,"Right"," 27");
+ctx.beginPath();
+M(440,2890);
+L(540,2890);
+M(5759,2890);
+L(5659,2890);
+ctx.stroke();
+ctx.closePath();
+T(360,2940,10.0,"Right"," 28");
+ctx.beginPath();
+M(440,2435);
+L(540,2435);
+M(5759,2435);
+L(5659,2435);
+ctx.stroke();
+ctx.closePath();
+T(360,2485,10.0,"Right"," 29");
+ctx.beginPath();
+M(440,1980);
+L(540,1980);
+M(5759,1980);
+L(5659,1980);
+ctx.stroke();
+ctx.closePath();
+T(360,2030,10.0,"Right"," 30");
+ctx.beginPath();
+M(440,1526);
+L(540,1526);
+M(5759,1526);
+L(5659,1526);
+ctx.stroke();
+ctx.closePath();
+T(360,1576,10.0,"Right"," 31");
+ctx.beginPath();
+M(440,1071);
+L(540,1071);
+M(5759,1071);
+L(5659,1071);
+ctx.stroke();
+ctx.closePath();
+T(360,1121,10.0,"Right"," 32");
+ctx.beginPath();
+M(440,616);
+L(540,616);
+M(5759,616);
+L(5659,616);
+ctx.stroke();
+ctx.closePath();
+T(360,666,10.0,"Right"," 33");
+ctx.beginPath();
+M(440,161);
+L(540,161);
+M(5759,161);
+L(5659,161);
+ctx.stroke();
+ctx.closePath();
+T(360,211,10.0,"Right"," 34");
+ctx.beginPath();
+M(440,3800);
+L(440,3700);
+M(440,161);
+L(440,261);
+ctx.stroke();
+ctx.closePath();
+T(440,3950,10.0,"Center"," 10");
+ctx.beginPath();
+M(1105,3800);
+L(1105,3700);
+M(1105,161);
+L(1105,261);
+ctx.stroke();
+ctx.closePath();
+T(1105,3950,10.0,"Center"," 15");
+ctx.beginPath();
+M(1770,3800);
+L(1770,3700);
+M(1770,161);
+L(1770,261);
+ctx.stroke();
+ctx.closePath();
+T(1770,3950,10.0,"Center"," 20");
+ctx.beginPath();
+M(2435,3800);
+L(2435,3700);
+M(2435,161);
+L(2435,261);
+ctx.stroke();
+ctx.closePath();
+T(2435,3950,10.0,"Center"," 25");
+ctx.beginPath();
+M(3099,3800);
+L(3099,3700);
+M(3099,161);
+L(3099,261);
+ctx.stroke();
+ctx.closePath();
+T(3099,3950,10.0,"Center"," 30");
+ctx.beginPath();
+M(3764,3800);
+L(3764,3700);
+M(3764,161);
+L(3764,261);
+ctx.stroke();
+ctx.closePath();
+T(3764,3950,10.0,"Center"," 35");
+ctx.beginPath();
+M(4429,3800);
+L(4429,3700);
+M(4429,161);
+L(4429,261);
+ctx.stroke();
+ctx.closePath();
+T(4429,3950,10.0,"Center"," 40");
+ctx.beginPath();
+M(5094,3800);
+L(5094,3700);
+M(5094,161);
+L(5094,261);
+ctx.stroke();
+ctx.closePath();
+T(5094,3950,10.0,"Center"," 45");
+ctx.beginPath();
+M(5759,3800);
+L(5759,3700);
+M(5759,161);
+L(5759,261);
+ctx.stroke();
+ctx.closePath();
+T(5759,3950,10.0,"Center"," 50");
+ctx.beginPath();
+M(440,161);
+L(440,3800);
+L(5759,3800);
+L(5759,161);
+L(440,161);
+ctx.closePath();
+ctx.stroke();
+if (typeof(gnuplot.hide_gp_plot_1) == "undefined"|| !gnuplot.hide_gp_plot_1) {
+ctx.strokeStyle = "rgb(148,000,211)";
+ctx.strokeStyle = "rgb(000,000,000)";
+T(5099,374,10.0,"Right","File test");
+ctx.strokeStyle = "rgb(148,000,211)";
+Dot(5759,161);
+Dot(4429,1071);
+Dot(3099,1980);
+Dot(1770,2890);
+Dot(440,3800);
+} // End gp_plot_1 
+ctx.lineWidth = 2;
+ctx.strokeStyle = "rgb(000,000,000)";
+DT(gnuplot.solid);
+ctx.lineWidth = 1;
+ctx.beginPath();
+M(440,161);
+L(440,3800);
+L(5759,3800);
+L(5759,161);
+L(440,161);
+ctx.closePath();
+ctx.stroke();
+
+// plot boundaries and axis scaling information for mousing 
+gnuplot.plot_term_xmax = 600;
+gnuplot.plot_term_ymax = 400;
+gnuplot.plot_xmin = 44.0;
+gnuplot.plot_xmax = 575.9;
+gnuplot.plot_ybot = 380.0;
+gnuplot.plot_ytop = 16.1;
+gnuplot.plot_width = 531.9;
+gnuplot.plot_height = 363.9;
+gnuplot.plot_axis_xmin = 10;
+gnuplot.plot_axis_xmax = 50;
+gnuplot.plot_axis_ymin = 26;
+gnuplot.plot_axis_ymax = 34;
+gnuplot.plot_axis_x2min = "none"
+gnuplot.plot_axis_y2min = "none"
+gnuplot.plot_logaxis_x = 0;
+gnuplot.plot_logaxis_y = 0;
+gnuplot.plot_axis_width = gnuplot.plot_axis_xmax - gnuplot.plot_axis_xmin;
+gnuplot.plot_axis_height = gnuplot.plot_axis_ymax - gnuplot.plot_axis_ymin;
+gnuplot.plot_timeaxis_x = "";
+gnuplot.plot_timeaxis_y = "";
+}
+</script>
+<link type="text/css" href="./js/gnuplot_mouse.css" rel="stylesheet">
+</head>
+<body onload="gnuplot_canvas(); gnuplot.init();" oncontextmenu="return false;">
+
+<div class="gnuplot">
+<canvas id="Tile" width="32" height="32" hidden></canvas>
+<table class="mbleft"><tr><td class="mousebox">
+<table class="mousebox" border=0>
+  <tr><td class="mousebox">
+    <table class="mousebox" id="gnuplot_mousebox" border=0>
+    <tr><td class="mbh"></td></tr>
+    <tr><td class="mbh">
+      <table class="mousebox">
+	<tr>
+	  <td class="icon"></td>
+	  <td class="icon" onclick=gnuplot.toggle_grid><img src="./js/grid.png" id="gnuplot_grid_icon" class="icon-image" alt="#" title="toggle grid"></td>
+	  <td class="icon" onclick=gnuplot.unzoom><img src="./js/previouszoom.png" id="gnuplot_unzoom_icon" class="icon-image" alt="unzoom" title="unzoom"></td>
+	  <td class="icon" onclick=gnuplot.rezoom><img src="./js/nextzoom.png" id="gnuplot_rezoom_icon" class="icon-image" alt="rezoom" title="rezoom"></td>
+	  <td class="icon" onclick=gnuplot.toggle_zoom_text><img src="./js/textzoom.png" id="gnuplot_textzoom_icon" class="icon-image" alt="zoom text" title="zoom text with plot"></td>
+	  <td class="icon" onclick=gnuplot.popup_help()><img src="./js/help.png" id="gnuplot_help_icon" class="icon-image" alt="?" title="help"></td>
+	</tr>
+	<tr>
+	  <td class="icon" onclick=gnuplot.toggle_plot("gp_plot_1")>1</td>
+	  <td class="icon" > </td>
+	  <td class="icon" > </td>
+	  <td class="icon" > </td>
+	  <td class="icon" > </td>
+	  <td class="icon" > </td>
+	</tr>
+      </table>
+  </td></tr>
+</table></td></tr><tr><td class="mousebox">
+<table class="mousebox" id="gnuplot_mousebox" border=1>
+<tr> <td class="mb0">x&nbsp;</td> <td class="mb1"><span id="gnuplot_canvas_x">&nbsp;</span></td> </tr>
+<tr> <td class="mb0">y&nbsp;</td> <td class="mb1"><span id="gnuplot_canvas_y">&nbsp;</span></td> </tr>
+</table></td></tr>
+</table>
+</td><td>
+<table class="plot">
+<tr><td>
+    <canvas id="gnuplot_canvas" width="600" height="400" tabindex="0">
+	Sorry, your browser seems not to support the HTML 5 canvas element
+    </canvas>
+</td></tr>
+</table>
+</td></tr></table>
+</div>
+
+</body>
+</html>

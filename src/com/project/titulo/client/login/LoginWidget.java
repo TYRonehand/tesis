@@ -71,76 +71,12 @@ public class LoginWidget extends Composite{
 		passInput.setText("");
 	}
 	
-	//evento cambio valor  input
-	@UiHandler("mailInput")
-    void handleMailInputChange(ValueChangeEvent<String> event) 
+	private void LoginUser()
 	{
-      if(FieldVerifier.isValidMail(event.getValue()) && event.getValue().length() >= 6)
-		{
-	        labelError1.setText("");
-	    	labelError1.setVisible(false);
-		}else{
-			
-			if (event.getValue().length() < 6) 
-			{
-		    	labelError1.setText("Minimum lenght 6");
-		    	labelError1.setVisible(true);
-		    } 
-			if(!FieldVerifier.isValidMail(event.getValue()))
-			{
-				labelError1.setText("Invalid email. example: name@company.com");
-				labelError1.setVisible(true);
-			}
-		}
-   }
 
-	//evento cambio valor  input
-	@UiHandler("passInput")
-    void handlePassInputChange(ValueChangeEvent<String> event) 
-	{
-		if(FieldVerifier.isValidPass(event.getValue()) && event.getValue().length() >= 6)
-		{
-	        labelError2.setText("");
-	    	labelError2.setVisible(false);
-		}
-		else{
-
-			if (event.getValue().length() < 6) 
-			{
-		    	labelError2.setText("Minimum lenght 6");
-		    	labelError2.setVisible(true);
-		    }
-			if(!FieldVerifier.isValidPass(event.getValue()))
-			{
-				labelError2.setText("Use letters and numbers");
-				labelError2.setVisible(true);
-			}
-		}
-   }
-	
-	//click registro link
-	@UiHandler("registerLink")
-	void onRegisteLinkClick(ClickEvent event) 
-	{
-		url.GoTo("REGISTER");
-	}
-	
-	//click recuperar link
-	@UiHandler("recoveryLink")
-	void onRecoveryLinkClick(ClickEvent event) 
-	{
-		url.GoTo("RECOVERY");
-	}
-	
-	/*Evento click SUBMIT*/
-	@UiHandler("submitBTN")
-	void onSubmitBTNClick(ClickEvent event) 
-	{
-		
 		//no existen errores
 		if(passInput.getText().length()>=6 && mailInput.getText().length()>=6)
 		{
-			
 			if(FieldVerifier.isValidMail(mailInput.getText()))
 			{
 				//admin test
@@ -200,7 +136,75 @@ public class LoginWidget extends Composite{
 		}else{
 			ErrorVerify.getErrorAlert("tooshort");
 		}
-		
+			
+	}
+	
+	/*Evento click SUBMIT*/
+	@UiHandler("submitBTN")
+	void onSubmitBTNClick(ClickEvent event) 
+	{
+		LoginUser();
+	}
+	
+	//evento cambio valor  input
+	@UiHandler("mailInput")
+    void handleMailInputChange(ValueChangeEvent<String> event) 
+	{
+      if(FieldVerifier.isValidMail(event.getValue()) && event.getValue().length() >= 6)
+		{
+	        labelError1.setText("");
+	    	labelError1.setVisible(false);
+		}else{
+			
+			if (event.getValue().length() < 6) 
+			{
+		    	labelError1.setText("Minimum lenght 6");
+		    	labelError1.setVisible(true);
+		    } 
+			if(!FieldVerifier.isValidMail(event.getValue()))
+			{
+				labelError1.setText("Invalid email. example: name@company.com");
+				labelError1.setVisible(true);
+			}
+		}
+   }
+
+	//evento cambio valor  input
+	@UiHandler("passInput")
+    void handlePassInputChange(ValueChangeEvent<String> event) 
+	{
+		if(FieldVerifier.isValidPass(event.getValue()) && event.getValue().length() >= 6)
+		{
+	        labelError2.setText("");
+	    	labelError2.setVisible(false);
+		}
+		else{
+
+			if (event.getValue().length() < 6) 
+			{
+		    	labelError2.setText("Minimum lenght 6");
+		    	labelError2.setVisible(true);
+		    }
+			if(!FieldVerifier.isValidPass(event.getValue()))
+			{
+				labelError2.setText("Use letters and numbers");
+				labelError2.setVisible(true);
+			}
+		}
+   }
+	
+	//click registro link
+	@UiHandler("registerLink")
+	void onRegisteLinkClick(ClickEvent event) 
+	{
+		url.GoTo("REGISTER");
+	}
+	
+	//click recuperar link
+	@UiHandler("recoveryLink")
+	void onRecoveryLinkClick(ClickEvent event) 
+	{
+		url.GoTo("RECOVERY");
 	}
 
 

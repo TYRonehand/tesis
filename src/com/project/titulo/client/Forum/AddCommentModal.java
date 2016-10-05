@@ -76,9 +76,7 @@ public class AddCommentModal  extends DialogBox {
 		dialogBox.center();
 	}
 	
-	//click update
-	@UiHandler("createBtn")
-	void onCreateBtnClick(ClickEvent event) 
+	private void CreateComment()
 	{
 		//validar algo escrito
 		if(descriptionInput.getText().length()>20)
@@ -108,6 +106,14 @@ public class AddCommentModal  extends DialogBox {
 		{
 			ErrorVerify.getErrorAlert("empty");
 		}
+		
+	}
+	
+	//click update
+	@UiHandler("createBtn")
+	void onCreateBtnClick(ClickEvent event) 
+	{
+		CreateComment();
     }
 	
 	//evento cambio valor  input

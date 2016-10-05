@@ -81,9 +81,7 @@ public class NewTopicModal  extends DialogBox {
 		titleInput.setFocus(true);
 	}
 	
-	//evento cambio valor  input
-	@UiHandler("createBtn")
-	void onCreateBtnClick(ClickEvent event) 
+	private void CreateTopic()
 	{
 		//validar algo escrito
 		if(titleInput.getText().length()>3 && descriptionInput.getText().length()>20)
@@ -112,13 +110,19 @@ public class NewTopicModal  extends DialogBox {
 						}
 					}
 				});
-			
 		}
 		else
 		{
 			ErrorVerify.getErrorAlert("empty");
 		}
 		
+	}
+	
+	//evento cambio valor  input
+	@UiHandler("createBtn")
+	void onCreateBtnClick(ClickEvent event) 
+	{
+		CreateTopic();
     }
 	
 	//evento cambio valor  input

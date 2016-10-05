@@ -79,7 +79,7 @@ public class FileWidget extends Composite {
 
 			@Override
 			public void onSuccess(List<UserFile> result) {
-				LoadTable(result);
+				LoadTable(result);	
 			}});
 	}
 	

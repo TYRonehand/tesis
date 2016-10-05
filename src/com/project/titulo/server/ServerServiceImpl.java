@@ -46,7 +46,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 	//private String status;
 	private String url = "jdbc:mysql://127.0.0.1:3306/proyectotitulo";
 	private String user = "root";
-	private String pass = "";//"z-AoDaFII2Hp";
+	private String pass = "z-AoDaFII2Hp";
 	
 	//Constructor
 	public ServerServiceImpl() {
@@ -78,7 +78,6 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 	/*--------------RPC FUNCTIONS---------------*/
 	
 	/*ADMIN-------------------------------------------------------------*/
-	
 	//get users list
 	@Override
 	public List<User> getUserList(String opcion) throws IllegalArgumentException 
@@ -98,15 +97,8 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 			 }
 			 else
 			 {
-				 String[] words = opcion.split(" ");
 				 Query= "SELECT * FROM user WHERE ";
-				
-				 if(words.length>=1)
-					 Query+="name = %"+words[0]+"% ";		 
-				 if(words.length>=2)
-					 Query+="lastname = %"+words[1]+"% ";
-				 
-				 Query+= " ORDER BY iduser ASC";
+				 Query+="name = %"+opcion+"%  OR lastname = %"+opcion+"% ORDER BY iduser ASC";
 			 }
 			 
 			 PreparedStatement ps = conn.prepareStatement(Query);
@@ -137,38 +129,6 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 		 	sqle.printStackTrace();
 		 }
 		 return allusers;
-	}
-	
-	
-	//user info validation
-	@Override
-	public User authenticateAdmin(String user, String pass) throws IllegalArgumentException
-	{
-		 User myadmin = null;
-		 
-		 try 
-		 {
-			 //consultamos a base de datos
-			 String Query= "SELECT * FROM administrator WHERE mail = '"+user.toUpperCase()+"' AND password = '"+pass+"' LIMIT 1";
-			 PreparedStatement ps = conn.prepareStatement(Query);
-			 ResultSet result = ps.executeQuery();
-			 //recorremos resultado
-			 while (result.next()) 
-			 {
-				 
-				 myadmin = new User( result.getString("idadmin"), result.getString("mail"), result.getString("name"), 
-						 			result.getString("lastname"), "", "Administrator", 
-						 			"", "", "", "","", "false", "");
-			 }
-			 result.close();
-			 ps.close();
-		 } 
-		 catch (SQLException sqle) 
-		 {
-		 	GWT.log(sqle.toString());
-		 	sqle.printStackTrace();
-		 }
-		 return myadmin;
 	}
 	
 	
@@ -203,7 +163,6 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 		return true;
 	}
 	
-
 	//valida pin
 	@Override
 	public Boolean userRecovery(String mail,String PIN) throws IllegalArgumentException 
@@ -394,6 +353,43 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 		return true;
 	}
 	
+	//get pin to user and Send email verify for lost password
+	@Override
+	public Boolean sendEmailVerify(String email) throws IllegalArgumentException {
+
+		SecretCode code = new SecretCode();
+		String CODE = code.getCode();
+		Boolean valid = false;
+		//set user PIN
+		try 
+		 {
+			 //actualizamos usuario
+			 String Query= " UPDATE user SET pin = '"+CODE+"' WHERE mail='"+email.toUpperCase()+"'";
+			//execute query
+			PreparedStatement ps = conn.prepareStatement(Query);
+			ResultSet result = ps.executeQuery();
+			 
+			result.close();
+			ps.close();
+			valid=true;//can send email
+		 } 
+		 catch (SQLException sqle) 
+		 {
+		 	GWT.log(sqle.toString());
+		 	sqle.printStackTrace();
+
+			valid=false;//somthing bad
+		 }
+		//true send email
+		if(valid)
+		{
+			return SendEmail(email, "cagutierrez@ing.ucsc.cl", "You have a petition to change your passwor.", "<h1>Petition for new password</h1> <p>Hi there! we recently receive a petition for lost password. that's why we sent you this recup code ["+CODE+"]. Under any reason that you didn't ask it just delete this email. have a nice day!!</p>");
+			//true it was sended and all ok - false problem
+		}
+		return valid;
+			
+	}
+	
 	
 	
 	/*FORUM-TOPIC-------------------------------------------------------------------------*/
@@ -482,383 +478,8 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 		 return true;
 	}
 	
-	
-	
-	/*FORUM-ANSWER-------------------------------------------------------------------------*/
-	//add new answer to topic
-	@Override
-	public Boolean addNewComment(Answer myAnswer) throws IllegalArgumentException {
-		
-		try 
-		 {
-			 //consultamos a base de datos
-			 String Query= "INSERT INTO comentary(comentary,idtopic,iduser) VALUES ('"+myAnswer.getComentary()+"','"+myAnswer.getIdtopic()+"','"+myAnswer.getIduser()+"')";
-			 PreparedStatement ps = conn.prepareStatement(Query);
-			 ps.executeUpdate();
-			 
-			 //recorremos resultado
-			 ps.close();
-		 } 
-		 catch (SQLException sqle) 
-		 {
-		 	GWT.log(sqle.toString());
-		 	sqle.printStackTrace();
-			return false;
-		 }
-		return true;
-	}
-
-	//get some comment
-	@Override
-	public List<Answer> getComments(String idtopic) throws IllegalArgumentException {
-		
-		List<Answer> myComments = new ArrayList<Answer>();
-		 try 
-		 {
-			 //consultamos a base de datos
-			 String Query= "select * from comentary where idtopic="+idtopic+" order by creation asc";//"SELECT * FROM comentary WHERE idtopic= "+idtopic+" ORDER BY creation ASC";
-			 PreparedStatement ps = conn.prepareStatement(Query);
-			 ResultSet result = ps.executeQuery();
-			 //recorremos resultado
-			 while (result.next()) 
-			 {
-				 myComments.add(new Answer(	result.getString("idcomentary"),
-							 				result.getString("idtopic"),
-							 				result.getString("comentary"),
-							 				result.getString("creation"),
-							 				result.getString("modify"),
-							 				result.getString("enabled"),
-							 				result.getString("iduser")));
-			 }
-			 result.close();
-			 ps.close();
-		 } 
-		 catch (SQLException sqle) 
-		 {
-		 	GWT.log(sqle.toString());
-		 	sqle.printStackTrace();
-		 }
-		 return myComments;
-	}
-	
-	//set a comment
-	@Override
-	public Boolean setComment(Answer myAnswer) throws IllegalArgumentException {
-		 try 
-		 {
-			 //actualizamos usuario
-			 String Query= " UPDATE comentary SET "
-			 			 + "comentary='"+myAnswer.getComentary()+"', "
-			 			 + "enabled='"+myAnswer.getEnabled()+"' "
-			 			 + "WHERE idcomentary = "+myAnswer.getIdcomentary()+" ";
-			//execute query
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			 
-			result.close();
-			ps.close();
-		 } 
-		 catch (SQLException sqle) 
-		 {
-		 	GWT.log(sqle.toString());
-		 	sqle.printStackTrace();
-		 	return false;
-		 }
-		 return true;
-	}
-	
-	
-	/*FILES------------------------------------------------------------------------------*/
-	//all user files 
-	@Override
-	public List<UserFile> getUserFiles(String user) throws IllegalArgumentException {
-
-		 
-		 List<UserFile> listFiles = new ArrayList<UserFile>();
-		 try 
-		 {
-			 //consultamos a base de datos
-			 String Query= "SELECT * FROM datafile WHERE iduser = '"+user+"'";
-			 PreparedStatement ps = conn.prepareStatement(Query);
-			 ResultSet result = ps.executeQuery();
-			 //recorremos resultado
-			 while (result.next()) 
-			 {
-				 //add element to list String Idfile, String Title, String Description, String Iduser, String Creation
-				 listFiles.add(new UserFile(result.getString("iddatafile"), 
-						 					result.getString("title"),
-						 					result.getString("dimension"),
-						 					result.getString("labelx"),
-						 					result.getString("labely"),
-						 					result.getString("labelz"),
-								 			result.getString("description"),  
-								 			result.getString("iduser"), 
-								 			result.getString("creation"),
-								 			result.getString("data"),
-								 			result.getString("plotselection"),
-								 			result.getString("metricselection")
-								 			));
-			 }
-			 result.close();
-			 ps.close();
-		 } 
-		 catch (SQLException sqle) 
-		 {
-		 	GWT.log(sqle.toString());
-		 	sqle.printStackTrace();
-		 }
-		 return listFiles;
-	}
-	
-	//Get selected plot Files
-	@Override
-	public List<UserFile> getUserFilesPlot(String user) throws IllegalArgumentException {
-
-		 List<UserFile> listFiles = new ArrayList<UserFile>();
-		 try 
-		 {
-			 //consultamos a base de datos
-			 String Query= "SELECT * FROM plotselected WHERE iduser = '"+user+"'";
-			 PreparedStatement ps = conn.prepareStatement(Query);
-			 ResultSet result = ps.executeQuery();
-			 //recorremos resultado
-			 while (result.next()) 
-			 {
-				 //add element to list String Idfile, String Title, String Description, String Iduser, String Creation
-				 listFiles.add(new UserFile(result.getString("iddatafile"), 
-						 					result.getString("title"),
-						 					result.getString("dimension"),
-						 					"",
-						 					"",
-						 					"",
-								 			result.getString("description"),  
-								 			result.getString("iduser"), 
-								 			result.getString("creation"),
-								 			result.getString("data"),
-								 			"",
-								 			""
-								 			));
-				 
-				//create user files in directory files
-			   	ServletContext context = this.getServletContext();
-				try (PrintStream out = new PrintStream(new FileOutputStream(context.getRealPath("files")+"/"+result.getString("iddatafile")+".txt"))) 
-				{
-				    out.print(result.getString("data"));
-				} 
-				catch (FileNotFoundException e) 
-				{
-					e.printStackTrace();
-				}
-			 }
-			 result.close();
-			 ps.close();
-		 } 
-		 catch (SQLException sqle) 
-		 {
-		 	GWT.log(sqle.toString());
-		 	sqle.printStackTrace();
-		 }
-		 return listFiles;
-	}
-	
-	//Get selected metric Files
-	@Override
-	public List<UserFile> getUserFilesMetric(String user) throws IllegalArgumentException {
-
-		 
-		 List<UserFile> listFiles = new ArrayList<UserFile>();
-		 try 
-		 {
-			 //consultamos a base de datos
-			 String Query= "SELECT * FROM metricselected WHERE iduser = '"+user+"'";
-			 PreparedStatement ps = conn.prepareStatement(Query);
-			 ResultSet result = ps.executeQuery();
-			 //recorremos resultado
-			 while (result.next()) 
-			 {
-				 //add element to list String Idfile, String Title, String Description, String Iduser, String Creation
-				 listFiles.add(new UserFile(result.getString("iddatafile"), 
-						 					result.getString("title"),
-						 					result.getString("dimension"),
-						 					"",
-						 					"",
-						 					"",
-								 			result.getString("description"),  
-								 			result.getString("iduser"), 
-								 			result.getString("creation"),
-								 			result.getString("data"),
-								 			"",
-								 			""
-								 			));
-			 }
-			 result.close();
-			 ps.close();
-		 } 
-		 catch (SQLException sqle) 
-		 {
-		 	GWT.log(sqle.toString());
-		 	sqle.printStackTrace();
-		 }
-		 return listFiles;
-	}
-	
-	//select file plot
-	@Override
-	public Boolean addPlotFile(String iddatafile) throws IllegalArgumentException 
-	{
-		try 
-		{
-			 //actualizamos usuario
-			 String Query= " UPDATE datafile SET plotselection = 1 WHERE iddatafile='"+iddatafile+"'";
-			//execute query
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			 
-			result.close();
-			ps.close();
-		} 
-		catch (SQLException sqle) 
-		{
-			GWT.log(sqle.toString());
-		 	sqle.printStackTrace();
-		 	return false;
-		}
-		
-		return true;
-	}
-	
-	//remove file selected plot
-	@Override
-	public Boolean removePlotFile(String iddatafile)throws IllegalArgumentException 
-	{
-		try 
-		{
-			 //actualizamos usuario
-			 String Query= " UPDATE datafile SET plotselection = 0 WHERE iddatafile='"+iddatafile+"'";
-			//execute query
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			 
-			result.close();
-			ps.close();
-		} 
-		catch (SQLException sqle) 
-		{
-			GWT.log(sqle.toString());
-		 	sqle.printStackTrace();
-		 	return false;
-		}
-		return true;
-	}
-	
-	//select metric
-	@Override
-	public Boolean addMetricFile(String iddatafile) throws IllegalArgumentException 
-	{
-		try 
-		{
-			 //actualizamos usuario
-			 String Query= " UPDATE datafile SET metricselection = 1 WHERE iddatafile='"+iddatafile+"'";
-			//execute query
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			 
-			result.close();
-			ps.close();
-		} 
-		catch (SQLException sqle) 
-		{
-			GWT.log(sqle.toString());
-		 	sqle.printStackTrace();
-		 	return false;
-		}
-		return true;
-	}
-	
-	//remove metric selected
-	@Override
-	public Boolean removeMetricFile(String iddatafile)throws IllegalArgumentException 
-	{
-		try 
-		{
-			 //actualizamos usuario
-			 String Query= " UPDATE datafile SET metricselection = 0 WHERE iddatafile='"+iddatafile+"'";
-			//execute query
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			 
-			result.close();
-			ps.close();
-		} 
-		catch (SQLException sqle) 
-		{
-			GWT.log(sqle.toString());
-		 	sqle.printStackTrace();
-		 	return false;
-		}
-		return true;
-	}
-	
-	//add file
-	@Override
-	public Boolean addNewFile(UserFile myFile) throws IllegalArgumentException {
-		//return fail
-		Boolean res = false;
-		
-        PreparedStatement pstmt = null;
-		try 
-		 {
-            
-            //consultamos a base de datos
-			String Query= "INSERT INTO datafile (title,dimension,labelx,labely,labelz,description,iduser,data) VALUES ('"+myFile.getTitle()+"','"+myFile.getDimension()+"','"+myFile.getLabelx()+"','"+myFile.getLabely()+"','"+myFile.getLabelz()+"','"+myFile.getDescription()+"','"+myFile.getIduser()+"','"+myFile.getData()+"')";
-			pstmt = conn.prepareStatement(Query);
-			int state = pstmt.executeUpdate();
-			//succes
-			if(state==1) {
-				res=true;
-			}
-			 pstmt.close();
-		 } 
-		 catch (SQLException sqle) 
-		 {
-		 	GWT.log(sqle.toString());
-		 	sqle.printStackTrace();
-			res= false;
-		 } 
-		
-		
-		return res;
-	}
-	
-	//delete file
-	@Override
-	public Boolean deleteFile(String iddatafile) throws IllegalArgumentException 
-	{	
-		try 
-		 {
-			 //consultamos a base de datos
-			 String Query= "DELETE FROM datafile WHERE iddatafile ="+iddatafile+"";
-			 PreparedStatement ps = conn.prepareStatement(Query);
-			 int state = ps.executeUpdate();
-			 if(state==1)
-			 {
-				 File file = new File("./files/"+iddatafile+".txt");
-				 file.delete();
-			 }
-			 //recorremos resultado
-			 ps.close();
-		 } 
-		 catch (SQLException sqle) 
-		 {
-		 	GWT.log(sqle.toString());
-		 	sqle.printStackTrace();
-			return false;
-		 }
-		return true;
-	}
-	
 	//get all resume topic 
-	@Override
+		@Override
 	public List<ResumeTopic> NewestResumeTopic() throws IllegalArgumentException {
 
 		List<ResumeTopic> resumetopic = new ArrayList<ResumeTopic>();
@@ -997,45 +618,385 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 		 return resumetopic;
 	}
 	
-	//clean pin ffrom user
 	
-	//get pin to user and Send email verify for lost password
+	
+	/*FORUM-ANSWER-------------------------------------------------------------------------*/
+	//add new answer to topic
 	@Override
-	public Boolean sendEmailVerify(String email) throws IllegalArgumentException {
-
-		SecretCode code = new SecretCode();
-		String CODE = code.getCode();
-		Boolean valid = false;
-		//set user PIN
+	public Boolean addNewComment(Answer myAnswer) throws IllegalArgumentException {
+		
 		try 
 		 {
+			 //consultamos a base de datos
+			 String Query= "INSERT INTO comentary(comentary,idtopic,iduser) VALUES ('"+myAnswer.getComentary()+"','"+myAnswer.getIdtopic()+"','"+myAnswer.getIduser()+"')";
+			 PreparedStatement ps = conn.prepareStatement(Query);
+			 ps.executeUpdate();
+			 
+			 //recorremos resultado
+			 ps.close();
+		 } 
+		 catch (SQLException sqle) 
+		 {
+		 	GWT.log(sqle.toString());
+		 	sqle.printStackTrace();
+			return false;
+		 }
+		return true;
+	}
+
+	//get some comment
+	@Override
+	public List<Answer> getComments(String idtopic) throws IllegalArgumentException {
+		
+		List<Answer> myComments = new ArrayList<Answer>();
+		 try 
+		 {
+			 //consultamos a base de datos
+			 String Query= "select * from comentary where idtopic="+idtopic+" order by creation asc";//"SELECT * FROM comentary WHERE idtopic= "+idtopic+" ORDER BY creation ASC";
+			 PreparedStatement ps = conn.prepareStatement(Query);
+			 ResultSet result = ps.executeQuery();
+			 //recorremos resultado
+			 while (result.next()) 
+			 {
+				 myComments.add(new Answer(	result.getString("idcomentary"),
+							 				result.getString("idtopic"),
+							 				result.getString("comentary"),
+							 				result.getString("creation"),
+							 				result.getString("modify"),
+							 				result.getString("enabled"),
+							 				result.getString("iduser")));
+			 }
+			 result.close();
+			 ps.close();
+		 } 
+		 catch (SQLException sqle) 
+		 {
+		 	GWT.log(sqle.toString());
+		 	sqle.printStackTrace();
+		 }
+		 return myComments;
+	}
+	
+	//set a comment
+	@Override
+	public Boolean setComment(Answer myAnswer) throws IllegalArgumentException {
+		 try 
+		 {
 			 //actualizamos usuario
-			 String Query= " UPDATE user SET pin = '"+CODE+"' WHERE mail='"+email.toUpperCase()+"'";
+			 String Query= " UPDATE comentary SET "
+			 			 + "comentary='"+myAnswer.getComentary()+"', "
+			 			 + "enabled='"+myAnswer.getEnabled()+"' "
+			 			 + "WHERE idcomentary = "+myAnswer.getIdcomentary()+" ";
 			//execute query
 			PreparedStatement ps = conn.prepareStatement(Query);
 			ResultSet result = ps.executeQuery();
 			 
 			result.close();
 			ps.close();
-			valid=true;//can send email
 		 } 
 		 catch (SQLException sqle) 
 		 {
 		 	GWT.log(sqle.toString());
 		 	sqle.printStackTrace();
-
-			valid=false;//somthing bad
+		 	return false;
 		 }
-		//true send email
-		if(valid)
-		{
-			return SendEmail(email, "cagutierrez@ing.ucsc.cl", "You have a petition to change your passwor.", "<h1>Petition for new password</h1> <p>Hi there! we recently receive a petition for lost password. that's why we sent you this recup code ["+CODE+"]. Under any reason that you didn't ask it just delete this email. have a nice day!!</p>");
-			//true it was sended and all ok - false problem
-		}
-		return valid;
-			
+		 return true;
 	}
 	
+	
+	
+	/*FILES------------------------------------------------------------------------------*/
+
+	//add new file
+	@Override
+	public Boolean addNewFile(UserFile myFile) throws IllegalArgumentException {
+		//return fail
+		Boolean res = false;
+		
+        PreparedStatement pstmt = null;
+		try 
+		 {
+            
+            //consultamos a base de datos
+			String Query= "INSERT INTO datafile (title,dimension,labelx,labely,labelz,description,iduser,data) VALUES ('"+myFile.getTitle()+"','"+myFile.getDimension()+"','"+myFile.getLabelx()+"','"+myFile.getLabely()+"','"+myFile.getLabelz()+"','"+myFile.getDescription()+"','"+myFile.getIduser()+"','"+myFile.getData()+"')";
+			pstmt = conn.prepareStatement(Query);
+			int state = pstmt.executeUpdate();
+			//succes
+			if(state==1) {
+				res=true;
+			}
+			 pstmt.close();
+		 } 
+		 catch (SQLException sqle) 
+		 {
+		 	GWT.log(sqle.toString());
+		 	sqle.printStackTrace();
+			res= false;
+		 } 
+		
+		
+		return res;
+	}
+	
+	//delete a file
+	@Override
+	public Boolean deleteFile(String iddatafile) throws IllegalArgumentException 
+	{	
+		try 
+		 {
+			 //consultamos a base de datos
+			 String Query= "DELETE FROM datafile WHERE iddatafile ="+iddatafile+"";
+			 PreparedStatement ps = conn.prepareStatement(Query);
+			 int state = ps.executeUpdate();
+			 if(state==1)
+			 {
+				 File file = new File("./files/"+iddatafile+".txt");
+				 file.delete();
+			 }
+			 //recorremos resultado
+			 ps.close();
+		 } 
+		 catch (SQLException sqle) 
+		 {
+		 	GWT.log(sqle.toString());
+		 	sqle.printStackTrace();
+			return false;
+		 }
+		return true;
+	}
+	
+	//all user files 
+	@Override
+	public List<UserFile> getUserFiles(String user) throws IllegalArgumentException {
+
+		 
+		 List<UserFile> listFiles = new ArrayList<UserFile>();
+		 try 
+		 {
+			 //consultamos a base de datos
+			 String Query= "SELECT * FROM datafile WHERE iduser = '"+user+"'";
+			 PreparedStatement ps = conn.prepareStatement(Query);
+			 ResultSet result = ps.executeQuery();
+			 //recorremos resultado
+			 while (result.next()) 
+			 {
+				 //add element to list String Idfile, String Title, String Description, String Iduser, String Creation
+				 listFiles.add(new UserFile(result.getString("iddatafile"), 
+						 					result.getString("title"),
+						 					result.getString("dimension"),
+						 					result.getString("labelx"),
+						 					result.getString("labely"),
+						 					result.getString("labelz"),
+								 			result.getString("description"),  
+								 			result.getString("iduser"), 
+								 			result.getString("creation"),
+								 			result.getString("data"),
+								 			result.getString("plotselection"),
+								 			result.getString("metricselection")
+								 			));
+			 }
+			 result.close();
+			 ps.close();
+		 } 
+		 catch (SQLException sqle) 
+		 {
+		 	GWT.log(sqle.toString());
+		 	sqle.printStackTrace();
+		 }
+		 return listFiles;
+	}
+	
+	//select file for plot
+	@Override
+	public Boolean addPlotFile(String iddatafile) throws IllegalArgumentException 
+	{
+		try 
+		{
+			 //actualizamos usuario
+			 String Query= " UPDATE datafile SET plotselection = 1 WHERE iddatafile='"+iddatafile+"'";
+			//execute query
+			PreparedStatement ps = conn.prepareStatement(Query);
+			ResultSet result = ps.executeQuery();
+			 
+			result.close();
+			ps.close();
+		} 
+		catch (SQLException sqle) 
+		{
+			GWT.log(sqle.toString());
+		 	sqle.printStackTrace();
+		 	return false;
+		}
+		
+		return true;
+	}
+	
+	//remove plot file selected
+	@Override
+	public Boolean removePlotFile(String iddatafile)throws IllegalArgumentException 
+	{
+		try 
+		{
+			 //actualizamos usuario
+			 String Query= " UPDATE datafile SET plotselection = 0 WHERE iddatafile='"+iddatafile+"'";
+			//execute query
+			PreparedStatement ps = conn.prepareStatement(Query);
+			ResultSet result = ps.executeQuery();
+			 
+			result.close();
+			ps.close();
+		} 
+		catch (SQLException sqle) 
+		{
+			GWT.log(sqle.toString());
+		 	sqle.printStackTrace();
+		 	return false;
+		}
+		return true;
+	}
+	
+	//select files for metric
+	@Override
+	public Boolean addMetricFile(String iddatafile) throws IllegalArgumentException 
+	{
+		try 
+		{
+			 //actualizamos usuario
+			 String Query= " UPDATE datafile SET metricselection = 1 WHERE iddatafile='"+iddatafile+"'";
+			//execute query
+			PreparedStatement ps = conn.prepareStatement(Query);
+			ResultSet result = ps.executeQuery();
+			 
+			result.close();
+			ps.close();
+		} 
+		catch (SQLException sqle) 
+		{
+			GWT.log(sqle.toString());
+		 	sqle.printStackTrace();
+		 	return false;
+		}
+		return true;
+	}
+	
+	//remove metric files selected
+	@Override
+	public Boolean removeMetricFile(String iddatafile)throws IllegalArgumentException 
+	{
+		try 
+		{
+			 //actualizamos usuario
+			 String Query= " UPDATE datafile SET metricselection = 0 WHERE iddatafile='"+iddatafile+"'";
+			//execute query
+			PreparedStatement ps = conn.prepareStatement(Query);
+			ResultSet result = ps.executeQuery();
+			 
+			result.close();
+			ps.close();
+		} 
+		catch (SQLException sqle) 
+		{
+			GWT.log(sqle.toString());
+		 	sqle.printStackTrace();
+		 	return false;
+		}
+		return true;
+	}
+	
+	//Get selected plot Files
+	@Override
+	public List<UserFile> getUserFilesPlot(String user) throws IllegalArgumentException {
+
+		 List<UserFile> listFiles = new ArrayList<UserFile>();
+		 try 
+		 {
+			 //consultamos a base de datos
+			 String Query= "SELECT * FROM plotselected WHERE iduser = '"+user+"'";
+			 PreparedStatement ps = conn.prepareStatement(Query);
+			 ResultSet result = ps.executeQuery();
+			 //recorremos resultado
+			 while (result.next()) 
+			 {
+				 //add element to list String Idfile, String Title, String Description, String Iduser, String Creation
+				 listFiles.add(new UserFile(result.getString("iddatafile"), 
+						 					result.getString("title"),
+						 					result.getString("dimension"),
+						 					"",
+						 					"",
+						 					"",
+								 			result.getString("description"),  
+								 			result.getString("iduser"), 
+								 			result.getString("creation"),
+								 			result.getString("data"),
+								 			"",
+								 			""
+								 			));
+				 
+				//create user files in directory files
+			   	ServletContext context = this.getServletContext();
+				try (PrintStream out = new PrintStream(new FileOutputStream(context.getRealPath("files")+"/"+result.getString("iddatafile")+".txt"))) 
+				{
+				    out.print(result.getString("data"));
+				} 
+				catch (FileNotFoundException e) 
+				{
+					e.printStackTrace();
+				}
+			 }
+			 result.close();
+			 ps.close();
+		 } 
+		 catch (SQLException sqle) 
+		 {
+		 	GWT.log(sqle.toString());
+		 	sqle.printStackTrace();
+		 }
+		 return listFiles;
+	}
+	
+	//Get selected metric Files
+	@Override
+	public List<UserFile> getUserFilesMetric(String user) throws IllegalArgumentException {
+
+		 
+		 List<UserFile> listFiles = new ArrayList<UserFile>();
+		 try 
+		 {
+			 //consultamos a base de datos
+			 String Query= "SELECT * FROM metricselected WHERE iduser = '"+user+"'";
+			 PreparedStatement ps = conn.prepareStatement(Query);
+			 ResultSet result = ps.executeQuery();
+			 //recorremos resultado
+			 while (result.next()) 
+			 {
+				 //add element to list String Idfile, String Title, String Description, String Iduser, String Creation
+				 listFiles.add(new UserFile(result.getString("iddatafile"), 
+						 					result.getString("title"),
+						 					result.getString("dimension"),
+						 					"",
+						 					"",
+						 					"",
+								 			result.getString("description"),  
+								 			result.getString("iduser"), 
+								 			result.getString("creation"),
+								 			result.getString("data"),
+								 			"",
+								 			""
+								 			));
+			 }
+			 result.close();
+			 ps.close();
+		 } 
+		 catch (SQLException sqle) 
+		 {
+		 	GWT.log(sqle.toString());
+		 	sqle.printStackTrace();
+		 }
+		 return listFiles;
+	}
+
+	
+	/*PLOT FILES------------------------------------------------------------------------------*/
 	//Live Plot
 	@Override
 	public Boolean LivePlot(String iduser, List<String> idfiles) throws IllegalArgumentException 
@@ -1110,7 +1071,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 				//save direction
 				direction = "images/"+iduser+".pdf";
 			}
-			else if(fileFormat.equals("html"))
+			else 
 			{
 				commandTerminal += "set terminal canvas jsdir './js/'  mousing;";
 				commandTerminal +="set output '"+context.getRealPath("plots")+"/"+iduser+".html';";
@@ -1171,7 +1132,6 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 		return null;
 			
 	}
-	
 	
 	//create image in 3d-------------------------------------------------------------------------------------------------------
 	@Override
@@ -1292,6 +1252,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 	
 	
 	
+	/*CALCULATE METRICS------------------------------------------------------------------------------*/
 	@Override
 	public MetricResults CalculateER(String idpftrue, String iduser) throws IllegalArgumentException {
 
@@ -1353,15 +1314,8 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 	
 	
 	
-	
-	
-	
-	
-	
-	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/* functions properly from server */
-	
 	//send email
 	private Boolean SendEmail(String to, String from, String Subjettext, String Messagehtml)
 	{
@@ -1476,5 +1430,6 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 		 }
 		 return listFiles;
 	} 
+	
 	
 }//end class

@@ -73,6 +73,91 @@ public class RegisterWidget extends Composite {
 		}
 	}
 
+	
+	//submit register
+	@UiHandler("registerBtn")
+	void onRegisterBtnClick(ClickEvent event) 
+	{
+		if(passInput.getText().equals(pass2Input.getText()) && FieldVerifier.isValidMail(mailInput.getText()) && FieldVerifier.isValidName(nameInput.getText()) && FieldVerifier.isValidName(lastnameInput.getText()))
+		{
+			
+			serverService.userExist(mailInput.getText(), new AsyncCallback<Boolean>(){
+
+				@Override
+				public void onFailure(Throwable caught) {
+					
+					ErrorVerify.getErrorAlert("mailexist");
+				}
+
+				@Override
+				public void onSuccess(Boolean result) 
+				{
+					//if mail dont exist
+					if(!result)
+					{
+						//save data in object
+						User newUser = new User( 
+				 			"",
+				 			mailInput.getText(), 
+				 			nameInput.getText(), 
+				 			lastnameInput.getText(), 
+				 			countryBox.getItemText(countryBox.getSelectedIndex()), 
+				 			"", 
+				 			"", 
+				 			"",
+				 			pass2Input.getText(),
+				 			null,
+				 			"",
+				 			null,
+				 			""
+						);
+						//call reguster user
+						registerUser(newUser);
+					}
+					else{
+						ErrorVerify.getErrorAlert("userexist");
+					}
+				}
+			});//end service
+		}
+		else
+		{
+			Window.alert("Please check fields before submit");
+		}
+	}
+	
+	
+	//register user
+	private void registerUser(User newUser)
+	{
+		//send object
+		serverService.addUserInfo(newUser, new AsyncCallback<Boolean>(){
+
+			@Override
+			public void onFailure(Throwable caught) {
+
+				ErrorVerify.getErrorAlert("offline");
+				
+			}
+
+			@Override
+			public void onSuccess(Boolean result) {
+
+				if(result){
+					ErrorVerify.getErrorAlert("successadd");
+					
+					RootPanel.get("GWTcontainer").clear();
+					RootPanel.get("GWTmenu").clear();
+					RootPanel.get("GWTmenu").add(new LoginWidget());
+					
+				}else{
+
+					ErrorVerify.getErrorAlert("failadd");
+				}
+			}
+		});//end inner service
+	}
+	
 	//evento size name
 	@UiHandler("nameInput")
     void handleNameChange(ValueChangeEvent<String> event) 
@@ -198,91 +283,5 @@ public class RegisterWidget extends Composite {
 	{
 		url.GoTo("LOGIN");
 	}
-	
-	//submit register
-	@UiHandler("registerBtn")
-	void onRegisterBtnClick(ClickEvent event) 
-	{
-		if(passInput.getText().equals(pass2Input.getText()) && FieldVerifier.isValidMail(mailInput.getText()) && FieldVerifier.isValidName(nameInput.getText()) && FieldVerifier.isValidName(lastnameInput.getText()))
-		{
-			
-			serverService.userExist(mailInput.getText(), new AsyncCallback<Boolean>(){
-
-				@Override
-				public void onFailure(Throwable caught) {
-					
-					ErrorVerify.getErrorAlert("mailexist");
-				}
-
-				@Override
-				public void onSuccess(Boolean result) 
-				{
-					//if mail dont exist
-					if(!result)
-					{
-						//save data in object
-						User newUser = new User( 
-				 			"",
-				 			mailInput.getText(), 
-				 			nameInput.getText(), 
-				 			lastnameInput.getText(), 
-				 			countryBox.getItemText(countryBox.getSelectedIndex()), 
-				 			"", 
-				 			"", 
-				 			"",
-				 			pass2Input.getText(),
-				 			null,
-				 			"",
-				 			null,
-				 			""
-						);
-						//call reguster user
-						registerUser(newUser);
-					}
-					else{
-						ErrorVerify.getErrorAlert("userexist");
-					}
-				}
-			});//end service
-			
-			
 		
-		}
-		else
-		{
-			Window.alert("Please check fields before submit");
-		}
-	}
-	
-	
-	//register user
-	private void registerUser(User newUser)
-	{
-		//send object
-		serverService.addUserInfo(newUser, new AsyncCallback<Boolean>(){
-
-			@Override
-			public void onFailure(Throwable caught) {
-
-				ErrorVerify.getErrorAlert("offline");
-				
-			}
-
-			@Override
-			public void onSuccess(Boolean result) {
-
-				if(result){
-					ErrorVerify.getErrorAlert("successadd");
-					
-					RootPanel.get("GWTcontainer").clear();
-					RootPanel.get("GWTmenu").clear();
-					RootPanel.get("GWTmenu").add(new LoginWidget());
-					
-				}else{
-
-					ErrorVerify.getErrorAlert("failadd");
-				}
-			}
-		});//end inner service
-	}
 }

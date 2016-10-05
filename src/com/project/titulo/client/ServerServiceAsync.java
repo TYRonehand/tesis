@@ -16,8 +16,6 @@ import com.project.titulo.shared.model.UserFile;
 public interface ServerServiceAsync {
 	
 	//admin
-	void authenticateAdmin(String user, String pass, AsyncCallback<User> callback) throws IllegalArgumentException;
-	
 	void getUserList(String opcion, AsyncCallback<List<User>> callback) throws IllegalArgumentException;
 	
 	

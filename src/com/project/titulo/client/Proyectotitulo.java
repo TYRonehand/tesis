@@ -14,7 +14,7 @@ public class Proyectotitulo implements EntryPoint
 
 	public void onModuleLoad() 
 	{	
-		//pide lista de cookies en el dominio actual
+		//search cookies in the domain
 		Collection<String> cok = Cookies.getCookieNames();
 		//si existen cookies
 		if(cok.size()>=4)

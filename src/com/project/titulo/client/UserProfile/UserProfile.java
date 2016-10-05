@@ -147,6 +147,7 @@ public class UserProfile extends Composite {
 		this.webInput.setValue(myuser.getWeb());
 	}
 	
+	//edit user
 	private void setUserInfo()
 	{
 		if(nameInput.getValue().length()>=3 && lastnameInput.getValue().length()>=3)
