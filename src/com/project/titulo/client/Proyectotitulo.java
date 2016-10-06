@@ -31,7 +31,7 @@ public class Proyectotitulo implements EntryPoint
 		}
 		else//if cookies dont exist send to login
 		{
-			url.GoTo("LOGIN");
+			url.GoTo("LOGINNEW");
 		}
 	}
 	

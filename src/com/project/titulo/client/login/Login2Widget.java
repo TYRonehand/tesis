@@ -1,19 +1,17 @@
 package com.project.titulo.client.login;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Hyperlink;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.project.titulo.client.GoToUrl;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
@@ -22,15 +20,11 @@ import com.project.titulo.shared.ErrorVerify;
 import com.project.titulo.shared.FieldVerifier;
 import com.project.titulo.shared.model.User;
 
-public class LoginWidget extends Composite{
+public class Login2Widget extends Composite {
 
 	//elementos uibinder
-	@UiField TextBox mailInput; 
-	@UiField Label labelError1;  
-	@UiField PasswordTextBox passInput;  
-	@UiField Label labelError2;
-	@UiField Hyperlink registerLink;
-	@UiField Hyperlink recoveryLink;
+	@UiField TextBox mailInput;  
+	@UiField PasswordTextBox passInput;
 	@UiField Button submitBTN;
 	
 	//cookie
@@ -41,29 +35,19 @@ public class LoginWidget extends Composite{
 	private final ServerServiceAsync serverService = GWT.create(ServerService.class);
 	
 	//crear widget
-	private static LoginWidgetUiBinder uiBinder = GWT
-			.create(LoginWidgetUiBinder.class);
-	
-	interface LoginWidgetUiBinder extends UiBinder<Widget, LoginWidget> {
+	private static Login2WidgetUiBinder uiBinder = GWT
+			.create(Login2WidgetUiBinder.class);
+
+	interface Login2WidgetUiBinder extends UiBinder<Widget, Login2Widget> {
 	}
-	
-	//css
-	@UiField(provided = true)
-	final LoginResource res;
-	
-	//iniciador
-	public LoginWidget() 
-	{
-		//carga recursos
-		this.res = GWT.create(LoginResource.class);
-	    //establece estilos
-		res.style().ensureInjected();
-		//inicia widgets
+
+	public Login2Widget() {
 		initWidget(uiBinder.createAndBindUi(this));
 		//set style to buttons from bootstrap
-		submitBTN.addStyleName("btn btn-primary");	
+		submitBTN.addStyleName("btn btn-primary");
 	}
-	
+
+
 	//limpiar inputs
 	private void clearInputs()
 	{
@@ -73,7 +57,6 @@ public class LoginWidget extends Composite{
 	
 	private void LoginUser()
 	{
-
 		//no existen errores
 		if(passInput.getText().length()>=6 && mailInput.getText().length()>=6)
 		{
@@ -108,7 +91,9 @@ public class LoginWidget extends Composite{
 						public void onSuccess(User result) 
 						{
 							if(result==null)
+							{
 								ErrorVerify.getErrorAlert("wronguser");	
+							}
 							else if(!result.getId().isEmpty())
 							{
 								//guardamos las cookies con info
@@ -133,7 +118,9 @@ public class LoginWidget extends Composite{
 			{
 				ErrorVerify.getErrorAlert("invalidmail");
 			}
-		}else{
+		}
+		else
+		{
 			ErrorVerify.getErrorAlert("tooshort");
 		}
 			
@@ -150,6 +137,7 @@ public class LoginWidget extends Composite{
 	@UiHandler("mailInput")
     void handleMailInputChange(ValueChangeEvent<String> event) 
 	{
+		/*
       if(FieldVerifier.isValidMail(event.getValue()) && event.getValue().length() >= 6)
 		{
 	        labelError1.setText("");
@@ -167,12 +155,14 @@ public class LoginWidget extends Composite{
 				labelError1.setVisible(true);
 			}
 		}
+		*/
    }
 
 	//evento cambio valor  input
 	@UiHandler("passInput")
     void handlePassInputChange(ValueChangeEvent<String> event) 
 	{
+		/*
 		if(FieldVerifier.isValidPass(event.getValue()) && event.getValue().length() >= 6)
 		{
 	        labelError2.setText("");
@@ -191,21 +181,8 @@ public class LoginWidget extends Composite{
 				labelError2.setVisible(true);
 			}
 		}
+		*/
    }
 	
-	//click registro link
-	@UiHandler("registerLink")
-	void onRegisteLinkClick(ClickEvent event) 
-	{
-		url.GoTo("REGISTER");
-	}
 	
-	//click recuperar link
-	@UiHandler("recoveryLink")
-	void onRecoveryLinkClick(ClickEvent event) 
-	{
-		url.GoTo("RECOVERY");
-	}
-
-
 }

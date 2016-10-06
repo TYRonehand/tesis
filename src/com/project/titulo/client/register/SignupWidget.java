@@ -1,10 +1,11 @@
 package com.project.titulo.client.register;
 
-
-
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -12,33 +13,27 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.project.titulo.client.GoToUrl;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
-import com.project.titulo.client.login.LoginWidget;
 import com.project.titulo.shared.DataOptional;
 import com.project.titulo.shared.ErrorVerify;
 import com.project.titulo.shared.FieldVerifier;
 import com.project.titulo.shared.model.User;
 
-public class RegisterWidget extends Composite {
+public class SignupWidget extends Composite {
 
 	//goto url
 	public GoToUrl url = new GoToUrl();
-	
-	
+		
 	@UiField  Label labelError1;
 	@UiField  Label labelError2;
 	@UiField  Label labelError3;
 	@UiField  Label labelError4;
 	@UiField  Label labelError5;
-	@UiField  Hyperlink backLink;
+	@UiField Hyperlink recoveryLink;
 	@UiField  Button registerBtn;
 	@UiField  TextBox mailInput;
 	@UiField  TextBox nameInput;
@@ -46,24 +41,26 @@ public class RegisterWidget extends Composite {
 	@UiField  TextBox passInput;
 	@UiField  TextBox pass2Input;
 	@UiField ListBox  countryBox;
+	
 	//RPC
 	private final ServerServiceAsync serverService = GWT.create(ServerService.class);
 	
 	//widget
-	private static RegisterWidgetUiBinder uiBinder = GWT
-			.create(RegisterWidgetUiBinder.class);
+	private static SignupWidgetUiBinder uiBinder = GWT
+			.create(SignupWidgetUiBinder.class);
 
-	interface RegisterWidgetUiBinder extends UiBinder<Widget, RegisterWidget> {
+	interface SignupWidgetUiBinder extends UiBinder<Widget, SignupWidget> {
 	}
 
-	public RegisterWidget() {
+	public SignupWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
 		//set style to buttons from bootstrap
 		registerBtn.addStyleName("btn btn-primary");	
 		//load country to combobox
 		addCountry();
 	}
-	
+
+
 	//add country to combobox
 	private void addCountry(){
 		String[] countryList = DataOptional.getCountries(); 
@@ -80,15 +77,12 @@ public class RegisterWidget extends Composite {
 	{
 		if(passInput.getText().equals(pass2Input.getText()) && FieldVerifier.isValidMail(mailInput.getText()) && FieldVerifier.isValidName(nameInput.getText()) && FieldVerifier.isValidName(lastnameInput.getText()))
 		{
-			
 			serverService.userExist(mailInput.getText(), new AsyncCallback<Boolean>(){
-
 				@Override
 				public void onFailure(Throwable caught) {
 					
 					ErrorVerify.getErrorAlert("mailexist");
 				}
-
 				@Override
 				public void onSuccess(Boolean result) 
 				{
@@ -132,23 +126,19 @@ public class RegisterWidget extends Composite {
 	{
 		//send object
 		serverService.addUserInfo(newUser, new AsyncCallback<Boolean>(){
-
 			@Override
 			public void onFailure(Throwable caught) {
 
 				ErrorVerify.getErrorAlert("offline");
 				
 			}
-
 			@Override
 			public void onSuccess(Boolean result) {
 
 				if(result){
 					ErrorVerify.getErrorAlert("successadd");
 					
-					RootPanel.get("GWTcontainer").clear();
-					RootPanel.get("GWTmenu").clear();
-					RootPanel.get("GWTmenu").add(new LoginWidget());
+					url.GoTo("LOGIN");
 					
 				}else{
 
@@ -185,10 +175,8 @@ public class RegisterWidget extends Composite {
 	@UiHandler("lastnameInput")
     void handleLastnameChange(ValueChangeEvent<String> event) 
 	{
-
 		if(FieldVerifier.isValidName(event.getValue()) && event.getValue().length() >= 3)
 		{
-
 			labelError2.setText("");
 			labelError2.setVisible(false);
 		}
@@ -240,8 +228,8 @@ public class RegisterWidget extends Composite {
 	    	labelError4.setVisible(false);
 			pass2Input.setEnabled(true);
 		}
-		else{
-
+		else
+		{
 			if (event.getValue().length() < 6) 
 			{
 		    	labelError4.setText("Minimum lenght 6");
@@ -276,12 +264,10 @@ public class RegisterWidget extends Composite {
 	    }
     }
 	
-	
-	//GO BACK
-	@UiHandler("backLink")
-	void onBackLinkClick(ClickEvent event) 
+	//click recuperar link
+	@UiHandler("recoveryLink")
+	void onRecoveryLinkClick(ClickEvent event) 
 	{
-		url.GoTo("LOGIN");
+		url.GoTo("RECOVERY");
 	}
-		
 }

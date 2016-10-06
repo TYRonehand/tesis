@@ -15,11 +15,11 @@ import com.project.titulo.client.Plot.PlotWidget;
 import com.project.titulo.client.UserProfile.UserProfile;
 import com.project.titulo.client.faq.FAQWidget;
 import com.project.titulo.client.home.HomeWidget;
-import com.project.titulo.client.login.LoginWidget;
+import com.project.titulo.client.login.Login2Widget;
 import com.project.titulo.client.menu.MenuDropdown;
 import com.project.titulo.client.menu.MenuUser;
 import com.project.titulo.client.recovery.RecoveryWidget;
-import com.project.titulo.client.register.RegisterWidget;
+import com.project.titulo.client.register.SignupWidget;
 import com.project.titulo.shared.CookieVerify;
 
 public class GoToUrl {
@@ -48,7 +48,7 @@ public class GoToUrl {
 			else if(option=="RECOVERY")
 			{
 				option="RECOVERY";
-			}
+			}	
 			else
 			{
 				option="LOGIN";
@@ -57,6 +57,17 @@ public class GoToUrl {
 		//opciones url
 		switch(option){
 
+			 case "LOGIN":
+				//set cookie from
+				mycookie.setCookieIdurl("LOGIN");
+				// widget close session	
+				RootPanel.get("GWTmenu").clear();
+				RootPanel.get("GWTcontainer").clear();	
+				//cualquier otro caso sera enviado al login
+				RootPanel.get("GWTmenu").add(new Login2Widget());
+				RootPanel.get("GWTcontainer").add(new SignupWidget());
+				break;
+				
 			case "MENU":
 				// widget close session	
 				RootPanel.get("GWTmenu").clear();
@@ -69,26 +80,6 @@ public class GoToUrl {
 				RootPanel.get("GWTmenu").clear();
 				//menu widget
 				RootPanel.get("GWTmenu").add(new MenuUser());
-				break;
-				
-			case "LOGIN":
-				//set cookie from
-				mycookie.setCookieIdurl("LOGIN");
-				// widget close session	
-				RootPanel.get("GWTmenu").clear();
-				RootPanel.get("GWTcontainer").clear();	
-				//cualquier otro caso sera enviado al login
-				RootPanel.get("GWTmenu").add(new LoginWidget());
-				break;
-				
-			case "REGISTER":
-				//set cookie from
-				mycookie.setCookieIdurl("REGISTER");
-				// widget close session	
-				RootPanel.get("GWTmenu").clear();
-				RootPanel.get("GWTcontainer").clear();	
-				//cualquier otro caso sera enviado al login
-				RootPanel.get("GWTmenu").add(new RegisterWidget());
 				break;
 				
 			case "RECOVERY":

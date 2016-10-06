@@ -15,6 +15,10 @@ h1 {
   font-size: 16pt;
 }
 
+.body{
+	background: #ffffff url("assets/img/wallpaper/wallpaper.png") no-repeat right top;
+}
+
 /** Most GWT widgets already have a style name defined */
 .gwt-DialogBox {
   width: 400px;
@@ -36,8 +40,10 @@ h1 {
 #closeButton {
   margin: 15px 6px 6px;
 }
-
-
+/*init page*/
+.beginpaper{
+	background: #ffffff url("assets/img/wallpaper/home.png") no-repeat right top;
+}
 /*forum style*/
 
 .titlePanel{
