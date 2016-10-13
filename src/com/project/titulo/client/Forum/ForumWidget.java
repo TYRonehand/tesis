@@ -146,13 +146,6 @@ public class ForumWidget extends Composite {
 		table.setPageSize(8);
 		table.setEmptyTableWidget(new Label("No data found!"));
 	  
-		//simple pager
-		SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
-		SimplePager pager = new SimplePager(TextLocation.CENTER, pagerResources, false, 0, true);
-		pager.setDisplay(table);
-		pager.addStyleName("pagerTable");
-	  
-	  
 		// Add a text column to show the name.
 		TextColumn<ResumeTopic> nameColumn = new TextColumn<ResumeTopic>() {
 		     @Override
@@ -214,9 +207,15 @@ public class ForumWidget extends Composite {
 		// Push the data into the widget.
 		table.setRowCount(DATAINFO.size(), true);
 		table.setRowData(0, DATAINFO);
+
+		//simple pager
+		SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
+		SimplePager pager = new SimplePager(TextLocation.CENTER, pagerResources, false, 0, true);
+		pager.setDisplay(table);
+		pager.addStyleName("pagerTable");
+		
 		panel.setBorderWidth(0);
 		panel.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
-		//panel.setWidth("350");
 		panel.add(new Label("*press topic to open"));
 		panel.add(table);
 		panel.add(pager);

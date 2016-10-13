@@ -8,11 +8,8 @@
 	.CommentPanel{
 		width:100%;
 	}
-	.HTMLheader{
-		padding-top:50px
-	}
 	</ui:style>
-	<gwt:HTMLPanel addStyleNames='{style.HTMLheader}'>
+	<gwt:HTMLPanel>
 	
 	<!-- PANELE INICIO-->
         <div class="row">

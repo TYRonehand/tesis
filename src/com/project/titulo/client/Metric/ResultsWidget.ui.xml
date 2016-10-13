@@ -1,10 +1,8 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder 
-  xmlns:ui="urn:ui:com.google.gwt.uibinder"
-  xmlns:g="urn:import:com.google.gwt.user.client.ui"
-  xmlns:c="urn:import:com.google.gwt.user.cellview.client">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
-	    .cellTable {
+		.cellTable {
 		  padding:4px
 	      border-bottom: 1px solid #ccc;
 	      text-align: left;
@@ -26,10 +24,8 @@
 			margin:2px;
 		    border-color: #245580
 		}
-		
 	</ui:style>
-	<g:HTMLPanel >
-		
+	<g:HTMLPanel>
 		<!-- MODAL - Menu opciones edición-->
         <div class="row">
         
@@ -42,8 +38,7 @@
                     
                     	<div class="btn-group btn-group-justified">
                         <g:VerticalPanel ui:field="menu" addStyleNames='{style.panel}' width="100%">
-                        	<g:Button ui:field="uploadBtn" addStyleNames='{style.submitBtn}' width="100%" >Create File</g:Button>
-							<g:Button ui:field="helpBtn" addStyleNames='{style.submitBtn}' width="100%" >Help</g:Button>
+                        	<g:Button ui:field="backBtn" addStyleNames='{style.submitBtn}' width="100%" >Go back</g:Button>
                         </g:VerticalPanel>
                         </div>
                             
@@ -54,7 +49,7 @@
         	<div class="col-lg-10 col-md-9 col-sm-8 col-xs-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        <h3 class="panel-title">My Files</h3>
+                        <h3 class="panel-title">My Metric Results</h3>
                     </header>
                     <div class="panel-body">
                     
@@ -68,8 +63,5 @@
                 </section>
             </div>
         </div>
-        
-	
-	
 	</g:HTMLPanel>
 </ui:UiBinder> 

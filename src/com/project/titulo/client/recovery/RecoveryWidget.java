@@ -61,7 +61,7 @@ public class RecoveryWidget extends Composite {
 	//sen email with code
 	private void SendCode()
 	{
-		serverService.sendEmailVerify(this.mailInput.getText(), new AsyncCallback<Boolean>(){
+		serverService.sendEmailVerify(this.mailInput.getText(), new AsyncCallback<String>(){
 
 			@Override
 			public void onFailure(Throwable caught) 
@@ -69,18 +69,17 @@ public class RecoveryWidget extends Composite {
 				ErrorVerify.getErrorAlert("offline");
 			}
 			@Override
-			public void onSuccess(Boolean result) 
+			public void onSuccess(String result) 
 			{
-				if(result)
+				if(!result.isEmpty())
+					ErrorVerify.getErrorAlert(result);
+				
+				if(result.equals("goodsendmail"))
 				{
-					ErrorVerify.getErrorAlert("goodsendmail");
 					panelRecovery.setVisible(false);
 					panelNewCode.setVisible(true);
 				}
-				else
-				{
-					ErrorVerify.getErrorAlert("fatal");
-				}	
+				
 			}});
 	}
 	

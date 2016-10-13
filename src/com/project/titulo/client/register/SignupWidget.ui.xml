@@ -13,10 +13,13 @@
 		color:red;
 	}
 	.titleText{
-		color: #ffffff; font-family: 'Raleway',sans-serif; font-size: 30px; font-weight: 800; line-height: 36px; margin: 0 0 24px; text-align: center;
+		color: #ffffff; font-family: 'Raleway',sans-serif; font-size: 24px; font-weight: 800; line-height: 36px; margin: 0 0 24px; text-align: center;
 	}
 	.resumeText{
-		color: #f8f8f8; font-family: 'Raleway',sans-serif; font-size: 18px; font-weight: 500; line-height: 32px; margin: 0 0 24px;
+		color: #f8f8f8; font-family: 'Raleway',sans-serif; font-size: 16px; font-weight: 500; line-height: 32px; margin: 0 0 24px;
+	}
+	.logoucsc{
+		padding-bottom:15px;
 	}
 	.panel{
 		border: solid 8px black;
@@ -28,17 +31,27 @@
 	    /* Mozilla */
 	    opacity: 0.6;
 	}
+	
+	.HTMLheader{
+		padding-top:50px
+	}
 	</ui:style>
-	<gwt:HTMLPanel>
+	<gwt:HTMLPanel addStyleNames='{style.HTMLheader}'>
 	
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		
 			<div class="col-lg-8 col-md-6 col-sm-12 col-xs-12">
 				<gwt:VerticalPanel addStyleNames='{style.panel}' spacing="10" horizontalAlignment="ALIGN_CENTER">
-					<gwt:InlineLabel addStyleNames='{style.titleText}' text="What Do We Do?" horizontalAlignment="ALIGN_CENTER" width="100%"/>
-					<gwt:InlineLabel addStyleNames='{style.resumeText}'  horizontalAlignment="ALIGN_CENTER" width="100%">
-					"ASMOP webtool" is a system that seeks to provide solutions to academics or researchers in the area of ​​multi-objective optimization. Delivering graphic tools and indicators of differentiation for solutions that consider the basis of Pareto optimality. Try it NOW, it's free.
-					</gwt:InlineLabel>
+					<gwt:Label addStyleNames='{style.titleText}' text="What Do We Do?" horizontalAlignment="ALIGN_CENTER" width="100%"/>
+					<gwt:Label addStyleNames='{style.resumeText}'  horizontalAlignment="ALIGN_CENTER" width="100%">
+					"ASMOP web" is a system that seeks to provide solutions to academics or researchers in the area of ​​multi-objective optimization. Delivering graphic tools and indicators of differentiation for solutions that consider the basis of Pareto optimality. Try it NOW, it's free.
+					</gwt:Label>
+					
+					<gwt:Label addStyleNames='{style.resumeText}'  horizontalAlignment="ALIGN_CENTER" width="100%">
+					This is a project from "Universidad Católica Santísima Concepción, Chile".</gwt:Label>
+					
+					<gwt:Image addStyleNames='{style.logoucsc}' url="assets/img/logo_ucsc_init.png" width="150px" height="54px"></gwt:Image>
+					
 				</gwt:VerticalPanel>
 			</div>
 			

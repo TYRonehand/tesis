@@ -1,0 +1,21 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:gwt="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.google.gwt.widget.client">
+	<ui:style>
+	.HTMLheader{
+		padding-top:50px
+	}
+	</ui:style>
+	<gwt:HTMLPanel addStyleNames='{style.HTMLheader}'>
+	
+                            
+	    <gwt:VerticalPanel ui:field="backbreadPanel" width="100%" verticalAlignment="ALIGN_MIDDLE">
+			<gwt:FlowPanel ui:field="breadPanel">
+			
+			</gwt:FlowPanel>
+		</gwt:VerticalPanel>
+                            
+                
+	
+	</gwt:HTMLPanel>
+</ui:UiBinder> 

@@ -19,6 +19,8 @@ import com.project.titulo.shared.CookieVerify;
 import com.project.titulo.shared.ErrorVerify;
 import com.project.titulo.shared.FieldVerifier;
 import com.project.titulo.shared.model.User;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
 
 public class Login2Widget extends Composite {
 
@@ -185,4 +187,10 @@ public class Login2Widget extends Composite {
    }
 	
 	
+	@UiHandler("passInput")
+	void onPassInputKeyDown(KeyDownEvent event) {
+
+		if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER)
+			LoginUser();
+	}
 }

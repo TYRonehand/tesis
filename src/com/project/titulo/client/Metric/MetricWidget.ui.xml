@@ -30,12 +30,9 @@
 			margin:2px;
 		    border-color: #245580
 		}
-		.HTMLheader{
-			padding-top:50px
-		}
 		
 	</ui:style>
-	<g:HTMLPanel addStyleNames='{style.HTMLheader}'>
+	<g:HTMLPanel >
 		
 		<!-- MODAL - Menu opciones edición-->
         <div class="row">
@@ -53,7 +50,7 @@
 							<g:Button ui:field="metric2Btn" addStyleNames='{style.submitBtn}' width="100%" >Spacing</g:Button>
 							<g:Button ui:field="metric3Btn" addStyleNames='{style.submitBtn}' width="100%" >Error-Ratio</g:Button>
 							<g:Button ui:field="metric4Btn" addStyleNames='{style.submitBtn}' width="100%" >GDistance</g:Button>
-							<g:Button ui:field="metric5Btn" addStyleNames='{style.submitBtn}' width="100%" >Cover</g:Button>
+							<g:Button ui:field="metric5Btn" addStyleNames='{style.submitBtn}' width="100%" >C-metric</g:Button>
                         </g:VerticalPanel>
                         </div>
                             

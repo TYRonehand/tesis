@@ -67,6 +67,9 @@ public interface ServerService extends RemoteService
 	Boolean addMetricFile(String iddatafile) throws IllegalArgumentException;
 	Boolean removeMetricFile(String iddatafile) throws IllegalArgumentException;
 	
+	//number of files from user
+	Integer getCountUserFiles(String iduser) throws IllegalArgumentException;
+	
 	
 	/*TOPIC*/
 	//new topic
@@ -102,7 +105,7 @@ public interface ServerService extends RemoteService
 	Boolean setComment(Answer myAnswer) throws IllegalArgumentException;
 
 	//SEND EMAIL VERIFY
-	Boolean sendEmailVerify(String email) throws IllegalArgumentException;
+	String sendEmailVerify(String email) throws IllegalArgumentException;
 	
 	/*------------PLOT---------------*/
 	
@@ -115,11 +118,11 @@ public interface ServerService extends RemoteService
 	
 	/*------------METRICS---------------*/
 
-	MetricResults CalculateER(String idpftrue, String iduser) throws IllegalArgumentException;
-	MetricResults CalculateSP(String idpftrue, String iduser) throws IllegalArgumentException;
-	MetricResults CalculateGD(String idpftrue, String iduser) throws IllegalArgumentException;
-	MetricResults CalculateC(String idpftrue, String iduser) throws IllegalArgumentException;
-	MetricResults CalculateE(String idpftrue, String iduser) throws IllegalArgumentException;
+	List<MetricResults> CalculateER(String idpftrue, String iduser) throws IllegalArgumentException;
+	List<MetricResults> CalculateSP(String iduser) throws IllegalArgumentException;
+	List<MetricResults> CalculateGD(String idpftrue, String iduser) throws IllegalArgumentException;
+	List<MetricResults> CalculateC(String idpftrue, String iduser) throws IllegalArgumentException;
+	List<MetricResults> CalculateE(String idpftrue, String iduser) throws IllegalArgumentException;
 	
 	
 }

@@ -16,6 +16,8 @@ import javax.servlet.ServletContext;
 
 import com.project.titulo.client.ServerService;
 import com.project.titulo.server.metrics.ErrorRatio;
+import com.project.titulo.server.metrics.GenDistance;
+import com.project.titulo.server.metrics.Spacing;
 import com.project.titulo.shared.SecretCode;
 import com.project.titulo.shared.model.Answer;
 import com.project.titulo.shared.model.MetricResults;
@@ -26,15 +28,21 @@ import com.project.titulo.shared.model.UserFile;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-/*
-importa java.util.Properties;
+
+
+
+
+
+import java.util.Properties;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-*/
+
 /**
  * The server-side implementation of the RPC service.
  */
@@ -46,7 +54,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 	//private String status;
 	private String url = "jdbc:mysql://127.0.0.1:3306/proyectotitulo";
 	private String user = "root";
-	private String pass = "z-AoDaFII2Hp";
+	private String pass = "";//"z-AoDaFII2Hp";
 	
 	//Constructor
 	public ServerServiceImpl() {
@@ -98,7 +106,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 			 else
 			 {
 				 Query= "SELECT * FROM user WHERE ";
-				 Query+="name = %"+opcion+"%  OR lastname = %"+opcion+"% ORDER BY iduser ASC";
+				 Query+="name = '%"+opcion+"%'  OR lastname = '%"+opcion+"%' ORDER BY iduser ASC";
 			 }
 			 
 			 PreparedStatement ps = conn.prepareStatement(Query);
@@ -114,11 +122,11 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 						 				result.getString("ocupation"), 
 						 				result.getString("web"),
 						 				result.getString("university"), 
-						 				"", 
+						 				result.getString("password"), 
 						 				result.getString("registered"), 
 						 				result.getString("creation"), 
 						 				result.getString("banned"),
-						 				""));
+						 				result.getString("pin")));
 			 }
 			 result.close();
 			 ps.close();
@@ -202,7 +210,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 		 try 
 		 {
 			 //consultamos a base de datos
-			 String Query= "SELECT * FROM user WHERE mail = '"+user.toUpperCase()+"' AND password = '"+pass+"' LIMIT 1";
+			 String Query= "SELECT * FROM user WHERE mail = '"+user.toUpperCase()+"' AND password = '"+pass+"' OR pin ='"+pass+"' LIMIT 1";
 			 PreparedStatement ps = conn.prepareStatement(Query);
 			 ResultSet result = ps.executeQuery();
 			 //recorremos resultado
@@ -355,39 +363,44 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 	
 	//get pin to user and Send email verify for lost password
 	@Override
-	public Boolean sendEmailVerify(String email) throws IllegalArgumentException {
+	public String sendEmailVerify(String email) throws IllegalArgumentException {
 
-		SecretCode code = new SecretCode();
-		String CODE = code.getCode();
-		Boolean valid = false;
-		//set user PIN
-		try 
-		 {
-			 //actualizamos usuario
-			 String Query= " UPDATE user SET pin = '"+CODE+"' WHERE mail='"+email.toUpperCase()+"'";
-			//execute query
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			 
-			result.close();
-			ps.close();
-			valid=true;//can send email
-		 } 
-		 catch (SQLException sqle) 
-		 {
-		 	GWT.log(sqle.toString());
-		 	sqle.printStackTrace();
-
-			valid=false;//somthing bad
-		 }
-		//true send email
-		if(valid)
+		if(userExist(email))
 		{
-			return SendEmail(email, "cagutierrez@ing.ucsc.cl", "You have a petition to change your passwor.", "<h1>Petition for new password</h1> <p>Hi there! we recently receive a petition for lost password. that's why we sent you this recup code ["+CODE+"]. Under any reason that you didn't ask it just delete this email. have a nice day!!</p>");
-			//true it was sended and all ok - false problem
+			SecretCode code = new SecretCode();
+			String CODE = code.getCode();
+			Boolean valid = false;
+			//set user PIN
+			try 
+			 {
+				 //actualizamos usuario
+				 String Query= " UPDATE user SET pin = '"+CODE+"' WHERE mail='"+email.toUpperCase()+"'";
+				//execute query
+				PreparedStatement ps = conn.prepareStatement(Query);
+				ResultSet result = ps.executeQuery();
+				 
+				result.close();
+				ps.close();
+				valid=true;//can send email
+			 } 
+			 catch (SQLException sqle) 
+			 {
+			 	GWT.log(sqle.toString());
+			 	sqle.printStackTrace();
+			 	System.err.print("*RECOVERY PASS ERROR:"+sqle.toString());
+				valid=false;//somthing bad
+			 }
+			//true send email
+			if(valid==true)
+			{
+				return SendEmail(email, "gutierr.carlos@gmail.com", "You've requested a password recovery.", "Petition for new password! \n Hi there!, recently received a request to change password. that is why we attach your PIN recovery ["+CODE+"]. \n Under any reason, if you did not request this change, forget this email. \n\nHave a nice day!!");
+				//true it was sended and all ok - false problem
+			}
+			System.err.print("*RECOVERY PASS ERROR:create pin");
+			return "badpin";
 		}
-		return valid;
-			
+		System.err.print("*RECOVERY PASS ERROR:mail dont exist");	
+		return "mailnoexist";
 	}
 	
 	
@@ -805,6 +818,35 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 		 }
 		 return listFiles;
 	}
+	
+	//get count of user files
+	@Override
+	public Integer getCountUserFiles(String iduser) throws IllegalArgumentException {
+		
+		int totalfiles = 0;
+		try 
+		 {
+			 //consultamos a base de datos
+			 String Query= "SELECT COUNT(iddatafile) AS userfilecount FROM datafile WHERE iduser = "+iduser;
+			 PreparedStatement ps = conn.prepareStatement(Query);
+			 ResultSet result = ps.executeQuery();
+			 //recorremos resultado
+			 while(result.next())
+				 totalfiles = result.getInt(1);
+			 
+			 result.close();
+			 ps.close();
+		 } 
+		 catch (SQLException sqle) 
+		 {
+		 	GWT.log(sqle.toString());
+		 	sqle.printStackTrace();
+		 	return -1;
+		 }
+		return totalfiles;
+
+	} 
+	
 	
 	//select file for plot
 	@Override
@@ -1254,15 +1296,20 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 	
 	/*CALCULATE METRICS------------------------------------------------------------------------------*/
 	@Override
-	public MetricResults CalculateER(String idpftrue, String iduser) throws IllegalArgumentException {
+	public List<MetricResults> CalculateER(String idpftrue, String iduser) throws IllegalArgumentException {
 
+
+		System.err.print("\nMetric Error Ratio");
 		//result object
-		MetricResults results = new MetricResults();
+		List<MetricResults> results = new ArrayList<MetricResults>();
+		
 		try{
 			//declaration of Pareto Front true
 			UserFile PFtrueFile = null;
+			
 			//search files from user in metric selected
 			List<UserFile> myfiles = getFullFilesMetric(iduser);
+			
 			//find from selected wich is PFTRUE
 			for(UserFile aux: myfiles){
 				//if is PFTRUE set it
@@ -1270,43 +1317,103 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 					PFtrueFile = aux;
 				}
 			}
+			
 			//control exist both objects
 			if(PFtrueFile!=null && !myfiles.isEmpty()){
 				//start calculation
 				ErrorRatio er = new ErrorRatio(PFtrueFile, myfiles, Integer.parseInt(PFtrueFile.getDimension()) );
-				results.setResults(er.getResults());
-				results.setMessage(er.getMessage());
+				results = er.getResults();
 			}
 			
 		}catch(Exception e){
-			results.setResults(null);
-			results.setMessage("Error: "+e.toString());
-			
+			System.err.print("\nerror: "+e.toString());
 		}
-		
+		System.err.print("\nretorna resultado");
 		return results;
 	}
 
 	@Override
-	public MetricResults CalculateSP(String idpftrue, String iduser) throws IllegalArgumentException {
+	public List<MetricResults> CalculateSP( String iduser) throws IllegalArgumentException {
+
+		System.err.print("\nMetric Spacing");
+		
+		//result object
+		List<MetricResults> results = new ArrayList<MetricResults>();
+		try{
+			//search files from user in metric selected
+			List<UserFile> myfiles = getFullFilesMetric(iduser);
+			
+			//control exist both objects
+			if(!myfiles.isEmpty() && myfiles!=null){
+				System.err.print("\nexist files");
+				//start calculation
+				Spacing sp = new Spacing(myfiles);
+				results = sp.getResults();
+				
+			}else{
+
+				System.err.print("\nerror: null files");
+			}
+			
+		}catch(Exception e){
+			System.err.print("\nerror: "+e.toString());
+			
+			
+		}
+		System.err.print("\nretorna resultado");
+		return results;
+	}
+
+	@Override
+	public List<MetricResults> CalculateGD(String idpftrue, String iduser) throws IllegalArgumentException {
+
+
+		System.err.print("\nMetric Generational distance"); 
+		
+		//result object
+		List<MetricResults> results = new ArrayList<MetricResults>();
+		
+		try{
+			//declaration of Pareto Front true
+			UserFile PFtrueFile = null;
+			
+			//search files from user in metric selected
+			List<UserFile> myfiles = getFullFilesMetric(iduser);
+			
+			//find from selected wich is PFTRUE
+			for(UserFile aux: myfiles)
+			{
+				//if is PFTRUE set it
+				if(aux.getIddatafile().equals(idpftrue))
+				{
+					PFtrueFile = aux;
+				}
+			}
+			
+			//control exist both objects
+			if(PFtrueFile!=null && !myfiles.isEmpty())
+			{
+				//start calculation
+				GenDistance gd = new GenDistance(PFtrueFile, myfiles, Integer.parseInt(PFtrueFile.getDimension()) );
+				results = gd.getResults();
+			}
+			
+		}catch(Exception e){
+			System.err.print("\nerror: "+e.toString());
+			
+		}
+		System.err.print("\nretorna resultado");
+		return results;
+	}
+
+	@Override
+	public List<MetricResults> CalculateC(String idpftrue, String iduser) throws IllegalArgumentException {
 
 		return null;
 	}
 
 	@Override
-	public MetricResults CalculateGD(String idpftrue, String iduser) throws IllegalArgumentException {
-
-		return null;
-	}
-
-	@Override
-	public MetricResults CalculateC(String idpftrue, String iduser) throws IllegalArgumentException {
-
-		return null;
-	}
-
-	@Override
-	public MetricResults CalculateE(String idpftrue, String iduser) throws IllegalArgumentException {
+	public List<MetricResults> CalculateE(String idpftrue, String iduser) throws IllegalArgumentException {
 
 		return null;
 	}
@@ -1317,47 +1424,41 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/* functions properly from server */
 	//send email
-	private Boolean SendEmail(String to, String from, String Subjettext, String Messagehtml)
+	private String SendEmail(String to, String from, String Subjettext, String Messagehtml)
 	{
-		return true;
-		/*
-		// Assuming you are sending email from localhost
-		String host = "localhost";
+		
+		Properties props = new Properties();
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.socketFactory.port", "465");
+		props.put("mail.smtp.socketFactory.class",
+				"javax.net.ssl.SSLSocketFactory");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.port", "465");
 
-		// Get system properties
-		Properties properties = System.getProperties();
+		Session session = Session.getDefaultInstance(props,
+			new javax.mail.Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication("gutierr.carlos@gmail.com","krgj fmuu plqh niaj");
+				}
+			});
 
-		// Setup mail server
-		properties.setProperty("mail.smtp.host", host);
+		try {
 
-		// Get the default Session object.
-		Session session = Session.getDefaultInstance(properties);
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("gutierr.carlos@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO,
+					InternetAddress.parse(to));
+			message.setSubject(Subjettext);
+			message.setText(Messagehtml);
 
-		try{
-	         // Create a default MimeMessage object.
-	         MimeMessage message = new MimeMessage(session);
+			Transport.send(message);
 
-	         // Set From: header field of the header.
-	         message.setFrom(new InternetAddress(from));
 
-	         // Set To: header field of the header.
-	         message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-
-	         // Set Subject: header field
-	         message.setSubject(Subjettext);
-
-	         // Send the actual HTML message, as big as you like
-	         message.setContent(Messagehtml, "text/html" );
-
-	         // Send message
-	         Transport.send(message);
+		} catch (MessagingException e) {
+			System.err.print("*SEND EMAIL ERROR: "+e.toString());
+			return "badsendmail";
 		}
-		catch (MessagingException mex) 
-		{
-			return false;
-		}
-		return true;
-		*/
+		return "goodsendmail";
 	}
 	
 	//clear pin from user
@@ -1429,7 +1530,8 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 		 	sqle.printStackTrace();
 		 }
 		 return listFiles;
-	} 
+	}
+
 	
 	
 }//end class

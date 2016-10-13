@@ -32,11 +32,8 @@
 		width:100%;
 		margin:2px;
 	}
-	.HTMLheader{
-		padding-top:50px
-	}
 	</ui:style>
-	<gwt:HTMLPanel addStyleNames='{style.HTMLheader}'>
+	<gwt:HTMLPanel>
 		
 		<!-- MODAL - Menu opciones edición-->
         <div class="row">

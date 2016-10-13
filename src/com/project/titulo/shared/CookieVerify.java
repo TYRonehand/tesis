@@ -104,8 +104,6 @@ public class CookieVerify {
 		return Cookies.getCookie(getIdurl());
 	}
 	
-	//
-	
 	
 	//exist cookie created
 	public Boolean CookieExist()
@@ -122,6 +120,7 @@ public class CookieVerify {
 		}
 			
 	}
+	
 	//delete cookie
 	public  void delCookiesInfo()
 	{

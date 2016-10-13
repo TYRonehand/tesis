@@ -2,31 +2,50 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:gwt="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
-	.panel{
-		background: black;
-	}
 	.label{
 		color: white;
+	}
+	.titleText{
+		color: #ffffff; font-family: 'Roboto',sans-serif; font-size: 30px; font-weight: 800; line-height: 42px; margin: 0 0 24px; text-align: center; text-transform: uppercase; 
+	}
+	.resumeText{
+		color: #f8f8f8; font-family: 'Raleway',sans-serif; font-size: 12px; font-weight: 800; line-height: 24px; margin: 0 0 24px;
 	}
 	</ui:style>
 	
 	<gwt:HTMLPanel>
-		<gwt:VerticalPanel addStyleNames='{style.panel}' width="100%" verticalAlignment="ALIGN_MIDDLE" spacing="8" horizontalAlignment="ALIGN_RIGHT" height="76px">
-			<gwt:HorizontalPanel  width="320px" height="76px" horizontalAlignment="ALIGN_CENTER" spacing="8">
-				<gwt:VerticalPanel  height="100%" width="132px" horizontalAlignment="ALIGN_LEFT" >
-					<gwt:InlineLabel addStyleNames='{style.label}'>Email</gwt:InlineLabel>
-					<gwt:TextBox ui:field="mailInput" maxLength="30" visibleLength="30" textAlignment="ALIGN_CENTER" alignment="CENTER" height="44px" width="128px"></gwt:TextBox>
+
+		<header class="header dark-bg">
+		
+			<div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
+				<gwt:VerticalPanel width="100%">
+					<gwt:FlowPanel>
+						<gwt:InlineLabel addStyleNames='{style.titleText}' horizontalAlignment="ALIGN_LEFT" text="ASMOP web"/>
+					</gwt:FlowPanel>
+					<gwt:InlineLabel addStyleNames='{style.resumeText}' horizontalAlignment="ALIGN_LEFT">Analysis System for Multi-objective Optimization Problems</gwt:InlineLabel>
+				</gwt:VerticalPanel>	
+			</div>	
+			
+			
+			<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">	
+				<gwt:VerticalPanel  width="100%" horizontalAlignment="ALIGN_RIGHT">
+					<gwt:HorizontalPanel  width="320px" height="76px" horizontalAlignment="ALIGN_RIGHT" spacing="8">
+						<gwt:VerticalPanel  height="100%" width="132px" horizontalAlignment="ALIGN_LEFT" >
+							<gwt:InlineLabel addStyleNames='{style.label}'>Email</gwt:InlineLabel>
+							<gwt:TextBox ui:field="mailInput" maxLength="30" visibleLength="30" textAlignment="ALIGN_CENTER" alignment="CENTER" height="44px" width="128px"></gwt:TextBox>
+						</gwt:VerticalPanel>
+						<gwt:VerticalPanel height="100%" width="132px" horizontalAlignment="ALIGN_LEFT">
+							<gwt:InlineLabel addStyleNames='{style.label}'>Password</gwt:InlineLabel>
+							<gwt:PasswordTextBox ui:field="passInput" maxLength="30" visibleLength="30" textAlignment="ALIGN_CENTER" alignment="CENTER" height="44px" width="128px"></gwt:PasswordTextBox>
+						</gwt:VerticalPanel>
+						<gwt:VerticalPanel width="100px" horizontalAlignment="ALIGN_CENTER" height="100%" verticalAlignment="ALIGN_MIDDLE">
+							<gwt:InlineLabel addStyleNames='{style.label}'></gwt:InlineLabel>
+							<gwt:Button ui:field="submitBTN" text="Log In" width="90px" height="44px"></gwt:Button>
+						</gwt:VerticalPanel>
+					</gwt:HorizontalPanel>	
 				</gwt:VerticalPanel>
-				<gwt:VerticalPanel height="100%" width="132px" horizontalAlignment="ALIGN_LEFT">
-					<gwt:InlineLabel addStyleNames='{style.label}'>Password</gwt:InlineLabel>
-					<gwt:PasswordTextBox ui:field="passInput" maxLength="30" visibleLength="30" textAlignment="ALIGN_CENTER" alignment="CENTER" height="44px" width="128px"></gwt:PasswordTextBox>
-				</gwt:VerticalPanel>
-				<gwt:VerticalPanel width="100px" horizontalAlignment="ALIGN_CENTER" height="100%" verticalAlignment="ALIGN_MIDDLE">
-					<gwt:InlineLabel addStyleNames='{style.label}'></gwt:InlineLabel>
-					<gwt:Button ui:field="submitBTN" text="Log In" width="90px" height="44px"></gwt:Button>
-				</gwt:VerticalPanel>
-			</gwt:HorizontalPanel>	
-		</gwt:VerticalPanel>
+			</div>
+		</header>
 	</gwt:HTMLPanel>
 	
 </ui:UiBinder> 

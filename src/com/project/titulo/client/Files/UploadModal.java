@@ -37,7 +37,6 @@ public class UploadModal  extends DialogBox  {
 	@UiField Button nextBtn;
 	@UiField Button createBtn;  
 	@UiField Button cancelBtn;  
-	
 	@UiField ListBox dimensionList; 
 	@UiField TextBox labelxInput; 
 	@UiField TextBox labelyInput; 
@@ -53,6 +52,7 @@ public class UploadModal  extends DialogBox  {
 	public UploadModal(String iduser) {
 		this.IDUSER = iduser;
 		setWidget(uiBinder.createAndBindUi(this));
+		this.center();
 		//load properties
 		LoadModal();
 	}
@@ -60,6 +60,7 @@ public class UploadModal  extends DialogBox  {
 	private void LoadModal(){
 
 		//list box
+		dimensionList.addItem("1");
 		dimensionList.addItem("2");
 		dimensionList.addItem("3");
 		dimensionList.addItem("4");
@@ -98,38 +99,62 @@ public class UploadModal  extends DialogBox  {
 			//verify format
 			if(FieldVerifier.checkDataFormat(this.dataInput.getText()))
 			{
-				//upload data
-				UserFile userfile = new UserFile(	this.titleInput.getText(),
-													this.dimensionList.getItemText(this.dimensionList.getSelectedIndex()),
-													this.labelxInput.getText(),
-													this.labelyInput.getText(),
-													this.labelzInput.getText(), 
-													this.descriptionInput.getText(), 
-													this.IDUSER, 
-													this.dataInput.getText());
-				
-				
-				serverService.addNewFile(userfile, new AsyncCallback<Boolean>(){
-
+				//verify user has less than 8 files
+				serverService.getCountUserFiles(this.IDUSER, new AsyncCallback<Integer>()
+				{
 					@Override
 					public void onFailure(Throwable caught) {
 						ErrorVerify.getErrorAlert("offline");
 					}
 
 					@Override
-					public void onSuccess(Boolean result) {
-						if(result)
-						{
-							//file added
-							dialogBox.hide();
-							url.GoTo("FILES");
-							ErrorVerify.getErrorAlert("successadd");
-						}
-						else
-						{
-							ErrorVerify.getErrorAlert("failadd");
+					public void onSuccess(Integer result) {
+						if(result!=null){
+							//user has less than 8 files
+							if(result>=0 && result<8)
+							{
+								//upload data
+								UserFile userfile = new UserFile(	titleInput.getText(),
+																	dimensionList.getItemText(dimensionList.getSelectedIndex()),
+																	labelxInput.getText(),
+																	labelyInput.getText(),
+																	labelzInput.getText(), 
+																	descriptionInput.getText(), 
+																	IDUSER, 
+																	dataInput.getText());
+								serverService.addNewFile(userfile, new AsyncCallback<Boolean>(){
+									@Override
+									public void onFailure(Throwable caught) {
+										ErrorVerify.getErrorAlert("offline");
+									}
+									@Override
+									public void onSuccess(Boolean result) {
+										if(result){
+											//file added
+											dialogBox.hide();
+											url.GoTo("FILES");
+											ErrorVerify.getErrorAlert("successadd");
+										}
+										else{
+											ErrorVerify.getErrorAlert("failadd");
+											dialogBox.hide();
+										}
+									}});
+							}
+							else if(result<0){
+								ErrorVerify.getErrorAlert("fatal");
+								dialogBox.hide();
+							}
+							else//user has 8 or more files
+							{
+								ErrorVerify.getErrorAlert("limitfiles");
+
+								dialogBox.hide();
+							}
 						}
 					}});
+				
+				
 			}
 			else{
 				ErrorVerify.getErrorAlert("noletters");

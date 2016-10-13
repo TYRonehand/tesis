@@ -3,11 +3,8 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
 	
-	.HTMLheader{
-		padding-top:50px
-	}
 	</ui:style>
-	<g:HTMLPanel addStyleNames='{style.HTMLheader}'>
+	<g:HTMLPanel >
 		
 	
 		<!-- PANELE INICIO-->
@@ -105,51 +102,6 @@
             </div>
         </div>
         
-        <!-- METRICS -->
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="panel ">
-
-                    <!--Titulo-->
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse4">
-                                  What are the metrics?
-                            </a>
-                        </h3>
-                    </div>
-
-                    <!--Texto-->
-                    <div id="collapse4" class="panel-collapse collapse ">
-                        <div class="panel-body">
-                            <div class="panel-text" align="justify">
-                               
-                                <h5>Entropy</h5> 
-                                <p>Resume
-                                </p>  
-                                                              
-                                <h5>Spacing</h5>  
-                                <p>Resume
-                                </p>
-                                                              
-                                <h5>Error ratio</h5>  
-                                <p>Resume
-                                </p> 
-                                                             
-                                <h5>Generational Distance</h5>  
-                                <p>Resume
-                                </p>  
-                                                            
-                                <h5>Cover</h5>  
-                                <p>Resume
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
         
         <!-- METRICS -->
         <div class="row">

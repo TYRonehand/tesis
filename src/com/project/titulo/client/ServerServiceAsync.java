@@ -54,6 +54,7 @@ public interface ServerServiceAsync {
 	
 	void removeMetricFile(String iddatafile, AsyncCallback<Boolean> callback) throws IllegalArgumentException;
 	
+	void getCountUserFiles(String iduser, AsyncCallback<Integer> callback) throws IllegalArgumentException;
 	
 	//topic
 	void addNewTopic(Topic myTopic, AsyncCallback<Boolean> callback) throws IllegalArgumentException;
@@ -79,7 +80,7 @@ public interface ServerServiceAsync {
 	void setComment(Answer myAnswer, AsyncCallback<Boolean> callback) throws IllegalArgumentException;
 
 	//user verify
-	void sendEmailVerify(String email, AsyncCallback<Boolean> callback) throws IllegalArgumentException;
+	void sendEmailVerify(String email, AsyncCallback<String> callback) throws IllegalArgumentException;
 	
 	/*------------PLOT---------------*/
 	
@@ -92,9 +93,9 @@ public interface ServerServiceAsync {
 	
 	/*------------METRICS---------------*/
 
-	void CalculateER(String idpftrue, String iduser, AsyncCallback<MetricResults> callback) throws IllegalArgumentException;
-	void CalculateSP(String idpftrue, String iduser, AsyncCallback<MetricResults> callback) throws IllegalArgumentException;
-	void CalculateGD(String idpftrue, String iduser, AsyncCallback<MetricResults> callback) throws IllegalArgumentException;
-	void CalculateC(String idpftrue, String iduser, AsyncCallback<MetricResults> callback) throws IllegalArgumentException;
-	void CalculateE(String idpftrue, String iduser, AsyncCallback<MetricResults> callback) throws IllegalArgumentException;
+	void CalculateER(String idpftrue, String iduser, AsyncCallback<List<MetricResults>> callback) throws IllegalArgumentException;
+	void CalculateSP(String iduser, AsyncCallback<List<MetricResults>> callback) throws IllegalArgumentException;
+	void CalculateGD(String idpftrue, String iduser, AsyncCallback<List<MetricResults>> callback) throws IllegalArgumentException;
+	void CalculateC(String idpftrue, String iduser, AsyncCallback<List<MetricResults>> callback) throws IllegalArgumentException;
+	void CalculateE(String idpftrue, String iduser, AsyncCallback<List<MetricResults>> callback) throws IllegalArgumentException;
 }

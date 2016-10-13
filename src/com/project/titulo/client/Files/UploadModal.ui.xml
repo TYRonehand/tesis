@@ -48,7 +48,7 @@
 		}
 		
 	</ui:style>
-	<g:HTMLPanel  addStyleNames='{style.HTMLheader}' >
+	<g:HTMLPanel  >
 	
     
 		<g:DialogBox ui:field="dialogBox"  width="100%" addStyleNames='{style.dialogBox}'>

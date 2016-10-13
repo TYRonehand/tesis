@@ -21,11 +21,13 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.project.titulo.client.GoToUrl;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
+import com.project.titulo.client.breadcrumb.BreadWidget;
 import com.project.titulo.shared.ErrorVerify;
 import com.project.titulo.shared.model.MetricResults;
 import com.project.titulo.shared.model.UserFile;
@@ -85,10 +87,10 @@ public class MetricWidget extends Composite {
 		this.metric3Btn.addStyleName("btn btn-primary");
 		this.metric4Btn.addStyleName("btn btn-primary");
 		this.metric5Btn.addStyleName("btn btn-primary");
-		this.SpacingBtn.addStyleName("btn btn-danger");
+		this.SpacingBtn.addStyleName("btn btn-success");
 		this.EntropyBtn.addStyleName("btn btn-danger");
 		this.ERBtn.addStyleName("btn btn-success");
-		this.GDistanceBtn.addStyleName("btn btn-danger");
+		this.GDistanceBtn.addStyleName("btn btn-success");
 		this.CoverBtn.addStyleName("btn btn-danger");
 		//load data table
 		LoadFilesData();
@@ -124,11 +126,6 @@ public class MetricWidget extends Composite {
 		table.setPageSize(8);
 		table.setEmptyTableWidget(new Label("No data found!"));
 	  
-		//simple pager
-		SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
-		SimplePager pager = new SimplePager(TextLocation.CENTER, pagerResources, false, 0, true);
-		pager.setDisplay(table);
-		pager.addStyleName("pagerTable");
 		
 		/*ADD FILENAME TEXTCELL*/
 		TextColumn<UserFile> nameColumn = new TextColumn<UserFile>() {
@@ -207,6 +204,12 @@ public class MetricWidget extends Composite {
 		// Push the data into the widget.
 		table.setRowCount(DATAINFO.size(), true);
 		table.setRowData(0, DATAINFO);
+		//simple pager
+		SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
+		SimplePager pager = new SimplePager(TextLocation.CENTER, pagerResources, false, 0, true);
+		pager.setDisplay(table);
+		pager.addStyleName("pagerTable");
+		
 		panel.setBorderWidth(0);
 		panel.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
 		panel.setWidth("350");
@@ -276,14 +279,36 @@ public class MetricWidget extends Composite {
 	@UiHandler("SpacingBtn")
 	void onSpacingBtnClick(ClickEvent event) 
 	{
-		
+		serverService.CalculateSP( this.IDUSER, new AsyncCallback<List<MetricResults>>(){
+
+			@Override
+			public void onFailure(Throwable caught) {
+				ErrorVerify.getErrorAlert("offline");
+			}
+
+			@Override
+			public void onSuccess(List<MetricResults> result) {
+				
+				if(result.size()>0)
+				{
+					RootPanel.get("GWTcontainer").clear();
+					//cualquier otro caso sera enviado al login
+					RootPanel.get("GWTcontainer").add(new BreadWidget("METRIC"));
+					RootPanel.get("GWTcontainer").add(new ResultsWidget(result, "Spacing"));
+				}
+				else{
+					String Message ="No data returned";
+					Window.alert(Message);
+				}
+				
+			}});
 	}
 	@UiHandler("ERBtn")
 	void onERBtnClick(ClickEvent event) 
 	{
 		if(this.PFtrueFile!=null)
 		{
-			serverService.CalculateER(this.PFtrueFile, this.IDUSER, new AsyncCallback<MetricResults>(){
+			serverService.CalculateER(this.PFtrueFile, this.IDUSER, new AsyncCallback<List<MetricResults>>(){
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -291,19 +316,18 @@ public class MetricWidget extends Composite {
 				}
 
 				@Override
-				public void onSuccess(MetricResults result) {
+				public void onSuccess(List<MetricResults> result) {
 					
-					if(result.getResults().size()>0)
+					if(result.size()>0)
 					{
-						//get results
-						String textresult = "";
-						for(String data:result.getResults()){
-							textresult +=data.toString()+"\n";
-						}
-						Window.alert(textresult);
+						RootPanel.get("GWTcontainer").clear();
+						//cualquier otro caso sera enviado al login
+						RootPanel.get("GWTcontainer").add(new BreadWidget("METRIC"));
+						RootPanel.get("GWTcontainer").add(new ResultsWidget(result, "Error-Ratio"));
 					}
-					if(!result.getMessage().isEmpty()){
-						Window.alert(result.getMessage());
+					else{
+						String Message ="No data returned";
+						Window.alert(Message);
 					}
 					
 				}});
@@ -315,7 +339,35 @@ public class MetricWidget extends Composite {
 	@UiHandler("GDistanceBtn")
 	void onGDistanceBtnClick(ClickEvent event) 
 	{
-		
+		if(this.PFtrueFile!=null)
+		{
+			serverService.CalculateGD(this.PFtrueFile, this.IDUSER, new AsyncCallback<List<MetricResults>>(){
+
+				@Override
+				public void onFailure(Throwable caught) {
+					ErrorVerify.getErrorAlert("offline");
+				}
+
+				@Override
+				public void onSuccess(List<MetricResults> result) 
+				{
+					if(result.size()>0)
+					{
+						RootPanel.get("GWTcontainer").clear();
+						//cualquier otro caso sera enviado al login
+						RootPanel.get("GWTcontainer").add(new BreadWidget("METRIC"));
+						RootPanel.get("GWTcontainer").add(new ResultsWidget(result, "Generational-Distance"));
+					}
+					else{
+						String Message ="No data returned";
+						Window.alert(Message);
+					}
+					
+				}});
+			
+		}else{
+			ErrorVerify.getErrorAlert("NoParetoFront");
+		}
 	}
 	@UiHandler("CoverBtn")
 	void onCoverBtnClick(ClickEvent event) 

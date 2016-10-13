@@ -76,6 +76,9 @@ public class ErrorVerify {
 			case "badsendmail":
 				Window.alert("Fail sending code. Try again later");
 				break;
+			case "badpin":
+				Window.alert("fail creating PIN try again later");
+				break;
 			case "goodnewpass":
 				Window.alert("Change pass successfully");
 				break;
@@ -86,7 +89,7 @@ public class ErrorVerify {
 				Window.alert("Not letters allow");
 				break;
 			case "imagecreated":
-				Window.alert("Image was created");
+				Window.alert("Image was created \n(Allows browser popups to see images)");
 				break;
 			case "imagefail":
 				Window.alert("Image couldn't be created");
@@ -98,16 +101,19 @@ public class ErrorVerify {
 				Window.alert("There's no file selected to use metric");
 				break;
 			case "plotfileadd":
-				Window.alert("File add to plot");
+				Window.alert("File added to plot");
 				break;
 			case "metricfileadd":
-				Window.alert("File add to evaluate");
+				Window.alert("File added to metric");
 				break;
 			case "fileremove":
 				Window.alert("File removed");
 				break;
+			case "limitfiles":
+				Window.alert("You reach the limit of 8 files.");
+				break;
 			case "NoParetoFront":
-				Window.alert("First select Pareto Front True from files down here");
+				Window.alert("Select a Pareto Front True from table");
 				break;
 			default:
 				Window.alert("Unknow error!!");

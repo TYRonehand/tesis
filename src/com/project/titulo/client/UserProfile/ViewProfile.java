@@ -66,11 +66,11 @@ public class ViewProfile extends Composite {
 		// primary info label
 		if(myuser.getName()!=null && myuser.getLastname()!=null)
 			this.pNameLabel.setHTML("<p>"+myuser.getName()+" "+myuser.getLastname()+"</p>");
-		if(myuser.getMail()!=null)
+		if(myuser.getMail()!=null && !myuser.getMail().equals("null"))
 			this.pMailLabel.setHTML("<p>"+myuser.getMail()+"</p>");
-		if(myuser.getUniversity()!=null)
+		if(myuser.getUniversity()!=null && !myuser.getUniversity().equals("null"))
 			this.pUniversityLabel.setHTML("<p>"+myuser.getUniversity()+"</p>");
-		if(myuser.getCountry()!=null)
+		if(myuser.getCountry()!=null && !myuser.getCountry().equals("null"))
 			this.pCountryLabel.setHTML("<p>"+myuser.getCountry()+"</p>");
 		
 		// secondary info label

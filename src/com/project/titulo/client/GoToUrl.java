@@ -13,6 +13,7 @@ import com.project.titulo.client.Forum.ReadWidget;
 import com.project.titulo.client.Metric.MetricWidget;
 import com.project.titulo.client.Plot.PlotWidget;
 import com.project.titulo.client.UserProfile.UserProfile;
+import com.project.titulo.client.breadcrumb.BreadWidget;
 import com.project.titulo.client.faq.FAQWidget;
 import com.project.titulo.client.home.HomeWidget;
 import com.project.titulo.client.login.Login2Widget;
@@ -97,6 +98,7 @@ public class GoToUrl {
 				mycookie.setCookieIdurl("PROFILE");
 				//goto profile
 				RootPanel.get("GWTcontainer").clear();
+				RootPanel.get("GWTcontainer").add(new BreadWidget(option));
 				RootPanel.get("GWTcontainer").add(new UserProfile(IDUSER));
 				break;
 
@@ -106,6 +108,7 @@ public class GoToUrl {
 				// widget close session	
 				RootPanel.get("GWTcontainer").clear();	
 				//cualquier otro caso sera enviado al login
+				RootPanel.get("GWTcontainer").add(new BreadWidget(option));
 				RootPanel.get("GWTcontainer").add(new HomeWidget());
 				break;
 				
@@ -115,6 +118,7 @@ public class GoToUrl {
 				// widget close session	
 				RootPanel.get("GWTcontainer").clear();	
 				//cualquier otro caso sera enviado al login
+				RootPanel.get("GWTcontainer").add(new BreadWidget(option));
 				RootPanel.get("GWTcontainer").add(new UsersList());
 				break;		
 				
@@ -124,6 +128,7 @@ public class GoToUrl {
 				// widget close session	
 				RootPanel.get("GWTcontainer").clear();	
 				//cualquier otro caso sera enviado al login
+				RootPanel.get("GWTcontainer").add(new BreadWidget(option));
 				RootPanel.get("GWTcontainer").add(new FileWidget(IDUSER));
 				break;
 				
@@ -133,6 +138,7 @@ public class GoToUrl {
 				// widget close session	
 				RootPanel.get("GWTcontainer").clear();	
 				//cualquier otro caso sera enviado al login
+				RootPanel.get("GWTcontainer").add(new BreadWidget(option));
 				RootPanel.get("GWTcontainer").add(new PlotWidget(IDUSER));
 				break;
 				
@@ -142,6 +148,7 @@ public class GoToUrl {
 				// widget close session	
 				RootPanel.get("GWTcontainer").clear();	
 				//cualquier otro caso sera enviado al login
+				RootPanel.get("GWTcontainer").add(new BreadWidget(option));
 				RootPanel.get("GWTcontainer").add(new MetricWidget(IDUSER));
 				break;
 				
@@ -151,6 +158,7 @@ public class GoToUrl {
 				// widget close session	
 				RootPanel.get("GWTcontainer").clear();	
 				//cualquier otro caso sera enviado al login
+				RootPanel.get("GWTcontainer").add(new BreadWidget(option));
 				RootPanel.get("GWTcontainer").add(new ForumWidget(IDUSER));
 				break;
 				
@@ -159,6 +167,7 @@ public class GoToUrl {
 				// widget close session	
 				RootPanel.get("GWTcontainer").clear();	
 				//cualquier otro caso sera enviado al login
+				RootPanel.get("GWTcontainer").add(new BreadWidget(option));
 				RootPanel.get("GWTcontainer").add(new FAQWidget());
 				break;
 				
@@ -167,6 +176,7 @@ public class GoToUrl {
 				// widget close session	
 				RootPanel.get("GWTcontainer").clear();	
 				//cualquier otro caso sera enviado al login
+				RootPanel.get("GWTcontainer").add(new BreadWidget(option));
 				RootPanel.get("GWTcontainer").add(new ReadWidget(IDTOPIC,IDUSER));
 				break;
 				

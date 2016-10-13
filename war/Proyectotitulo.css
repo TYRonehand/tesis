@@ -5,7 +5,7 @@
 h1 {
   font-size: 2em;
   font-weight: bold;
-  color: #777777;
+  color: #646567;
   margin: 40px 0px 70px;
   text-align: center;
 }
@@ -36,11 +36,14 @@ h1 {
   color: red;
 }
 
+
 /** Set ids using widget.getElement().setId("idOfElement") */
 #closeButton {
   margin: 15px 6px 6px;
 }
+
 /*init page*/
+
 .beginpaper{
 	background: #ffffff url("assets/img/wallpaper/home.png") no-repeat right top;
 }
@@ -119,3 +122,17 @@ celltable tbody tr{
 	padding:4px;
 }
 /*metrics*/
+
+
+/*breadcrumbs*/
+.breadcrumb{
+	padding: 5px;
+}
+.breadcrumb tbody {
+	background: #646567;
+}
+.breadcrumb tbody tr td div a{
+	padding: 8px;
+	color: white;
+	font-weight: bold;
+}

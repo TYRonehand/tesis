@@ -2,6 +2,7 @@ package com.project.titulo.client.register;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -22,6 +23,7 @@ import com.project.titulo.shared.DataOptional;
 import com.project.titulo.shared.ErrorVerify;
 import com.project.titulo.shared.FieldVerifier;
 import com.project.titulo.shared.model.User;
+import com.google.gwt.event.dom.client.KeyDownEvent;
 
 public class SignupWidget extends Composite {
 
@@ -60,7 +62,6 @@ public class SignupWidget extends Composite {
 		addCountry();
 	}
 
-
 	//add country to combobox
 	private void addCountry(){
 		String[] countryList = DataOptional.getCountries(); 
@@ -70,11 +71,34 @@ public class SignupWidget extends Composite {
 		}
 	}
 
-	
-	//submit register
-	@UiHandler("registerBtn")
-	void onRegisterBtnClick(ClickEvent event) 
+	//register user
+	private void registerUser(User newUser)
 	{
+		//send object
+		serverService.addUserInfo(newUser, new AsyncCallback<Boolean>(){
+			@Override
+			public void onFailure(Throwable caught) {
+
+				ErrorVerify.getErrorAlert("offline");
+				
+			}
+			@Override
+			public void onSuccess(Boolean result) {
+
+				if(result){
+					ErrorVerify.getErrorAlert("successadd");
+					
+					url.GoTo("LOGIN");
+					
+				}else{
+
+					ErrorVerify.getErrorAlert("failadd");
+				}
+			}
+		});//end inner service
+	}
+	
+	private void SignUp(){
 		if(passInput.getText().equals(pass2Input.getText()) && FieldVerifier.isValidMail(mailInput.getText()) && FieldVerifier.isValidName(nameInput.getText()) && FieldVerifier.isValidName(lastnameInput.getText()))
 		{
 			serverService.userExist(mailInput.getText(), new AsyncCallback<Boolean>(){
@@ -118,34 +142,6 @@ public class SignupWidget extends Composite {
 		{
 			Window.alert("Please check fields before submit");
 		}
-	}
-	
-	
-	//register user
-	private void registerUser(User newUser)
-	{
-		//send object
-		serverService.addUserInfo(newUser, new AsyncCallback<Boolean>(){
-			@Override
-			public void onFailure(Throwable caught) {
-
-				ErrorVerify.getErrorAlert("offline");
-				
-			}
-			@Override
-			public void onSuccess(Boolean result) {
-
-				if(result){
-					ErrorVerify.getErrorAlert("successadd");
-					
-					url.GoTo("LOGIN");
-					
-				}else{
-
-					ErrorVerify.getErrorAlert("failadd");
-				}
-			}
-		});//end inner service
 	}
 	
 	//evento size name
@@ -264,10 +260,23 @@ public class SignupWidget extends Composite {
 	    }
     }
 	
+	//submit register
+	@UiHandler("registerBtn")
+	void onRegisterBtnClick(ClickEvent event) 
+	{
+		SignUp();
+	}
+		
 	//click recuperar link
 	@UiHandler("recoveryLink")
 	void onRecoveryLinkClick(ClickEvent event) 
 	{
 		url.GoTo("RECOVERY");
+	}
+	
+	@UiHandler("pass2Input")
+	void onPass2InputKeyDown(KeyDownEvent event) {
+		if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER)
+			SignUp();
 	}
 }

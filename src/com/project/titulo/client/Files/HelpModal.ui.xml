@@ -51,9 +51,7 @@
 	
 		<g:DialogBox ui:field="dialogBox"  width="100%" addStyleNames='{style.dialogBox}'>
 			<g:VerticalPanel ui:field="dialogVPanel" addStyleNames='{style.verticalPanel}' height="100%"  borderWidth="0" verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER">
-			
-				<g:Label text="FILE FORMAT" addStyleNames='{style.title}' direction="LTR" horizontalAlignment="ALIGN_CENTER"/>
-				<g:Label text="Only files with extension .TXT o .CSV and máx. size 10 MB." addStyleNames='{style.text}' horizontalAlignment="ALIGN_LEFT"/>
+				
 				<g:Label text="EXAMPLE" addStyleNames='{style.title}' horizontalAlignment="ALIGN_CENTER"/>
 				<g:Image url="assets/img/examplefile.png" width="100%"/>
 				

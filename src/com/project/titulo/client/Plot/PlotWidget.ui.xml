@@ -32,11 +32,8 @@
 		align:left;
 		widht:100%;
 	}
-	.HTMLheader{
-		padding-top:50px
-	}
 	</ui:style>
-	<gwt:HTMLPanel addStyleNames='{style.HTMLheader}'>
+	<gwt:HTMLPanel>
 		
 		
 	<!--  Menu opciones edición-->
