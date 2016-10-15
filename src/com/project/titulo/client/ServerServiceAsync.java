@@ -93,9 +93,9 @@ public interface ServerServiceAsync {
 	
 	/*------------METRICS---------------*/
 
-	void CalculateER(String idpftrue, String iduser, AsyncCallback<List<MetricResults>> callback) throws IllegalArgumentException;
+	void CalculateER(String iduser, AsyncCallback<List<MetricResults>> callback) throws IllegalArgumentException;
 	void CalculateSP(String iduser, AsyncCallback<List<MetricResults>> callback) throws IllegalArgumentException;
-	void CalculateGD(String idpftrue, String iduser, AsyncCallback<List<MetricResults>> callback) throws IllegalArgumentException;
-	void CalculateC(String idpftrue, String iduser, AsyncCallback<List<MetricResults>> callback) throws IllegalArgumentException;
-	void CalculateE(String idpftrue, String iduser, AsyncCallback<List<MetricResults>> callback) throws IllegalArgumentException;
+	void CalculateGD(String iduser, AsyncCallback<List<MetricResults>> callback) throws IllegalArgumentException;
+	void CalculateC(String iduser, AsyncCallback<List<MetricResults>> callback) throws IllegalArgumentException;
+	void CalculateE(String iduser, AsyncCallback<List<MetricResults>> callback) throws IllegalArgumentException;
 }

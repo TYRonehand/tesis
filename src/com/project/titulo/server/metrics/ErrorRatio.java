@@ -11,17 +11,12 @@ import com.project.titulo.shared.model.UserFile;
 public class ErrorRatio {
 	
 	private int axis_size;
-	
-	private UserFile paretoFile;
 	private List<UserFile> aproxFileList;
-	
-	private List<Points> paretoDataList;//pf true points doubles
 	
 	private List<MetricResults> ResultList = new ArrayList<MetricResults>();//result are added here	
 	
 	//load files for metric
-	public ErrorRatio(UserFile PFtrue, List<UserFile> listPFcalc,int axis_size){
-		this.paretoFile = PFtrue;
+	public ErrorRatio( List<UserFile> listPFcalc, int axis_size){
 		this.aproxFileList = listPFcalc;
 		this.axis_size = axis_size;
 		
@@ -31,76 +26,73 @@ public class ErrorRatio {
 	//go throw list
 	private void Start()
 	{
-		
-		//pftrue to double
-		TextToDouble pftrue = new TextToDouble();
-		pftrue.create(paretoFile.getData(), this.axis_size);
-		this.paretoDataList = pftrue.getListPoints();
-		
-		//run data list if exist pftrue
-		if(this.paretoDataList.size()>0)
+		System.err.print("\nStart");
+		List<UserFile> auxFileList = this.aproxFileList;
+		System.err.print("\nauxFileSize: "+auxFileList.size());
+		//files 
+		for(UserFile file : this.aproxFileList)
 		{
+			//text to double points
+			TextToDouble paretoOptime = new TextToDouble();
+			paretoOptime.create(file.getData(), this.axis_size);
+
+			System.err.print("\nparetoOptime POINT Size: "+paretoOptime.getListPoints().size());
 			
-			for(UserFile file : this.aproxFileList)
+			//set object results
+			MetricResults mr = new MetricResults();
+			mr.setAproximationNameFile(file.getTitle());//name POknow
+			
+			//files to compare with
+			for(UserFile auxfile : this.aproxFileList)
 			{
-				//metric data
-				MetricResults mr  = new MetricResults();
-				//save name pareto front
-				mr.setParetoNameFile(paretoFile.getTitle());
-				//save name pareto aproximation
-				mr.setAproximationNameFile(file.getTitle());
+				mr.addParetoNameFile(auxfile.getTitle());//name PFtrue
 				
 				//data dimension equals
-				if(this.paretoFile.getDimension().equals(file.getDimension()))
+				if(auxfile.getDimension().equals(file.getDimension()))
 				{
-					
-					TextToDouble paretoOp = new TextToDouble();
-					paretoOp.create(file.getData(), this.axis_size);
+					//text to double points
+					TextToDouble paretoFrontPoint = new TextToDouble();
+					paretoFrontPoint.create(auxfile.getData(), this.axis_size);
+
+					System.err.print("\nparetoFrontPoint POINT Size: "+paretoFrontPoint.getListPoints().size());
 					
 					//calculate metric
-					String Value = Calculate(paretoOp.getListPoints());
-					//value return
-					if(!Value.isEmpty() && Value != null)
-					{
-						//save data
-						mr.setResults(Value);
-						mr.setMessage("Ok");
-					}else{
-
-						//fail calculate
-						mr.setResults("-");
-						mr.setMessage("Error");
-					}
+					String value = Calculate( paretoFrontPoint.getListPoints(), paretoOptime.getListPoints()) ;
+					System.err.print("\nCalculated VALUE:"+value);
+					
+					if(!value.isEmpty() && value!=null)
+						mr.addResult( value);
+					else
+						mr.addResult("Error");
 				}
 				else{
 					System.err.println("different dimension");
 					//fail dimension
-					mr.setMessage("Wronge dimension");
-					mr.setResults("-");
+					mr.addResult("Wronge dimension");
 				}
-				this.ResultList.add(mr);
 			}
+
+			System.err.print("result added!");
+			this.ResultList.add(mr);
+			
 		}
-		else{
-			System.err.println("pareto front empty");
-		}
+		
 	}
 	
 	//calculate one file at time
-	private String Calculate(List<Points> paretoOp)
+	private String Calculate(List<Points> paretoDataList, List<Points> paretoOptime)
 	{
-
 		System.err.print("\nevaluating...");
 		
 		//count equals points
 		float errori = 0;
-		if(paretoOp.size()>0)
+		if(paretoOptime.size()>0)
 		{
 			//pareto front optime points
-			for(Points po: paretoOp)
+			for(Points po: paretoOptime)
 			{
 				//pareto front true points
-				for(Points pf: this.paretoDataList)
+				for(Points pf: paretoDataList)
 				{
 					//same dimension for axies
 					if(po.getDimension()==pf.getDimension())
@@ -129,11 +121,11 @@ public class ErrorRatio {
 			}
 
 			//formula
-			float Nsize = paretoOp.size();
-			float ER=(1-(errori/Nsize));
+			double Nsize = paretoOptime.size();
+			double ER = (1-(errori/Nsize));
 			
 			System.err.print("\nready!");
-			return ER+"";
+			return String.format( "%.6f", ER);
 			
 		}
 		return null;

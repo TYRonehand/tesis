@@ -42,9 +42,10 @@
 		
 			<div class="col-lg-8 col-md-6 col-sm-12 col-xs-12">
 				<gwt:VerticalPanel addStyleNames='{style.panel}' spacing="10" horizontalAlignment="ALIGN_CENTER">
+					<gwt:Image url="assets/img/banner2.png"/>
 					<gwt:Label addStyleNames='{style.titleText}' text="What Do We Do?" horizontalAlignment="ALIGN_CENTER" width="100%"/>
 					<gwt:Label addStyleNames='{style.resumeText}'  horizontalAlignment="ALIGN_CENTER" width="100%">
-					"ASMOP web" is a system that seeks to provide solutions to academics or researchers in the area of ​​multi-objective optimization. Delivering graphic tools and indicators of differentiation for solutions that consider the basis of Pareto optimality. Try it NOW, it's free.
+					"ASMOP webtool" is a system that seeks to provide solutions to academics or researchers in the area of ​​multi-objective optimization. Delivering graphic tools and indicators of differentiation for solutions that consider the basis of Pareto optimality. Try it NOW, it's free.
 					</gwt:Label>
 					
 					<gwt:Label addStyleNames='{style.resumeText}'  horizontalAlignment="ALIGN_CENTER" width="100%">
@@ -57,7 +58,7 @@
 			
 			<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
 				<gwt:VerticalPanel addStyleNames='{style.panel}' spacing="10" horizontalAlignment="ALIGN_CENTER" width="100%">
-					<gwt:InlineLabel addStyleNames='{style.titleText}' text="Sign Up?" horizontalAlignment="ALIGN_CENTER" width="100%"/>
+					<gwt:InlineLabel addStyleNames='{style.titleText}' text="Sign Up" horizontalAlignment="ALIGN_CENTER" width="100%"/>
 				</gwt:VerticalPanel>
 				
 				<gwt:VerticalPanel addStyleNames='{style.panel}' spacing="10" horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="100%">
@@ -94,7 +95,7 @@
 						</gwt:VerticalPanel>
 						
 						<gwt:VerticalPanel addStyleNames='{style.input}' width="96%" height="69px" verticalAlignment="ALIGN_MIDDLE">
-	                    	<gwt:InlineLabel addStyleNames='{style.label}' text="Repeat pass:" horizontalAlignment="ALIGN_CENTER" width="91px"/>
+	                    	<gwt:InlineLabel addStyleNames='{style.label}' text="Repeat password:" horizontalAlignment="ALIGN_CENTER" width="91px"/>
 							<gwt:PasswordTextBox ui:field="pass2Input" maxLength="30" width="100%" textAlignment="ALIGN_CENTER"  alignment="JUSTIFY" direction="LTR" tabIndex="5"/>
 							<gwt:Label ui:field="labelError5" addStyleNames='{style.labelwarning}' width="100%" direction="RTL" horizontalAlignment="ALIGN_CENTER"  text="minimum lenght 6" visible="false"/>
 						</gwt:VerticalPanel>
@@ -105,7 +106,7 @@
 	       		</gwt:VerticalPanel>
 	       		<gwt:VerticalPanel addStyleNames='{style.panel}' spacing="10" horizontalAlignment="ALIGN_CENTER" width="100%">
 					<gwt:InlineLabel addStyleNames='{style.titleText}' text="Lost Password?" horizontalAlignment="ALIGN_CENTER" width="100%"/>
-					<gwt:Hyperlink ui:field="recoveryLink" text="I forget password" targetHistoryToken="" width="117px" />
+					<gwt:Hyperlink ui:field="recoveryLink" text="I forgot my password" targetHistoryToken="" width="100%" />
 				</gwt:VerticalPanel>
 	       		
 			</div>

@@ -4,7 +4,8 @@ com.google.gwt.user.client.rpc.XsrfToken, false, false, true, true, com.google.g
 com.project.titulo.client.ServerService, false, false, false, false, _, 779498090
 com.project.titulo.shared.model.Answer, true, true, true, true, com.project.titulo.shared.model.Answer/3843695366, 3843695366
 [Lcom.project.titulo.shared.model.Answer;, true, true, false, false, [Lcom.project.titulo.shared.model.Answer;/2943380373, 2943380373
-com.project.titulo.shared.model.MetricResults, true, true, false, false, com.project.titulo.shared.model.MetricResults/1903991052, 1903991052
+com.project.titulo.shared.model.MetricResults, true, true, false, false, com.project.titulo.shared.model.MetricResults/4249636767, 4249636767
+[Lcom.project.titulo.shared.model.MetricResults;, true, true, false, false, [Lcom.project.titulo.shared.model.MetricResults;/2720209498, 2720209498
 com.project.titulo.shared.model.ResumeTopic, true, true, false, false, com.project.titulo.shared.model.ResumeTopic/3023953164, 3023953164
 [Lcom.project.titulo.shared.model.ResumeTopic;, true, true, false, false, [Lcom.project.titulo.shared.model.ResumeTopic;/3444772719, 3444772719
 com.project.titulo.shared.model.Topic, true, true, true, true, com.project.titulo.shared.model.Topic/727527989, 727527989
@@ -15,6 +16,8 @@ com.project.titulo.shared.model.UserFile, true, true, true, true, com.project.ti
 java.lang.Boolean, true, true, true, true, java.lang.Boolean/476441737, 476441737
 java.lang.Exception, true, false, true, false, java.lang.Exception/1920171873, 1920171873
 java.lang.IllegalArgumentException, true, true, false, false, java.lang.IllegalArgumentException/1755012560, 1755012560
+java.lang.Integer, true, true, false, false, java.lang.Integer/3438268394, 3438268394
+java.lang.Number, true, false, false, false, java.lang.Number/300033342, 300033342
 java.lang.NumberFormatException, true, true, false, false, java.lang.NumberFormatException/3305228476, 3305228476
 java.lang.RuntimeException, true, false, true, false, java.lang.RuntimeException/515124647, 515124647
 java.lang.String, true, true, true, true, java.lang.String/2004016611, 2004016611

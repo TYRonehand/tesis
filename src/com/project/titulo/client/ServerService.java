@@ -118,11 +118,11 @@ public interface ServerService extends RemoteService
 	
 	/*------------METRICS---------------*/
 
-	List<MetricResults> CalculateER(String idpftrue, String iduser) throws IllegalArgumentException;
+	List<MetricResults> CalculateER(String iduser) throws IllegalArgumentException;
 	List<MetricResults> CalculateSP(String iduser) throws IllegalArgumentException;
-	List<MetricResults> CalculateGD(String idpftrue, String iduser) throws IllegalArgumentException;
-	List<MetricResults> CalculateC(String idpftrue, String iduser) throws IllegalArgumentException;
-	List<MetricResults> CalculateE(String idpftrue, String iduser) throws IllegalArgumentException;
+	List<MetricResults> CalculateGD(String iduser) throws IllegalArgumentException;
+	List<MetricResults> CalculateC(String iduser) throws IllegalArgumentException;
+	List<MetricResults> CalculateE(String iduser) throws IllegalArgumentException;
 	
 	
 }

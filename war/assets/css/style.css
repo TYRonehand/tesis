@@ -183,17 +183,16 @@ a.logo {
     color: #d12421;
     float: left;
     margin-top: 15px;
-    text-transform: uppercase;*/
-    margin-top: 15px;
-    margin-bottom: 15px;
+    text-transform: uppercase;
+    margin-top: 10px;
+    margin-bottom: 10px;*/
     align:left;
     float: none;
     display: block;
     background-repeat: no-repeat;
-    background-image: url(../img/svg-sprite.svg);
-    background-position: 0 33.53903944191038%;
-    width: 260px;
-    height: 78.74px;
+    background-image: url(../img/banner3.png);
+    width: 300px;
+    height: 108px;
 }
 
 a.logo:hover,

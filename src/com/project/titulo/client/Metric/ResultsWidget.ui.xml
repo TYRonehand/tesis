@@ -39,6 +39,7 @@
                     	<div class="btn-group btn-group-justified">
                         <g:VerticalPanel ui:field="menu" addStyleNames='{style.panel}' width="100%">
                         	<g:Button ui:field="backBtn" addStyleNames='{style.submitBtn}' width="100%" >Go back</g:Button>
+                        	<g:Button ui:field="csvBtn" addStyleNames='{style.submitBtn}' width="100%" >Export Results</g:Button>
                         </g:VerticalPanel>
                         </div>
                             
@@ -49,13 +50,15 @@
         	<div class="col-lg-10 col-md-9 col-sm-8 col-xs-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        <h3 class="panel-title">My Metric Results</h3>
+                        <h3 class="panel-title">
+                        	<g:Label ui:field="titleName"></g:Label>
+                        </h3>
                     </header>
                     <div class="panel-body">
                     
                    		<g:ScrollPanel width="100%">
 	                        <g:VerticalPanel ui:field="panel" addStyleNames='{style.cellTable}' width="100%">
-	                        
+	                        	<g:HTML ui:field="htmlTable" wordWrap="true"/>
 	                        </g:VerticalPanel>
                        	</g:ScrollPanel>
                        	

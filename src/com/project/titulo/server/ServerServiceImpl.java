@@ -33,6 +33,9 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 
 
+
+
+
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -1296,7 +1299,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 	
 	/*CALCULATE METRICS------------------------------------------------------------------------------*/
 	@Override
-	public List<MetricResults> CalculateER(String idpftrue, String iduser) throws IllegalArgumentException {
+	public List<MetricResults> CalculateER(String iduser) throws IllegalArgumentException {
 
 
 		System.err.print("\nMetric Error Ratio");
@@ -1304,24 +1307,14 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 		List<MetricResults> results = new ArrayList<MetricResults>();
 		
 		try{
-			//declaration of Pareto Front true
-			UserFile PFtrueFile = null;
-			
 			//search files from user in metric selected
-			List<UserFile> myfiles = getFullFilesMetric(iduser);
-			
-			//find from selected wich is PFTRUE
-			for(UserFile aux: myfiles){
-				//if is PFTRUE set it
-				if(aux.getIddatafile().equals(idpftrue)){
-					PFtrueFile = aux;
-				}
-			}
+			List<UserFile> userfiles = getFullFilesMetric(iduser);
 			
 			//control exist both objects
-			if(PFtrueFile!=null && !myfiles.isEmpty()){
+			if(!userfiles.isEmpty() && userfiles!=null)
+			{
 				//start calculation
-				ErrorRatio er = new ErrorRatio(PFtrueFile, myfiles, Integer.parseInt(PFtrueFile.getDimension()) );
+				ErrorRatio er = new ErrorRatio( userfiles, Integer.parseInt( userfiles.get(0).getDimension() ) );
 				results = er.getResults();
 			}
 			
@@ -1344,14 +1337,12 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 			List<UserFile> myfiles = getFullFilesMetric(iduser);
 			
 			//control exist both objects
-			if(!myfiles.isEmpty() && myfiles!=null){
-				System.err.print("\nexist files");
+			if(!myfiles.isEmpty() && myfiles!=null)
+			{
 				//start calculation
 				Spacing sp = new Spacing(myfiles);
 				results = sp.getResults();
-				
 			}else{
-
 				System.err.print("\nerror: null files");
 			}
 			
@@ -1365,55 +1356,41 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 	}
 
 	@Override
-	public List<MetricResults> CalculateGD(String idpftrue, String iduser) throws IllegalArgumentException {
+	public List<MetricResults> CalculateGD(String iduser) throws IllegalArgumentException {
 
-
-		System.err.print("\nMetric Generational distance"); 
-		
+		System.err.print("\nMetric Generational Distance");
 		//result object
 		List<MetricResults> results = new ArrayList<MetricResults>();
 		
 		try{
-			//declaration of Pareto Front true
-			UserFile PFtrueFile = null;
-			
 			//search files from user in metric selected
-			List<UserFile> myfiles = getFullFilesMetric(iduser);
-			
-			//find from selected wich is PFTRUE
-			for(UserFile aux: myfiles)
-			{
-				//if is PFTRUE set it
-				if(aux.getIddatafile().equals(idpftrue))
-				{
-					PFtrueFile = aux;
-				}
-			}
+			List<UserFile> userfiles = getFullFilesMetric(iduser);
 			
 			//control exist both objects
-			if(PFtrueFile!=null && !myfiles.isEmpty())
+			if(!userfiles.isEmpty() && userfiles!=null)
 			{
 				//start calculation
-				GenDistance gd = new GenDistance(PFtrueFile, myfiles, Integer.parseInt(PFtrueFile.getDimension()) );
+				GenDistance gd = new GenDistance( userfiles, Integer.parseInt( userfiles.get(0).getDimension() ) );
 				results = gd.getResults();
+			}else{
+				System.err.print("\nerror: null files");
 			}
 			
 		}catch(Exception e){
-			System.err.print("\nerror: "+e.toString());
-			
+			System.err.print("\nImpl error: "+e.toString());
 		}
 		System.err.print("\nretorna resultado");
 		return results;
 	}
 
 	@Override
-	public List<MetricResults> CalculateC(String idpftrue, String iduser) throws IllegalArgumentException {
+	public List<MetricResults> CalculateC(String iduser) throws IllegalArgumentException {
 
 		return null;
 	}
 
 	@Override
-	public List<MetricResults> CalculateE(String idpftrue, String iduser) throws IllegalArgumentException {
+	public List<MetricResults> CalculateE(String iduser) throws IllegalArgumentException {
 
 		return null;
 	}

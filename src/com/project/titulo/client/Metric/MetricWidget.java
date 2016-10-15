@@ -1,6 +1,4 @@
 package com.project.titulo.client.Metric;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.cell.client.ButtonCell;
@@ -39,10 +37,6 @@ public class MetricWidget extends Composite {
 
 	private String IDUSER=null;
 	
-	//files id
-	private String PFtrueFile=null;
-	@SuppressWarnings("unused")
-	private List<String> listPFknow=new ArrayList<String>();
 	
 	//uifields	
 	@UiField Button metric1Btn;
@@ -194,8 +188,7 @@ public class MetricWidget extends Composite {
 	      public void onSelectionChange(SelectionChangeEvent event) {
 	    	  UserFile selected = selectionModel.getSelectedObject();
 	        if (selected != null) {
-	          Window.alert("Your PF true is file: " + selected.getTitle());
-	          PFtrueFile = selected.getIddatafile();
+	        	
 	        }
 	      }
 	    });
@@ -302,73 +295,64 @@ public class MetricWidget extends Composite {
 				}
 				
 			}});
+		
 	}
+	
 	@UiHandler("ERBtn")
 	void onERBtnClick(ClickEvent event) 
 	{
-		if(this.PFtrueFile!=null)
-		{
-			serverService.CalculateER(this.PFtrueFile, this.IDUSER, new AsyncCallback<List<MetricResults>>(){
+		serverService.CalculateER(this.IDUSER, new AsyncCallback<List<MetricResults>>(){
 
-				@Override
-				public void onFailure(Throwable caught) {
-					ErrorVerify.getErrorAlert("offline");
+			@Override
+			public void onFailure(Throwable caught) {
+				ErrorVerify.getErrorAlert("offline");
+			}
+
+			@Override
+			public void onSuccess(List<MetricResults> result) {
+				if(result.size()>0)
+				{
+					RootPanel.get("GWTcontainer").clear();
+					//cualquier otro caso sera enviado al login
+					RootPanel.get("GWTcontainer").add(new BreadWidget("METRIC"));
+					RootPanel.get("GWTcontainer").add(new ResultsWidget(result, "Error-Ratio"));
 				}
-
-				@Override
-				public void onSuccess(List<MetricResults> result) {
-					
-					if(result.size()>0)
-					{
-						RootPanel.get("GWTcontainer").clear();
-						//cualquier otro caso sera enviado al login
-						RootPanel.get("GWTcontainer").add(new BreadWidget("METRIC"));
-						RootPanel.get("GWTcontainer").add(new ResultsWidget(result, "Error-Ratio"));
-					}
-					else{
-						String Message ="No data returned";
-						Window.alert(Message);
-					}
-					
-				}});
-			
-		}else{
-			ErrorVerify.getErrorAlert("NoParetoFront");
-		}
+				else{
+					String Message ="No data returned";
+					Window.alert(Message);
+				}
+			}});
 	}
+	
 	@UiHandler("GDistanceBtn")
 	void onGDistanceBtnClick(ClickEvent event) 
 	{
-		if(this.PFtrueFile!=null)
-		{
-			serverService.CalculateGD(this.PFtrueFile, this.IDUSER, new AsyncCallback<List<MetricResults>>(){
+		serverService.CalculateGD(this.IDUSER, new AsyncCallback<List<MetricResults>>(){
 
-				@Override
-				public void onFailure(Throwable caught) {
-					ErrorVerify.getErrorAlert("offline");
-				}
+			@Override
+			public void onFailure(Throwable caught) {
+				ErrorVerify.getErrorAlert("offline");
+			}
 
-				@Override
-				public void onSuccess(List<MetricResults> result) 
+			@Override
+			public void onSuccess(List<MetricResults> result) 
+			{
+				if(result.size()>0)
 				{
-					if(result.size()>0)
-					{
-						RootPanel.get("GWTcontainer").clear();
-						//cualquier otro caso sera enviado al login
-						RootPanel.get("GWTcontainer").add(new BreadWidget("METRIC"));
-						RootPanel.get("GWTcontainer").add(new ResultsWidget(result, "Generational-Distance"));
-					}
-					else{
-						String Message ="No data returned";
-						Window.alert(Message);
-					}
-					
-				}});
+					RootPanel.get("GWTcontainer").clear();
+					//cualquier otro caso sera enviado al login
+					RootPanel.get("GWTcontainer").add(new BreadWidget("METRIC"));
+					RootPanel.get("GWTcontainer").add(new ResultsWidget(result, "Generational-Distance"));
+				}
+				else{
+					String Message ="No data returned";
+					Window.alert(Message);
+				}
+				
+			}});
 			
-		}else{
-			ErrorVerify.getErrorAlert("NoParetoFront");
-		}
 	}
+	
 	@UiHandler("CoverBtn")
 	void onCoverBtnClick(ClickEvent event) 
 	{

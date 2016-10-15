@@ -67,7 +67,7 @@
                     
                     	<g:VerticalPanel ui:field="EntropyPanel" addStyleNames='{style.panel}' width="100%" horizontalAlignment="ALIGN_CENTER">
                     		<g:VerticalPanel width="100%">
-                    			<g:Label>The entropy (E) metric, is responsible for studying the divergence in a Pareto front . It is based on the definition of a niche solution S , this represents all solutions that are close to or in the vicinity of the solution S. This metric is given by :</g:Label> 
+                    			<g:Label>The entropy  (E) metric, is responsible for studying the divergence in a Pareto front . It is based on the definition of a niche solution S , this represents all solutions that are close to or in the vicinity of the solution S. This metric is given by :</g:Label> 
                     		</g:VerticalPanel>
                     		<g:VerticalPanel horizontalAlignment="ALIGN_CENTER" width="100%">
 	                    		<g:Image url="assets/img/metric/E1.png" width="277px" height="65px"></g:Image>

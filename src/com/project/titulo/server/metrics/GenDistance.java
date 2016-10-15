@@ -11,17 +11,12 @@ import com.project.titulo.shared.model.UserFile;
 public class GenDistance 
 {
 	private int axis_size;
-	
-	private UserFile paretoFile;
 	private List<UserFile> aproxFileList;
 	
-	private List<Points> paretoDataList;//pf true points doubles
 	private List<MetricResults> ResultList = new ArrayList<MetricResults>();//result are added here	
 	
 	//load files for metric
-	public GenDistance(UserFile PFtrue, List<UserFile> listPFcalc,int axis_size)
-	{
-		this.paretoFile = PFtrue;
+	public GenDistance( List<UserFile> listPFcalc, int axis_size){
 		this.aproxFileList = listPFcalc;
 		this.axis_size = axis_size;
 		
@@ -31,67 +26,69 @@ public class GenDistance
 	//go throw list
 	private void Start()
 	{
-		//pftrue to double
-		TextToDouble pftrueaux = new TextToDouble();
-		pftrueaux.create(paretoFile.getData(), this.axis_size);
-		this.paretoDataList = pftrueaux.getListPoints();
-		
-		//run data list if exist pftrue
-		if(this.paretoDataList.size()>0)
+		System.err.print("\nStart");
+		List<UserFile> auxFileList = this.aproxFileList;
+		System.err.print("\nauxFileSize: "+auxFileList.size());
+		//files 
+		for(UserFile file : this.aproxFileList)
 		{
-			for(UserFile file : this.aproxFileList)
+			//text to double points
+			TextToDouble paretoOptime = new TextToDouble();
+			paretoOptime.create(file.getData(), this.axis_size);
+
+			System.err.print("\nparetoOptime POINT Size: "+paretoOptime.getListPoints().size());
+			
+			//set object results
+			MetricResults mr = new MetricResults();
+			mr.setAproximationNameFile(file.getTitle());//name POknow
+			
+			//files to compare with
+			for(UserFile auxfile : this.aproxFileList)
 			{
-				//metric data
-				MetricResults mr  = new MetricResults();
-				//save name pareto front
-				mr.setParetoNameFile(paretoFile.getTitle());
-				//save name pareto aproximation
-				mr.setAproximationNameFile(file.getTitle());
+				mr.addParetoNameFile(auxfile.getTitle());//name PFtrue
 				
-				if(this.paretoFile.getDimension().equals(file.getDimension()))
+				//data dimension equals
+				if(auxfile.getDimension().equals(file.getDimension()))
 				{
-					TextToDouble paretoAux = new TextToDouble();
-					paretoAux.create(file.getData(), this.axis_size);
+					//text to double points
+					TextToDouble paretoFrontPoint = new TextToDouble();
+					paretoFrontPoint.create(auxfile.getData(), this.axis_size);
+
+					System.err.print("\nparetoFrontPoint POINT Size: "+paretoFrontPoint.getListPoints().size());
 					
 					//calculate metric
-					String Value = Calculate(paretoAux.getListPoints());//calculate file data
-					//value return
-					if(!Value.isEmpty() && Value != null)
-					{
-						//save data
-						mr.setResults(Value);
-						mr.setMessage("Ok");
-					}else{
-
-						//fail calculate
-						mr.setResults("-");
-						mr.setMessage("Error");
-					}
+					String value = Calculate( paretoFrontPoint.getListPoints(), paretoOptime.getListPoints()) ;
+					System.err.print("\nCalculated VALUE:"+value);
+					
+					if(!value.isEmpty() && value!=null)
+						mr.addResult( value);
+					else
+						mr.addResult("Error");
 				}
 				else{
 					System.err.println("different dimension");
-					mr.setMessage("Wronge dimension");
-					mr.setResults("-");
+					//fail dimension
+					mr.addResult("Wronge dimension");
 				}
-				this.ResultList.add(mr);
 			}
+
+			System.err.print("result added!");
+			this.ResultList.add(mr);
+			
 		}
-		else{
-			System.err.println("pareto front empty");
-		}
+		
 	}
 	
 	//calculate one file at time
-	private String Calculate(List<Points> aproximationDataList)
+	private String Calculate(List<Points> paretoDataList, List<Points> aproximationDataList)
 	{
-
 		System.err.print("\nevaluating...");
 		
 	    double D, F, G, flag;
-	    D = 0;
-        G = 0;
-        F = -1;
-        flag = 0;
+	    D = 0.00000;
+        G = 0.00000;
+        F = -1.00000;
+        flag = 0.00000;
         for (int i = 0; i < aproximationDataList.size(); i++) 
         {
             for (int j = 0; j < paretoDataList.size(); j++) 
@@ -102,9 +99,11 @@ public class GenDistance
             	for(int k =0; k <optimo.getDimension();k++)
             	{
             		D = (Math.pow(optimo.getAxieIndex(k) - pareto.getAxieIndex(k), 2));
+            		//System.err.print(String.format("\nD POW + = %.6f",D));
             	}
             	
                 D = Math.sqrt(D);
+                //System.err.print(String.format("\nD SQRT + = %.6f",D));
                 if (flag == 0) {
                     F = D;
                     flag = 1;
@@ -116,12 +115,22 @@ public class GenDistance
             G = (G + Math.pow(F, 2));
             flag = 0;
         }
+        System.err.print(String.format("\nG ante POW + = %.6f",G));
+        
         G = (Math.pow(G, 0.5));
-        G = (G / aproximationDataList.size());
-        G = Math.rint(G * 100) / 100;
 
+        System.err.print(String.format("\nG POW + = %.6f",G));
+        
+        G = (G / aproximationDataList.size());
+        
+        System.err.print(String.format("\nG DIVIDE + = %.6f",G));
+        
+        //G = Math.rint(G * 100) / 100;
+        
+        System.err.print(String.format("\nG FINAL + = %.6f",G));
+        
 		System.err.print("\nready!");
-		return G+"";
+		return String.format( "%.6f", G); 
 	}
 	
 	//get result calculated

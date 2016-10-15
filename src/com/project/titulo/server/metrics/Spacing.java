@@ -23,32 +23,24 @@ public class Spacing {
 	//go throw list
 	private void Start()
 	{
+		
+		
 		for(UserFile file : this.FileList)
 		{
 			//metric data
 			MetricResults mr  = new MetricResults();
 			//save name pareto front
-			mr.setParetoNameFile("-");
+			mr.addParetoNameFile("Results");
+			//text to double points
+			TextToDouble paretoOptime = new TextToDouble();
+			paretoOptime.create(file.getData(), Integer.parseInt(file.getDimension()));
+			
 			//save name pareto aproximation
 			mr.setAproximationNameFile(file.getTitle());
 			
-			TextToDouble paretoOp = new TextToDouble();
-			paretoOp.create(file.getData(), Integer.parseInt(file.getDimension()));
-			
 			//calculate metric
-			String Value = Calculate(paretoOp.getListPoints());//calculate file data
-			//value return
-			if(!Value.isEmpty() && Value != null)
-			{
-				//save data
-				mr.setResults(Value);
-				mr.setMessage("Ok");
-			}else{
-
-				//fail calculate
-				mr.setResults("-");
-				mr.setMessage("Error");
-			}
+			mr.addResult( Calculate(paretoOptime.getListPoints()) );//calculate file data
+			
 			this.ResultList.add(mr);
 			
 		}
@@ -62,7 +54,7 @@ public class Spacing {
 		//auxiliar list
 		List<Points> auxDataList = aproximationDataList;
 		
-	    double flag = 0.0, F = 0.0, D = 0.0, pro = 0.0, dif = 0.0;
+	    double flag = 0.00000, F = 0.00000, D = 0.00000, pro = 0.00000, dif = 0.00000;
 	    double d[] = new double[aproximationDataList.size()];
 	    
 	    for (int i = 0; i < aproximationDataList.size(); i++) 
@@ -103,11 +95,11 @@ public class Spacing {
         }
         dif = dif / (aproximationDataList.size() - 1);
         dif = Math.sqrt(dif);
-        dif = Math.rint(dif * 100) / 100;
+        //dif = Math.rint(dif * 100) / 100;
         
 
 		System.err.print("\nready!");
-		return dif+"";
+		return String.format( "%.6f", dif);
 		
 	}
 	

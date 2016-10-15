@@ -25,7 +25,7 @@ public class TextToDouble implements IsSerializable {
 			//all points from size dimension are add to one point
 			for(int j=i;j<i+dimension;j++)
 			{
-				axis.add(Double.parseDouble(values[j].replace(",",".")));//add axis to point
+				axis.add( Double.valueOf( values[j].replace(",",".") ) );//add axis to point
 			}
 			this.listvalues.add(axis);//add point to list of points
 		}

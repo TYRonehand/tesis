@@ -20,7 +20,7 @@
 			<div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
 				<gwt:VerticalPanel width="100%">
 					<gwt:FlowPanel>
-						<gwt:InlineLabel addStyleNames='{style.titleText}' horizontalAlignment="ALIGN_LEFT" text="ASMOP web"/>
+						<gwt:InlineLabel addStyleNames='{style.titleText}' horizontalAlignment="ALIGN_LEFT" text="ASMOP webtool"/>
 					</gwt:FlowPanel>
 					<gwt:InlineLabel addStyleNames='{style.resumeText}' horizontalAlignment="ALIGN_LEFT">Analysis System for Multi-objective Optimization Problems</gwt:InlineLabel>
 				</gwt:VerticalPanel>	

@@ -20,13 +20,13 @@
     	  color:#646567;
 		}
 		.btnMenu:active {
-		  border-bottom: 5px solid #d12421 ;
-		  color:#d12421;
+		  border-bottom: 5px solid #337ab7 ;
+		  color:#337ab7;
 		}
 		
 		.btnMenu:hover {
-		  border-bottom: 5px solid #d12421 ;
-		  color:#d12421;
+		  border-bottom: 5px solid #337ab7 ;
+		  color:#337ab7;
 		}
 		.btnMenu2 {
 		  padding:15px;
@@ -43,7 +43,7 @@
 		}
 		.btnMenu2:hover {
 		  color:#646567;
-		  border-bottom: 5px solid #d12421 ;
+		  border-bottom: 5px solid #337ab7 ;
 		}
 		.flowPanel{
 		  width: 100%;

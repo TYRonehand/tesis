@@ -1,14 +1,16 @@
 package com.project.titulo.shared.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class MetricResults implements Serializable  
 {
 	private String Message;
-	private String results;
 	private String aproximationNameFile;
-	private String paretoNameFile;
+	private List<String> resultList = new ArrayList<String>();
+	private List<String> paretoNameFileList = new ArrayList<String>();;
 	
 	public MetricResults(){
 	}
@@ -21,12 +23,12 @@ public class MetricResults implements Serializable
 		Message = message;
 	}
 
-	public String getResults() {
-		return results;
+	public List<String> getResultsList() {
+		return resultList;
 	}
 
-	public void setResults(String results) {
-		this.results = results;
+	public void addResult(String result) {
+		this.resultList.add(result);
 	}
 
 	public String getAproximationNameFile() {
@@ -37,12 +39,12 @@ public class MetricResults implements Serializable
 		this.aproximationNameFile = aproximationNameFile;
 	}
 
-	public String getParetoNameFile() {
-		return paretoNameFile;
+	public List<String> getParetoNameFile() {
+		return paretoNameFileList;
 	}
 
-	public void setParetoNameFile(String paretoNameFile) {
-		this.paretoNameFile = paretoNameFile;
+	public void addParetoNameFile(String paretoNameFile) {
+		this.paretoNameFileList.add(paretoNameFile);
 	}
 
 }
