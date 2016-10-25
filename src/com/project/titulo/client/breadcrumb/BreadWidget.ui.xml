@@ -3,7 +3,7 @@
 	xmlns:gwt="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.google.gwt.widget.client">
 	<ui:style>
 	.HTMLheader{
-		padding-top:50px
+		padding-top:70px
 	}
 	</ui:style>
 	<gwt:HTMLPanel addStyleNames='{style.HTMLheader}'>

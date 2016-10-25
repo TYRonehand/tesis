@@ -54,40 +54,39 @@
 		  left: 0px;
 		  z-index: 99999;
 		}
+		.userstyleBtns{
+		  	background: white;
+			padding-bottom:10px;
+			border:none;
+		  	font-weight: bold;
+		  	color:#337ab7;
+		}
 	</ui:style>
 	
 	<gwt:HTMLPanel>
 	
 		<header class="header white-bg">
-        
+        	
             <div class="col-lg-6 col-md-6 col-sm-9 col-xs-9">
 	            <!--logotipo o nombre aplicacion inicia-->
 	            <a href="" class="logo"> 
 	            	<span class="lite"></span>
 	            </a>
-	            <!--logo fin-->
 			</div>
 			
-            <!--seccion session-->
-            <div class="col-lg-6 col-md-6 col-sm-3 col-xs-3">
-            	<div id="GWTusername" class="top-nav notification-row">
-	            	 <!-- seccion para dropdown-->
-			        <ul class="nav pull-right top-menu" align="right">
-			            <!-- Usuario dropdown inicia-->
-			            <li class="dropdown">
-	                    	<gwt:Hyperlink ui:field="profileLink" addStyleNames='{style.sessionlink}' targetHistoryToken="" text="User X" width="117px"/>
-	                    	
-	                    	<gwt:Hyperlink ui:field="exitLink" addStyleNames='{style.sessionlink}' targetHistoryToken="" text="Exit" width="117px"/>
-			                    	
-			            </li>
-			            <!-- usuario dropdown fin -->
-			        </ul>
-            	</div>
-            </div>
+            
             
              <!--seccion menu de usuario-->
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 	            <div align="center" class="panel-menu-user" >
+	            
+					<gwt:VerticalPanel  width="100%" horizontalAlignment="ALIGN_RIGHT" >
+		        		<gwt:HorizontalPanel addStyleNames='{style.userstyleBtns}' width="160px">
+			               	<gwt:Button addStyleNames='{style.userstyleBtns}' ui:field="profileLink"  text="User X" width="100px"/>
+			               	<gwt:Button addStyleNames='{style.userstyleBtns}' ui:field="exitLink"  text="Exit" width="60px"/>
+		              	</gwt:HorizontalPanel>
+		        	</gwt:VerticalPanel>
+		        	
 					<gwt:VerticalPanel width="100%" horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" spacing="10" height="40px">
 						<gwt:MenuBar width="100%" animationEnabled="true" autoOpen="true" height="50px">
 							<gwt:MenuItem ui:field="homeBTN" addStyleNames='{style.btnMenu}' text="Home" height="50px" width="60px"/>

@@ -18,6 +18,7 @@ import com.project.titulo.client.ServerService;
 import com.project.titulo.server.metrics.ErrorRatio;
 import com.project.titulo.server.metrics.GenDistance;
 import com.project.titulo.server.metrics.Spacing;
+import com.project.titulo.shared.ExportDataResult;
 import com.project.titulo.shared.SecretCode;
 import com.project.titulo.shared.model.Answer;
 import com.project.titulo.shared.model.MetricResults;
@@ -27,6 +28,12 @@ import com.project.titulo.shared.model.User;
 import com.project.titulo.shared.model.UserFile;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+
+
+
+
+
 
 
 
@@ -141,7 +148,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 		 }
 		 return allusers;
 	}
-	
+
 	
 	/*USER------------------------------------------------------------------------------*/
 	//consulta si existe usuario
@@ -288,8 +295,14 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 			 //actualizamos usuario
 			 String Query= " UPDATE user SET "
 			 			 + "name='"+myUser.getName()+"', "
-			 			 + "lastname='"+myUser.getLastname()+"', "
-			 			 + "country='"+myUser.getCountry()+"', "
+			 			 + "lastname='"+myUser.getLastname()+"', ";
+			 
+			 if(myUser.getMail().length()>0)
+				 Query += "mail='"+myUser.getMail()+"',";
+			 if(myUser.getPassword().length()>0)
+				 Query += "password='"+myUser.getPassword()+"',";
+			 
+			 Query      += "country='"+myUser.getCountry()+"', "
 			 			 + "ocupation='"+myUser.getOcupation()+"', "
 			 			 + "web='"+myUser.getWeb()+"',"
 			 			 + "university='"+myUser.getUniversity()+"' "
@@ -363,6 +376,31 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 		 }
 		return true;
 	}
+
+	//delete a user
+
+	@Override
+	public Boolean deleteUserInfo(String iduser) throws IllegalArgumentException {
+		Boolean res= false;
+		try 
+		 {
+			 //consultamos a base de datos
+			 String Query= "DELETE FROM user WHERE iduser="+iduser;
+			 PreparedStatement ps = conn.prepareStatement(Query);
+			 ps.executeUpdate();
+			 
+			 //recorremos resultado
+			 ps.close();
+			 res= true;
+		 } 
+		 catch (SQLException sqle) 
+		 {
+		 	GWT.log(sqle.toString());
+		 	sqle.printStackTrace();
+		 	res= false;
+		 }
+		return res;
+	}
 	
 	//get pin to user and Send email verify for lost password
 	@Override
@@ -390,7 +428,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 			 {
 			 	GWT.log(sqle.toString());
 			 	sqle.printStackTrace();
-			 	System.err.print("*RECOVERY PASS ERROR:"+sqle.toString());
+			 	//System.err.print("*RECOVERY PASS ERROR:"+sqle.toString());
 				valid=false;//somthing bad
 			 }
 			//true send email
@@ -399,10 +437,10 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 				return SendEmail(email, "gutierr.carlos@gmail.com", "You've requested a password recovery.", "Petition for new password! \n Hi there!, recently received a request to change password. that is why we attach your PIN recovery ["+CODE+"]. \n Under any reason, if you did not request this change, forget this email. \n\nHave a nice day!!");
 				//true it was sended and all ok - false problem
 			}
-			System.err.print("*RECOVERY PASS ERROR:create pin");
+			//System.err.print("*RECOVERY PASS ERROR:create pin");
 			return "badpin";
 		}
-		System.err.print("*RECOVERY PASS ERROR:mail dont exist");	
+		//System.err.print("*RECOVERY PASS ERROR:mail dont exist");	
 		return "mailnoexist";
 	}
 	
@@ -973,8 +1011,8 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 								 			result.getString("iduser"), 
 								 			result.getString("creation"),
 								 			result.getString("data"),
-								 			"",
-								 			""
+								 			"true",
+								 			null
 								 			));
 				 
 				//create user files in directory files
@@ -1025,8 +1063,8 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 								 			result.getString("iduser"), 
 								 			result.getString("creation"),
 								 			result.getString("data"),
-								 			"",
-								 			""
+								 			null,
+								 			"true"
 								 			));
 			 }
 			 result.close();
@@ -1283,8 +1321,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 				if(cont<files.size()-1)
 					commandTerminal +=",";
 				cont++;
-			}
-			commandTerminal +=";replot;";		
+			}	
 					
 			//Load gnuplot
 			Boolean state = GnuplotLoad.setCommand(commandTerminal,context);
@@ -1395,6 +1432,15 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 		return null;
 	}
 
+	/*EXPORT RESULTS------------------------------------------------------------------------------*/
+	@Override
+	public Boolean ExportResults(String iduser, List<MetricResults> Results) throws IllegalArgumentException {
+		
+		//servlet context to find path
+   	 	ServletContext context = this.getServletContext();
+   	 	ExportDataResult EDR = new ExportDataResult(context, iduser, Results);
+		return EDR.WriteFile();
+	}
 	
 	
 	
@@ -1403,7 +1449,6 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 	//send email
 	private String SendEmail(String to, String from, String Subjettext, String Messagehtml)
 	{
-		
 		Properties props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.socketFactory.port", "465");
@@ -1483,8 +1528,8 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 								 			result.getString("iduser"), 
 								 			result.getString("creation"),
 								 			result.getString("data"),
-								 			"",
-								 			""
+								 			null,
+								 			null
 								 			));
 				 
 				//create user files in directory files
@@ -1508,6 +1553,10 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 		 }
 		 return listFiles;
 	}
+
+	
+
+
 
 	
 	

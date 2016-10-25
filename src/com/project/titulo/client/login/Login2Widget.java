@@ -2,7 +2,6 @@ package com.project.titulo.client.login;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -13,6 +12,7 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.project.titulo.client.GoToUrl;
+import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
 import com.project.titulo.shared.CookieVerify;
@@ -24,6 +24,10 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 
 public class Login2Widget extends Composite {
 
+	/*style*/
+	private MyStyle ms = new MyStyle();
+	
+	/*variables*/
 	//elementos uibinder
 	@UiField TextBox mailInput;  
 	@UiField PasswordTextBox passInput;
@@ -45,28 +49,24 @@ public class Login2Widget extends Composite {
 
 	public Login2Widget() {
 		initWidget(uiBinder.createAndBindUi(this));
+		
 		//set style to buttons from bootstrap
-		submitBTN.addStyleName("btn btn-primary");
+		submitBTN.addStyleName(ms.getButtonStyle());
 	}
 
 
 	//limpiar inputs
-	private void clearInputs()
-	{
+	private void clearInputs(){
 		mailInput.setText("");
 		passInput.setText("");
 	}
 	
-	private void LoginUser()
-	{
+	private void LoginUser(){
 		//no existen errores
-		if(passInput.getText().length()>=6 && mailInput.getText().length()>=6)
-		{
-			if(FieldVerifier.isValidMail(mailInput.getText()))
-			{
+		if(passInput.getText().length()>=6 && mailInput.getText().length()>=6){
+			if(FieldVerifier.isValidMail(mailInput.getText())){
 				//admin test
-				if(mailInput.getText().equals("Administr@tor") && passInput.getText().equals("741admin963"))
-				{
+				if(mailInput.getText().equals("Administr@tor") && passInput.getText().equals("741admin963")){
 					//guardamos las cookies con info
 					mycookie.setCookieMail("cagutierrez@ing.ucsc.cl");
 					mycookie.setCookieName("Administration");
@@ -75,29 +75,20 @@ public class Login2Widget extends Composite {
 					//go to home first time
 					url.GoTo("MENU2");
 					url.GoTo("ADMIN");
-				}
-				else
-				{
+				}else{
 					//consulta datos usuario normal				
-					serverService.authenticateUser( mailInput.getText(), passInput.getText(), new AsyncCallback<User>()
-					{
+					serverService.authenticateUser( mailInput.getText(), passInput.getText(), new AsyncCallback<User>(){
 						@Override
-						public void onFailure(Throwable caught) 
-						{
+						public void onFailure(Throwable caught){
 							ErrorVerify.getErrorAlert("offline");
 							//limpiar input
 							clearInputs();
 						}
-
 						@Override
-						public void onSuccess(User result) 
-						{
-							if(result==null)
-							{
+						public void onSuccess(User result){
+							if(result==null){
 								ErrorVerify.getErrorAlert("wronguser");	
-							}
-							else if(!result.getId().isEmpty())
-							{
+							}else if(!result.getId().isEmpty())	{
 								//guardamos las cookies con info
 								mycookie.setCookieBanned(result.getBanned());
 								mycookie.setCookieMail(result.getMail());
@@ -107,22 +98,15 @@ public class Login2Widget extends Composite {
 								//go to home first time
 								url.GoTo("MENU");
 								url.GoTo("HOME");
-							}
-							else
-							{
+							}else{
 								clearInputs();
 							}
-						}
-					});
+						}});
 				}
-			}
-			else
-			{
+			}else{
 				ErrorVerify.getErrorAlert("invalidmail");
 			}
-		}
-		else
-		{
+		}else{
 			ErrorVerify.getErrorAlert("tooshort");
 		}
 			
@@ -130,66 +114,12 @@ public class Login2Widget extends Composite {
 	
 	/*Evento click SUBMIT*/
 	@UiHandler("submitBTN")
-	void onSubmitBTNClick(ClickEvent event) 
-	{
+	void onSubmitBTNClick(ClickEvent event){
 		LoginUser();
 	}
 	
-	//evento cambio valor  input
-	@UiHandler("mailInput")
-    void handleMailInputChange(ValueChangeEvent<String> event) 
-	{
-		/*
-      if(FieldVerifier.isValidMail(event.getValue()) && event.getValue().length() >= 6)
-		{
-	        labelError1.setText("");
-	    	labelError1.setVisible(false);
-		}else{
-			
-			if (event.getValue().length() < 6) 
-			{
-		    	labelError1.setText("Minimum lenght 6");
-		    	labelError1.setVisible(true);
-		    } 
-			if(!FieldVerifier.isValidMail(event.getValue()))
-			{
-				labelError1.setText("Invalid email. example: name@company.com");
-				labelError1.setVisible(true);
-			}
-		}
-		*/
-   }
-
-	//evento cambio valor  input
 	@UiHandler("passInput")
-    void handlePassInputChange(ValueChangeEvent<String> event) 
-	{
-		/*
-		if(FieldVerifier.isValidPass(event.getValue()) && event.getValue().length() >= 6)
-		{
-	        labelError2.setText("");
-	    	labelError2.setVisible(false);
-		}
-		else{
-
-			if (event.getValue().length() < 6) 
-			{
-		    	labelError2.setText("Minimum lenght 6");
-		    	labelError2.setVisible(true);
-		    }
-			if(!FieldVerifier.isValidPass(event.getValue()))
-			{
-				labelError2.setText("Use letters and numbers");
-				labelError2.setVisible(true);
-			}
-		}
-		*/
-   }
-	
-	
-	@UiHandler("passInput")
-	void onPassInputKeyDown(KeyDownEvent event) {
-
+	void onPassInputKeyDown(KeyDownEvent event){
 		if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER)
 			LoginUser();
 	}

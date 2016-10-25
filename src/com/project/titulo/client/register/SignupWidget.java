@@ -17,6 +17,7 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.project.titulo.client.GoToUrl;
+import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
 import com.project.titulo.shared.DataOptional;
@@ -27,6 +28,10 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 
 public class SignupWidget extends Composite {
 
+	/*style*/
+	private MyStyle ms = new MyStyle();
+	
+	/*variables*/
 	//goto url
 	public GoToUrl url = new GoToUrl();
 		
@@ -57,7 +62,9 @@ public class SignupWidget extends Composite {
 	public SignupWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
 		//set style to buttons from bootstrap
-		registerBtn.addStyleName("btn btn-primary");	
+		registerBtn.addStyleName(ms.getButtonStyle());
+		//set styles for css
+		
 		//load country to combobox
 		addCountry();
 	}
@@ -65,10 +72,10 @@ public class SignupWidget extends Composite {
 	//add country to combobox
 	private void addCountry(){
 		String[] countryList = DataOptional.getCountries(); 
-		for(String country : countryList)
-		{
+		for(String country : countryList){			
 			countryBox.addItem(country.substring(3));
 		}
+		countryBox.setSelectedIndex(42);
 	}
 
 	//register user
@@ -78,41 +85,33 @@ public class SignupWidget extends Composite {
 		serverService.addUserInfo(newUser, new AsyncCallback<Boolean>(){
 			@Override
 			public void onFailure(Throwable caught) {
-
 				ErrorVerify.getErrorAlert("offline");
-				
 			}
 			@Override
 			public void onSuccess(Boolean result) {
-
 				if(result){
 					ErrorVerify.getErrorAlert("successadd");
-					
 					url.GoTo("LOGIN");
-					
 				}else{
-
 					ErrorVerify.getErrorAlert("failadd");
 				}
 			}
 		});//end inner service
 	}
 	
+	//send user info to server
 	private void SignUp(){
 		if(passInput.getText().equals(pass2Input.getText()) && FieldVerifier.isValidMail(mailInput.getText()) && FieldVerifier.isValidName(nameInput.getText()) && FieldVerifier.isValidName(lastnameInput.getText()))
 		{
 			serverService.userExist(mailInput.getText(), new AsyncCallback<Boolean>(){
 				@Override
 				public void onFailure(Throwable caught) {
-					
 					ErrorVerify.getErrorAlert("mailexist");
 				}
 				@Override
-				public void onSuccess(Boolean result) 
-				{
+				public void onSuccess(Boolean result){
 					//if mail dont exist
-					if(!result)
-					{
+					if(!result)	{
 						//save data in object
 						User newUser = new User( 
 				 			"",
@@ -131,37 +130,28 @@ public class SignupWidget extends Composite {
 						);
 						//call reguster user
 						registerUser(newUser);
-					}
-					else{
+					}else{
 						ErrorVerify.getErrorAlert("userexist");
 					}
 				}
 			});//end service
-		}
-		else
-		{
+		}else{
 			Window.alert("Please check fields before submit");
 		}
 	}
 	
 	//evento size name
 	@UiHandler("nameInput")
-    void handleNameChange(ValueChangeEvent<String> event) 
-	{
-		if(FieldVerifier.isValidName(event.getValue()) && event.getValue().length() >= 3)
-		{
+    void handleNameChange(ValueChangeEvent<String> event){
+		if(FieldVerifier.isValidName(event.getValue()) && event.getValue().length() >= 3){
 	          labelError1.setText("");
 	    	  labelError1.setVisible(false);
-		}
-		else 
-		{	
-			if (event.getValue().length() < 3) 
-			{
+		}else{	
+			if (event.getValue().length() < 3){
 	    	  labelError1.setText("Minimum lenght 3");
 	    	  labelError1.setVisible(true);
 			} 
-			if(!FieldVerifier.isValidName(event.getValue()))
-			{
+			if(!FieldVerifier.isValidName(event.getValue())){
 				labelError1.setText("Use only letters");
 				labelError1.setVisible(true);
 			}
@@ -169,22 +159,16 @@ public class SignupWidget extends Composite {
    }
 	//evento size lastname
 	@UiHandler("lastnameInput")
-    void handleLastnameChange(ValueChangeEvent<String> event) 
-	{
-		if(FieldVerifier.isValidName(event.getValue()) && event.getValue().length() >= 3)
-		{
+    void handleLastnameChange(ValueChangeEvent<String> event){
+		if(FieldVerifier.isValidName(event.getValue()) && event.getValue().length() >= 3){
 			labelError2.setText("");
 			labelError2.setVisible(false);
-		}
-		else 
-		{	
-			if (event.getValue().length() < 3) 
-			{
+		}else{	
+			if (event.getValue().length() < 3){
 				labelError2.setText("Minimum lenght 3");
 				labelError2.setVisible(true);
 			} 
-			if(!FieldVerifier.isValidName(event.getValue()))
-			{
+			if(!FieldVerifier.isValidName(event.getValue())){
 				labelError2.setText("Use only letters");
 				labelError2.setVisible(true);
 			}
@@ -199,7 +183,6 @@ public class SignupWidget extends Composite {
 	        labelError3.setText("");
 	    	labelError3.setVisible(false);
 		}else{
-			
 			if (event.getValue().length() < 6) 
 			{
 		    	labelError3.setText("Minimum lenght 6");
@@ -223,9 +206,7 @@ public class SignupWidget extends Composite {
 	        labelError4.setText("");
 	    	labelError4.setVisible(false);
 			pass2Input.setEnabled(true);
-		}
-		else
-		{
+		}else{
 			if (event.getValue().length() < 6) 
 			{
 		    	labelError4.setText("Minimum lenght 6");
@@ -252,9 +233,7 @@ public class SignupWidget extends Composite {
 		{
 			labelError5.setText("Passwords must be equals!");
 			labelError5.setVisible(true);
-		}
-		else 
-		{
+		}else{
 	        labelError5.setText("");
 	    	labelError5.setVisible(false);
 	    }
@@ -262,15 +241,13 @@ public class SignupWidget extends Composite {
 	
 	//submit register
 	@UiHandler("registerBtn")
-	void onRegisterBtnClick(ClickEvent event) 
-	{
+	void onRegisterBtnClick(ClickEvent event){
 		SignUp();
 	}
 		
 	//click recuperar link
 	@UiHandler("recoveryLink")
-	void onRecoveryLinkClick(ClickEvent event) 
-	{
+	void onRecoveryLinkClick(ClickEvent event){
 		url.GoTo("RECOVERY");
 	}
 	

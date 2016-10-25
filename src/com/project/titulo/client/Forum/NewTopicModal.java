@@ -61,7 +61,7 @@ public class NewTopicModal  extends DialogBox {
 		dialogBox.setAutoHideEnabled(true);
 	    dialogBox.setGlassEnabled(true);
 		dialogBox.center();
-		dialogBox.setText("Create new topic");
+		dialogBox.setText("New Topic");
 		dialogBox.addStyleName("panel-body");
 
 		//set style to buttons from bootstrap
@@ -84,7 +84,7 @@ public class NewTopicModal  extends DialogBox {
 	private void CreateTopic()
 	{
 		//validar algo escrito
-		if(titleInput.getText().length()>3 && descriptionInput.getText().length()>20)
+		if(titleInput.getText().length()>0 && descriptionInput.getText().length()>0)
 		{
 			
 				//create object
@@ -105,6 +105,7 @@ public class NewTopicModal  extends DialogBox {
 
 							ErrorVerify.getErrorAlert("successadd");
 							dialogBox.setVisible(false);
+							url.GoTo("FORUM");
 						}else{
 							ErrorVerify.getErrorAlert("failadd");
 						}

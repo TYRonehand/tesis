@@ -45,6 +45,21 @@
 	                                Edit Profile
 	                            </a>
 	                        </li>
+	                        <li class="">
+	                            <a data-toggle="tab" href="#edit-email"> 
+	                                Change Email
+	                            </a>
+	                        </li>
+	                        <li class="">
+	                            <a data-toggle="tab" href="#edit-password"> 
+	                                Change Password
+	                            </a>
+	                        </li>
+	                        <li class="">
+	                            <a data-toggle="tab" href="#edit-account"> 
+	                                Close Account
+	                            </a>
+	                        </li>
 	                    </ul>
 	                </header>
 	                
@@ -83,58 +98,168 @@
 	                        <div id="edit-profile" class="tab-pane">
 	                            <section class="panel">
 	                                <div class="panel-body bio-graph-info">
-	
-	                                    <h1 width="100%" align="left"> My Info</h1>
-	                                    <form class="form-horizontal" role="form" align="center">
-	
-	                                        <div class="form-group" align="center">
-	                                            <label class="col-lg-2 control-label">Name</label>
-	                                            <div class="col-lg-6">
-	                                            	<gwt:TextBox ui:field="nameInput" addStyleNames='{style.editInput}' maxLength="50"  visibleLength="50"></gwt:TextBox>
-	                                            	<gwt:Label ui:field="labelError1" width="100%" direction="RTL" horizontalAlignment="ALIGN_CENTER"  text="minimum lenght 6" visible="false"/>
+	                                    <h1> My Info</h1>
+	                                    
+										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+											<div class="row">
+	                                           
+	                                            <div class="col-lg-12">
+	                                            	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+	                                            		<label class="col-lg-6" align="left">Name</label>
+	                                            		<gwt:TextBox ui:field="nameInput" addStyleNames='{style.editInput}' maxLength="50"  visibleLength="50"></gwt:TextBox>
+	                                            		<gwt:Label ui:field="labelError1" width="100%" direction="RTL" horizontalAlignment="ALIGN_CENTER"  text="minimum lenght 6" visible="false"/>
+	                                            	</div>
+	                                            	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+	                                            		<label class="col-lg-6" align="left">Lastname</label>
+	                                            		<gwt:TextBox ui:field="lastnameInput" addStyleNames='{style.editInput}' maxLength="50" visibleLength="50"></gwt:TextBox>
+	                                            		<gwt:Label ui:field="labelError2" width="100%" direction="RTL" horizontalAlignment="ALIGN_CENTER"  text="minimum lenght 6" visible="false"/>
+	                                            	</div>
 	                                            </div>
-	                                        </div>
-	
-	                                        <div class="form-group">
-	                                            <label class="col-lg-2 control-label">Lastname</label>
-	                                            <div class="col-lg-6">
-	                                            	<gwt:TextBox ui:field="lastnameInput" addStyleNames='{style.editInput}' maxLength="50" visibleLength="50"></gwt:TextBox>
-	                                            	<gwt:Label ui:field="labelError2" width="100%" direction="RTL" horizontalAlignment="ALIGN_CENTER"  text="minimum lenght 6" visible="false"/>
+	                                            
+	                                            
+	                                            <div class="col-lg-12">
+	                                            	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+	                                            		<label class="col-lg-6" align="left">Ocupation</label>
+	                                            		<gwt:TextBox ui:field="ocupationInput" addStyleNames='{style.editInput}' maxLength="30"  visibleLength="30"></gwt:TextBox>
+	                                            	</div>
+	                                            	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+	                                            		<label class="col-lg-6" align="left">Web URL</label>
+	                                            		<gwt:TextBox ui:field="webInput" addStyleNames='{style.editInput}' maxLength="50"  visibleLength="50"></gwt:TextBox>
+	                                            	</div>
+	                                            	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+	                                            		<label class="col-lg-6" align="left">Country</label>
+	                                            		<gwt:ListBox ui:field="countryBox"  addStyleNames='{style.editInput}' />
+	                                            	</div>
 	                                            </div>
-	                                        </div>
-	
-	                                        <div class="form-group">
-	                                            <label class="col-lg-2 control-label">Country</label>
-	                                            <div class="col-lg-6">
-	                                            	<gwt:ListBox ui:field="countryBox"  addStyleNames='{style.editInput}' />
-	                                            </div>
-	                                        </div>
-	
-	                                        <div class="form-group">
-	                                            <label class="col-lg-2 control-label">Ocupation</label>
-	                                            <div class="col-lg-6">
-	                                            	<gwt:TextBox ui:field="ocupationInput" addStyleNames='{style.editInput}' maxLength="30"  visibleLength="30"></gwt:TextBox>
-	                                            </div>
-	                                        </div>
-	
-	                                        <div class="form-group">
-	                                            <label class="col-lg-2 control-label">Web URL</label>
-	                                            <div class="col-lg-6">
-	                                            	<gwt:TextBox ui:field="webInput" addStyleNames='{style.editInput}' maxLength="50"  visibleLength="50"></gwt:TextBox>
-	                                            </div>
-	                                        </div>
-	
-	                                        <div class="form-group">
-	                                            <div class="col-lg-12 col-lg-9 col-lg-6">
-	                                            	<gwt:Button ui:field="submitBTN" >Save</gwt:Button>
-	                                            	<gwt:Button ui:field="cancelBTN" >Reset</gwt:Button>
-	                                            </div>
-	                                        </div>
-	
-	                                    </form>
+	                                            
+												<label class="col-lg-2 " align="left"></label>
+												<div class="col-lg-12">
+                                            		<gwt:Button ui:field="submitBTN" >Save</gwt:Button>
+                                            		<gwt:Button ui:field="cancelBTN" >Reset</gwt:Button>
+                                           		</div>
+                                            </div>
+                                    	</div>
 	                                </div>
 	                            </section>
 	                        </div>
+	                        
+	                        
+	                        <!-- editar email -->
+	                        <div id="edit-email" class="tab-pane">
+	                            <section class="panel">
+	                                <div class="panel-body bio-graph-info">
+	                                    <h1> Change My Email</h1>
+	                                    
+										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+											<div class="row">
+	                                    		
+	                                           	<div class="col-lg-12">
+	                                            	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+		                                            	<label class="col-lg-6 " align="left">Current Password</label>
+	                                            		<gwt:PasswordTextBox ui:field="currentPassword1" alignment="JUSTIFY" width="100%" textAlignment="ALIGN_CENTER" maxLength="30" visibleLength="30" focus="true" direction="LTR"/>
+														<gwt:Label ui:field="labelError3" width="100%" direction="RTL" horizontalAlignment="ALIGN_CENTER"  text="minimum lenght 6" visible="false"/>
+													</div>
+	                                            </div>
+	                                            
+	                                            <div class="col-lg-12">
+	                                            	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+			                                            <label class="col-lg-6 " align="left">New Email</label>
+	                                            		<gwt:TextBox ui:field="newEmail" alignment="JUSTIFY" width="100%" textAlignment="ALIGN_CENTER" maxLength="30" visibleLength="30" focus="true" direction="LTR"/>
+														<gwt:Label ui:field="labelError4" width="100%" direction="RTL" horizontalAlignment="ALIGN_CENTER"  text="minimum lenght 6" visible="false"/>
+													</div>
+	                                            	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+		                                            	<label class="col-lg-6 " align="left">Repeat Email</label>
+	                                            		<gwt:TextBox ui:field="newEmailRepeat" alignment="JUSTIFY" width="100%" textAlignment="ALIGN_CENTER" maxLength="30" visibleLength="30" focus="true" direction="LTR"/>
+														<gwt:Label ui:field="labelError5" width="100%" direction="RTL" horizontalAlignment="ALIGN_CENTER"  text="minimum lenght 6" visible="false"/>
+													</div>
+	                                            </div>
+	                                            
+												<label class="col-lg-2 " align="left"></label>
+												<div class="col-lg-12">
+												    <gwt:Button ui:field="changeEmailBTN" text="Change Email"/>
+								                </div>
+								                
+	                                   		</div>
+                                    	</div>
+	                                </div>
+	                            </section>
+	                        </div>
+	                        
+	                        <!-- editar password -->
+	                        <div id="edit-password" class="tab-pane">
+	                            <section class="panel">
+	                                <div class="panel-body bio-graph-info">
+	                                    <h1 > Change My Password</h1>
+	                                    
+										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+											<div class="row">
+	                                    		
+	                                           	<div class="col-lg-12">
+	                                            	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+			                                            <label class="col-lg-6 " align="left">Current Password</label>
+	                                            		<gwt:PasswordTextBox ui:field="currentPassword2" alignment="JUSTIFY" width="100%" textAlignment="ALIGN_CENTER" maxLength="30" visibleLength="30" focus="true" direction="LTR"/>
+														<gwt:Label ui:field="labelError6" width="100%" direction="RTL" horizontalAlignment="ALIGN_CENTER"  text="minimum lenght 6" visible="false"/>
+													</div>
+	                                            </div>
+	                                            
+	                                            <div class="col-lg-12">
+	                                            	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				                                        <label class="col-lg-6 " align="left">New Password</label>
+	                                            		<gwt:PasswordTextBox ui:field="newPassword" alignment="JUSTIFY" width="100%" textAlignment="ALIGN_CENTER" maxLength="30" visibleLength="30" focus="true" direction="LTR"/>
+														<gwt:Label ui:field="labelError7" width="100%" direction="RTL" horizontalAlignment="ALIGN_CENTER"  text="minimum lenght 6" visible="false"/>
+													</div>
+	                                            	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+			                                            <label class="col-lg-6 " align="left">Repeat Password</label>
+	                                            		<gwt:PasswordTextBox ui:field="newPasswordRepeat" alignment="JUSTIFY" width="100%" textAlignment="ALIGN_CENTER" maxLength="30" visibleLength="30" focus="true" direction="LTR"/>
+														<gwt:Label ui:field="labelError8" width="100%" direction="RTL" horizontalAlignment="ALIGN_CENTER"  text="minimum lenght 6" visible="false"/>
+													</div>
+	                                            </div>
+	                                            
+												<label class="col-lg-2 " align="left"></label>
+												<div class="col-lg-12">
+												    <gwt:Button ui:field="changePasswordBTN" text="Change Password" />
+								                </div>
+								                
+	                                   		</div>
+                                    	</div>
+	                                </div>
+	                            </section>
+	                        </div>
+	                        
+	                        
+	                        
+	                         <!-- editar email -->
+	                        <div id="edit-account" class="tab-pane">
+	                            <section class="panel">
+	                                <div class="panel-body bio-graph-info">
+	                                    <h1> Close My Account</h1>
+	                                    
+										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+											<div class="row">
+	                                    		
+	                                           	<div class="col-lg-12">
+	                                            	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		                                            	<label align="justify">IMPORTANT NOTICE: Please make sure that you have downloaded everything that you want to retain before you close your account. When you close your account all of the data that it contains will be permanently deleted.</label>
+	                                            	</div>
+	                                            </div>
+	                                            
+	                                            <div class="col-lg-12">
+	                                            	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			                                            <label align="justify">If you do decide to close your account we'll be sorry to see you go - please do let us know why ASMOP didn't work for you by emailing us at gutierr.carlos@gmail.com - we take any feedback very seriously and will try to improve our service based on your comments.</label>
+	                                            	</div>
+	                                            </div>
+	                                            
+												<div class="col-lg-12">
+												    <gwt:Button ui:field="closeAccountBTN" text="Close Account Forever"/>
+								                </div>
+								                
+	                                   		</div>
+                                    	</div>
+	                                </div>
+	                            </section>
+	                        </div>
+	                        
+	                        
 	                        
 	                    </div>
 	                </div>

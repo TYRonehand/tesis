@@ -7,6 +7,9 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class FAQWidget extends Composite {
 
+
+	/*variables*/
+	
 	private static FAQWidgetUiBinder uiBinder = GWT
 			.create(FAQWidgetUiBinder.class);
 
@@ -15,6 +18,7 @@ public class FAQWidget extends Composite {
 
 	public FAQWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
+		
 	}
 
 }

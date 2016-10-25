@@ -11,40 +11,50 @@
 	.resumeText{
 		color: #f8f8f8; font-family: 'Raleway',sans-serif; font-size: 12px; font-weight: 800; line-height: 24px; margin: 0 0 24px;
 	}
+	.Logo{
+		width:280px;	
+	}
+	.loginFields{
+		padding-top:7px;
+	}
+	.loginBtn{
+		padding-top:4px;
+	}
 	</ui:style>
 	
 	<gwt:HTMLPanel>
 
 		<header class="header dark-bg">
-		
+		<div class="row" >
 			<div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
 				<gwt:VerticalPanel width="100%">
-					<gwt:FlowPanel>
-						<gwt:InlineLabel addStyleNames='{style.titleText}' horizontalAlignment="ALIGN_LEFT" text="ASMOP webtool"/>
-					</gwt:FlowPanel>
-					<gwt:InlineLabel addStyleNames='{style.resumeText}' horizontalAlignment="ALIGN_LEFT">Analysis System for Multi-objective Optimization Problems</gwt:InlineLabel>
-				</gwt:VerticalPanel>	
+					<gwt:Image  url="assets/img/banner2.png" width="280px"/>
+				</gwt:VerticalPanel>
 			</div>	
 			
 			
 			<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">	
-				<gwt:VerticalPanel  width="100%" horizontalAlignment="ALIGN_RIGHT">
-					<gwt:HorizontalPanel  width="320px" height="76px" horizontalAlignment="ALIGN_RIGHT" spacing="8">
-						<gwt:VerticalPanel  height="100%" width="132px" horizontalAlignment="ALIGN_LEFT" >
+				<gwt:VerticalPanel addStyleNames='{style.loginFields}' width="100%" horizontalAlignment="ALIGN_RIGHT" verticalAlignment="ALIGN_BOTTOM" height="90px">
+					<gwt:HorizontalPanel  width="100%" height="74px" horizontalAlignment="ALIGN_LEFT"  verticalAlignment="ALIGN_MIDDLE">
+						
+						<gwt:VerticalPanel  height="100%" width="98%" horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_BOTTOM" >
 							<gwt:InlineLabel addStyleNames='{style.label}'>Email</gwt:InlineLabel>
-							<gwt:TextBox ui:field="mailInput" maxLength="30" visibleLength="30" textAlignment="ALIGN_CENTER" alignment="CENTER" height="44px" width="128px"></gwt:TextBox>
+							<gwt:TextBox ui:field="mailInput" maxLength="30" visibleLength="30" textAlignment="ALIGN_CENTER" alignment="CENTER" height="44px" width="100%"></gwt:TextBox>
 						</gwt:VerticalPanel>
-						<gwt:VerticalPanel height="100%" width="132px" horizontalAlignment="ALIGN_LEFT">
+						
+						<gwt:VerticalPanel height="100%" width="98%" horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_BOTTOM">
 							<gwt:InlineLabel addStyleNames='{style.label}'>Password</gwt:InlineLabel>
-							<gwt:PasswordTextBox ui:field="passInput" maxLength="30" visibleLength="30" textAlignment="ALIGN_CENTER" alignment="CENTER" height="44px" width="128px"></gwt:PasswordTextBox>
+							<gwt:PasswordTextBox ui:field="passInput" maxLength="30" visibleLength="30" textAlignment="ALIGN_CENTER" alignment="CENTER" height="44px" width="100%" tabIndex="0"></gwt:PasswordTextBox>
 						</gwt:VerticalPanel>
-						<gwt:VerticalPanel width="100px" horizontalAlignment="ALIGN_CENTER" height="100%" verticalAlignment="ALIGN_MIDDLE">
-							<gwt:InlineLabel addStyleNames='{style.label}'></gwt:InlineLabel>
-							<gwt:Button ui:field="submitBTN" text="Log In" width="90px" height="44px"></gwt:Button>
+						
+						<gwt:VerticalPanel height="100%" width="98%" horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_BOTTOM">
+							<gwt:Button ui:field="submitBTN" addStyleNames='{style.loginBtn}' text="Log In" width="100%" height="44px" tabIndex="0"></gwt:Button>
 						</gwt:VerticalPanel>
+						
 					</gwt:HorizontalPanel>	
 				</gwt:VerticalPanel>
 			</div>
+		</div>
 		</header>
 	</gwt:HTMLPanel>
 	

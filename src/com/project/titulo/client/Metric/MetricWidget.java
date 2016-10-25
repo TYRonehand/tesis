@@ -23,6 +23,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.project.titulo.client.GoToUrl;
+import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
 import com.project.titulo.client.breadcrumb.BreadWidget;
@@ -35,8 +36,11 @@ import com.google.gwt.view.client.SingleSelectionModel;
 
 public class MetricWidget extends Composite {
 
-	private String IDUSER=null;
+	/*style*/
+	private MyStyle ms = new MyStyle();
 	
+	/*variables*/
+	private String IDUSER=null;
 	
 	//uifields	
 	@UiField Button metric1Btn;
@@ -76,16 +80,16 @@ public class MetricWidget extends Composite {
 		this.IDUSER = iduser;
 		initWidget(uiBinder.createAndBindUi(this));
 		//set style to buttons from bootstrap
-		this.metric1Btn.addStyleName("btn btn-primary");
-		this.metric2Btn.addStyleName("btn btn-primary");
-		this.metric3Btn.addStyleName("btn btn-primary");
-		this.metric4Btn.addStyleName("btn btn-primary");
-		this.metric5Btn.addStyleName("btn btn-primary");
-		this.SpacingBtn.addStyleName("btn btn-success");
-		this.EntropyBtn.addStyleName("btn btn-danger");
-		this.ERBtn.addStyleName("btn btn-success");
-		this.GDistanceBtn.addStyleName("btn btn-success");
-		this.CoverBtn.addStyleName("btn btn-danger");
+		this.metric1Btn.addStyleName(ms.getButtonStyle());
+		this.metric2Btn.addStyleName(ms.getButtonStyle());
+		this.metric3Btn.addStyleName(ms.getButtonStyle());
+		this.metric4Btn.addStyleName(ms.getButtonStyle());
+		this.metric5Btn.addStyleName(ms.getButtonStyle());
+		this.SpacingBtn.addStyleName(ms.getOkStyle());
+		this.EntropyBtn.addStyleName(ms.getCancelStyle());
+		this.ERBtn.addStyleName(ms.getOkStyle());
+		this.GDistanceBtn.addStyleName(ms.getOkStyle());
+		this.CoverBtn.addStyleName(ms.getCancelStyle());
 		//load data table
 		LoadFilesData();
 	}
@@ -287,7 +291,7 @@ public class MetricWidget extends Composite {
 					RootPanel.get("GWTcontainer").clear();
 					//cualquier otro caso sera enviado al login
 					RootPanel.get("GWTcontainer").add(new BreadWidget("METRIC"));
-					RootPanel.get("GWTcontainer").add(new ResultsWidget(result, "Spacing"));
+					RootPanel.get("GWTcontainer").add(new ResultsWidget(IDUSER ,result, "Spacing"));
 				}
 				else{
 					String Message ="No data returned";
@@ -315,7 +319,7 @@ public class MetricWidget extends Composite {
 					RootPanel.get("GWTcontainer").clear();
 					//cualquier otro caso sera enviado al login
 					RootPanel.get("GWTcontainer").add(new BreadWidget("METRIC"));
-					RootPanel.get("GWTcontainer").add(new ResultsWidget(result, "Error-Ratio"));
+					RootPanel.get("GWTcontainer").add(new ResultsWidget(IDUSER ,result, "Error-Ratio"));
 				}
 				else{
 					String Message ="No data returned";
@@ -342,7 +346,7 @@ public class MetricWidget extends Composite {
 					RootPanel.get("GWTcontainer").clear();
 					//cualquier otro caso sera enviado al login
 					RootPanel.get("GWTcontainer").add(new BreadWidget("METRIC"));
-					RootPanel.get("GWTcontainer").add(new ResultsWidget(result, "Generational-Distance"));
+					RootPanel.get("GWTcontainer").add(new ResultsWidget(IDUSER ,result, "Generational-Distance"));
 				}
 				else{
 					String Message ="No data returned";

@@ -5,6 +5,8 @@ import java.util.List;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -23,6 +25,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.project.titulo.client.GoToUrl;
+import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
 import com.project.titulo.shared.CookieVerify;
@@ -31,6 +34,10 @@ import com.project.titulo.shared.model.ResumeTopic;
 
 public class ForumWidget extends Composite {
 
+	/*style*/
+	private MyStyle ms = new MyStyle();
+	
+	/*variables*/
 	private String IDUSER=null;
 	
 	//uifields 
@@ -66,11 +73,11 @@ public class ForumWidget extends Composite {
 		this.IDUSER=iduser;
 		initWidget(uiBinder.createAndBindUi(this));
 		//set style to buttons from bootstrap
-		modalNewTopic.addStyleName("btn btn-primary");
-		modalSearchTopic.addStyleName("btn btn-primary");
-		modalMyTopic.addStyleName("btn btn-primary");
-		modalNewestTopic.addStyleName("btn btn-primary");
-		modalOldestTopic.addStyleName("btn btn-primary");
+		modalNewTopic.addStyleName(ms.getButtonStyle());
+		modalSearchTopic.addStyleName(ms.getButtonStyle());
+		modalMyTopic.addStyleName(ms.getButtonStyle());
+		modalNewestTopic.addStyleName(ms.getButtonStyle());
+		modalOldestTopic.addStyleName(ms.getButtonStyle());
 		//load data and table (ASC, USER, COMENTED)
 		LoadNewestTopic();
 	}
@@ -264,4 +271,13 @@ public class ForumWidget extends Composite {
 			ErrorVerify.getErrorAlert("empty");
 	}
 	
+	
+	@UiHandler("searchInput")
+	void onPassInputKeyDown(KeyDownEvent event) {
+
+		if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER)
+		{
+			LoadSearchTopic(this.searchInput.getText());
+		}
+	}
 }

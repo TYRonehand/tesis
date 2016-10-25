@@ -59,7 +59,7 @@
 			<g:Label text="Title" direction="LTR"/>
 			<g:TextBox ui:field="titleInput"  addStyleNames='{style.myFields}' height="16px" width="100%" direction="LTR" textAlignment="ALIGN_CENTER" focus="true" maxLength="49" ></g:TextBox>
 			
-			<g:Label text="Response"/>
+			<g:Label text="Description"/>
 			<g:RichTextArea ui:field="descriptionInput"   addStyleNames='{style.myFields}' width="100%" ></g:RichTextArea>
 			
 			<g:VerticalPanel ui:field="buttonPanel">

@@ -39,7 +39,7 @@
                     	<div class="btn-group btn-group-justified">
                         <g:VerticalPanel ui:field="menu" addStyleNames='{style.panel}' width="100%">
                         	<g:Button ui:field="backBtn" addStyleNames='{style.submitBtn}' width="100%" >Go back</g:Button>
-                        	<g:Button ui:field="csvBtn" addStyleNames='{style.submitBtn}' width="100%" >Export Results</g:Button>
+                        	<g:Button ui:field="exportBtn" addStyleNames='{style.submitBtn}' width="100%" >Export Results</g:Button>
                         </g:VerticalPanel>
                         </div>
                             

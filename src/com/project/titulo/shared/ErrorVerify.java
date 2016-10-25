@@ -52,9 +52,6 @@ public class ErrorVerify {
 			case "invalidmail":
 				Window.alert("Invalid e-mail ");
 				break;
-			case "invalidpass":
-				Window.alert("Invalid password");
-				break;
 			case "invalidfield":
 				Window.alert("Invalid field");
 				break;
@@ -81,6 +78,15 @@ public class ErrorVerify {
 				break;
 			case "goodnewpass":
 				Window.alert("Change pass successfully");
+				break;
+			case "invalipass":
+				Window.alert("Password min. 6 characters");
+				break;
+			case "badpassword":
+				Window.alert("Wrong password");
+				break;
+			case "diferentpassword":
+				Window.alert("Passwords are not equals");
 				break;
 			case "badcode":
 				Window.alert("Not a valid code for the user");
@@ -114,6 +120,9 @@ public class ErrorVerify {
 				break;
 			case "NoParetoFront":
 				Window.alert("Select a Pareto Front True from table");
+				break;
+			case "failexport":
+				Window.alert("File export failure");
 				break;
 			default:
 				Window.alert("Unknow error!!");

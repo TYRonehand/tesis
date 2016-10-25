@@ -16,6 +16,7 @@ import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.SimplePager.TextLocation;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -23,13 +24,18 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.project.titulo.client.GoToUrl;
+import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
 import com.project.titulo.shared.ErrorVerify;
 import com.project.titulo.shared.model.UserFile;
 
 public class FileWidget extends Composite {
-
+	
+	/*style*/
+	private MyStyle ms = new MyStyle();
+	
+	/*variables*/
 	private String IDUSER=null;
 	
 	//uifields	
@@ -61,8 +67,9 @@ public class FileWidget extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 
 		//set style to buttons from bootstrap
-		uploadBtn.addStyleName("btn btn-primary");
-		helpBtn.addStyleName("btn btn-primary");
+		uploadBtn.addStyleName(ms.getButtonStyle());
+		helpBtn.addStyleName(ms.getButtonStyle());
+		
 		//table
 		LoadFilesData();
 	}
@@ -132,32 +139,53 @@ public class FileWidget extends Composite {
 		Column<UserFile, String> buttonPlotColumn = new Column<UserFile, String>(buttonPlot) {
 		  @Override
 		  public String getValue(UserFile object) {
-			  if(object.getPlot().equals("1"))
-				  return "Added";
-			  else
-				  return "Add";
+			  if(object.getPlot()=="1")
+				  return "Remove";
+			  return "Add";
 		  }
 		};
 		buttonPlotColumn.setFieldUpdater(new FieldUpdater<UserFile, String>() 
 		{
 			  public void update(int index, UserFile object, String value) 
 			  {
-				  serverService.addPlotFile(object.getIddatafile(), new AsyncCallback<Boolean>(){
-
-						@Override
-						public void onFailure(Throwable caught) {
-							ErrorVerify.getErrorAlert("offline");
-						}
-						@Override
-						public void onSuccess(Boolean result) 
-						{
-							if(result){
-								ErrorVerify.getErrorAlert("plotfileadd");
-								LoadFilesData();
-							}else{
-								ErrorVerify.getErrorAlert("failadd");
+				  //not added in plot
+				  if(object.getPlot()=="0")
+				  {
+					  serverService.addPlotFile(object.getIddatafile(), new AsyncCallback<Boolean>(){
+	
+							@Override
+							public void onFailure(Throwable caught) {
+								ErrorVerify.getErrorAlert("offline");
 							}
-						}}); 
+							@Override
+							public void onSuccess(Boolean result){
+								if(result){
+									ErrorVerify.getErrorAlert("plotfileadd");
+									LoadFilesData();
+								}else{
+									ErrorVerify.getErrorAlert("failadd");
+								}
+							}}); 
+				  }
+				  else//added in plot
+				  {
+					  serverService.removePlotFile(object.getIddatafile(), new AsyncCallback<Boolean>(){
+
+							@Override
+							public void onFailure(Throwable caught) {
+								ErrorVerify.getErrorAlert("offline");
+							}
+							@Override
+							public void onSuccess(Boolean result){
+								if(result){
+									ErrorVerify.getErrorAlert("fileremove");
+									LoadFilesData();
+								}else{
+									ErrorVerify.getErrorAlert("faildel");
+								}
+							}}
+					  ); 
+				  }
 			  }
 		});
 		table.addColumn(buttonPlotColumn, "Plot");
@@ -167,35 +195,59 @@ public class FileWidget extends Composite {
 		Column<UserFile, String> buttonMetricColumn = new Column<UserFile, String>(buttonMetric) {
 		  @Override
 		  public String getValue(UserFile object) {
-			  if(object.getMetric().equals("1"))
-				  return "Added";
-			  else
-				  return "Add";
+			  if(object.getMetric()=="1")
+				  return "Remove";
+			  return "Add";
 		  }
 		};
 		buttonMetricColumn.setFieldUpdater(new FieldUpdater<UserFile, String>() 
 		{
 			  public void update(int index, UserFile object, String value) 
 			  {
-				  serverService.addMetricFile(object.getIddatafile(), new AsyncCallback<Boolean>(){
+				  //not added in metric
+				  if(object.getMetric()=="0")
+				  {
+					  serverService.addMetricFile(object.getIddatafile(), new AsyncCallback<Boolean>(){
 
-						@Override
-						public void onFailure(Throwable caught) {
-							ErrorVerify.getErrorAlert("offline");
-						}
-						@Override
-						public void onSuccess(Boolean result) 
-						{
-							if(result){
-								ErrorVerify.getErrorAlert("metricfileadd");
-								LoadFilesData();
-							}else{
-								ErrorVerify.getErrorAlert("failadd");
+							@Override
+							public void onFailure(Throwable caught) {
+								ErrorVerify.getErrorAlert("offline");
 							}
-						}}); 
+							@Override
+							public void onSuccess(Boolean result){
+								if(result){
+									ErrorVerify.getErrorAlert("metricfileadd");
+									LoadFilesData();
+								}else{
+									ErrorVerify.getErrorAlert("failadd");
+								}
+							}}); 
+				  }
+				  else//added in metric
+				  {
+					  serverService.removeMetricFile(object.getIddatafile(), new AsyncCallback<Boolean>(){
+
+							@Override
+							public void onFailure(Throwable caught) {
+								ErrorVerify.getErrorAlert("offline");
+							}
+							@Override
+							public void onSuccess(Boolean result){
+								if(result){
+									ErrorVerify.getErrorAlert("fileremove");
+									
+									LoadFilesData();
+								}else{
+									ErrorVerify.getErrorAlert("faildel");
+								}
+							}}
+					  ); 
+				  }
+				  
 			  }
 		});
 		table.addColumn(buttonMetricColumn, "Metric");
+		
 		
 		/*DELETE BOUTTON CELL*/
 		ButtonCell buttonDelete = new ButtonCell();
@@ -210,21 +262,24 @@ public class FileWidget extends Composite {
 		{
 			  public void update(int index, UserFile object, String value) 
 			  {
-				  serverService.deleteFile(object.getIddatafile(), new AsyncCallback<Boolean>(){
-
-						@Override
-						public void onFailure(Throwable caught) {
-							ErrorVerify.getErrorAlert("offline");
-						}
-						@Override
-						public void onSuccess(Boolean result) 
-						{
-							if(result){
-								LoadFilesData();
-							}else{
-								ErrorVerify.getErrorAlert("faildel");
+				  if(Window.confirm("Delete this file?"))
+				  {
+					  serverService.deleteFile(object.getIddatafile(), new AsyncCallback<Boolean>(){
+	
+							@Override
+							public void onFailure(Throwable caught) {
+								ErrorVerify.getErrorAlert("offline");
 							}
-						}}); 
+							@Override
+							public void onSuccess(Boolean result) 
+							{
+								if(result){
+									LoadFilesData();
+								}else{
+									ErrorVerify.getErrorAlert("faildel");
+								}
+							}});
+				  }
 			  }
 		});
 		table.addColumn(buttonDeleteColumn, "Action");

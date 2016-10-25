@@ -1,72 +1,76 @@
 package com.project.titulo.shared;
 
-import java.io.IOException;
-import java.io.Writer;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.ServletContext;
 
 import com.project.titulo.shared.model.MetricResults;
 
 public class ExportDataResult {
 
-	private static final char DEFAULT_SEPARATOR = ',';
+	private final char DEFAULT_SEPARATOR = ';';
+	private String PATH=null;
 	
-	private List<MetricResults> dataResults = new ArrayList<MetricResults>();
+	private List<MetricResults> dataResultsList = new ArrayList<MetricResults>();
+	private String IDUSER=null;
 	
-	public ExportDataResult(List<MetricResults> Results)
+	public ExportDataResult(ServletContext context, String iduser, List<MetricResults> Results)
 	{
-		this.dataResults = Results;
+		this.dataResultsList = Results;
+		this.IDUSER = iduser;
+		this.PATH = context.getRealPath("download")+"/";
 	}
 	
+	public Boolean WriteFile(){
 
-    public static void writeLine(Writer w, List<String> values) throws IOException {
-        writeLine(w, values, DEFAULT_SEPARATOR, ' ');
-    }
+		try (PrintStream writer = new PrintStream(new FileOutputStream( PATH+this.IDUSER+".csv"  ))) 
+		{
+		    //cadena titulos
+			List<String> titlesHorizontal = this.dataResultsList.get(0).getParetoNameFile();
+			String textline=";";
+			for(int i = 0; i<titlesHorizontal.size();i++)
+			{
+				textline += titlesHorizontal.get(i);
+				if(i<titlesHorizontal.size()-1)
+					textline += this.DEFAULT_SEPARATOR;
+			}
+			
+			//write in textfile
+			writer.println(textline);
+			
+			//create textlines from results
+			for(MetricResults result : this.dataResultsList)
+			{
+				textline = result.getAproximationNameFile()+this.DEFAULT_SEPARATOR;
+				
+				for(int j =0; j<result.getResultsList().size();j++)
+				{
+					textline += result.getResultsList().get(j);
+					if(j<titlesHorizontal.size()-1)
+						textline += this.DEFAULT_SEPARATOR;
+				}
+				//write in textfile
+				writer.println(textline);
+			}
+			//close textfile
+			writer.close();
+		} 
+		catch (FileNotFoundException e) 
+		{
+			e.printStackTrace();
+			System.err.println("Export fail!");
+			return false;
+		}
+		System.err.println("Export Ok!");
+		return true;
 
-    public static void writeLine(Writer w, List<String> values, char separators) throws IOException {
-        writeLine(w, values, separators, ' ');
-    }
+		
+	}
 
-    //https://tools.ietf.org/html/rfc4180
-    private static String followCVSformat(String value) {
-
-        String result = value;
-        if (result.contains("\"")) {
-            result = result.replace("\"", "\"\"");
-        }
-        return result;
-
-    }
-
-    public static void writeLine(Writer w, List<String> values, char separators, char customQuote) throws IOException {
-
-        boolean first = true;
-
-        //default customQuote is empty
-
-        if (separators == ' ') {
-            separators = DEFAULT_SEPARATOR;
-        }
-
-        StringBuilder sb = new StringBuilder();
-        for (String value : values) 
-        {
-            if (!first) {
-                sb.append(separators);
-            }
-            if (customQuote == ' ') {
-                sb.append(followCVSformat(value));
-            } else {
-                sb.append(customQuote).append(followCVSformat(value)).append(customQuote);
-            }
-
-            first = false;
-        }
-        sb.append("\n");
-        w.append(sb.toString());
-
-
-    }
 
 
 }

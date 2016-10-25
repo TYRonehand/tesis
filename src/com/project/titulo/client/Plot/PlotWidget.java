@@ -28,6 +28,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.project.titulo.client.GoToUrl;
+import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
 import com.project.titulo.shared.ErrorVerify;
@@ -35,6 +36,10 @@ import com.project.titulo.shared.model.UserFile;
 
 public class PlotWidget extends Composite {
 
+	/*style*/
+	private MyStyle ms = new MyStyle();
+	
+	/*variables*/
 	private String IDUSER=null;
 	
 	//panels
@@ -92,11 +97,11 @@ public class PlotWidget extends Composite {
 		//properties
 		initWidget(uiBinder.createAndBindUi(this));
 		//set style to buttons from bootstrap
-		plotBtn.addStyleName("btn btn-primary");	
-		epsBtn.addStyleName("btn btn-primary");	
-		pdfBtn.addStyleName("btn btn-primary");	
-		pngBtn.addStyleName("btn btn-primary");	
-		svgBtn.addStyleName("btn btn-primary");	
+		plotBtn.addStyleName(ms.getButtonStyle());	
+		epsBtn.addStyleName(ms.getButtonStyle());	
+		pdfBtn.addStyleName(ms.getButtonStyle());	
+		pngBtn.addStyleName(ms.getButtonStyle());	
+		svgBtn.addStyleName(ms.getButtonStyle());	
 		//load properties
 		gridItems.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
 		//table
@@ -227,7 +232,7 @@ public class PlotWidget extends Composite {
 	}
 
 	//save images for extension
-	private void SaveImg(String extension, final String window)
+	private void SaveImg(String extension)
 	{
 		//labels
 		List<String> labelxyz = new ArrayList<String>();
@@ -259,7 +264,8 @@ public class PlotWidget extends Composite {
 					{
 						//Window.Location.assign(GWT.getHostPageBaseURL()+result);
 						ErrorVerify.getErrorAlert("successadd");
-						Window.open(GWT.getHostPageBaseURL()+result,"_blank",window);
+						//Window.open(GWT.getHostPageBaseURL()+result,"_blank",window);
+						Window.Location.assign(GWT.getHostPageBaseURL()+result);
 					}
 					else
 					{
@@ -282,7 +288,7 @@ public class PlotWidget extends Composite {
 					{
 						//Window.Location.assign(GWT.getHostPageBaseURL()+result);
 						ErrorVerify.getErrorAlert("successadd");
-						Window.open(GWT.getHostPageBaseURL()+result,"_blank",window);
+						Window.Location.assign(GWT.getHostPageBaseURL()+result);
 					}
 					else
 					{
@@ -299,35 +305,35 @@ public class PlotWidget extends Composite {
 	@UiHandler("plotBtn")
 	void onPlotBtnClick(ClickEvent event) 
 	{
-		SaveImg("html","");
+		SaveImg("html");
     }
 
 	//guarda imagen en png
 	@UiHandler("pngBtn")
 	void onPngBtnClick(ClickEvent event) 
 	{
-		SaveImg("png","enabled");
+		SaveImg("png");
     }
 	
 	//guarda imagen en eps
 	@UiHandler("epsBtn")
 	void onEpsBtnClick(ClickEvent event) 
 	{
-		SaveImg("eps","enabled");
+		SaveImg("eps");
     }
 
 	//guarda imagen en svg
 	@UiHandler("svgBtn")
 	void onSvgBtnClick(ClickEvent event) 
 	{
-		SaveImg("svg","enabled");
+		SaveImg("svg");
     }
 	
 	//guarda imagen en pdf
 	@UiHandler("pdfBtn")
 	void onPdfBtnClick(ClickEvent event) 
 	{
-		SaveImg("pdf","enabled");
+		SaveImg("pdf");
     }
 	
 	

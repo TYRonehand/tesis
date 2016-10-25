@@ -12,6 +12,7 @@ public class CookieVerify {
 	private  String idban="MOPban";
 	private  String idurl="MOPurl";
 	private  String idtopic="MOPtopic";
+	private  String idstyle="MOPstyle";
 	
 	public CookieVerify(Boolean init){
 		//inicializa cookie
@@ -22,6 +23,7 @@ public class CookieVerify {
 			this.setCookieMail("");
 			this.setCookieName("");
 			this.setCookieITopic("");
+			this.setCookieStyle("0");
 		}
 		
 	}
@@ -34,6 +36,8 @@ public class CookieVerify {
 	private  String getIdban() {return this.idban;}
 	private String getIdurl() {return idurl;}
 	private String getIdtopic() {return idtopic;}
+	private String getIdstyle() {return idstyle;}
+
 	
 	//cookie id
 	public  void setCookieUser(String value)
@@ -69,6 +73,13 @@ public class CookieVerify {
 		Cookies.setCookie(getIdtopic(), value, getTime());
 	}	
 	
+	//cookie style
+	public void setCookieStyle(String value) {
+		Cookies.setCookie( getIdstyle(), value, getTime());
+	}
+	
+	
+	
 	//cookie id
 	public  String getCookieUser()
 	{
@@ -103,6 +114,12 @@ public class CookieVerify {
 	public String getCookieIdurl() {
 		return Cookies.getCookie(getIdurl());
 	}
+
+	//cookie style
+	public String getCookieStyle() {
+		return Cookies.getCookie(this.getIdstyle());
+	}
+	
 	
 	
 	//exist cookie created
@@ -130,6 +147,7 @@ public class CookieVerify {
 		this.setCookieMail("");
 		this.setCookieName("");
 	}
+
 
 	
 

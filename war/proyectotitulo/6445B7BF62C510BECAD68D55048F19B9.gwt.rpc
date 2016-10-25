@@ -4,8 +4,8 @@ com.google.gwt.user.client.rpc.XsrfToken, false, false, true, true, com.google.g
 com.project.titulo.client.ServerService, false, false, false, false, _, 779498090
 com.project.titulo.shared.model.Answer, true, true, true, true, com.project.titulo.shared.model.Answer/3843695366, 3843695366
 [Lcom.project.titulo.shared.model.Answer;, true, true, false, false, [Lcom.project.titulo.shared.model.Answer;/2943380373, 2943380373
-com.project.titulo.shared.model.MetricResults, true, true, false, false, com.project.titulo.shared.model.MetricResults/4249636767, 4249636767
-[Lcom.project.titulo.shared.model.MetricResults;, true, true, false, false, [Lcom.project.titulo.shared.model.MetricResults;/2720209498, 2720209498
+com.project.titulo.shared.model.MetricResults, true, true, true, true, com.project.titulo.shared.model.MetricResults/4249636767, 4249636767
+[Lcom.project.titulo.shared.model.MetricResults;, true, true, true, true, [Lcom.project.titulo.shared.model.MetricResults;/2720209498, 2720209498
 com.project.titulo.shared.model.ResumeTopic, true, true, false, false, com.project.titulo.shared.model.ResumeTopic/3023953164, 3023953164
 [Lcom.project.titulo.shared.model.ResumeTopic;, true, true, false, false, [Lcom.project.titulo.shared.model.ResumeTopic;/3444772719, 3444772719
 com.project.titulo.shared.model.Topic, true, true, true, true, com.project.titulo.shared.model.Topic/727527989, 727527989

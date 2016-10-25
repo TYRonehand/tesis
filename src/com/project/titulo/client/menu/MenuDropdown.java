@@ -6,8 +6,8 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.Widget;
 import com.project.titulo.client.GoToUrl;
@@ -22,8 +22,8 @@ public class MenuDropdown extends Composite {
 	public GoToUrl url = new GoToUrl();
 	
 	//uibinder
-	@UiField Hyperlink exitLink;
-	@UiField Hyperlink profileLink;
+	@UiField Button exitLink;
+	@UiField Button profileLink;
 	@UiField MenuItem homeBTN;
 	@UiField MenuItem filesBTN;
 	@UiField MenuItem plotBTN;

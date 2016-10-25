@@ -30,6 +30,7 @@ import com.project.titulo.shared.model.Topic;
 import com.project.titulo.shared.model.User;
 
 public class ReadWidget extends Composite {
+	
 	private String IDTOPIC = null;//selected topic
 	private String IDUSER = null;//current user
 	

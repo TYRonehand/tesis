@@ -22,7 +22,7 @@ public interface ServerService extends RemoteService
 	/*ADMIN*/
 	//list of users
 	List<User> getUserList(String opcion) throws IllegalArgumentException;
-
+		
 	
 	/*USER*/
 	
@@ -46,6 +46,9 @@ public interface ServerService extends RemoteService
 
 	//insert user
 	Boolean addUserInfo(User newUser) throws IllegalArgumentException;
+	
+	//erase user
+	Boolean deleteUserInfo(String iduser) throws IllegalArgumentException;
 	
 	/*FILES*/
 	//found user files 
@@ -124,5 +127,6 @@ public interface ServerService extends RemoteService
 	List<MetricResults> CalculateC(String iduser) throws IllegalArgumentException;
 	List<MetricResults> CalculateE(String iduser) throws IllegalArgumentException;
 	
-	
+	/*------------EXPORT RESULTS---------------*/
+	Boolean ExportResults(String iduser, List<MetricResults> Results) throws IllegalArgumentException;
 }
