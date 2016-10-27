@@ -34,24 +34,17 @@ public class GoToUrl {
 		String IDUSER=null;
 		String IDTOPIC=null;
 		
-		if(Cookies.getCookieNames().size()>2)
-		{
+		if(Cookies.getCookieNames().size()>2){
 			IDUSER= mycookie.getCookieUser();
 			if(option=="TOPIC")
 				IDTOPIC=mycookie.getCookieTopic();
-		}
-		else
-		{
+		}else{
 			if(option=="REGISTER")  
 			{
 				option="REGISTER";
-			}	
-			else if(option=="RECOVERY")
-			{
+			}else if(option=="RECOVERY"){
 				option="RECOVERY";
-			}	
-			else
-			{
+			}else{
 				option="LOGIN";
 			}	
 		}

@@ -31,8 +31,6 @@ import com.project.titulo.shared.ErrorVerify;
 import com.project.titulo.shared.model.MetricResults;
 import com.project.titulo.shared.model.UserFile;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.view.client.SelectionChangeEvent;
-import com.google.gwt.view.client.SingleSelectionModel;
 
 public class MetricWidget extends Composite {
 
@@ -80,16 +78,16 @@ public class MetricWidget extends Composite {
 		this.IDUSER = iduser;
 		initWidget(uiBinder.createAndBindUi(this));
 		//set style to buttons from bootstrap
-		this.metric1Btn.addStyleName(ms.getButtonStyle());
-		this.metric2Btn.addStyleName(ms.getButtonStyle());
-		this.metric3Btn.addStyleName(ms.getButtonStyle());
-		this.metric4Btn.addStyleName(ms.getButtonStyle());
-		this.metric5Btn.addStyleName(ms.getButtonStyle());
+		this.metric1Btn.addStyleName(ms.getButtonStyle(0));
+		this.metric2Btn.addStyleName(ms.getButtonStyle(0));
+		this.metric3Btn.addStyleName(ms.getButtonStyle(0));
+		this.metric4Btn.addStyleName(ms.getButtonStyle(0));
+		this.metric5Btn.addStyleName(ms.getButtonStyle(0));
 		this.SpacingBtn.addStyleName(ms.getOkStyle());
 		this.EntropyBtn.addStyleName(ms.getCancelStyle());
 		this.ERBtn.addStyleName(ms.getOkStyle());
 		this.GDistanceBtn.addStyleName(ms.getOkStyle());
-		this.CoverBtn.addStyleName(ms.getCancelStyle());
+		this.CoverBtn.addStyleName(ms.getOkStyle());
 		//load data table
 		LoadFilesData();
 	}
@@ -185,17 +183,7 @@ public class MetricWidget extends Composite {
 		});
 		table.addColumn(buttonColumn, "Action");
 		
-		// Add a selection model to handle user selection.
-	    final SingleSelectionModel<UserFile> selectionModel = new SingleSelectionModel<UserFile>();
-	    table.setSelectionModel(selectionModel);
-	    selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-	      public void onSelectionChange(SelectionChangeEvent event) {
-	    	  UserFile selected = selectionModel.getSelectedObject();
-	        if (selected != null) {
-	        	
-	        }
-	      }
-	    });
+		
 		
 
 		// Push the data into the widget.
@@ -360,6 +348,28 @@ public class MetricWidget extends Composite {
 	@UiHandler("CoverBtn")
 	void onCoverBtnClick(ClickEvent event) 
 	{
-		
+		serverService.CalculateC(this.IDUSER, new AsyncCallback<List<MetricResults>>(){
+
+			@Override
+			public void onFailure(Throwable caught) {
+				ErrorVerify.getErrorAlert("offline");
+			}
+
+			@Override
+			public void onSuccess(List<MetricResults> result) 
+			{
+				if(result.size()>0)
+				{
+					RootPanel.get("GWTcontainer").clear();
+					//cualquier otro caso sera enviado al login
+					RootPanel.get("GWTcontainer").add(new BreadWidget("METRIC"));
+					RootPanel.get("GWTcontainer").add(new ResultsWidget(IDUSER ,result, "Coverage"));
+				}
+				else{
+					String Message ="No data returned";
+					Window.alert(Message);
+				}
+				
+			}});
 	}
 }

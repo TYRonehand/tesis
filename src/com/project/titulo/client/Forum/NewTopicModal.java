@@ -9,7 +9,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.RichTextArea;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -29,7 +29,7 @@ public class NewTopicModal  extends DialogBox {
 	
 	//elementos uibinder
 	@UiField TextBox titleInput; 
-	@UiField RichTextArea descriptionInput; 
+	@UiField TextArea descriptionInput; 
 	@UiField DialogBox dialogBox; 
 	@UiField VerticalPanel dialogVPanel; 
 	@UiField VerticalPanel buttonPanel; 
@@ -49,6 +49,7 @@ public class NewTopicModal  extends DialogBox {
 		this.IDUSER = iduser;
 		
 		setWidget(uiBinder.createAndBindUi(this));
+		this.center();
 		
 		//load properties
 		LoadModal();

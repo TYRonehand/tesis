@@ -73,11 +73,11 @@ public class ForumWidget extends Composite {
 		this.IDUSER=iduser;
 		initWidget(uiBinder.createAndBindUi(this));
 		//set style to buttons from bootstrap
-		modalNewTopic.addStyleName(ms.getButtonStyle());
-		modalSearchTopic.addStyleName(ms.getButtonStyle());
-		modalMyTopic.addStyleName(ms.getButtonStyle());
-		modalNewestTopic.addStyleName(ms.getButtonStyle());
-		modalOldestTopic.addStyleName(ms.getButtonStyle());
+		modalNewTopic.addStyleName(ms.getButtonStyle(0));
+		modalSearchTopic.addStyleName(ms.getButtonStyle(0));
+		modalMyTopic.addStyleName(ms.getButtonStyle(0));
+		modalNewestTopic.addStyleName(ms.getButtonStyle(0));
+		modalOldestTopic.addStyleName(ms.getButtonStyle(0));
 		//load data and table (ASC, USER, COMENTED)
 		LoadNewestTopic();
 	}
@@ -223,7 +223,7 @@ public class ForumWidget extends Composite {
 		
 		panel.setBorderWidth(0);
 		panel.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
-		panel.add(new Label("*press topic to open"));
+		panel.add(new Label("*press topic to Read"));
 		panel.add(table);
 		panel.add(pager);
 		

@@ -10,16 +10,8 @@ public class MyStyle {
 		
 	}
 	
-	public String getButtonStyle(){
+	public String getButtonStyle(int option){
 		
-		int option = 0;
-		/*
-		if(Cookies.getCookieNames().size()>2) 
-		{
-			CookieVerify cv = new CookieVerify(false);
-			option=Integer.parseInt(cv.getCookieStyle());
-		}
-		*/
 		switch(option)
 		{
 			case 0: return "btn btn-primary" ;

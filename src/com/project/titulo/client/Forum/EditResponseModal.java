@@ -8,7 +8,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.RichTextArea;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.project.titulo.client.GoToUrl;
@@ -23,7 +23,7 @@ public class EditResponseModal extends DialogBox {
 	public GoToUrl url = new GoToUrl();
 	
 	//elementos uibinder
-	@UiField RichTextArea descriptionInput; 
+	@UiField TextArea descriptionInput; 
 	@UiField DialogBox dialogBox; 
 	@UiField VerticalPanel dialogVPanel; 
 	@UiField VerticalPanel buttonPanel; 
@@ -50,6 +50,8 @@ public class EditResponseModal extends DialogBox {
 		this.updatedAnswer=mycomment;
 		//init properties
 		setWidget(uiBinder.createAndBindUi(this));
+		this.center();
+		
 		LoadModal();
 	}
 

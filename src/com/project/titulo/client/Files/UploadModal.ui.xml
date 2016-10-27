@@ -69,16 +69,22 @@
 					<g:Label text="Dimension" direction="LTR"/>
 					<g:ListBox ui:field="dimensionList" addStyleNames='{style.myFields}' ></g:ListBox>
 					
-					<g:Label text="Label X" direction="LTR"/>
-					<g:TextBox ui:field="labelxInput"  addStyleNames='{style.myFields}' height="16px" width="100%" direction="LTR" textAlignment="ALIGN_CENTER" focus="true" maxLength="49" ></g:TextBox>
+					<g:VerticalPanel ui:field="labelxPanel">
+						<g:Label text="Label X" direction="LTR"/>
+						<g:TextBox ui:field="labelxInput"  addStyleNames='{style.myFields}' height="16px" width="100%" direction="LTR" textAlignment="ALIGN_CENTER" maxLength="12" ></g:TextBox>
+					</g:VerticalPanel>
 					
-					<g:Label text="Label Y" direction="LTR"/>
-					<g:TextBox ui:field="labelyInput"  addStyleNames='{style.myFields}' height="16px" width="100%" direction="LTR" textAlignment="ALIGN_CENTER" focus="true" maxLength="49" ></g:TextBox>
+					<g:VerticalPanel ui:field="labelyPanel" visible="false">
+						<g:Label text="Label Y" direction="LTR"/>
+						<g:TextBox ui:field="labelyInput"  addStyleNames='{style.myFields}' height="16px" width="100%" direction="LTR" textAlignment="ALIGN_CENTER" maxLength="12" ></g:TextBox>
+					</g:VerticalPanel>
 					
-					<g:Label text="Label Z" direction="LTR"/>
-					<g:TextBox ui:field="labelzInput"  addStyleNames='{style.myFields}' height="16px" width="100%" direction="LTR" textAlignment="ALIGN_CENTER" focus="true" maxLength="49" ></g:TextBox>
+					<g:VerticalPanel ui:field="labelzPanel" visible="false">
+						<g:Label text="Label Z" direction="LTR"/>
+						<g:TextBox ui:field="labelzInput"  addStyleNames='{style.myFields}' height="16px" width="100%" direction="LTR" textAlignment="ALIGN_CENTER"  maxLength="12" ></g:TextBox>
+					</g:VerticalPanel>
 					
-					<g:Label text="Data results" direction="LTR"/>
+					<g:Label text="Pareto Optimal Set" direction="LTR"/>
 					<g:RichTextArea ui:field="dataInput"   addStyleNames='{style.myFields}' width="100%" ></g:RichTextArea>
 					
 					<g:Button ui:field="createBtn" addStyleNames='{style.submitBtn}' width="100%" >Upload Data</g:Button>

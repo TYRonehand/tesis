@@ -37,10 +37,14 @@ public interface ServerServiceAsync {
 	
 	
 	//files
+	void getDataFile(String iddatafile, AsyncCallback<UserFile> callback) throws IllegalArgumentException; 
+	
 	void getUserFiles(String user, AsyncCallback<List<UserFile>> callback) throws IllegalArgumentException;
 
 	void addNewFile(UserFile myFile, AsyncCallback<Boolean> callback) throws IllegalArgumentException;
 
+	void setFile(UserFile myFile, AsyncCallback<Boolean> callback) throws IllegalArgumentException;
+	
 	void deleteFile(String iddatafile, AsyncCallback<Boolean> callback) throws IllegalArgumentException;
 	
 	void getUserFilesPlot(String user, AsyncCallback<List<UserFile>> callback) throws IllegalArgumentException;
@@ -56,6 +60,7 @@ public interface ServerServiceAsync {
 	void removeMetricFile(String iddatafile, AsyncCallback<Boolean> callback) throws IllegalArgumentException;
 	
 	void getCountUserFiles(String iduser, AsyncCallback<Integer> callback) throws IllegalArgumentException;
+	
 	
 	//topic
 	void addNewTopic(Topic myTopic, AsyncCallback<Boolean> callback) throws IllegalArgumentException;

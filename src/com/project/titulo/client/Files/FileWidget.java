@@ -21,12 +21,14 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.project.titulo.client.GoToUrl;
 import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
+import com.project.titulo.client.breadcrumb.BreadWidget;
 import com.project.titulo.shared.ErrorVerify;
 import com.project.titulo.shared.model.UserFile;
 
@@ -67,8 +69,8 @@ public class FileWidget extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 
 		//set style to buttons from bootstrap
-		uploadBtn.addStyleName(ms.getButtonStyle());
-		helpBtn.addStyleName(ms.getButtonStyle());
+		uploadBtn.addStyleName(ms.getButtonStyle(0));
+		helpBtn.addStyleName(ms.getButtonStyle(0));
 		
 		//table
 		LoadFilesData();
@@ -249,13 +251,40 @@ public class FileWidget extends Composite {
 		table.addColumn(buttonMetricColumn, "Metric");
 		
 		
-		/*DELETE BOUTTON CELL*/
+		
+		/*EDIT BUTTON CELL*/
+		ButtonCell buttonEdit = new ButtonCell();
+		Column<UserFile, String> buttonEditColumn = new Column<UserFile, String>(buttonEdit) {
+		  @Override
+		  public String getValue(UserFile object) {
+			  return "Edit";
+		  }
+		};
+		buttonEditColumn.setFieldUpdater(new FieldUpdater<UserFile, String>() 
+		{
+			  public void update(int index, UserFile object, String value) 
+			  {
+				  if(Window.confirm("Edit this file?"))
+					{
+			        	// widget close session	
+						RootPanel.get("GWTcontainer").clear();	
+						//cualquier otro caso sera enviado al login
+						RootPanel.get("GWTcontainer").add(new BreadWidget("FILES"));
+						RootPanel.get("GWTcontainer").add(new EditFile(object.getIddatafile()));
+					}
+			  }
+		});
+		table.addColumn(buttonEditColumn, "");
+		
+		
+		
+		/*DELETE BUTTON CELL*/
 		ButtonCell buttonDelete = new ButtonCell();
 		Column<UserFile, String> buttonDeleteColumn = new Column<UserFile, String>(buttonDelete) {
 		  @Override
 		  public String getValue(UserFile object) {
 			  
-			  return "Delete";
+			  return "X";
 		  }
 		};
 		buttonDeleteColumn.setFieldUpdater(new FieldUpdater<UserFile, String>() 
@@ -282,8 +311,29 @@ public class FileWidget extends Composite {
 				  }
 			  }
 		});
-		table.addColumn(buttonDeleteColumn, "Action");
+		table.addColumn(buttonDeleteColumn, "Delete");
 		
+		/*
+		// Add a selection model to handle user selection.
+	    final SingleSelectionModel<UserFile> selectionModel = new SingleSelectionModel<UserFile>();
+	    table.setSelectionModel(selectionModel);
+	    selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+	      public void onSelectionChange(SelectionChangeEvent event) {
+	    	  UserFile selected = selectionModel.getSelectedObject();
+	        if (selected != null) {
+	        	if(Window.confirm("Edit this file?"))
+				{
+		        	// widget close session	
+					RootPanel.get("GWTcontainer").clear();	
+					//cualquier otro caso sera enviado al login
+					RootPanel.get("GWTcontainer").add(new BreadWidget("FILES"));
+					RootPanel.get("GWTcontainer").add(new EditFile(selected.getIddatafile()));
+				}
+	        }
+	      }
+	    });
+	    */
+	    
 		
 		// draw table
 		table.setRowCount(DATAINFO.size(), true);

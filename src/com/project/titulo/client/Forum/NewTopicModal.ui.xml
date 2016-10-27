@@ -60,9 +60,10 @@
 			<g:TextBox ui:field="titleInput"  addStyleNames='{style.myFields}' height="16px" width="100%" direction="LTR" textAlignment="ALIGN_CENTER" focus="true" maxLength="49" ></g:TextBox>
 			
 			<g:Label text="Description"/>
-			<g:RichTextArea ui:field="descriptionInput"   addStyleNames='{style.myFields}' width="100%" ></g:RichTextArea>
+			<g:TextArea ui:field="descriptionInput"  addStyleNames='{style.myFields}' textAlignment="ALIGN_JUSTIFY" width="100%" height="200px"/>
+			<g:Label text="(max 500 characters)"/>
 			
-			<g:VerticalPanel ui:field="buttonPanel">
+			<g:VerticalPanel ui:field="buttonPanel" horizontalAlignment="ALIGN_CENTER">
 				<g:Button ui:field="createBtn" addStyleNames='{style.submitBtn}' width="100%" >Post Topic</g:Button>	
 				<g:Button ui:field="cancelBtn" addStyleNames='{style.submitBtn}' width="100%" >Cancel</g:Button>	
 			</g:VerticalPanel>

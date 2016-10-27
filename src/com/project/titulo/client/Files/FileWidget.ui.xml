@@ -41,10 +41,10 @@
                     <div class="panel-body">
                     
                     	<div class="btn-group btn-group-justified">
-                        <g:VerticalPanel ui:field="menu" addStyleNames='{style.panel}' width="100%">
-                        	<g:Button ui:field="uploadBtn" addStyleNames='{style.submitBtn}' width="100%" >Create File</g:Button>
-							<g:Button ui:field="helpBtn" addStyleNames='{style.submitBtn}' width="100%" >Help</g:Button>
-                        </g:VerticalPanel>
+	                        <g:VerticalPanel ui:field="menu" addStyleNames='{style.panel}' width="100%">
+	                        	<g:Button ui:field="uploadBtn" addStyleNames='{style.submitBtn}' width="100%" >Create File</g:Button>
+								<g:Button ui:field="helpBtn" addStyleNames='{style.submitBtn}' width="100%" >Help</g:Button>
+	                        </g:VerticalPanel>
                         </div>
                             
                     </div>

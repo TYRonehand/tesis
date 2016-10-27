@@ -43,6 +43,8 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 
 
+
+
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -792,6 +794,41 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 		return res;
 	}
 	
+
+	//update a file
+	@Override
+	public Boolean setFile(UserFile myFile) throws IllegalArgumentException {
+		try 
+		 {
+			 //actualizamos usuario
+			 String Query= " UPDATE datafile SET "
+			 			 + "title='"+myFile.getTitle()+"', "
+			 			 + "description='"+myFile.getDescription()+"', "
+			 			 + "dimension='"+myFile.getDimension()+"',"
+			 			 + "labelx='"+myFile.getLabelx()+"', "
+			 			 + "labely='"+myFile.getLabely()+"', "
+			 			 + "labelz='"+myFile.getLabelz()+"', "
+			 			 + "data='"+myFile.getData()+"' "
+			 			 + " WHERE iddatafile = "+myFile.getIddatafile()+"";
+			 
+			 //execute query
+			 PreparedStatement ps = conn.prepareStatement(Query);
+			 
+			 ResultSet result = ps.executeQuery();
+			 
+			 result.close();
+			 ps.close();
+		 } 
+		 catch (SQLException sqle) 
+		 {
+		 	GWT.log(sqle.toString());
+		 	sqle.printStackTrace();
+		 	return false;
+		 }
+		 return true;
+	}
+
+	
 	//delete a file
 	@Override
 	public Boolean deleteFile(String iddatafile) throws IllegalArgumentException 
@@ -817,6 +854,44 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 			return false;
 		 }
 		return true;
+	}
+	//a file data
+	@Override
+	public UserFile getDataFile(String iddatafile) throws IllegalArgumentException {
+		UserFile myFile = null;
+		 try 
+		 {
+			 //consultamos a base de datos
+			 String Query= "SELECT * FROM datafile WHERE iddatafile = '"+iddatafile+"' LIMIT 1";
+			 PreparedStatement ps = conn.prepareStatement(Query);
+			 ResultSet result = ps.executeQuery();
+			 //recorremos resultado
+			 while (result.next()) 
+			 {
+				 //add element to list String Idfile, String Title, String Description, String Iduser, String Creation
+				 myFile = new UserFile(	result.getString("iddatafile"), 
+					 					result.getString("title"),
+					 					result.getString("dimension"),
+					 					result.getString("labelx"),
+					 					result.getString("labely"),
+					 					result.getString("labelz"),
+							 			result.getString("description"),  
+							 			result.getString("iduser"), 
+							 			result.getString("creation"),
+							 			result.getString("data"),
+							 			result.getString("plotselection"),
+							 			result.getString("metricselection")
+							 			);
+			 }
+			 result.close();
+			 ps.close();
+		 } 
+		 catch (SQLException sqle) 
+		 {
+		 	GWT.log(sqle.toString());
+		 	sqle.printStackTrace();
+		 }
+		 return myFile;
 	}
 	
 	//all user files 
@@ -1422,8 +1497,29 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 
 	@Override
 	public List<MetricResults> CalculateC(String iduser) throws IllegalArgumentException {
-
-		return null;
+		System.err.print("\nMetric Coverage");
+		//result object
+		List<MetricResults> results = new ArrayList<MetricResults>();
+		
+		try{
+			//search files from user in metric selected
+			List<UserFile> userfiles = getFullFilesMetric(iduser);
+			
+			//control exist both objects
+			if(!userfiles.isEmpty() && userfiles!=null)
+			{
+				//start calculation
+				GenDistance gd = new GenDistance( userfiles, Integer.parseInt( userfiles.get(0).getDimension() ) );
+				results = gd.getResults();
+			}else{
+				System.err.print("\nerror: null files");
+			}
+			
+		}catch(Exception e){
+			System.err.print("\nImpl error: "+e.toString());
+		}
+		System.err.print("\nretorna resultado");
+		return results;
 	}
 
 	@Override
@@ -1553,6 +1649,9 @@ public class ServerServiceImpl extends RemoteServiceServlet implements ServerSer
 		 }
 		 return listFiles;
 	}
+
+
+	
 
 	
 

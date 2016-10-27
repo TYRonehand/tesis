@@ -4,27 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.project.titulo.shared.TextToDouble;
+import com.project.titulo.shared.model.MetricResults;
 import com.project.titulo.shared.model.Points;
 import com.project.titulo.shared.model.UserFile;
 
 public class Coverage {
-	private String Message;
-	
 	private int axis_size;
+	private List<UserFile> aproxFileList;
 	
-	private UserFile PFtrue_File;
-	private List<UserFile> FileList;
-	
-	private List<Points> PFtrue_data;//pf true points doubles
-	
-	private List<String> ResultList = new ArrayList<String>();//result are added here	
+	private List<MetricResults> ResultList = new ArrayList<MetricResults>();//result are added here	
 	
 	//load files for metric
-	public Coverage(UserFile PFtrue, List<UserFile> listPFcalc,int axis_size){
-		this.PFtrue_File = PFtrue;
-		this.FileList = listPFcalc;
+	public Coverage( List<UserFile> listPFcalc, int axis_size){
+		this.aproxFileList = listPFcalc;
 		this.axis_size = axis_size;
-		
 		
 		Start();
 	}
@@ -32,49 +25,88 @@ public class Coverage {
 	//go throw list
 	private void Start()
 	{
-		//pftrue to double
-		TextToDouble pftrue = new TextToDouble();
-		pftrue.create(PFtrue_File.getData(), this.axis_size);
-		this.PFtrue_data = pftrue.getListPoints();
-		
-		//run data list if exist pftrue
-		if(this.PFtrue_data.size()>0)
+		System.err.print("\nStart");
+
+		//files 
+		for(UserFile file : this.aproxFileList)
 		{
-			for(UserFile file : this.FileList)
+			//text to double points
+			TextToDouble paretoOptime = new TextToDouble();
+			paretoOptime.create(file.getData(), this.axis_size);
+
+			//set object results
+			MetricResults mr = new MetricResults();
+			mr.setAproximationNameFile(file.getTitle());//name POknow
+			
+			//files to compare with
+			for(UserFile auxfile : this.aproxFileList)
 			{
-				if(this.PFtrue_File.getDimension().equals(file.getDimension()))
+				mr.addParetoNameFile(auxfile.getTitle());//name PFtrue
+				
+				//data dimension equals
+				if(auxfile.getDimension().equals(file.getDimension()))
 				{
-					TextToDouble paretoOp = new TextToDouble();
-					paretoOp.create(file.getData(), this.axis_size);
-					Calculate(paretoOp.getListPoints());//calculate file data
+					//text to double points
+					TextToDouble paretoFrontPoint = new TextToDouble();
+					paretoFrontPoint.create(auxfile.getData(), this.axis_size);
+
+					
+					//calculate metric
+					String value = Calculate( paretoFrontPoint.getListPoints(), paretoOptime.getListPoints()) ;
+					
+					if(!value.isEmpty() && value!=null)
+						mr.addResult( value);
+					else
+						mr.addResult("Error");
 				}
 				else{
-					this.ResultList.add("different dimensions");
+					System.err.println("different dimension");
+					//fail dimension
+					mr.addResult("Wronge dimension");
 				}
 			}
+
+			System.err.print("result added!");
+			this.ResultList.add(mr);
+			
 		}
-		else{
-			this.setMessage("No data inf Pareto Front");
-		}
+		
 	}
 	
 	//calculate one file at time
-	private void Calculate(List<Points> paretoOp)
+	private String Calculate(List<Points> paretoDataList, List<Points> aproximationDataList)
 	{
+		System.err.print("\nevaluating...");
+		int dominated = 0;
+		//pareto front optime points
+		for(Points po: aproximationDataList)
+		{
+			//pareto front true points
+			for(Points pf: paretoDataList)
+			{
+				int domcount = 0;
+				for(int i=0; i<po.getDimension();i++){
+					if(po.getAxieIndex(i)<pf.getAxieIndex(i)){
+						domcount++;
+					}
+				}
+				if (domcount>0){
+					dominated++;
+				}
+			}
+		}
+		//formula
+		double Nsize = aproximationDataList.size();
+		double CV = ((dominated/Nsize));
 		
+		System.err.print("\nready!");
+		return String.format( "%.6f", CV);
+			
 	}
 	
 	//get result calculated
-	public List<String> getResults()
+	public List<MetricResults> getResults()
 	{
 		return this.ResultList;
-	}
-
-	public String getMessage() {
-		return Message;
-	}
-
-	public void setMessage(String message) {
-		Message = message;
 	}
 }

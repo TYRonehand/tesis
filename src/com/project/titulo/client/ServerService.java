@@ -51,13 +51,19 @@ public interface ServerService extends RemoteService
 	Boolean deleteUserInfo(String iduser) throws IllegalArgumentException;
 	
 	/*FILES*/
+	//get a datafile
+	UserFile getDataFile(String iddatafile) throws IllegalArgumentException;
+	
 	//found user files 
 	List<UserFile> getUserFiles(String user) throws IllegalArgumentException;
 
 	//add user file
 	Boolean addNewFile(UserFile myFile) throws IllegalArgumentException;
 
-	//add user file
+	//update user file
+	Boolean setFile(UserFile myFile) throws IllegalArgumentException;
+		
+	//delete user file
 	Boolean deleteFile(String iddatafile) throws IllegalArgumentException;
 	
 	//found user files selected

@@ -53,21 +53,21 @@
     
 	<g:DialogBox ui:field="dialogBox"  width="100%" addStyleNames='{style.dialogBox}'>
     	
-	
 		<g:VerticalPanel ui:field="dialogVPanel" addStyleNames='{style.verticalPanel}' height="100%"  borderWidth="0" verticalAlignment="ALIGN_MIDDLE">
 		
 			<g:Label text="Title" direction="LTR"/>
 			<g:TextBox ui:field="titleInput"  addStyleNames='{style.myFields}' height="16px" width="100%" direction="LTR" textAlignment="ALIGN_CENTER" focus="true" maxLength="49" ></g:TextBox>
 			
 			<g:Label text="Response"/>
-			<g:RichTextArea ui:field="descriptionInput"   addStyleNames='{style.myFields}' width="100%" ></g:RichTextArea>
+			<g:TextArea ui:field="descriptionInput"   addStyleNames='{style.myFields}' width="100%" />
+			<g:Label text="(max 500 characters)"/>
 			
 			<g:VerticalPanel ui:field="buttonPanel">
 				<g:Button ui:field="createBtn" addStyleNames='{style.submitBtn}' width="100%" >Edit Post</g:Button>	
 				<g:Button ui:field="cancelBtn" addStyleNames='{style.submitBtn}' width="100%" >Cancel</g:Button>	
 			</g:VerticalPanel>
+			
 		</g:VerticalPanel>
-		
 		
 	</g:DialogBox>
 		

@@ -97,11 +97,11 @@ public class PlotWidget extends Composite {
 		//properties
 		initWidget(uiBinder.createAndBindUi(this));
 		//set style to buttons from bootstrap
-		plotBtn.addStyleName(ms.getButtonStyle());	
-		epsBtn.addStyleName(ms.getButtonStyle());	
-		pdfBtn.addStyleName(ms.getButtonStyle());	
-		pngBtn.addStyleName(ms.getButtonStyle());	
-		svgBtn.addStyleName(ms.getButtonStyle());	
+		plotBtn.addStyleName(ms.getButtonStyle(0));	
+		epsBtn.addStyleName(ms.getButtonStyle(0));	
+		pdfBtn.addStyleName(ms.getButtonStyle(0));	
+		pngBtn.addStyleName(ms.getButtonStyle(0));	
+		svgBtn.addStyleName(ms.getButtonStyle(0));	
 		//load properties
 		gridItems.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
 		//table

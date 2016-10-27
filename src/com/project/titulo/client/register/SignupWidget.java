@@ -62,7 +62,7 @@ public class SignupWidget extends Composite {
 	public SignupWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
 		//set style to buttons from bootstrap
-		registerBtn.addStyleName(ms.getButtonStyle());
+		registerBtn.addStyleName(ms.getButtonStyle(0));
 		//set styles for css
 		
 		//load country to combobox

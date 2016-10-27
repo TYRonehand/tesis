@@ -51,7 +51,7 @@ public class Login2Widget extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 		
 		//set style to buttons from bootstrap
-		submitBTN.addStyleName(ms.getButtonStyle());
+		submitBTN.addStyleName(ms.getButtonStyle(0));
 	}
 
 

@@ -57,8 +57,9 @@
 	
 		<g:VerticalPanel ui:field="dialogVPanel" addStyleNames='{style.verticalPanel}' height="100%"  borderWidth="0" verticalAlignment="ALIGN_MIDDLE">
 		
-			<g:Label text="Your Response"/>
-			<g:RichTextArea ui:field="descriptionInput"   addStyleNames='{style.myFields}' width="100%" ></g:RichTextArea>
+			<g:Label text="Add Response"/>
+			<g:TextArea ui:field="descriptionInput"   addStyleNames='{style.myFields}' width="100%" />
+			<g:Label text="(max 500 characters)"/>
 			
 			<g:VerticalPanel ui:field="buttonPanel">
 				<g:Button ui:field="createBtn" addStyleNames='{style.submitBtn}' width="100%" >Post Response</g:Button>	

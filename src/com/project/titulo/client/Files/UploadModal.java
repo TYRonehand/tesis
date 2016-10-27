@@ -12,6 +12,8 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.project.titulo.client.GoToUrl;
 import com.project.titulo.client.ServerService;
@@ -30,7 +32,10 @@ public class UploadModal  extends DialogBox  {
 	@UiField VerticalPanel dialogVPanel; 
 	@UiField VerticalPanel panel1; 
 	@UiField VerticalPanel panel2; 
-	@UiField VerticalPanel buttonPanel; 
+	@UiField VerticalPanel buttonPanel;
+	@UiField VerticalPanel labelxPanel;
+	@UiField VerticalPanel labelyPanel;
+	@UiField VerticalPanel labelzPanel;
 	@UiField TextBox titleInput; 
 	@UiField RichTextArea descriptionInput;
 	@UiField RichTextArea dataInput;
@@ -70,6 +75,31 @@ public class UploadModal  extends DialogBox  {
 		dimensionList.addItem("8");
 		dimensionList.addItem("9");
 		dimensionList.addItem("10");
+		dimensionList.addChangeHandler(new ChangeHandler() {
+		      public void onChange(ChangeEvent event) {
+		    	  if(dimensionList.getValue(dimensionList.getSelectedIndex()).toString().equals("1")){
+		    		  labelxPanel.setVisible(true);
+		    		  labelyPanel.setVisible(false);
+		    		  labelzPanel.setVisible(false);
+		    		  
+		    	  }else if(dimensionList.getValue(dimensionList.getSelectedIndex()).toString().equals("2")){
+		    		  labelxPanel.setVisible(true);
+		    		  labelyPanel.setVisible(true);
+		    		  labelzPanel.setVisible(false);
+
+		    	  }else if(dimensionList.getValue(dimensionList.getSelectedIndex()).toString().equals("3")){
+		    		  labelxPanel.setVisible(true);
+		    		  labelyPanel.setVisible(true);
+		    		  labelzPanel.setVisible(true);
+
+		    	  }else{
+		    		  labelxPanel.setVisible(false);
+		    		  labelyPanel.setVisible(false);
+		    		  labelzPanel.setVisible(false);
+		    	  }
+		    		
+		      }
+		    });
 		//dialogbox
 		dialogBox.setAnimationEnabled(true);
 		dialogBox.setAutoHideEnabled(true);

@@ -51,8 +51,8 @@ public class ResultsWidget extends Composite {
 	public ResultsWidget(String iduser, List<MetricResults> results,  String MetricName) {
 		initWidget(uiBinder.createAndBindUi(this));
 		//set style to buttons from bootstrap
-		backBtn.addStyleName(ms.getButtonStyle());
-		exportBtn.addStyleName(ms.getButtonStyle());
+		backBtn.addStyleName(ms.getButtonStyle(0));
+		exportBtn.addStyleName(ms.getButtonStyle(0));
 		//save results
 		this.IDUSER = iduser;
 		this.RESULTS = results;
@@ -108,10 +108,6 @@ public class ResultsWidget extends Composite {
 	{
 		url.GoTo("METRIC");
 	}
-	
-	
-	
-	
 	
 	//click upload
 	@UiHandler("exportBtn")

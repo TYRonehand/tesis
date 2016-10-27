@@ -17,6 +17,7 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.project.titulo.client.GoToUrl;
+import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
 import com.project.titulo.shared.CookieVerify;
@@ -26,7 +27,9 @@ import com.project.titulo.shared.FieldVerifier;
 import com.project.titulo.shared.model.User;
 
 public class UserProfile extends Composite {
-
+	/*style*/
+	private MyStyle ms = new MyStyle();
+	
 	//principal labels
 	@UiField HTML pNameLabel;
 	@UiField HTML pMailLabel;
@@ -80,6 +83,13 @@ public class UserProfile extends Composite {
 	public UserProfile(String iduser) {
 		initWidget(uiBinder.createAndBindUi(this));
 		getUser(iduser);
+		/*Boostrap style*/
+		this.submitBTN.setStyleName(ms.getButtonStyle(2));
+		this.cancelBTN.setStyleName(ms.getButtonStyle(1));
+		this.changeEmailBTN.setStyleName(ms.getButtonStyle(2));
+		this.changePasswordBTN.setStyleName(ms.getButtonStyle(2));
+		this.closeAccountBTN.setStyleName(ms.getButtonStyle(3));
+		/*combobox*/
 		addCountry();
 	}
 
