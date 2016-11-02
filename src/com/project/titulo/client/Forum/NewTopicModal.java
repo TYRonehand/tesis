@@ -1,6 +1,5 @@
 package com.project.titulo.client.Forum;
 
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -19,25 +18,32 @@ import com.project.titulo.client.ServerServiceAsync;
 import com.project.titulo.shared.ErrorVerify;
 import com.project.titulo.shared.model.Topic;
 
-public class NewTopicModal  extends DialogBox {
+public class NewTopicModal extends DialogBox {
 
-	private String IDUSER=null;
-	
-	//goto url
+	private String IDUSER = null;
+
+	// goto url
 	public GoToUrl url = new GoToUrl();
-	
-	
-	//elementos uibinder
-	@UiField TextBox titleInput; 
-	@UiField TextArea descriptionInput; 
-	@UiField DialogBox dialogBox; 
-	@UiField VerticalPanel dialogVPanel; 
-	@UiField VerticalPanel buttonPanel; 
-	@UiField Button createBtn;
-	@UiField Button cancelBtn;
-	//RPC
-	private final ServerServiceAsync serverService = GWT.create(ServerService.class);
-	
+
+	// elementos uibinder
+	@UiField
+	TextBox titleInput;
+	@UiField
+	TextArea descriptionInput;
+	@UiField
+	DialogBox dialogBox;
+	@UiField
+	VerticalPanel dialogVPanel;
+	@UiField
+	VerticalPanel buttonPanel;
+	@UiField
+	Button createBtn;
+	@UiField
+	Button cancelBtn;
+	// RPC
+	private final ServerServiceAsync serverService = GWT
+			.create(ServerService.class);
+
 	private static NewTopicModalUiBinder uiBinder = GWT
 			.create(NewTopicModalUiBinder.class);
 
@@ -45,93 +51,87 @@ public class NewTopicModal  extends DialogBox {
 	}
 
 	public NewTopicModal(String iduser) {
-		//save id user
+		// save id user
 		this.IDUSER = iduser;
-		
+
 		setWidget(uiBinder.createAndBindUi(this));
 		this.center();
-		
-		//load properties
+
+		// load properties
 		LoadModal();
 	}
 
-	public void LoadModal(){
+	public void LoadModal() {
 
-		//dialogbox
+		// dialogbox
 		dialogBox.setAnimationEnabled(true);
 		dialogBox.setAutoHideEnabled(true);
-	    dialogBox.setGlassEnabled(true);
+		dialogBox.setGlassEnabled(true);
 		dialogBox.center();
 		dialogBox.setText("New Topic");
 		dialogBox.addStyleName("panel-body");
 
-		//set style to buttons from bootstrap
+		// set style to buttons from bootstrap
 		createBtn.addStyleName("btn btn-success");
 		cancelBtn.addStyleName("btn btn-danger");
-		
-		//VerticalPanel 
+
+		// VerticalPanel
 		dialogVPanel.addStyleName("dialogVPanel");
 		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
 		buttonPanel.addStyleName("btn-group btn-group-justified");
-		
-		//clear fields
+
+		// clear fields
 		titleInput.setText("");
 		descriptionInput.setText("");
-		
-		//set focus
+
+		// set focus
 		titleInput.setFocus(true);
 	}
-	
-	private void CreateTopic()
-	{
-		//validar algo escrito
-		if(titleInput.getText().length()>0 && descriptionInput.getText().length()>0)
-		{
-			
-				//create object
-				Topic myTopic = new Topic(titleInput.getText(), descriptionInput.getText(), this.IDUSER);
-				//call service
-				serverService.addNewTopic(myTopic, new AsyncCallback<Boolean>(){
-		
-					@Override
-					public void onFailure(Throwable caught) 
-					{
-						ErrorVerify.getErrorAlert("offline");
-					}
-					
-					@Override
-					public void onSuccess(Boolean result) 
-					{
-						if(result){
 
-							ErrorVerify.getErrorAlert("successadd");
-							dialogBox.setVisible(false);
-							url.GoTo("FORUM");
-						}else{
-							ErrorVerify.getErrorAlert("failadd");
-						}
+	private void CreateTopic() {
+		// validar algo escrito
+		if (titleInput.getText().length() > 0
+				&& descriptionInput.getText().length() > 0) {
+
+			// create object
+			Topic myTopic = new Topic(titleInput.getText(),
+					descriptionInput.getText(), this.IDUSER);
+			// call service
+			serverService.addNewTopic(myTopic, new AsyncCallback<Boolean>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					ErrorVerify.getErrorAlert("offline");
+				}
+
+				@Override
+				public void onSuccess(Boolean result) {
+					if (result) {
+
+						ErrorVerify.getErrorAlert("successadd");
+						dialogBox.setVisible(false);
+						url.GoTo("FORUM");
+					} else {
+						ErrorVerify.getErrorAlert("failadd");
 					}
-				});
-		}
-		else
-		{
+				}
+			});
+		} else {
 			ErrorVerify.getErrorAlert("empty");
 		}
-		
+
 	}
-	
-	//evento cambio valor  input
+
+	// evento cambio valor input
 	@UiHandler("createBtn")
-	void onCreateBtnClick(ClickEvent event) 
-	{
+	void onCreateBtnClick(ClickEvent event) {
 		CreateTopic();
-    }
-	
-	//evento cambio valor  input
+	}
+
+	// evento cambio valor input
 	@UiHandler("cancelBtn")
-	void onCancelBtnClick(ClickEvent event) 
-	{
+	void onCancelBtnClick(ClickEvent event) {
 		dialogBox.hide();
-    }
-	
+	}
+
 }

@@ -20,122 +20,119 @@ import com.project.titulo.shared.model.Topic;
 
 public class EditTopicModal extends DialogBox {
 
-	//control url
+	// control url
 	public GoToUrl url = new GoToUrl();
-	
-	//elementos uibinder
-	@UiField TextBox titleInput; 
-	@UiField TextArea descriptionInput; 
-	@UiField DialogBox dialogBox; 
-	@UiField VerticalPanel dialogVPanel; 
-	@UiField VerticalPanel buttonPanel; 
-	@UiField Button createBtn;
-	@UiField Button cancelBtn;
 
-	//RPC
-	private final ServerServiceAsync serverService = GWT.create(ServerService.class);
-	
-	//topic full
+	// elementos uibinder
+	@UiField
+	TextBox titleInput;
+	@UiField
+	TextArea descriptionInput;
+	@UiField
+	DialogBox dialogBox;
+	@UiField
+	VerticalPanel dialogVPanel;
+	@UiField
+	VerticalPanel buttonPanel;
+	@UiField
+	Button createBtn;
+	@UiField
+	Button cancelBtn;
+
+	// RPC
+	private final ServerServiceAsync serverService = GWT
+			.create(ServerService.class);
+
+	// topic full
 	private Topic updatedTopic;
-	
-	//widget
+
+	// widget
 	private static EditTopicModalUiBinder uiBinder = GWT
 			.create(EditTopicModalUiBinder.class);
 
 	interface EditTopicModalUiBinder extends UiBinder<Widget, EditTopicModal> {
 	}
 
-	public EditTopicModal(Topic mytopic) 
-	{
-		//save topic to edit
+	public EditTopicModal(Topic mytopic) {
+		// save topic to edit
 		this.updatedTopic = mytopic;
-		//init properties
+		// init properties
 		setWidget(uiBinder.createAndBindUi(this));
 		this.center();
 		LoadModal();
 	}
-	
-	//properties from modal
-	public void LoadModal(){
-		//dialogbox
+
+	// properties from modal
+	public void LoadModal() {
+		// dialogbox
 		dialogBox.setAnimationEnabled(true);
 		dialogBox.setAutoHideEnabled(true);
-	    dialogBox.setGlassEnabled(true);
+		dialogBox.setGlassEnabled(true);
 		dialogBox.center();
 		dialogBox.setText("Edit My Topic");
 		dialogBox.addStyleName("panel-body");
 
-		//set style to buttons from bootstrap
+		// set style to buttons from bootstrap
 		createBtn.addStyleName("btn btn-success");
 		cancelBtn.addStyleName("btn btn-danger");
-		
-		//VerticalPanel 
+
+		// VerticalPanel
 		dialogVPanel.addStyleName("dialogVPanel");
 		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
 		buttonPanel.addStyleName("btn-group btn-group-justified");
-		
-		//clear fields
+
+		// clear fields
 		titleInput.setText(this.updatedTopic.getTitle());
 		descriptionInput.setText(this.updatedTopic.getDescription());
-		
-		//set focus
+
+		// set focus
 		titleInput.setFocus(true);
 	}
-	
-		
-	private void EditTopic()
-	{
-		//validar algo escrito
-		if(titleInput.getText().length()>3 && descriptionInput.getText().length()>20)
-		{
-			//modification date
-			//Edit object
+
+	private void EditTopic() {
+		// validar algo escrito
+		if (titleInput.getText().length() > 3 && descriptionInput.getText().length() > 3) {
+			// modification date
+			// Edit object
 			updatedTopic.setTitle(titleInput.getText());
 			updatedTopic.setDescription(descriptionInput.getText());
 			updatedTopic.setEdition("");
-			
-			//call service update
-			serverService.setTopic(updatedTopic, new AsyncCallback<Boolean>(){
+
+			// call service update
+			serverService.setTopic(updatedTopic, new AsyncCallback<Boolean>() {
 
 				@Override
-				public void onFailure(Throwable caught) 
-				{
+				public void onFailure(Throwable caught) {
 					ErrorVerify.getErrorAlert("offline");
 				}
-				
+
 				@Override
-				public void onSuccess(Boolean result) 
-				{
-					if(result){
+				public void onSuccess(Boolean result) {
+					if (result) {
 						ErrorVerify.getErrorAlert("successupdate");
 						url.GoTo("TOPIC");
 						dialogBox.hide();
-					}else{
+					} else {
 						ErrorVerify.getErrorAlert("fatal");
 					}
 				}
 			});
-		
-		}
-		else
-		{
+
+		} else {
 			ErrorVerify.getErrorAlert("empty");
 		}
 	}
-	
-	//click update
+
+	// click update
 	@UiHandler("createBtn")
-	void onCreateBtnClick(ClickEvent event) 
-	{
+	void onCreateBtnClick(ClickEvent event) {
 		EditTopic();
-    }
-	
-	//evento cambio valor  input
+	}
+
+	// evento cambio valor input
 	@UiHandler("cancelBtn")
-	void onCancelBtnClick(ClickEvent event) 
-	{
+	void onCancelBtnClick(ClickEvent event) {
 		dialogBox.hide();
-    }
-	
-	
+	}
+
 }

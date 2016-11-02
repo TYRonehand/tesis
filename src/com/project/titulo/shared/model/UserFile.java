@@ -2,27 +2,29 @@ package com.project.titulo.shared.model;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class UserFile  implements IsSerializable{
-	private String iddatafile;
-	private String iduser;
+public class UserFile implements IsSerializable {
+	private String idfile;
 	private String title;
+	private String description;
+	private String creation;
 	private String dimension;
 	private String labelx;
 	private String labely;
 	private String labelz;
-	private String description;
-	private String creation;
-	private String data;
 	private String plot;
 	private String metric;
+	private String data;
+	private String iduser;
 
 	@SuppressWarnings("unused")
-	private UserFile(){
-		
+	private UserFile() {
+
 	}
-	
-	//add file
-	public UserFile(String Title,String Dimension,String Labelx,String Labely,String Labelz, String Description, String Iduser,  String Data){
+
+	// add file
+	public UserFile(String Title, String Dimension, String Labelx,
+			String Labely, String Labelz, String Description, String Iduser,
+			String Data) {
 		this.setIduser(Iduser);
 		this.setTitle(Title);
 		this.setDimension(Dimension);
@@ -32,9 +34,13 @@ public class UserFile  implements IsSerializable{
 		this.setDescription(Description);
 		this.setData(Data);
 	}
-	//get file
-	public UserFile(String Idfile, String Title,String Dimension,String Labelx,String Labely,String Labelz,  String Description, String Iduser, String Creation, String Data,String Plot,String Metric){
-		this.setIddatafile(Idfile);
+
+	// get file
+	public UserFile(String Idfile, String Title, String Dimension,
+			String Labelx, String Labely, String Labelz, String Description,
+			String Iduser, String Creation, String Data, String Plot,
+			String Metric) {
+		this.setIdfile(Idfile);
 		this.setIduser(Iduser);
 		this.setTitle(Title);
 		this.setDimension(Dimension);
@@ -46,15 +52,15 @@ public class UserFile  implements IsSerializable{
 		this.setData(Data);
 		this.setPlot(Plot);
 		this.setMetric(Metric);
-		
+
 	}
 
-	public String getIddatafile() {
-		return iddatafile;
+	public String getIdfile() {
+		return idfile;
 	}
 
-	public void setIddatafile(String iddatafile) {
-		this.iddatafile = iddatafile;
+	public void setIdfile(String iddatafile) {
+		this.idfile = iddatafile;
 	}
 
 	public String getIduser() {

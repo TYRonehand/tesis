@@ -13,24 +13,34 @@ import com.project.titulo.shared.model.User;
 
 public class ViewProfile extends Composite {
 
-	//principal labels
-	@UiField HTML pNameLabel;
-	@UiField HTML pMailLabel;
-	@UiField HTML pUniversityLabel;
-	@UiField HTML pCountryLabel;
-	//secondary Labels
-	@UiField HTML nameLabel;
-	@UiField HTML lastnameLabel;
-	@UiField HTML countryLabel;
-	@UiField HTML ocupationLabel;
-	@UiField HTML webLabel;
-	
-	//info from user
+	// principal labels
+	@UiField
+	HTML pNameLabel;
+	@UiField
+	HTML pMailLabel;
+	@UiField
+	HTML pUniversityLabel;
+	@UiField
+	HTML pCountryLabel;
+	// secondary Labels
+	@UiField
+	HTML nameLabel;
+	@UiField
+	HTML lastnameLabel;
+	@UiField
+	HTML countryLabel;
+	@UiField
+	HTML ocupationLabel;
+	@UiField
+	HTML webLabel;
+
+	// info from user
 	@SuppressWarnings("unused")
 	private User UserInfo;
-	
-	//RPC
-	private final ServerServiceAsync serverService = GWT.create(ServerService.class);
+
+	// RPC
+	private final ServerServiceAsync serverService = GWT
+			.create(ServerService.class);
 
 	private static ViewProfileUiBinder uiBinder = GWT
 			.create(ViewProfileUiBinder.class);
@@ -43,58 +53,77 @@ public class ViewProfile extends Composite {
 		getUser(iduser);
 	}
 
-	//load all data from user
+	// load all data from user
 	private void getUser(String user) {
-		serverService.getUserInfo(user, new AsyncCallback<User>(){
+		serverService.getUserInfo(user, new AsyncCallback<User>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				
+
 			}
 
 			@Override
 			public void onSuccess(User result) {
 				LoadDataView(result);
-			}});
+			}
+		});
 	}
-	//load data into the view
-	private void LoadDataView(User myuser)
-	{
-		//save user info
+
+	// load data into the view
+	private void LoadDataView(User myuser) {
+		// save user info
 		this.UserInfo = myuser;
-		
+
 		// primary info label
-		if(myuser.getName()!=null && myuser.getLastname()!=null)
-			this.pNameLabel.setHTML("<p>"+myuser.getName()+" "+myuser.getLastname()+"</p>");
-		if(myuser.getMail()!=null && !myuser.getMail().equals("null"))
-			this.pMailLabel.setHTML("<p>"+myuser.getMail()+"</p>");
-		if(myuser.getUniversity()!=null && !myuser.getUniversity().equals("null"))
-			this.pUniversityLabel.setHTML("<p>"+myuser.getUniversity()+"</p>");
-		if(myuser.getCountry()!=null && !myuser.getCountry().equals("null"))
-			this.pCountryLabel.setHTML("<p>"+myuser.getCountry()+"</p>");
-		
+		if (myuser.getName() != null && myuser.getLastname() != null)
+			this.pNameLabel.setHTML("<p>" + myuser.getName() + " "
+					+ myuser.getLastname() + "</p>");
+		if (myuser.getMail() != null && !myuser.getMail().equals("null"))
+			this.pMailLabel.setHTML("<p>" + myuser.getMail() + "</p>");
+		if (myuser.getInstitution() != null
+				&& !myuser.getInstitution().equals("null"))
+			this.pUniversityLabel.setHTML("<p>" + myuser.getInstitution()
+					+ "</p>");
+		if (myuser.getCountry() != null && !myuser.getCountry().equals("null"))
+			this.pCountryLabel.setHTML("<p>" + myuser.getCountry() + "</p>");
+
 		// secondary info label
-		if(myuser.getName()!=null)
-			this.nameLabel.setHTML("<div class='bio-row'><p><span>Name </span>: "+myuser.getName()+"</p></div>");
+		if (myuser.getName() != null)
+			this.nameLabel
+					.setHTML("<div class='bio-row'><p><span>Name </span>: "
+							+ myuser.getName() + "</p></div>");
 		else
-			this.nameLabel.setHTML("<div class='bio-row'><p><span>Name </span>: - </p></div>");
-		if(myuser.getLastname()!=null)
-			this.lastnameLabel.setHTML("<div class='bio-row'><p><span>Lastname </span>: "+myuser.getLastname()+"</p></div>");
-		else	
-			this.lastnameLabel.setHTML("<div class='bio-row'><p><span>Lastname </span>: - </p></div>");
-		if(myuser.getCountry()!=null)
-			this.countryLabel.setHTML("<div class='bio-row'><p><span>Country </span>: "+myuser.getCountry()+"</p></div>");
+			this.nameLabel
+					.setHTML("<div class='bio-row'><p><span>Name </span>: - </p></div>");
+		if (myuser.getLastname() != null)
+			this.lastnameLabel
+					.setHTML("<div class='bio-row'><p><span>Lastname </span>: "
+							+ myuser.getLastname() + "</p></div>");
 		else
-			this.countryLabel.setHTML("<div class='bio-row'><p><span>Country </span>: - </p></div>");
-		if(myuser.getOcupation()!=null)
-			this.ocupationLabel.setHTML("<div class='bio-row'><p><span>Ocupation </span>: "+myuser.getOcupation()+"</p></div>");
+			this.lastnameLabel
+					.setHTML("<div class='bio-row'><p><span>Lastname </span>: - </p></div>");
+		if (myuser.getCountry() != null)
+			this.countryLabel
+					.setHTML("<div class='bio-row'><p><span>Country </span>: "
+							+ myuser.getCountry() + "</p></div>");
 		else
-			this.ocupationLabel.setHTML("<div class='bio-row'><p><span>Ocupation </span>: - </p></div>");
-		if(myuser.getWeb()!=null)
-			this.webLabel.setHTML("<div class='bio-row'><p><span>Web </span>: <a href='"+myuser.getWeb()+"'>My site</a>");
+			this.countryLabel
+					.setHTML("<div class='bio-row'><p><span>Country </span>: - </p></div>");
+		if (myuser.getOcupation() != null)
+			this.ocupationLabel
+					.setHTML("<div class='bio-row'><p><span>Ocupation </span>: "
+							+ myuser.getOcupation() + "</p></div>");
 		else
-			this.webLabel.setHTML("<div class='bio-row'><p><span>Web </span>: - </p></div>");
-		
+			this.ocupationLabel
+					.setHTML("<div class='bio-row'><p><span>Ocupation </span>: - </p></div>");
+		if (myuser.getWeb() != null)
+			this.webLabel
+					.setHTML("<div class='bio-row'><p><span>Web </span>: <a href='"
+							+ myuser.getWeb() + "'>My site</a>");
+		else
+			this.webLabel
+					.setHTML("<div class='bio-row'><p><span>Web </span>: - </p></div>");
+
 	}
-	
+
 }

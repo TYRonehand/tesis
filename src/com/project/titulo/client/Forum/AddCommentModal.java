@@ -17,27 +17,34 @@ import com.project.titulo.client.ServerServiceAsync;
 import com.project.titulo.shared.ErrorVerify;
 import com.project.titulo.shared.model.Answer;
 
-public class AddCommentModal  extends DialogBox {
+public class AddCommentModal extends DialogBox {
 
-	//control url
+	// control url
 	public GoToUrl url = new GoToUrl();
-	
-	//elementos uibinder
-	@UiField TextArea descriptionInput; 
-	@UiField DialogBox dialogBox; 
-	@UiField VerticalPanel dialogVPanel; 
-	@UiField VerticalPanel buttonPanel; 
-	@UiField Button createBtn;
-	@UiField Button cancelBtn;
 
-	//RPC
-	private final ServerServiceAsync serverService = GWT.create(ServerService.class);
-	
-	//topic full
+	// elementos uibinder
+	@UiField
+	TextArea descriptionInput;
+	@UiField
+	DialogBox dialogBox;
+	@UiField
+	VerticalPanel dialogVPanel;
+	@UiField
+	VerticalPanel buttonPanel;
+	@UiField
+	Button createBtn;
+	@UiField
+	Button cancelBtn;
+
+	// RPC
+	private final ServerServiceAsync serverService = GWT
+			.create(ServerService.class);
+
+	// topic full
 	private String idtopic;
 	private String iduser;
-	
-	//widget
+
+	// widget
 	private static AddCommentModalUiBinder uiBinder = GWT
 			.create(AddCommentModalUiBinder.class);
 
@@ -45,48 +52,45 @@ public class AddCommentModal  extends DialogBox {
 	}
 
 	public AddCommentModal(String idtopic, String iduser) {
-		this.idtopic=idtopic;
-		this.iduser=iduser;
-		
+		this.idtopic = idtopic;
+		this.iduser = iduser;
+
 		setWidget(uiBinder.createAndBindUi(this));
 		this.center();
-		
+
 		LoadModal();
 	}
 
-
-
-	//properties from modal
-	public void LoadModal(){
-		//dialogbox
-		dialogBox.setText("Create a Response");
+	// properties from modal
+	public void LoadModal() {
+		// dialogbox
+		dialogBox.setText("Comment Topic");
 		dialogBox.setAnimationEnabled(true);
 		dialogBox.setAutoHideEnabled(true);
 		dialogBox.addStyleName("panel-body");
 
-		//set style to buttons from bootstrap
+		// set style to buttons from bootstrap
 		createBtn.addStyleName("btn btn-success");
 		cancelBtn.addStyleName("btn btn-danger");
-		
-		//VerticalPanel 
+
+		// VerticalPanel
 		dialogVPanel.addStyleName("dialogVPanel");
 		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
 		buttonPanel.addStyleName("btn-group btn-group-justified");
-		
-		//clear fields
+
+		// clear fields
 		descriptionInput.setText("");
 		descriptionInput.setFocus(true);
 		dialogBox.center();
 	}
-	
-	private void CreateComment()
-	{
-		//validar algo escrito
-		if(descriptionInput.getText().length()>20)
-		{
-			Answer myanswer = new Answer(descriptionInput.getText(), this.idtopic, this.iduser);
-			//call service update
-			serverService.addNewComment(myanswer, new AsyncCallback<Boolean>(){
+
+	private void CreateComment() {
+		// validar algo escrito
+		if (descriptionInput.getText().length() > 3) {
+			Answer myanswer = new Answer(descriptionInput.getText(),
+					this.idtopic, this.iduser);
+			// call service update
+			serverService.addNewComment(myanswer, new AsyncCallback<Boolean>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -95,34 +99,31 @@ public class AddCommentModal  extends DialogBox {
 
 				@Override
 				public void onSuccess(Boolean result) {
-					if(result){
+					if (result) {
 						ErrorVerify.getErrorAlert("successadd");
 						url.GoTo("TOPIC");
 						dialogBox.hide();
-					}else{
+					} else {
 						ErrorVerify.getErrorAlert("failadd");
 					}
-				}});
-		
-		}
-		else
-		{
+				}
+			});
+
+		} else {
 			ErrorVerify.getErrorAlert("empty");
 		}
-		
+
 	}
-	
-	//click update
+
+	// click update
 	@UiHandler("createBtn")
-	void onCreateBtnClick(ClickEvent event) 
-	{
+	void onCreateBtnClick(ClickEvent event) {
 		CreateComment();
-    }
-	
-	//evento cambio valor  input
+	}
+
+	// evento cambio valor input
 	@UiHandler("cancelBtn")
-	void onCancelBtnClick(ClickEvent event) 
-	{
+	void onCancelBtnClick(ClickEvent event) {
 		dialogBox.hide();
-    }
+	}
 }

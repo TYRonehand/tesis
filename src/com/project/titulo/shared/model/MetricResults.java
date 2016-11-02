@@ -5,14 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("serial")
-public class MetricResults implements Serializable  
-{
+public class MetricResults implements Serializable {
 	private String Message;
 	private String aproximationNameFile;
 	private List<String> resultList = new ArrayList<String>();
 	private List<String> paretoNameFileList = new ArrayList<String>();;
-	
-	public MetricResults(){
+
+	public MetricResults() {
 	}
 
 	public String getMessage() {

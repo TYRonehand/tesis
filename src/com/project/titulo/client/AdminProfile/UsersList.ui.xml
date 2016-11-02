@@ -1,93 +1,104 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder 
-  xmlns:ui="urn:ui:com.google.gwt.uibinder"
-  xmlns:gwt="urn:import:com.google.gwt.user.client.ui">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:gwt="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
-    .cellTable {
-	  padding:4px
-      border-bottom: 1px solid #ccc;
-      text-align: left;
-      margin-bottom: 4px;
-      width:100%;
-    }
-    .pagerTable {
-      text-align: center;
-      align:center;
-    }
-    .panel{
-      text-align: center;
-      align:center;
-      width:100%;
-    }
-	.titleInput{
-		padding-top:5px;
-		width:100%;
+	.cellTable {
+		padding: 4px border-bottom: 1px solid #ccc;
+		text-align: left;
+		margin-bottom: 4px;
+		width: 100%;
 	}
-	.textArea{
-		padding-top:5px;
-		width:100%;
+	
+	.pagerTable {
+		text-align: center;
+		align: center;
 	}
-	.submitBtn{
-		padding-top:5px;
-		width:100%;
-		margin:2px;
+	
+	.panel {
+		text-align: center;
+		align: center;
+		width: 100%;
+	}
+	
+	.titleInput {
+		padding-top: 5px;
+		width: 100%;
+	}
+	
+	.textArea {
+		padding-top: 5px;
+		width: 100%;
+	}
+	
+	.submitBtn {
+		padding-top: 5px;
+		width: 100%;
+		margin: 2px;
 	}
 	</ui:style>
 	<gwt:HTMLPanel>
-		
-		<!-- MODAL - Menu opciones edición-->
-        <div class="row">
-            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
-            
-                <section class="panel">
-                    <header class="panel-heading">
-                    <h3 class="panel-title">Search</h3>
-                    </header>
-                    <div class="panel-body">
-                    
-                    	<div class="btn-group btn-group-justified">
-                   	 	<gwt:VerticalPanel ui:field="menu3" addStyleNames='{style.panel}' width="100%">
-							<gwt:TextBox ui:field="searchInput" addStyleNames='{style.titleInput}' width="100%" maxLength="40" alignment="CENTER" direction="LTR" textAlignment="ALIGN_CENTER"></gwt:TextBox>	
-							<gwt:Button ui:field="modalSearchTopic" addStyleNames='{style.submitBtn}' width="100%" >Find</gwt:Button>	
-						</gwt:VerticalPanel>
-                        </div>
-                        
-                    </div>
-                </section>
-                
-                <section class="panel">
-                    <header class="panel-heading">
-                    <h3 class="panel-title">Order by</h3>
-                    </header>
-                    <div class="panel-body">
-	                    <div class="btn-group btn-group-justified">
-	                   	 	<gwt:VerticalPanel ui:field="menu2" addStyleNames='{style.panel}' width="100%">
-		                   	 	<gwt:Button ui:field="modalNewestTopic" addStyleNames='{style.submitBtn}' width="100%" >Newest</gwt:Button>	
-		                   	 	<gwt:Button ui:field="modalOldestTopic" addStyleNames='{style.submitBtn}' width="100%" >Oldest</gwt:Button>	 
-	                        </gwt:VerticalPanel>
-                        </div>
-                    </div>
-                </section>
-            </div>
 
-        	<div class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
-                <section class="panel">
-                    <header class="panel-heading">
-                        <h3 class="panel-title">Users</h3>
-                    </header>
-                    <div class="panel-body">
-                    
-                   		<gwt:ScrollPanel width="100%">
-	                        <gwt:VerticalPanel ui:field="panel" addStyleNames='{style.cellTable}' width="100%">
-	                        
-	                        </gwt:VerticalPanel>
-                       	</gwt:ScrollPanel>
-                        
-                    </div>
-                </section>
-            </div>
-        </div>
-        
-	
+		<!-- MODAL - Menu opciones edición -->
+		<div class="row">
+			<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+
+				<section class="panel">
+					<header class="panel-heading">
+						<h3 class="panel-title">Search</h3>
+					</header>
+					<div class="panel-body">
+
+						<div class="btn-group btn-group-justified">
+							<gwt:VerticalPanel ui:field="menu3"
+								addStyleNames='{style.panel}' width="100%">
+								<gwt:TextBox ui:field="searchInput" addStyleNames='{style.titleInput}'
+									width="100%" maxLength="40" alignment="CENTER" direction="LTR"
+									textAlignment="ALIGN_CENTER"></gwt:TextBox>
+								<gwt:Button ui:field="modalSearchTopic"
+									addStyleNames='{style.submitBtn}' width="100%">Find</gwt:Button>
+							</gwt:VerticalPanel>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="panel">
+					<header class="panel-heading">
+						<h3 class="panel-title">Order by</h3>
+					</header>
+					<div class="panel-body">
+						<div class="btn-group btn-group-justified">
+							<gwt:VerticalPanel ui:field="menu2"
+								addStyleNames='{style.panel}' width="100%">
+								<gwt:Button ui:field="modalNewestTopic"
+									addStyleNames='{style.submitBtn}' width="100%">Newest</gwt:Button>
+								<gwt:Button ui:field="modalOldestTopic"
+									addStyleNames='{style.submitBtn}' width="100%">Oldest</gwt:Button>
+							</gwt:VerticalPanel>
+						</div>
+					</div>
+				</section>
+			</div>
+
+			<div class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
+				<section class="panel">
+					<header class="panel-heading">
+						<h3 class="panel-title">Users</h3>
+					</header>
+					<div class="panel-body">
+
+						<gwt:ScrollPanel width="100%">
+							<gwt:VerticalPanel ui:field="panel"
+								addStyleNames='{style.cellTable}' width="100%">
+
+							</gwt:VerticalPanel>
+						</gwt:ScrollPanel>
+
+					</div>
+				</section>
+			</div>
+		</div>
+
+
 	</gwt:HTMLPanel>
 </ui:UiBinder> 

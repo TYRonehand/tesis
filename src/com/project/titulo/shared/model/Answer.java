@@ -2,35 +2,34 @@ package com.project.titulo.shared.model;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class Answer  implements IsSerializable{
+public class Answer implements IsSerializable {
 	private String idcomentary;
 	private String idtopic;
-	private String comentary;
+	private String description;
 	private String creation;
-	private String modify;
-	private String enabled;
+	private String edition;
 	private String iduser;
-	
+	private String numsubcomment;
+
 	@SuppressWarnings("unused")
-	private Answer(){
-		
+	private Answer() {
+
 	}
-	
-	public Answer(String Comentary, String Idtopic, String Iduser)
-	{
-		this.setComentary(Comentary);
+
+	public Answer(String Description, String Idtopic, String Iduser) {
+		this.setDescription(Description);
 		this.setIdtopic(Idtopic);
 		this.setIduser(Iduser);
 	}
-	
-	public Answer(String idcomentary,String idtopic, String Comentary, String creation, String modify, String enabled, String iduser)
-	{
+
+	public Answer(String idcomentary, String idtopic, String Description,
+			String creation, String edition, String Numsubcomment, String iduser) {
 		this.setIdcomentary(idcomentary);
 		this.setIdtopic(idtopic);
-		this.setComentary(Comentary);
+		this.setDescription(Description);
 		this.setCreation(creation);
-		this.setModify(modify);
-		this.setEnabled(enabled);
+		this.setEdition(edition);
+		this.setNumsubcomment(Numsubcomment);
 		this.setIduser(iduser);
 	}
 
@@ -50,12 +49,12 @@ public class Answer  implements IsSerializable{
 		this.idtopic = idtopic;
 	}
 
-	public String getComentary() {
-		return comentary;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setComentary(String comentary) {
-		this.comentary = comentary;
+	public void setDescription(String comentary) {
+		this.description = comentary;
 	}
 
 	public String getCreation() {
@@ -66,20 +65,12 @@ public class Answer  implements IsSerializable{
 		this.creation = creation;
 	}
 
-	public String getModify() {
-		return modify;
+	public String getEdition() {
+		return edition;
 	}
 
-	public void setModify(String modify) {
-		this.modify = modify;
-	}
-
-	public String getEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(String enabled) {
-		this.enabled = enabled;
+	public void setEdition(String edition) {
+		this.edition = edition;
 	}
 
 	public String getIduser() {
@@ -88,6 +79,14 @@ public class Answer  implements IsSerializable{
 
 	public void setIduser(String iduser) {
 		this.iduser = iduser;
+	}
+
+	public String getNumsubcomment() {
+		return numsubcomment;
+	}
+
+	public void setNumsubcomment(String numsubcomment) {
+		this.numsubcomment = numsubcomment;
 	}
 
 }

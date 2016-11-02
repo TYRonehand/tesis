@@ -24,23 +24,27 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 
 public class Login2Widget extends Composite {
 
-	/*style*/
+	/* style */
 	private MyStyle ms = new MyStyle();
-	
-	/*variables*/
-	//elementos uibinder
-	@UiField TextBox mailInput;  
-	@UiField PasswordTextBox passInput;
-	@UiField Button submitBTN;
-	
-	//cookie
-	private CookieVerify mycookie=new CookieVerify(false);
-	//url
+
+	/* variables */
+	// elementos uibinder
+	@UiField
+	TextBox mailInput;
+	@UiField
+	PasswordTextBox passInput;
+	@UiField
+	Button submitBTN;
+
+	// cookie
+	private CookieVerify mycookie = new CookieVerify(false);
+	// url
 	private GoToUrl url = new GoToUrl();
-	//RPC
-	private final ServerServiceAsync serverService = GWT.create(ServerService.class);
-	
-	//crear widget
+	// RPC
+	private final ServerServiceAsync serverService = GWT
+			.create(ServerService.class);
+
+	// crear widget
 	private static Login2WidgetUiBinder uiBinder = GWT
 			.create(Login2WidgetUiBinder.class);
 
@@ -49,77 +53,80 @@ public class Login2Widget extends Composite {
 
 	public Login2Widget() {
 		initWidget(uiBinder.createAndBindUi(this));
-		
-		//set style to buttons from bootstrap
+
+		// set style to buttons from bootstrap
 		submitBTN.addStyleName(ms.getButtonStyle(0));
 	}
 
-
-	//limpiar inputs
-	private void clearInputs(){
+	// limpiar inputs
+	private void clearInputs() {
 		mailInput.setText("");
 		passInput.setText("");
 	}
-	
-	private void LoginUser(){
-		//no existen errores
-		if(passInput.getText().length()>=6 && mailInput.getText().length()>=6){
-			if(FieldVerifier.isValidMail(mailInput.getText())){
-				//admin test
-				if(mailInput.getText().equals("Administr@tor") && passInput.getText().equals("741admin963")){
-					//guardamos las cookies con info
+
+	private void LoginUser() {
+		// no existen errores
+		if (passInput.getText().length() >= 6
+				&& mailInput.getText().length() >= 6) {
+			if (FieldVerifier.isValidMail(mailInput.getText())) {
+				// admin test
+				if (mailInput.getText().equals("Administr@tor")
+						&& passInput.getText().equals("741admin963")) {
+					// guardamos las cookies con info
 					mycookie.setCookieMail("cagutierrez@ing.ucsc.cl");
-					mycookie.setCookieName("Administration");
 					mycookie.setCookieUser("Admin");
-					
-					//go to home first time
+
+					// go to home first time
 					url.GoTo("MENU2");
 					url.GoTo("ADMIN");
-				}else{
-					//consulta datos usuario normal				
-					serverService.authenticateUser( mailInput.getText(), passInput.getText(), new AsyncCallback<User>(){
+				} else {
+					// consulta datos usuario normal
+					serverService.authenticateUser(mailInput.getText(),passInput.getText(), new AsyncCallback<User>() 
+					{
 						@Override
-						public void onFailure(Throwable caught){
+						public void onFailure(Throwable caught) {
 							ErrorVerify.getErrorAlert("offline");
-							//limpiar input
+							// limpiar input
 							clearInputs();
 						}
 						@Override
-						public void onSuccess(User result){
-							if(result==null){
-								ErrorVerify.getErrorAlert("wronguser");	
-							}else if(!result.getId().isEmpty())	{
-								//guardamos las cookies con info
-								mycookie.setCookieBanned(result.getBanned());
+						public void onSuccess(User result) {
+							if (result == null) 
+							{
+								ErrorVerify.getErrorAlert("wronguser");
+							} 
+							else if (!result.getId().isEmpty()) 
+							{
+								// guardamos las cookies con info
 								mycookie.setCookieMail(result.getMail());
-								mycookie.setCookieName(result.getName()+" "+result.getLastname());
 								mycookie.setCookieUser(result.getId());
-								
-								//go to home first time
+
+								// go to home first time
 								url.GoTo("MENU");
 								url.GoTo("HOME");
-							}else{
+							} else {
 								clearInputs();
 							}
-						}});
+						}
+					});
 				}
-			}else{
+			} else {
 				ErrorVerify.getErrorAlert("invalidmail");
 			}
-		}else{
+		} else {
 			ErrorVerify.getErrorAlert("tooshort");
 		}
-			
+
 	}
-	
-	/*Evento click SUBMIT*/
+
+	/* Evento click SUBMIT */
 	@UiHandler("submitBTN")
-	void onSubmitBTNClick(ClickEvent event){
+	void onSubmitBTNClick(ClickEvent event) {
 		LoginUser();
 	}
-	
+
 	@UiHandler("passInput")
-	void onPassInputKeyDown(KeyDownEvent event){
+	void onPassInputKeyDown(KeyDownEvent event) {
 		if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER)
 			LoginUser();
 	}

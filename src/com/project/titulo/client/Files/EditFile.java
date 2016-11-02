@@ -24,74 +24,90 @@ import com.google.gwt.event.dom.client.ClickEvent;
 
 public class EditFile extends Composite {
 
-	@UiField VerticalPanel labelxPanel;
-	@UiField VerticalPanel labelyPanel;
-	@UiField VerticalPanel labelzPanel;
-	@UiField TextBox titleBox;  
-	@UiField ListBox dimensionList; 
-	@UiField TextBox labelxBox; 
-	@UiField TextBox labelyBox; 
-	@UiField TextBox labelzBox; 
-	@UiField TextArea descriptionBox;
-	@UiField TextArea paretoSetBox;
-	@UiField Button saveBtn;
-	@UiField Button cancelBtn;
-	/*style*/
+	@UiField
+	VerticalPanel labelxPanel;
+	@UiField
+	VerticalPanel labelyPanel;
+	@UiField
+	VerticalPanel labelzPanel;
+	@UiField
+	TextBox titleBox;
+	@UiField
+	ListBox dimensionList;
+	@UiField
+	TextBox labelxBox;
+	@UiField
+	TextBox labelyBox;
+	@UiField
+	TextBox labelzBox;
+	@UiField
+	TextArea descriptionBox;
+	@UiField
+	TextArea paretoSetBox;
+	@UiField
+	Button saveBtn;
+	@UiField
+	Button cancelBtn;
+	/* style */
 	private MyStyle ms = new MyStyle();
-	//goto url
+	// goto url
 	private GoToUrl url = new GoToUrl();
-	
-	//id for data file
+
+	// id for data file
 	private String IDDATAFILE;
 	private UserFile USERFILE;
-	//RPC
-	private final ServerServiceAsync serverService = GWT.create(ServerService.class);
-	
-	//variables
-	private static EditFileUiBinder uiBinder = GWT.create(EditFileUiBinder.class);
+	// RPC
+	private final ServerServiceAsync serverService = GWT
+			.create(ServerService.class);
+
+	// variables
+	private static EditFileUiBinder uiBinder = GWT
+			.create(EditFileUiBinder.class);
 
 	interface EditFileUiBinder extends UiBinder<Widget, EditFile> {
 	}
 
 	public EditFile(String iddatafile) {
-		//id from datafile
-		this.IDDATAFILE=iddatafile;
-		
-		//properties
+		// id from datafile
+		this.IDDATAFILE = iddatafile;
+
+		// properties
 		initWidget(uiBinder.createAndBindUi(this));
-		
-		//bootstrap style
+
+		// bootstrap style
 		saveBtn.setStyleName(ms.getButtonStyle(2));
 		cancelBtn.setStyleName(ms.getButtonStyle(1));
-		
-		//load data from file into inputs
+
+		// load data from file into inputs
 		getFileData();
 	}
 
-	private void getFileData(){
-		serverService.getDataFile(this.IDDATAFILE, new AsyncCallback<UserFile>(){
+	private void getFileData() {
+		serverService.getDataFile(this.IDDATAFILE,
+				new AsyncCallback<UserFile>() {
 
-			@Override
-			public void onFailure(Throwable caught) {
-				ErrorVerify.getErrorAlert("offline");
-			}
-			@Override
-			public void onSuccess(UserFile result) {
-				if(result!=null){
-					USERFILE = result;
-					LoadDataInput(result);
-				}else{
-					ErrorVerify.getErrorAlert("fatal");
-				}
-			}
-		});
+					@Override
+					public void onFailure(Throwable caught) {
+						ErrorVerify.getErrorAlert("offline");
+					}
+
+					@Override
+					public void onSuccess(UserFile result) {
+						if (result != null) {
+							USERFILE = result;
+							LoadDataInput(result);
+						} else {
+							ErrorVerify.getErrorAlert("fatal");
+						}
+					}
+				});
 	}
-	
-	private void LoadDataInput(UserFile result){
+
+	private void LoadDataInput(UserFile result) {
 		titleBox.setText(result.getTitle());
-		descriptionBox.setText(result.getDescription()); 
-		paretoSetBox.setText(result.getData()); 
-		//list box
+		descriptionBox.setText(result.getDescription());
+		paretoSetBox.setText(result.getData());
+		// list box
 		dimensionList.addItem("1");
 		dimensionList.addItem("2");
 		dimensionList.addItem("3");
@@ -103,108 +119,122 @@ public class EditFile extends Composite {
 		dimensionList.addItem("9");
 		dimensionList.addItem("10");
 		dimensionList.addChangeHandler(new ChangeHandler() {
-		      public void onChange(ChangeEvent event) {
-		    	  if(dimensionList.getValue(dimensionList.getSelectedIndex()).toString().equals("1")){
-		    		  labelxPanel.setVisible(true);
-		    		  labelyPanel.setVisible(false);
-		    		  labelzPanel.setVisible(false); 
-		    		  labelyBox.setText(""); 
-		    		  labelzBox.setText(""); 
-		    		  
-		    	  }else if(dimensionList.getValue(dimensionList.getSelectedIndex()).toString().equals("2")){
-		    		  labelxPanel.setVisible(true);
-		    		  labelyPanel.setVisible(true);
-		    		  labelzPanel.setVisible(false);
-		    		  labelzBox.setText(""); 
-	
-		    	  }else if(dimensionList.getValue(dimensionList.getSelectedIndex()).toString().equals("3")){
-		    		  labelxPanel.setVisible(true);
-		    		  labelyPanel.setVisible(true);
-		    		  labelzPanel.setVisible(true);
-	
-		    	  }else{
-		    		  labelxPanel.setVisible(false);
-		    		  labelyPanel.setVisible(false);
-		    		  labelzPanel.setVisible(false);
-		  			labelxBox.setText(""); 
-					labelyBox.setText(""); 
-					labelzBox.setText(""); 
-		    	  }
-		      }
-		    });
-		//combobox
-		for(int i =0; i<dimensionList.getItemCount();i++){
-			if(dimensionList.getItemText(i).equals(result.getDimension())){
+			public void onChange(ChangeEvent event) {
+				if (dimensionList.getValue(dimensionList.getSelectedIndex())
+						.toString().equals("1")) {
+					labelxPanel.setVisible(true);
+					labelyPanel.setVisible(false);
+					labelzPanel.setVisible(false);
+					labelyBox.setText("");
+					labelzBox.setText("");
+
+				} else if (dimensionList
+						.getValue(dimensionList.getSelectedIndex()).toString()
+						.equals("2")) {
+					labelxPanel.setVisible(true);
+					labelyPanel.setVisible(true);
+					labelzPanel.setVisible(false);
+					labelzBox.setText("");
+
+				} else if (dimensionList
+						.getValue(dimensionList.getSelectedIndex()).toString()
+						.equals("3")) {
+					labelxPanel.setVisible(true);
+					labelyPanel.setVisible(true);
+					labelzPanel.setVisible(true);
+
+				} else {
+					labelxPanel.setVisible(false);
+					labelyPanel.setVisible(false);
+					labelzPanel.setVisible(false);
+					labelxBox.setText("");
+					labelyBox.setText("");
+					labelzBox.setText("");
+				}
+			}
+		});
+		// combobox
+		for (int i = 0; i < dimensionList.getItemCount(); i++) {
+			if (dimensionList.getItemText(i).equals(result.getDimension())) {
 				dimensionList.setItemSelected(i, true);
 				break;
 			}
 		}
-		
-		//labels		
-		if(dimensionList.getValue(dimensionList.getSelectedIndex()).toString().equals("1")){
-  		  labelxPanel.setVisible(true);
-  		  labelyPanel.setVisible(false);
-  		  labelzPanel.setVisible(false); 
-			labelxBox.setText(result.getLabelx());
-  		  
-  	  }else if(dimensionList.getValue(dimensionList.getSelectedIndex()).toString().equals("2")){
-  		  labelxPanel.setVisible(true);
-  		  labelyPanel.setVisible(true);
-  		  labelzPanel.setVisible(false);
-			labelxBox.setText(result.getLabelx());
-			labelyBox.setText(result.getLabely()); 
 
-  	  }else if(dimensionList.getValue(dimensionList.getSelectedIndex()).toString().equals("3")){
-  		  labelxPanel.setVisible(true);
-  		  labelyPanel.setVisible(true);
-  		  labelzPanel.setVisible(true);
+		// labels
+		if (dimensionList.getValue(dimensionList.getSelectedIndex()).toString()
+				.equals("1")) {
+			labelxPanel.setVisible(true);
+			labelyPanel.setVisible(false);
+			labelzPanel.setVisible(false);
 			labelxBox.setText(result.getLabelx());
-			labelyBox.setText(result.getLabely()); 
-			labelzBox.setText(result.getLabelz()); 
 
-  	  }else{
-  		  labelxPanel.setVisible(false);
-  		  labelyPanel.setVisible(false);
-  		  labelzPanel.setVisible(false);
-			labelxBox.setText(""); 
-			labelyBox.setText(""); 
-			labelzBox.setText(""); 
-  	  }
+		} else if (dimensionList.getValue(dimensionList.getSelectedIndex())
+				.toString().equals("2")) {
+			labelxPanel.setVisible(true);
+			labelyPanel.setVisible(true);
+			labelzPanel.setVisible(false);
+			labelxBox.setText(result.getLabelx());
+			labelyBox.setText(result.getLabely());
+
+		} else if (dimensionList.getValue(dimensionList.getSelectedIndex())
+				.toString().equals("3")) {
+			labelxPanel.setVisible(true);
+			labelyPanel.setVisible(true);
+			labelzPanel.setVisible(true);
+			labelxBox.setText(result.getLabelx());
+			labelyBox.setText(result.getLabely());
+			labelzBox.setText(result.getLabelz());
+
+		} else {
+			labelxPanel.setVisible(false);
+			labelyPanel.setVisible(false);
+			labelzPanel.setVisible(false);
+			labelxBox.setText("");
+			labelyBox.setText("");
+			labelzBox.setText("");
+		}
 	}
-	
-	
 
-	@UiHandler("cancelBtn")
-	void onCancelBtnClick(ClickEvent event) {
-		url.GoTo("FILES");
-	}
-	@UiHandler("saveBtn")
-	void onSaveBtnClick(ClickEvent event) {
-		
-		UserFile edited = USERFILE;
+	private void EditDataFile(UserFile file) {
+		UserFile edited = file;
 		edited.setTitle(this.titleBox.getText());
-		edited.setDimension(this.dimensionList.getItemText(this.dimensionList.getSelectedIndex()).toString());
+		edited.setDimension(this.dimensionList.getItemText(
+				this.dimensionList.getSelectedIndex()).toString());
 		edited.setLabelx(this.labelxBox.getText());
 		edited.setLabely(this.labelyBox.getText());
 		edited.setLabelz(this.labelzBox.getText());
 		edited.setDescription(this.descriptionBox.getText());
 		edited.setData(this.paretoSetBox.getText());
-		
-		//update request
-		serverService.setFile(edited, new AsyncCallback<Boolean>(){
+
+		// update request
+		serverService.setFile(edited, new AsyncCallback<Boolean>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				ErrorVerify.getErrorAlert("offline");
 			}
+
 			@Override
 			public void onSuccess(Boolean result) {
-				if(result){
+				if (result) {
 					ErrorVerify.getErrorAlert("successupdate");
 					url.GoTo("FILES");
-				}else{
+				} else {
 					ErrorVerify.getErrorAlert("failupdate");
 				}
-			}});
-		
+			}
+		});
+	}
+
+	// cancel button event
+	@UiHandler("cancelBtn")
+	void onCancelBtnClick(ClickEvent event) {
+		url.GoTo("FILES");
+	}
+
+	// save button event
+	@UiHandler("saveBtn")
+	void onSaveBtnClick(ClickEvent event) {
+		EditDataFile(this.USERFILE);
 	}
 }

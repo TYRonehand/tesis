@@ -33,347 +33,353 @@ import com.project.titulo.shared.ErrorVerify;
 import com.project.titulo.shared.model.UserFile;
 
 public class FileWidget extends Composite {
-	
-	/*style*/
-	private MyStyle ms = new MyStyle();
-	
-	/*variables*/
-	private String IDUSER=null;
-	
-	//uifields	
-	@UiField Button uploadBtn;
-	@UiField Button helpBtn;
-	@UiField VerticalPanel panel;
-	
-	//------------------------------------
-	
-	
-	//Create a CellTable.
-	private CellTable<UserFile> table = null;
-	//goto url
-	public GoToUrl url = new GoToUrl();
-	//RPC
-	private final ServerServiceAsync serverService = GWT.create(ServerService.class);
-	
-	//CREATION
-	private static FileWidgetUiBinder uiBinder = GWT.create(FileWidgetUiBinder.class);
 
-	interface FileWidgetUiBinder extends
-			UiBinder<Widget, FileWidget> {
+	/* style */
+	private MyStyle ms = new MyStyle();
+
+	/* variables */
+	private String IDUSER = null;
+
+	// uifields
+	@UiField
+	Button uploadBtn;
+	@UiField
+	Button helpBtn;
+	@UiField
+	VerticalPanel panel;
+
+	// ------------------------------------
+
+	// Create a CellTable.
+	private CellTable<UserFile> table = null;
+	// goto url
+	public GoToUrl url = new GoToUrl();
+	// RPC
+	private final ServerServiceAsync serverService = GWT
+			.create(ServerService.class);
+
+	// CREATION
+	private static FileWidgetUiBinder uiBinder = GWT
+			.create(FileWidgetUiBinder.class);
+
+	interface FileWidgetUiBinder extends UiBinder<Widget, FileWidget> {
 	}
+
 	public FileWidget(String iduser) {
-	
-		//get id user
-		this.IDUSER=iduser;
-		//properties
+
+		// get id user
+		this.IDUSER = iduser;
+		// properties
 		initWidget(uiBinder.createAndBindUi(this));
 
-		//set style to buttons from bootstrap
+		// set style to buttons from bootstrap
 		uploadBtn.addStyleName(ms.getButtonStyle(0));
 		helpBtn.addStyleName(ms.getButtonStyle(0));
-		
-		//table
+
+		// table
 		LoadFilesData();
 	}
-	
-	//load data from database
-	private void LoadFilesData()
-	{
-		serverService.getUserFiles(this.IDUSER, new AsyncCallback<List<UserFile>>(){
 
-			@Override
-			public void onFailure(Throwable caught) {
-				ErrorVerify.getErrorAlert("offline");
-			}
+	// load data from database
+	private void LoadFilesData() {
+		serverService.getUserFiles(this.IDUSER,
+				new AsyncCallback<List<UserFile>>() {
 
-			@Override
-			public void onSuccess(List<UserFile> result) {
-				LoadTable(result);	
-			}});
+					@Override
+					public void onFailure(Throwable caught) {
+						ErrorVerify.getErrorAlert("offline");
+					}
+
+					@Override
+					public void onSuccess(List<UserFile> result) {
+						LoadTable(result);
+					}
+				});
 	}
-	
-	//Create data table
-	private void LoadTable(List<UserFile> DATAINFO)
-	{
-		//cleaning
+
+	// Create data table
+	private void LoadTable(List<UserFile> DATAINFO) {
+		// cleaning
 		panel.clear();
 		table = new CellTable<UserFile>();
-		
-		//properties
+
+		// properties
 		table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 		table.addStyleName("cellTable");
 		table.setSize("100%", "25px");
 		table.setPageStart(0);
 		table.setPageSize(8);
 		table.setEmptyTableWidget(new Label("No data found!"));
-	  
-		
-		/*ADD FILENAME TEXTCELL*/
+
+		/* ADD FILENAME TEXTCELL */
 		TextColumn<UserFile> nameColumn = new TextColumn<UserFile>() {
-		     @Override
-		     public String getValue(UserFile object) {
-		        return object.getTitle();
-		     }
+			@Override
+			public String getValue(UserFile object) {
+				return object.getTitle();
+			}
 		};
 		table.addColumn(nameColumn, "FileName");
-		
-		/*ADD dimension TEXTCELL*/
+
+		/* ADD dimension TEXTCELL */
 		TextColumn<UserFile> dimColumn = new TextColumn<UserFile>() {
-		     @Override
-		     public String getValue(UserFile object) {
-		        return object.getDimension();
-		     }
+			@Override
+			public String getValue(UserFile object) {
+				return object.getDimension();
+			}
 		};
 		table.addColumn(dimColumn, "Dimension");
 
-		/*ADD CREATION DATE TEXTCELL*/
+		/* ADD CREATION DATE TEXTCELL */
 		TextColumn<UserFile> creationColumn = new TextColumn<UserFile>() {
-		     @Override
-		     public String getValue(UserFile object) {
-		        return object.getCreation();
-		     }
+			@Override
+			public String getValue(UserFile object) {
+				return object.getCreation();
+			}
 		};
 		table.addColumn(creationColumn, "Created");
-	      
-		
-		/*ADD TO PLOT BUTTONCELL*/
-		ButtonCell buttonPlot = new ButtonCell();
-		Column<UserFile, String> buttonPlotColumn = new Column<UserFile, String>(buttonPlot) {
-		  @Override
-		  public String getValue(UserFile object) {
-			  if(object.getPlot()=="1")
-				  return "Remove";
-			  return "Add";
-		  }
-		};
-		buttonPlotColumn.setFieldUpdater(new FieldUpdater<UserFile, String>() 
-		{
-			  public void update(int index, UserFile object, String value) 
-			  {
-				  //not added in plot
-				  if(object.getPlot()=="0")
-				  {
-					  serverService.addPlotFile(object.getIddatafile(), new AsyncCallback<Boolean>(){
-	
-							@Override
-							public void onFailure(Throwable caught) {
-								ErrorVerify.getErrorAlert("offline");
-							}
-							@Override
-							public void onSuccess(Boolean result){
-								if(result){
-									ErrorVerify.getErrorAlert("plotfileadd");
-									LoadFilesData();
-								}else{
-									ErrorVerify.getErrorAlert("failadd");
-								}
-							}}); 
-				  }
-				  else//added in plot
-				  {
-					  serverService.removePlotFile(object.getIddatafile(), new AsyncCallback<Boolean>(){
 
-							@Override
-							public void onFailure(Throwable caught) {
-								ErrorVerify.getErrorAlert("offline");
-							}
-							@Override
-							public void onSuccess(Boolean result){
-								if(result){
-									ErrorVerify.getErrorAlert("fileremove");
-									LoadFilesData();
-								}else{
-									ErrorVerify.getErrorAlert("faildel");
+		/* ADD TO PLOT BUTTONCELL */
+		ButtonCell buttonPlot = new ButtonCell();
+		Column<UserFile, String> buttonPlotColumn = new Column<UserFile, String>(
+				buttonPlot) {
+			@Override
+			public String getValue(UserFile object) {
+				if (object.getPlot() == "1")
+					return "Remove";
+				return "Add";
+			}
+		};
+		buttonPlotColumn.setFieldUpdater(new FieldUpdater<UserFile, String>() {
+			public void update(int index, UserFile object, String value) {
+				// not added in plot
+				if (object.getPlot() == "0") {
+					serverService.addPlotFile(object.getIdfile(),
+							new AsyncCallback<Boolean>() {
+
+								@Override
+								public void onFailure(Throwable caught) {
+									ErrorVerify.getErrorAlert("offline");
 								}
-							}}
-					  ); 
-				  }
-			  }
+
+								@Override
+								public void onSuccess(Boolean result) {
+									if (result) {
+										ErrorVerify
+												.getErrorAlert("plotfileadd");
+										LoadFilesData();
+									} else {
+										ErrorVerify.getErrorAlert("failadd");
+									}
+								}
+							});
+				} else// added in plot
+				{
+					serverService.removePlotFile(object.getIdfile(),
+							new AsyncCallback<Boolean>() {
+
+								@Override
+								public void onFailure(Throwable caught) {
+									ErrorVerify.getErrorAlert("offline");
+								}
+
+								@Override
+								public void onSuccess(Boolean result) {
+									if (result) {
+										ErrorVerify.getErrorAlert("fileremove");
+										LoadFilesData();
+									} else {
+										ErrorVerify.getErrorAlert("faildel");
+									}
+								}
+							});
+				}
+			}
 		});
 		table.addColumn(buttonPlotColumn, "Plot");
-		
-		/*ADD TO METRIC BUTTONCELL*/
+
+		/* ADD TO METRIC BUTTONCELL */
 		ButtonCell buttonMetric = new ButtonCell();
-		Column<UserFile, String> buttonMetricColumn = new Column<UserFile, String>(buttonMetric) {
-		  @Override
-		  public String getValue(UserFile object) {
-			  if(object.getMetric()=="1")
-				  return "Remove";
-			  return "Add";
-		  }
+		Column<UserFile, String> buttonMetricColumn = new Column<UserFile, String>(
+				buttonMetric) {
+			@Override
+			public String getValue(UserFile object) {
+				if (object.getMetric() == "1")
+					return "Remove";
+				return "Add";
+			}
 		};
-		buttonMetricColumn.setFieldUpdater(new FieldUpdater<UserFile, String>() 
-		{
-			  public void update(int index, UserFile object, String value) 
-			  {
-				  //not added in metric
-				  if(object.getMetric()=="0")
-				  {
-					  serverService.addMetricFile(object.getIddatafile(), new AsyncCallback<Boolean>(){
+		buttonMetricColumn
+				.setFieldUpdater(new FieldUpdater<UserFile, String>() {
+					public void update(int index, UserFile object, String value) {
+						// not added in metric
+						if (object.getMetric() == "0") {
+							serverService.addMetricFile(object.getIdfile(),
+									new AsyncCallback<Boolean>() {
 
-							@Override
-							public void onFailure(Throwable caught) {
-								ErrorVerify.getErrorAlert("offline");
-							}
-							@Override
-							public void onSuccess(Boolean result){
-								if(result){
-									ErrorVerify.getErrorAlert("metricfileadd");
-									LoadFilesData();
-								}else{
-									ErrorVerify.getErrorAlert("failadd");
-								}
-							}}); 
-				  }
-				  else//added in metric
-				  {
-					  serverService.removeMetricFile(object.getIddatafile(), new AsyncCallback<Boolean>(){
+										@Override
+										public void onFailure(Throwable caught) {
+											ErrorVerify
+													.getErrorAlert("offline");
+										}
 
-							@Override
-							public void onFailure(Throwable caught) {
-								ErrorVerify.getErrorAlert("offline");
-							}
-							@Override
-							public void onSuccess(Boolean result){
-								if(result){
-									ErrorVerify.getErrorAlert("fileremove");
-									
-									LoadFilesData();
-								}else{
-									ErrorVerify.getErrorAlert("faildel");
-								}
-							}}
-					  ); 
-				  }
-				  
-			  }
-		});
-		table.addColumn(buttonMetricColumn, "Metric");
-		
-		
-		
-		/*EDIT BUTTON CELL*/
-		ButtonCell buttonEdit = new ButtonCell();
-		Column<UserFile, String> buttonEditColumn = new Column<UserFile, String>(buttonEdit) {
-		  @Override
-		  public String getValue(UserFile object) {
-			  return "Edit";
-		  }
-		};
-		buttonEditColumn.setFieldUpdater(new FieldUpdater<UserFile, String>() 
-		{
-			  public void update(int index, UserFile object, String value) 
-			  {
-				  if(Window.confirm("Edit this file?"))
-					{
-			        	// widget close session	
-						RootPanel.get("GWTcontainer").clear();	
-						//cualquier otro caso sera enviado al login
-						RootPanel.get("GWTcontainer").add(new BreadWidget("FILES"));
-						RootPanel.get("GWTcontainer").add(new EditFile(object.getIddatafile()));
+										@Override
+										public void onSuccess(Boolean result) {
+											if (result) {
+												ErrorVerify
+														.getErrorAlert("metricfileadd");
+												LoadFilesData();
+											} else {
+												ErrorVerify
+														.getErrorAlert("failadd");
+											}
+										}
+									});
+						} else// added in metric
+						{
+							serverService.removeMetricFile(
+									object.getIdfile(),
+									new AsyncCallback<Boolean>() {
+
+										@Override
+										public void onFailure(Throwable caught) {
+											ErrorVerify
+													.getErrorAlert("offline");
+										}
+
+										@Override
+										public void onSuccess(Boolean result) {
+											if (result) {
+												ErrorVerify
+														.getErrorAlert("fileremove");
+
+												LoadFilesData();
+											} else {
+												ErrorVerify
+														.getErrorAlert("faildel");
+											}
+										}
+									});
+						}
+
 					}
-			  }
-		});
-		table.addColumn(buttonEditColumn, "");
-		
-		
-		
-		/*DELETE BUTTON CELL*/
-		ButtonCell buttonDelete = new ButtonCell();
-		Column<UserFile, String> buttonDeleteColumn = new Column<UserFile, String>(buttonDelete) {
-		  @Override
-		  public String getValue(UserFile object) {
-			  
-			  return "X";
-		  }
+				});
+		table.addColumn(buttonMetricColumn, "Metric");
+
+		/* EDIT BUTTON CELL */
+		ButtonCell buttonEdit = new ButtonCell();
+		Column<UserFile, String> buttonEditColumn = new Column<UserFile, String>(
+				buttonEdit) {
+			@Override
+			public String getValue(UserFile object) {
+				return "View";
+			}
 		};
-		buttonDeleteColumn.setFieldUpdater(new FieldUpdater<UserFile, String>() 
-		{
-			  public void update(int index, UserFile object, String value) 
-			  {
-				  if(Window.confirm("Delete this file?"))
-				  {
-					  serverService.deleteFile(object.getIddatafile(), new AsyncCallback<Boolean>(){
-	
-							@Override
-							public void onFailure(Throwable caught) {
-								ErrorVerify.getErrorAlert("offline");
-							}
-							@Override
-							public void onSuccess(Boolean result) 
-							{
-								if(result){
-									LoadFilesData();
-								}else{
-									ErrorVerify.getErrorAlert("faildel");
-								}
-							}});
-				  }
-			  }
-		});
-		table.addColumn(buttonDeleteColumn, "Delete");
-		
-		/*
-		// Add a selection model to handle user selection.
-	    final SingleSelectionModel<UserFile> selectionModel = new SingleSelectionModel<UserFile>();
-	    table.setSelectionModel(selectionModel);
-	    selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-	      public void onSelectionChange(SelectionChangeEvent event) {
-	    	  UserFile selected = selectionModel.getSelectedObject();
-	        if (selected != null) {
-	        	if(Window.confirm("Edit this file?"))
-				{
-		        	// widget close session	
-					RootPanel.get("GWTcontainer").clear();	
-					//cualquier otro caso sera enviado al login
+		buttonEditColumn.setFieldUpdater(new FieldUpdater<UserFile, String>() {
+			public void update(int index, UserFile object, String value) {
+				//if (Window.confirm("Edit this file?")) {
+					// widget close session
+					RootPanel.get("GWTcontainer").clear();
+					// cualquier otro caso sera enviado al login
 					RootPanel.get("GWTcontainer").add(new BreadWidget("FILES"));
-					RootPanel.get("GWTcontainer").add(new EditFile(selected.getIddatafile()));
-				}
-	        }
-	      }
-	    });
-	    */
-	    
-		
+					RootPanel.get("GWTcontainer").add(
+							new EditFile(object.getIdfile()));
+				//}
+			}
+		});
+		table.addColumn(buttonEditColumn, "Action");
+
+		/* DELETE BUTTON CELL */
+		ButtonCell buttonDelete = new ButtonCell();
+		Column<UserFile, String> buttonDeleteColumn = new Column<UserFile, String>(
+				buttonDelete) {
+			@Override
+			public String getValue(UserFile object) {
+
+				return "X";
+			}
+		};
+		buttonDeleteColumn
+				.setFieldUpdater(new FieldUpdater<UserFile, String>() {
+					public void update(int index, UserFile object, String value) {
+						if (Window.confirm("Delete this file?")) {
+							serverService.deleteFile(object.getIdfile(),
+									new AsyncCallback<Boolean>() {
+
+										@Override
+										public void onFailure(Throwable caught) {
+											ErrorVerify
+													.getErrorAlert("offline");
+										}
+
+										@Override
+										public void onSuccess(Boolean result) {
+											if (result) {
+												LoadFilesData();
+											} else {
+												ErrorVerify
+														.getErrorAlert("faildel");
+											}
+										}
+									});
+						}
+					}
+				});
+		table.addColumn(buttonDeleteColumn, "Delete");
+
+		/*
+		 * // Add a selection model to handle user selection. final
+		 * SingleSelectionModel<UserFile> selectionModel = new
+		 * SingleSelectionModel<UserFile>();
+		 * table.setSelectionModel(selectionModel);
+		 * selectionModel.addSelectionChangeHandler(new
+		 * SelectionChangeEvent.Handler() { public void
+		 * onSelectionChange(SelectionChangeEvent event) { UserFile selected =
+		 * selectionModel.getSelectedObject(); if (selected != null) {
+		 * if(Window.confirm("Edit this file?")) { // widget close session
+		 * RootPanel.get("GWTcontainer").clear(); //cualquier otro caso sera
+		 * enviado al login RootPanel.get("GWTcontainer").add(new
+		 * BreadWidget("FILES")); RootPanel.get("GWTcontainer").add(new
+		 * EditFile(selected.getIddatafile())); } } } });
+		 */
+
 		// draw table
 		table.setRowCount(DATAINFO.size(), true);
 		table.setRowData(0, DATAINFO);
-		//simple pager
-		SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
-		SimplePager pager = new SimplePager(TextLocation.CENTER, pagerResources, false, 0, true);
+		// simple pager
+		SimplePager.Resources pagerResources = GWT
+				.create(SimplePager.Resources.class);
+		SimplePager pager = new SimplePager(TextLocation.CENTER,
+				pagerResources, false, 0, true);
 		pager.setDisplay(table);
 		pager.addStyleName("pagerTable");
-		
+
 		panel.setBorderWidth(0);
 		panel.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
 		panel.setWidth("350");
-		panel.add(new Label("*select action"));
+		panel.add(new Label("Remember 8 files max."));
 		panel.add(table);
 		panel.add(pager);
 		Button reload = new Button("Reload Table");
-		reload.addClickHandler(new ClickHandler(){
+		reload.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				 LoadFilesData();
-			}}
-		);
+				LoadFilesData();
+			}
+		});
 		panel.add(reload);
-		
+
 	}
-	
-	//click upload
+
+	// click upload
 	@UiHandler("uploadBtn")
-	void onRegisteLinkClick(ClickEvent event) 
-	{
+	void onRegisteLinkClick(ClickEvent event) {
 		url.GoTo("MODALUPLOAD");
 	}
-	
-	//click Help
+
+	// click Help
 	@UiHandler("helpBtn")
-	void onHelpBtnClick(ClickEvent event) 
-	{
+	void onHelpBtnClick(ClickEvent event) {
 		url.GoTo("MODALHELP");
 	}
-	
-	
+
 }

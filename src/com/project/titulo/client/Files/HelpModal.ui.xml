@@ -2,61 +2,66 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
-		.title {
-		  display: block;
-		  font-size: 16pt;
-		  font-weight: bold;
-		}
-		.text {
-		  display: block;
-		  font-size: 10pt;
-		}
-		.dialogBox{
-    	  position: relative;
-		  top: 0px;
-		  left: 0px;
-		  z-index: 99999;
-		  display: block;
-		  font-size: 16pt;
-		  width:300px;
-		  padding:8px;
-		  align:center;
-		  background:white;
-		  border: 1px solid;
-		  border-radius: 3px;
-		  box-shadow: 10px 10px grey;
-		  font-weight: bold;
-		  
-		}
-		.verticalPanel{
-		
-		  padding:5px;
-		  padding-top:12px;
-		  display: block;
-		  font-size: 16pt;
-		  align:center;
-		  background:#f0f0f0;
-		  border-radius: 8px;
-		}
-		.HTMLheader{
-			height:80%;
-			width:80%;
-			align:center;
-			margin:auto;
-		  background:black;
-		}
-		
-	</ui:style>
-	<g:HTMLPanel  addStyleNames='{style.HTMLheader}' >
+	.title {
+		display: block;
+		font-size: 16pt;
+		font-weight: bold;
+	}
 	
-		<g:DialogBox ui:field="dialogBox"  width="100%" addStyleNames='{style.dialogBox}'>
-			<g:VerticalPanel ui:field="dialogVPanel" addStyleNames='{style.verticalPanel}' height="100%"  borderWidth="0" verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER">
-				
-				<g:Label text="EXAMPLE" addStyleNames='{style.title}' horizontalAlignment="ALIGN_CENTER"/>
-				<g:Image url="assets/img/examplefile.png" width="100%"/>
-				
+	.text {
+		display: block;
+		font-size: 10pt;
+	}
+	
+	.dialogBox {
+		position: relative;
+		top: 0px;
+		left: 0px;
+		z-index: 99999;
+		display: block;
+		font-size: 16pt;
+		width: 300px;
+		padding: 8px;
+		align: center;
+		background: white;
+		border: 1px solid;
+		border-radius: 3px;
+		box-shadow: 10px 10px grey;
+		font-weight: bold;
+	}
+	
+	.verticalPanel {
+		padding: 5px;
+		padding-top: 12px;
+		display: block;
+		font-size: 16pt;
+		align: center;
+		background: #f0f0f0;
+		border-radius: 8px;
+	}
+	
+	.HTMLheader {
+		height: 80%;
+		width: 80%;
+		align: center;
+		margin: auto;
+		background: black;
+	}
+	</ui:style>
+	<g:HTMLPanel addStyleNames='{style.HTMLheader}'>
+
+		<g:DialogBox ui:field="dialogBox" width="100%"
+			addStyleNames='{style.dialogBox}'>
+			<g:VerticalPanel ui:field="dialogVPanel"
+				addStyleNames='{style.verticalPanel}' height="100%" borderWidth="0"
+				verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER">
+
+				<g:Label text="EXAMPLE" addStyleNames='{style.title}'
+					horizontalAlignment="ALIGN_CENTER" />
+				<g:Image url="assets/img/examplefile.png" width="100%" />
+
 			</g:VerticalPanel>
 		</g:DialogBox>
-	
+
 	</g:HTMLPanel>
 </ui:UiBinder> 

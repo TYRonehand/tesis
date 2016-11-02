@@ -2,45 +2,48 @@ package com.project.titulo.shared.model;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class Topic  implements IsSerializable{
-	
+public class Topic implements IsSerializable {
+
 	private String idtopic;
 	private String title;
 	private String description;
 	private String creation;
 	private String edition;
-	private String enabled;
+	private String banned;
 	private String iduser;
-	
+	private String numcomments;
+
 	@SuppressWarnings("unused")
-	private Topic(){
-		
+	private Topic() {
+
 	}
-	
-	//add topic
-	public Topic(String Title, String Resume, String Iduser){
+
+	// add topic
+	public Topic(String Title, String Resume, String Iduser) {
 		this.setTitle(Title);
 		this.setDescription(Resume);
 		this.setIduser(Iduser);
 	}
-	
-	//update topic
-	public Topic(String idtopic,String Title, String Resume,String date){
+
+	// update topic
+	public Topic(String idtopic, String Title, String Resume, String date) {
 		this.setIdtopic(idtopic);
 		this.setTitle(Title);
 		this.setDescription(Resume);
 		this.setEdition(date);
 	}
-	
-	//get info
-	public Topic(String idtopic, String Title, String Resume, String Iduser,String Creation, String Enabled, String edited){
+
+	// get info
+	public Topic(String idtopic, String Title, String Description, String Iduser,
+			String Creation, String Banned, String edited, String Numcomment) {
 		this.setIdtopic(idtopic);
 		this.setTitle(Title);
-		this.setDescription(Resume);
+		this.setDescription(Description);
 		this.setIduser(Iduser);
 		this.setCreation(Creation);
-		this.setEnabled(Enabled);
+		this.setBanned(Banned);
 		this.setEdition(edited);
+		this.setNumcomments(Numcomment);
 	}
 
 	public String getIdtopic() {
@@ -83,12 +86,12 @@ public class Topic  implements IsSerializable{
 		this.edition = edition;
 	}
 
-	public String getEnabled() {
-		return enabled;
+	public String getbanned() {
+		return banned;
 	}
 
-	public void setEnabled(String enabled) {
-		this.enabled = enabled;
+	public void setBanned(String banned) {
+		this.banned = banned;
 	}
 
 	public String getIduser() {
@@ -98,5 +101,13 @@ public class Topic  implements IsSerializable{
 	public void setIduser(String iduser) {
 		this.iduser = iduser;
 	}
-	
+
+	public String getNumcomments() {
+		return numcomments;
+	}
+
+	public void setNumcomments(String numcomments) {
+		this.numcomments = numcomments;
+	}
+
 }

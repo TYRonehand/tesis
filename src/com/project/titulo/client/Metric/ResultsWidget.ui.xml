@@ -2,71 +2,77 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
-		.cellTable {
-		  padding:4px
-	      border-bottom: 1px solid #ccc;
-	      text-align: left;
-	      margin-bottom: 4px;
-	      width:100%;
-	    }
-	    .pagerTable {
-	      text-align: center;
-	      align:center;
-	    }
-	    .panel{
-	      text-align: center;
-	      align:center;
-	      width:100%;
-	    }
-		.submitBtn{
-			padding-top:5px;
-			width:100%;
-			margin:2px;
-		    border-color: #245580
-		}
+	.cellTable {
+		padding: 4px border-bottom: 1px solid #ccc;
+		text-align: left;
+		margin-bottom: 4px;
+		width: 100%;
+	}
+	
+	.pagerTable {
+		text-align: center;
+		align: center;
+	}
+	
+	.panel {
+		text-align: center;
+		align: center;
+		width: 100%;
+	}
+	
+	.submitBtn {
+		padding-top: 5px;
+		width: 100%;
+		margin: 2px;
+		border-color: #245580
+	}
 	</ui:style>
 	<g:HTMLPanel>
 
-        <div class="row">
-        
-            <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
-                <section class="panel">
-                    <header class="panel-heading">
-                    <h3 class="panel-title">Tools</h3>
-                    </header>
-                    <div class="panel-body">
-                    
-                    	<div class="btn-group btn-group-justified">
-                        <g:VerticalPanel ui:field="menu" addStyleNames='{style.panel}' width="100%">
-                        	<g:Button ui:field="backBtn" addStyleNames='{style.submitBtn}' width="100%" >Go back</g:Button>
-                        	<g:Button ui:field="exportBtn" addStyleNames='{style.submitBtn}' width="100%" >Export Results</g:Button>
-                        </g:VerticalPanel>
-                        </div>
-                            
-                    </div>
-                </section>
-            </div>
-            
-        	<div class="col-lg-10 col-md-9 col-sm-8 col-xs-12">
-                <section class="panel">
-                    <header class="panel-heading">
-                        <h3 class="panel-title">
-                        	<g:Label ui:field="titleName"></g:Label>
-                        </h3>
-                    </header>
-                    <div class="panel-body">
-                    
-                   		<g:ScrollPanel width="100%">
-	                        <g:VerticalPanel ui:field="panel" addStyleNames='{style.cellTable}' width="100%">
-	                        	<g:HTML ui:field="htmlTable" wordWrap="true"/>
-	                        </g:VerticalPanel>
-                       	</g:ScrollPanel>
-                       	
-                    </div>
-                </section>
-            </div>
-            
-        </div>
-        
+		<div class="row">
+
+			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+				<section class="panel">
+					<header class="panel-heading">
+						<h3 class="panel-title">Tools</h3>
+					</header>
+					<div class="panel-body">
+
+						<div class="btn-group btn-group-justified">
+							<g:VerticalPanel ui:field="menu" addStyleNames='{style.panel}'
+								width="100%">
+								<g:Button ui:field="backBtn" addStyleNames='{style.submitBtn}'
+									width="100%">Go back</g:Button>
+								<g:Button ui:field="exportBtn" addStyleNames='{style.submitBtn}'
+									width="100%">Export Results</g:Button>
+							</g:VerticalPanel>
+						</div>
+
+					</div>
+				</section>
+			</div>
+
+			<div class="col-lg-10 col-md-9 col-sm-8 col-xs-12">
+				<section class="panel">
+					<header class="panel-heading">
+						<h3 class="panel-title">
+							<g:Label ui:field="titleName"></g:Label>
+						</h3>
+					</header>
+					<div class="panel-body">
+
+						<g:ScrollPanel width="100%">
+							<g:VerticalPanel ui:field="panel" addStyleNames='{style.cellTable}'
+								width="100%">
+								<g:HTML ui:field="htmlTable" wordWrap="true" />
+							</g:VerticalPanel>
+						</g:ScrollPanel>
+
+					</div>
+				</section>
+			</div>
+
+		</div>
+
 	</g:HTMLPanel>
 </ui:UiBinder> 

@@ -1,224 +1,266 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:gwt="urn:import:com.google.gwt.user.client.ui" 
-  	xmlns:c="urn:import:com.google.gwt.user.cellview.client">
+	xmlns:gwt="urn:import:com.google.gwt.user.client.ui" xmlns:c="urn:import:com.google.gwt.user.cellview.client">
 	<ui:style>
-    .cellTable {
-	  padding:4px;
-      border-bottom: 1px solid #ccc;
-      text-align: left;
-      margin-bottom: 4px;
-      width:100%;
-    }
-    .panel{
-      text-align: center;
-      align:center;
-      width:100%;
-    }
-	.submitBtn{
-		padding-top:5px;
-		width:100%;
-		margin:2px;
+	.cellTable {
+		padding: 4px;
+		border-bottom: 1px solid #ccc;
+		text-align: left;
+		margin-bottom: 4px;
+		width: 100%;
 	}
-    .inputPrimary{
-		width:50px;
-		heigth:24px;
+	
+	.panel {
+		text-align: center;
+		align: center;
+		width: 100%;
 	}
-    .inputLabels{
-		heigth:24px;
+	
+	.submitBtn {
+		padding-top: 5px;
+		width: 100%;
+		margin: 2px;
 	}
-	.style.gridOpt{
-		margin:5px;
-		align:left;
-		widht:100%;
+	
+	.inputPrimary {
+		width: 50px;
+		heigth: 24px;
+	}
+	
+	.inputLabels {
+		heigth: 24px;
+	}
+	
+	.style.gridOpt {
+		margin: 5px;
+		align: left;
+		widht: 100%;
 	}
 	</ui:style>
 	<gwt:HTMLPanel>
-		
-		
-	<!--  Menu opciones edición-->
-        <div class="row">
-        
-        	<!-- COLLAPSE 1 PLOT FILES-->
-        	
-            <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
-                <section class="panel">
-                    <!--Titulo-->
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                  Plot Files
-                            </a>
-                        </h3>
-                    </div>
 
-                    <!--Texto-->
-                    <div id="collapseOne" class="panel-collapse collapse in">
-                        <div class="panel-body">
-	                        <div class="btn-group btn-group-justified">
-	                            <gwt:Button ui:field="plotBtn" addStyleNames='{style.submitBtn}' width="100%" >Plot Files</gwt:Button>	
+
+		<!-- Menu opciones edición -->
+		<div class="row">
+
+			<!-- COLLAPSE 1 PLOT FILES -->
+
+			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+				<section class="panel">
+					<!--Titulo -->
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
+								href="#collapseOne">
+								Plot Files
+							</a>
+						</h3>
+					</div>
+
+					<!--Texto -->
+					<div id="collapseOne" class="panel-collapse collapse in">
+						<div class="panel-body">
+							<div class="btn-group btn-group-justified">
+								<gwt:Button ui:field="plotBtn" addStyleNames='{style.submitBtn}'
+									width="100%">Plot Files</gwt:Button>
 							</div>
-                        </div>
-                    </div>
-                </section>
-                
-                <!-- COLLAPSE 2  SAVE IMAGE-->
-                <section class="panel">
-                    <!--Titulo-->
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                                  Save Image
-                            </a>
-                        </h3>
-                    </div>
-                    <!--Texto-->
-                    <div id="collapseTwo" class="panel-collapse collapse in">
-                        <div class="panel-body">
-	                    	<div class="btn-group btn-group-justified">
-	                            <gwt:FlowPanel width="100%">	
-									<gwt:Button ui:field="epsBtn" addStyleNames='{style.submitBtn}' width="40%" >EPS</gwt:Button>	
-									<gwt:Button ui:field="pdfBtn" addStyleNames='{style.submitBtn}' width="40%" >PDF</gwt:Button>
-	                            </gwt:FlowPanel>
-	                            <gwt:FlowPanel width="100%">
-	                            	<gwt:Button ui:field="pngBtn" addStyleNames='{style.submitBtn}' width="40%" >PNG</gwt:Button>	
-									<gwt:Button ui:field="svgBtn" addStyleNames='{style.submitBtn}' width="40%" >SVG</gwt:Button>
-		                        </gwt:FlowPanel>       
-		                    </div>
-                        </div>
-                    </div>
-                </section>
-                
-                <!-- COLLAPSE 3  PLOT FORM-->
-                <section class="panel">
-                <!--Titulo-->
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                                  Grid Option
-                            </a>
-                        </h3>
-                    </div>
-                    <!--Texto-->
-                    <div id="collapseThree" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                        
+						</div>
+					</div>
+				</section>
+
+				<!-- COLLAPSE 2 SAVE IMAGE -->
+				<section class="panel">
+					<!--Titulo -->
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
+								href="#collapseTwo">
+								Save Image
+							</a>
+						</h3>
+					</div>
+					<!--Texto -->
+					<div id="collapseTwo" class="panel-collapse collapse in">
+						<div class="panel-body">
+							<div class="btn-group btn-group-justified">
+								<gwt:FlowPanel width="100%">
+									<gwt:Button ui:field="epsBtn" addStyleNames='{style.submitBtn}'
+										width="40%">EPS</gwt:Button>
+									<gwt:Button ui:field="pdfBtn" addStyleNames='{style.submitBtn}'
+										width="40%">PDF</gwt:Button>
+								</gwt:FlowPanel>
+								<gwt:FlowPanel width="100%">
+									<gwt:Button ui:field="pngBtn" addStyleNames='{style.submitBtn}'
+										width="40%">PNG</gwt:Button>
+									<gwt:Button ui:field="svgBtn" addStyleNames='{style.submitBtn}'
+										width="40%">SVG</gwt:Button>
+								</gwt:FlowPanel>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- COLLAPSE 3 PLOT FORM -->
+				<section class="panel">
+					<!--Titulo -->
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
+								href="#collapseThree">
+								Grid Option
+							</a>
+						</h3>
+					</div>
+					<!--Texto -->
+					<div id="collapseThree" class="panel-collapse collapse in">
+						<div class="panel-body">
+
 							<!-- checkbox -->
-							<gwt:VerticalPanel ui:field="gridItems" width="100%" >
-							
-	                            <gwt:FlowPanel width="100%">
-		                        	<gwt:SimpleCheckBox ui:field="dimensionCheckbox" width="25%"/>
-		                        	<gwt:InlineLabel text="Enable 3D Plot"></gwt:InlineLabel>
-	                        	</gwt:FlowPanel>
-	                        	
+							<gwt:VerticalPanel ui:field="gridItems" width="100%">
+
 								<gwt:FlowPanel width="100%">
-									<gwt:SimpleCheckBox ui:field="linesGrid" width="25%"/>
-									<gwt:InlineLabel text="Lines/grid"/>
+									<gwt:SimpleCheckBox ui:field="dimensionCheckbox"
+										width="25%" />
+									<gwt:InlineLabel text="Enable 3D Plot"></gwt:InlineLabel>
 								</gwt:FlowPanel>
-								
+
 								<gwt:FlowPanel width="100%">
-									<gwt:SimpleCheckBox ui:field="pointsGrid" width="25%"/>
-									<gwt:InlineLabel text="Points"/>
+									<gwt:SimpleCheckBox ui:field="linesGrid"
+										width="25%" />
+									<gwt:InlineLabel text="Lines/grid" />
 								</gwt:FlowPanel>
-								
+
+								<gwt:FlowPanel width="100%">
+									<gwt:SimpleCheckBox ui:field="pointsGrid"
+										width="25%" />
+									<gwt:InlineLabel text="Points" />
+								</gwt:FlowPanel>
+
 							</gwt:VerticalPanel>
 
-                        </div>
-                    </div>
-                </section>
-                
-            </div>  
-            
-            <div class="col-lg-10 col-md-9 col-sm-8 col-xs-12">
-            <!-- COLLAPSE 5 LIMITS -->
-            	<section class="panel">
-                    <!--Titulo-->
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
-                                  Limit X, Y and Z
-                            </a>
-                        </h3>
-                    </div>
-                    <div id="collapseFive" class="panel-collapse collapse in">
-	                    <div class="panel-body">
-	                        <!-- limit -->
-	                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-									<gwt:Label text="Size X"></gwt:Label>
-									<gwt:DoubleBox ui:field="minxBox" addStyleNames='{style.inputPrimary}' alignment="CENTER"  visibleLength="6" maxLength="9" tabIndex="7" direction="LTR" width="58px" height="44px"></gwt:DoubleBox>
-									<gwt:DoubleBox ui:field="maxxBox" addStyleNames='{style.inputPrimary}' alignment="CENTER"  visibleLength="6" maxLength="9" tabIndex="8" direction="LTR" width="58px" height="44px"></gwt:DoubleBox>
-		                    </div>
-		                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">    
-									<gwt:Label text="Size Y"></gwt:Label>
-									<gwt:DoubleBox ui:field="minyBox" addStyleNames='{style.inputPrimary}' alignment="CENTER"  visibleLength="6" maxLength="9" tabIndex="9" direction="LTR" width="58px" height="44px"></gwt:DoubleBox>
-									<gwt:DoubleBox ui:field="maxyBox" addStyleNames='{style.inputPrimary}' alignment="CENTER"  visibleLength="6" maxLength="9" tabIndex="10" direction="LTR" width="58px" height="44px"></gwt:DoubleBox>
-		                    </div>
-		                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">    
-									<gwt:Label text="Size Z"></gwt:Label>
-									<gwt:DoubleBox ui:field="minzBox" addStyleNames='{style.inputPrimary}' alignment="CENTER"  visibleLength="6" maxLength="9" tabIndex="11" direction="LTR" width="58px" height="44px"></gwt:DoubleBox>
-									<gwt:DoubleBox ui:field="maxzBox" addStyleNames='{style.inputPrimary}' alignment="CENTER"  visibleLength="6" maxLength="9" tabIndex="12" direction="LTR" width="58px" height="44px"></gwt:DoubleBox>
-		                    </div>
-	                    </div>
-                    </div>
-                </section>
-            
-            <!-- INFO FOR PLOT -->
-	       		<section class="panel">
-                    <!--Titulo-->
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
-                                  Labels Info
-                            </a>
-                        </h3>
-                    </div>
-                    <div id="collapseSix" class="panel-collapse collapse in">
-		                <div class="panel-body">
-		                   
-			                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+						</div>
+					</div>
+				</section>
+
+			</div>
+
+			<div class="col-lg-10 col-md-9 col-sm-8 col-xs-12">
+				<!-- COLLAPSE 5 LIMITS -->
+				<section class="panel">
+					<!--Titulo -->
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
+								href="#collapseFive">
+								Limit X, Y and Z
+							</a>
+						</h3>
+					</div>
+					<div id="collapseFive" class="panel-collapse collapse in">
+						<div class="panel-body">
+							<!-- limit -->
+							<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+								<gwt:Label text="Size X"></gwt:Label>
+								<gwt:DoubleBox ui:field="minxBox" addStyleNames='{style.inputPrimary}'
+									alignment="CENTER" visibleLength="6" maxLength="9" tabIndex="7"
+									direction="LTR" width="58px" height="44px"></gwt:DoubleBox>
+								<gwt:DoubleBox ui:field="maxxBox" addStyleNames='{style.inputPrimary}'
+									alignment="CENTER" visibleLength="6" maxLength="9" tabIndex="8"
+									direction="LTR" width="58px" height="44px"></gwt:DoubleBox>
+							</div>
+							<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+								<gwt:Label text="Size Y"></gwt:Label>
+								<gwt:DoubleBox ui:field="minyBox" addStyleNames='{style.inputPrimary}'
+									alignment="CENTER" visibleLength="6" maxLength="9" tabIndex="9"
+									direction="LTR" width="58px" height="44px"></gwt:DoubleBox>
+								<gwt:DoubleBox ui:field="maxyBox" addStyleNames='{style.inputPrimary}'
+									alignment="CENTER" visibleLength="6" maxLength="9" tabIndex="10"
+									direction="LTR" width="58px" height="44px"></gwt:DoubleBox>
+							</div>
+							<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+								<gwt:Label text="Size Z"></gwt:Label>
+								<gwt:DoubleBox ui:field="minzBox" addStyleNames='{style.inputPrimary}'
+									alignment="CENTER" visibleLength="6" maxLength="9" tabIndex="11"
+									direction="LTR" width="58px" height="44px"></gwt:DoubleBox>
+								<gwt:DoubleBox ui:field="maxzBox" addStyleNames='{style.inputPrimary}'
+									alignment="CENTER" visibleLength="6" maxLength="9" tabIndex="12"
+									direction="LTR" width="58px" height="44px"></gwt:DoubleBox>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- INFO FOR PLOT -->
+				<section class="panel">
+					<!--Titulo -->
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
+								href="#collapseSix">
+								Labels Info
+							</a>
+						</h3>
+					</div>
+					<div id="collapseSix" class="panel-collapse collapse in">
+						<div class="panel-body">
+
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 								<gwt:Label text="Title"></gwt:Label>
-								<gwt:TextBox ui:field="titleBox" addStyleNames='{style.inputLabels}' alignment="CENTER"  textAlignment="ALIGN_CENTER" visibleLength="10" maxLength="25" tabIndex="8" direction="LTR" width="100%" height="44px"></gwt:TextBox>
-		                   </div>
-		                   
-			                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+								<gwt:TextBox ui:field="titleBox" addStyleNames='{style.inputLabels}'
+									alignment="CENTER" textAlignment="ALIGN_CENTER" visibleLength="10"
+									maxLength="25" tabIndex="8" direction="LTR" width="100%"
+									height="44px"></gwt:TextBox>
+							</div>
+
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 								<gwt:Label text="Label X"></gwt:Label>
-								<gwt:TextBox ui:field="labelxBox" addStyleNames='{style.inputLabels}' alignment="CENTER"  textAlignment="ALIGN_CENTER" visibleLength="10" maxLength="25" tabIndex="8" direction="LTR" width="100%" height="44px"></gwt:TextBox>
-		                   </div>
-		                   
-			                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+								<gwt:TextBox ui:field="labelxBox" addStyleNames='{style.inputLabels}'
+									alignment="CENTER" textAlignment="ALIGN_CENTER" visibleLength="10"
+									maxLength="25" tabIndex="8" direction="LTR" width="100%"
+									height="44px"></gwt:TextBox>
+							</div>
+
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 								<gwt:Label text="Label Y"></gwt:Label>
-								<gwt:TextBox ui:field="labelyBox" addStyleNames='{style.inputLabels}' alignment="CENTER"  textAlignment="ALIGN_CENTER" visibleLength="10" maxLength="25" tabIndex="8" direction="LTR" width="100%" height="44px"></gwt:TextBox>
-		                   </div>
-		                   
-			                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+								<gwt:TextBox ui:field="labelyBox" addStyleNames='{style.inputLabels}'
+									alignment="CENTER" textAlignment="ALIGN_CENTER" visibleLength="10"
+									maxLength="25" tabIndex="8" direction="LTR" width="100%"
+									height="44px"></gwt:TextBox>
+							</div>
+
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 								<gwt:Label text="Label Z"></gwt:Label>
-								<gwt:TextBox ui:field="labelzBox" addStyleNames='{style.inputLabels}' alignment="CENTER"  textAlignment="ALIGN_CENTER" visibleLength="10" maxLength="25" tabIndex="8" direction="LTR" width="100%" height="44px"></gwt:TextBox>
-		                   </div>
-		                       
-		               </div>
-	               </div>
-	           </section>
-	        <!-- TABLE -->
-	       		<section class="panel">
-	            	<header class="panel-heading">
-	                	<h3 class="panel-title">Selected Files</h3>
-	                </header>
-	                <div class="panel-body">
-	                   
-	           			<gwt:ScrollPanel width="100%">
-	                       <gwt:VerticalPanel ui:field="panel" addStyleNames='{style.cellTable}' width="100%">
-	                       
-	                       </gwt:VerticalPanel>
-	                   	</gwt:ScrollPanel>
-	                       
-	               </div>
-	           </section>
-	        </div>
-	        <!-- Tabla con archivos -->
-            
-        </div>  
-        
-        
-		
+								<gwt:TextBox ui:field="labelzBox" addStyleNames='{style.inputLabels}'
+									alignment="CENTER" textAlignment="ALIGN_CENTER" visibleLength="10"
+									maxLength="25" tabIndex="8" direction="LTR" width="100%"
+									height="44px"></gwt:TextBox>
+							</div>
+
+						</div>
+					</div>
+				</section>
+				<!-- TABLE -->
+				<section class="panel">
+					<header class="panel-heading">
+						<h3 class="panel-title">Selected Files</h3>
+					</header>
+					<div class="panel-body">
+
+						<gwt:ScrollPanel width="100%">
+							<gwt:VerticalPanel ui:field="panel"
+								addStyleNames='{style.cellTable}' width="100%">
+
+							</gwt:VerticalPanel>
+						</gwt:ScrollPanel>
+
+					</div>
+				</section>
+			</div>
+			<!-- Tabla con archivos -->
+
+		</div>
+
+
+
 	</gwt:HTMLPanel>
 </ui:UiBinder> 

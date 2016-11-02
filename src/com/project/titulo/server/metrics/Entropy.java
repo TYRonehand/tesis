@@ -8,65 +8,57 @@ import com.project.titulo.shared.model.Points;
 import com.project.titulo.shared.model.UserFile;
 
 public class Entropy {
-private String Message;
-	
+	private String Message;
+
 	private int axis_size;
-	
+
 	private UserFile PFtrue_File;
 	private List<UserFile> FileList;
-	
-	private List<Points> PFtrue_data;//pf true points doubles
-	
-	private List<String> ResultList = new ArrayList<String>();//result are added here	
-	
-	//load files for metric
-	public Entropy(UserFile PFtrue, List<UserFile> listPFcalc,int axis_size){
+
+	private List<Points> PFtrue_data;// pf true points doubles
+
+	private List<String> ResultList = new ArrayList<String>();// result are
+																// added here
+
+	// load files for metric
+	public Entropy(UserFile PFtrue, List<UserFile> listPFcalc, int axis_size) {
 		this.PFtrue_File = PFtrue;
 		this.FileList = listPFcalc;
 		this.axis_size = axis_size;
-		
-		
+
 		Start();
 	}
-	
-	//go throw list
-	private void Start()
-	{
-		//pftrue to double
+
+	// go throw list
+	private void Start() {
+		// pftrue to double
 		TextToDouble pftrue = new TextToDouble();
 		pftrue.create(PFtrue_File.getData(), this.axis_size);
 		this.PFtrue_data = pftrue.getListPoints();
-		
-		//run data list if exist pftrue
-		if(this.PFtrue_data.size()>0)
-		{
-			for(UserFile file : this.FileList)
-			{
-				if(this.PFtrue_File.getDimension().equals(file.getDimension()))
-				{
+
+		// run data list if exist pftrue
+		if (this.PFtrue_data.size() > 0) {
+			for (UserFile file : this.FileList) {
+				if (this.PFtrue_File.getDimension().equals(file.getDimension())) {
 					TextToDouble paretoOp = new TextToDouble();
 					paretoOp.create(file.getData(), this.axis_size);
-					Calculate(paretoOp.getListPoints());//calculate file data
-				}
-				else{
+					Calculate(paretoOp.getListPoints());// calculate file data
+				} else {
 					this.ResultList.add("different dimensions");
 				}
 			}
-		}
-		else{
+		} else {
 			this.setMessage("No data inf Pareto Front");
 		}
 	}
-	
-	//calculate one file at time
-	private void Calculate(List<Points> paretoOp)
-	{
-		
+
+	// calculate one file at time
+	private void Calculate(List<Points> paretoOp) {
+
 	}
-	
-	//get result calculated
-	public List<String> getResults()
-	{
+
+	// get result calculated
+	public List<String> getResults() {
 		return this.ResultList;
 	}
 

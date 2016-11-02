@@ -1,137 +1,141 @@
 /** Add css rules here for your application. */
-
-
 /** Example rules used by the template application (remove for your app) */
 h1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: #646567;
-  margin: 40px 0px 70px;
-  text-align: center;
+	font-size: 2em;
+	font-weight: bold;
+	color: #646567;
+	margin: 40px 0px 70px;
+	text-align: center;
 }
 
 .sendButton {
-  display: block;
-  font-size: 16pt;
+	display: block;
+	font-size: 16pt;
 }
 
-.body{
-	background: #ffffff url("assets/img/wallpaper/wallpaper.png") no-repeat right top;
+.body {
+	background: #ffffff url("assets/img/wallpaper/wallpaper.png") no-repeat
+		right top;
 }
 
 /** Most GWT widgets already have a style name defined */
 .gwt-DialogBox {
-  width: 400px;
+	width: 400px;
 }
 
 .gwt-TextButton {
-  background:#428bca;
+	background: #428bca;
 }
 
 .dialogVPanel {
-  margin: 5px;
+	margin: 5px;
 }
 
 .serverResponseLabelError {
-  color: red;
+	color: red;
 }
-
 
 /** Set ids using widget.getElement().setId("idOfElement") */
 #closeButton {
-  margin: 15px 6px 6px;
+	margin: 15px 6px 6px;
 }
 
 /*init page*/
-
-.beginpaper{
-	background: #ffffff url("assets/img/wallpaper/home.png") no-repeat right top;
+.beginpaper {
+	background: #ffffff url("assets/img/wallpaper/home.png") no-repeat right
+		top;
 }
 /*forum style*/
-
-.titlePanel{
+.titlePanel {
 	background: #5cb85c;
-	border-bottom:solid 1px #BBBBBB;
+	border-bottom: solid 1px #BBBBBB;
 }
-.titleTopic{
+
+.titleTopic {
 	font-weight: bold;
-	color:white;
+	color: white;
 	background: #5cb85c;
-	padding:6px;
-	border-bottom:solid 1px #BBBBBB;
-	
+	padding: 6px;
+	border-bottom: solid 1px #BBBBBB;
 }
 
-.panel-heading{
+.panel-heading {
 	font-weight: bold;
 }
 
-.messagePanel tbody tr td{
-	padding:20px;
-	
+.messagePanel tbody tr td {
+	padding: 20px;
 }
 /*forum in options*/
-.commentOption{
-	height:25px;
+.commentOption {
+	height: 25px;
 }
-.optionPanel tbody tr td{
-	padding:4px;
+
+.optionPanel tbody tr td {
+	padding: 4px;
 }
-.optionPanel tbody tr td tbody tr td{
-	padding:8px;
+
+.optionPanel tbody tr td tbody tr td {
+	padding: 8px;
 }
 /*forum info*/
-.commentInfo{
+.commentInfo {
 	font-weight: bold;
-	padding:3px;
-	border:solid 1px #BBBBBB;
+	padding: 3px;
+	border: solid 1px #BBBBBB;
 }
-.infoPanel{
-	border-bottom:solid 1px #BBBBBB;
+
+.infoPanel {
+	border-bottom: solid 1px #BBBBBB;
 	font-weight: bold;
 }
-.infoPanel .gwt-Hyperlink{
-	padding:4px;
+
+.infoPanel .gwt-Hyperlink {
+	padding: 4px;
 }
-.infoPanel span{
-	padding:4px;
+
+.infoPanel span {
+	padding: 4px;
 }
-.controlPanel{
+
+.controlPanel {
 	border: 1px #BBBBBB solid;
-    border-radius: 25px;
+	border-radius: 25px;
 }
 
 .commentpanel tbody tr {
+	
 }
 /*tables*/
-table thead{
-	background:#a3d781;
-	color:#284315;
-	border-color:#79c447;
-}
-celltable tbody tr{
-	border:solid 1px #284315;
+table thead {
+	background: #a3d781;
+	color: #284315;
+	border-color: #79c447;
 }
 
-.panel-body{
-	padding-bottom:10px
+celltable tbody tr {
+	border: solid 1px #284315;
+}
+
+.panel-body {
+	padding-bottom: 10px
 }
 
 /*recovery*/
-.controlgroup table tbody tr td{
-	padding:4px;
+.controlgroup table tbody tr td {
+	padding: 4px;
 }
 /*metrics*/
-
-
 /*breadcrumbs*/
-.breadcrumb{
+.breadcrumb {
 	padding: 5px;
 }
+
 .breadcrumb tbody {
 	background: #646567;
 }
-.breadcrumb tbody tr td div a{
+
+.breadcrumb tbody tr td div a {
 	padding: 8px;
 	color: white;
 	font-weight: bold;

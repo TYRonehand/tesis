@@ -4,21 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Points {
-	private List<Double> axis = new ArrayList<Double>();//x,y,z,.....
-	
-	public Points(){
+	private List<Double> axis = new ArrayList<Double>();// x,y,z,.....
+
+	public Points() {
 	}
-	
-	public void add(double value){
+
+	public void add(double value) {
 		this.axis.add(value);
 	}
-	public int getDimension(){
+
+	public int getDimension() {
 		return this.axis.size();
 	}
-	public List<Double> getAxies(){
+
+	public List<Double> getAxies() {
 		return this.axis;
 	}
-	public double getAxieIndex(int i){
+
+	public double getAxieIndex(int i) {
 		return this.axis.get(i);
 	}
 }
