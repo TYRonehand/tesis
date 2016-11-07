@@ -49,13 +49,10 @@ public class Spacing {
 	}
 
 	// calculate one file at time
+	
 	private String Calculate(List<Points> aproximationDataList) {
-
-		System.err.print("\nevaluating...");
-		// auxiliar list
 		List<Points> auxDataList = aproximationDataList;
-
-		double flag = 0.00000, F = 0.00000, D = 0.00000, pro = 0.00000, dif = 0.00000;
+		double flag = 0.0, F = 0.0, D = 0.0, pro = 0.0, dif = 0.0;
 		double d[] = new double[aproximationDataList.size()];
 
 		for (int i = 0; i < aproximationDataList.size(); i++) {
@@ -65,9 +62,7 @@ public class Spacing {
 					Points auxDataPoint = auxDataList.get(j);
 
 					for (int k = 0; k < aproximationDataPoint.getDimension(); k++) {
-						D += Math
-								.pow((auxDataPoint.getAxieIndex(k) - aproximationDataPoint
-										.getAxieIndex(k)), 2);
+						D += Math.pow((auxDataPoint.getAxieIndex(k) - aproximationDataPoint.getAxieIndex(k)), 2);
 					}
 					D = Math.sqrt(D);
 				}
@@ -75,29 +70,21 @@ public class Spacing {
 					F = D;
 					flag = 1;
 				}
-				if (F > D) {
-					F = D;
-				}
+				if (F > D) {F = D;}
 			}
 			d[i] = F;
 			pro = pro + F;
 			flag = 0;
 		}
-
 		pro = pro / (aproximationDataList.size());
-
 		for (int i = 0; i < aproximationDataList.size(); i++) {
 			dif = dif + Math.pow((pro - d[i]), 2);
 		}
 		dif = dif / (aproximationDataList.size() - 1);
 		dif = Math.sqrt(dif);
-		// dif = Math.rint(dif * 100) / 100;
-
-		System.err.print("\nready!");
 		return String.format("%.6f", dif);
-
 	}
-
+	
 	// get result calculated
 	public List<MetricResults> getResults() {
 		return this.ResultList;

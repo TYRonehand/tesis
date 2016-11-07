@@ -6,19 +6,15 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.Widget;
-import com.project.titulo.client.GoToUrl;
-import com.project.titulo.shared.CookieVerify;
 
 public class MenuDropdown extends Composite {
 
-	// cookies
-	private CookieVerify mycookie = new CookieVerify(false);
-	// control url
-	public GoToUrl url = new GoToUrl();
 
 	// uibinder
 	@UiField
@@ -66,47 +62,47 @@ public class MenuDropdown extends Composite {
 		public void execute() {
 
 			// load home
-			url.GoTo("HOME");
+			History.newItem("home");
 		}
 	};
 
 	Command commFile = new Command() {
 		@Override
 		public void execute() {
-			// load home
-			url.GoTo("FILES");
+			// load files
+			History.newItem("files");
 		}
 	};
 
 	Command commPlot = new Command() {
 		@Override
 		public void execute() {
-			// load home
-			url.GoTo("PLOT");
+			// load plot
+			History.newItem("plot");
 		}
 	};
 
 	Command commMetric = new Command() {
 		@Override
 		public void execute() {
-			// load home
-			url.GoTo("METRIC");
+			// load metric
+			History.newItem("metric");
 		}
 	};
 
 	Command commForum = new Command() {
 		@Override
 		public void execute() {
-			// load home
-			url.GoTo("FORUM");
+			// load forum
+			History.newItem("forum");
 		}
 	};
 
 	Command commFaq = new Command() {
 		@Override
 		public void execute() {
-			// load home
-			url.GoTo("FAQ");
+			// load faq
+			History.newItem("faq");
 		}
 	};
 
@@ -115,16 +111,14 @@ public class MenuDropdown extends Composite {
 	void onProfileLinkClick(ClickEvent event) {
 
 		// load profile
-		url.GoTo("PROFILE");
+		History.newItem("profile");
 	}
 
 	// click profile
 	@UiHandler("exitLink")
 	void onCloseLinkClick(ClickEvent event) {
-
-		mycookie.delCookiesInfo();
 		// load profile
-		url.GoTo("LOGIN");
+		Window.Location.reload();
 	}
 
 }

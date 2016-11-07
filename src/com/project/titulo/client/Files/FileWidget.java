@@ -373,13 +373,13 @@ public class FileWidget extends Composite {
 	// click upload
 	@UiHandler("uploadBtn")
 	void onRegisteLinkClick(ClickEvent event) {
-		url.GoTo("MODALUPLOAD");
+		url.GoTo("MODALUPLOAD",null,null);
 	}
 
 	// click Help
 	@UiHandler("helpBtn")
 	void onHelpBtnClick(ClickEvent event) {
-		url.GoTo("MODALHELP");
+		url.GoTo("MODALHELP",null,null);
 	}
 
 }

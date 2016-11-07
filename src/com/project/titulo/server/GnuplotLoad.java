@@ -12,52 +12,40 @@ public class GnuplotLoad implements IsSerializable {
 
 	// get actual os name
 	private static String OS = System.getProperty("os.name").toLowerCase();
-
 	// constructor
-	public GnuplotLoad() {
-	}
-
+	public GnuplotLoad(){}
 	// windows?
-	private static boolean isWindows() {
-		return (OS.indexOf("win") >= 0);
-	}
-
+	private static boolean isWindows() { return (OS.indexOf("win") >= 0);}
 	// Mac?
-	private static boolean isMac() {
-		return (OS.indexOf("mac") >= 0);
-	}
-
+	private static boolean isMac() {return (OS.indexOf("mac") >= 0);}
 	// linux?
 	private static boolean isUnix() {
-		return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS
-				.indexOf("aix") > 0);
+		return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0);
 	}
-
 	// solaris?
-	private static boolean isSolaris() {
-		return (OS.indexOf("sunos") >= 0);
-	}
-
+	private static boolean isSolaris() {return (OS.indexOf("sunos") >= 0);}
+	
+	//get directory
 	public static String getDirectory(ServletContext context) {
 		if (isWindows()) {
 			return context.getRealPath("/gnuplot/win/bin/gnuplot.exe");
 		} else if (isMac()) {
-			return "osx";
+			return "/usr/local/bin/gnuplot";
 		} else if (isUnix()) {
 			return "/usr/bin/gnuplot";
 		} else if (isSolaris()) {
-			return "sol";
+			return "/usr/sbin/gnuplot";
 		} else {
-			return "err";
+			return null;
 		}
 	}
 
-	public static Boolean setCommand(String commandTerminal,
-			ServletContext context) {
+	//load gnuplot
+	public static Boolean setCommand(String commandTerminal, ServletContext context) {
 		System.err.println("gnuplot command:" + commandTerminal);
-		// get gnuplot deppending on SO from server
+		// server - GNUPLOT DIRECTORY
 		String[] s = { getDirectory(context), "-e", commandTerminal };
-		// try execute gnuplot stand alone
+		// execute GNUPLOT aplication and send commandterminal
 		try {
 			Runtime rt = Runtime.getRuntime();
 			Process proc = rt.exec(s);
@@ -67,6 +55,7 @@ public class GnuplotLoad implements IsSerializable {
 			String line = null;
 			while ((line = br.readLine()) != null)
 				System.err.println("gnuplot:" + line);
+			
 			int exitVal = proc.waitFor();
 			if (exitVal != 0)
 				System.err.println("gnuplot Process exitValue: " + exitVal);
@@ -77,7 +66,7 @@ public class GnuplotLoad implements IsSerializable {
 			System.err.println("Fail: " + e);
 			return false;// fail
 		}
-		return true;
+		return true;//ok
 	}
 
 }

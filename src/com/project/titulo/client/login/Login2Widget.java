@@ -5,13 +5,13 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.project.titulo.client.GoToUrl;
 import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
@@ -38,8 +38,6 @@ public class Login2Widget extends Composite {
 
 	// cookie
 	private CookieVerify mycookie = new CookieVerify(false);
-	// url
-	private GoToUrl url = new GoToUrl();
 	// RPC
 	private final ServerServiceAsync serverService = GWT
 			.create(ServerService.class);
@@ -77,8 +75,7 @@ public class Login2Widget extends Composite {
 					mycookie.setCookieUser("Admin");
 
 					// go to home first time
-					url.GoTo("MENU2");
-					url.GoTo("ADMIN");
+					History.newItem("admin");
 				} else {
 					// consulta datos usuario normal
 					serverService.authenticateUser(mailInput.getText(),passInput.getText(), new AsyncCallback<User>() 
@@ -102,8 +99,7 @@ public class Login2Widget extends Composite {
 								mycookie.setCookieUser(result.getId());
 
 								// go to home first time
-								url.GoTo("MENU");
-								url.GoTo("HOME");
+								History.newItem("home");
 							} else {
 								clearInputs();
 							}

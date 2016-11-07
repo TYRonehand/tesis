@@ -131,8 +131,8 @@ public class UserProfile extends Composite {
 	}
 
 	// load all data from user
-	private void getUser(String user) {
-		serverService.getUserInfo(user, new AsyncCallback<User>() {
+	private void getUser(String iduser) {
+		serverService.getUserInfo(iduser, new AsyncCallback<User>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				ErrorVerify.getErrorAlert("offline");
@@ -255,7 +255,7 @@ public class UserProfile extends Composite {
 			public void onSuccess(Boolean result) {
 				if (result) {
 					ErrorVerify.getErrorAlert("successupdate");
-					url.GoTo("PROFILE");
+					url.GoTo("PROFILE",UserInfo.getId(),null);
 				} else {
 					ErrorVerify.getErrorAlert("offline");
 					LoadDataView(UserInfo);
@@ -406,7 +406,7 @@ public class UserProfile extends Composite {
 					// clear all cookies and close active session
 					mycookie.delCookiesInfo();
 					// load profile
-					url.GoTo("LOGIN");
+					Window.Location.reload();
 				} else {
 					ErrorVerify.getErrorAlert("fatal");
 				}

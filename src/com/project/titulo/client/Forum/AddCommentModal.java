@@ -41,8 +41,8 @@ public class AddCommentModal extends DialogBox {
 			.create(ServerService.class);
 
 	// topic full
-	private String idtopic;
-	private String iduser;
+	private String IDTOPIC;
+	private String IDUSER;
 
 	// widget
 	private static AddCommentModalUiBinder uiBinder = GWT
@@ -52,8 +52,8 @@ public class AddCommentModal extends DialogBox {
 	}
 
 	public AddCommentModal(String idtopic, String iduser) {
-		this.idtopic = idtopic;
-		this.iduser = iduser;
+		this.IDTOPIC = idtopic;
+		this.IDUSER = iduser;
 
 		setWidget(uiBinder.createAndBindUi(this));
 		this.center();
@@ -88,7 +88,7 @@ public class AddCommentModal extends DialogBox {
 		// validar algo escrito
 		if (descriptionInput.getText().length() > 3) {
 			Answer myanswer = new Answer(descriptionInput.getText(),
-					this.idtopic, this.iduser);
+					this.IDTOPIC, this.IDUSER);
 			// call service update
 			serverService.addNewComment(myanswer, new AsyncCallback<Boolean>() {
 
@@ -101,7 +101,7 @@ public class AddCommentModal extends DialogBox {
 				public void onSuccess(Boolean result) {
 					if (result) {
 						ErrorVerify.getErrorAlert("successadd");
-						url.GoTo("TOPIC");
+						url.GoTo("TOPIC",IDUSER,IDTOPIC);
 						dialogBox.hide();
 					} else {
 						ErrorVerify.getErrorAlert("failadd");

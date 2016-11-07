@@ -103,7 +103,7 @@ public class EditSubCommentModal extends DialogBox {
 						public void onSuccess(Boolean result) {
 							if (result) {
 								ErrorVerify.getErrorAlert("successupdate");
-								url.GoTo("TOPIC");
+								url.GoTo("TOPIC",updatedAnswer.getIduser(),null);
 								dialogBox.hide();
 							} else {
 								ErrorVerify.getErrorAlert("fatal");

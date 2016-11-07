@@ -23,7 +23,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.project.titulo.client.GoToUrl;
 import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
@@ -80,8 +79,6 @@ public class MetricWidget extends Composite {
 	// Create a CellTable.
 	private CellTable<UserFile> table = null;
 
-	// goto url
-	public GoToUrl url = new GoToUrl();
 	// RPC
 	private final ServerServiceAsync serverService = GWT
 			.create(ServerService.class);
@@ -241,14 +238,10 @@ public class MetricWidget extends Composite {
 						if (result.size() > 0) {
 							RootPanel.get("GWTcontainer").clear();
 							// cualquier otro caso sera enviado al login
-							RootPanel.get("GWTcontainer").add(
-									new BreadWidget("METRIC"));
-							RootPanel.get("GWTcontainer")
-									.add(new ResultsWidget(IDUSER, result,
-											"Spacing"));
+							RootPanel.get("GWTcontainer").add(new BreadWidget("METRIC"));
+							RootPanel.get("GWTcontainer").add(new ResultsWidget(IDUSER, result,"Spacing"));
 						} else {
-							String Message = "No data returned";
-							Window.alert(Message);
+							ErrorVerify.getErrorAlert("baddimension");
 						}
 					}
 				});
@@ -268,14 +261,10 @@ public class MetricWidget extends Composite {
 						if (result.size() > 0) {
 							RootPanel.get("GWTcontainer").clear();
 							// cualquier otro caso sera enviado al login
-							RootPanel.get("GWTcontainer").add(
-									new BreadWidget("METRIC"));
-							RootPanel.get("GWTcontainer").add(
-									new ResultsWidget(IDUSER, result,
-											"Coverage"));
+							RootPanel.get("GWTcontainer").add(new BreadWidget("METRIC"));
+							RootPanel.get("GWTcontainer").add(new ResultsWidget(IDUSER, result,"Coverage"));
 						} else {
-							String Message = "No data returned";
-							Window.alert(Message);
+							ErrorVerify.getErrorAlert("baddimension");
 						}
 
 					}
@@ -296,14 +285,10 @@ public class MetricWidget extends Composite {
 						if (result.size() > 0) {
 							RootPanel.get("GWTcontainer").clear();
 							// cualquier otro caso sera enviado al login
-							RootPanel.get("GWTcontainer").add(
-									new BreadWidget("METRIC"));
-							RootPanel.get("GWTcontainer").add(
-									new ResultsWidget(IDUSER, result,
-											"Error-Ratio"));
+							RootPanel.get("GWTcontainer").add(new BreadWidget("METRIC"));
+							RootPanel.get("GWTcontainer").add(new ResultsWidget(IDUSER, result,"Error-Ratio"));
 						} else {
-							String Message = "No data returned";
-							Window.alert(Message);
+							ErrorVerify.getErrorAlert("baddimension");
 						}
 					}
 				});
@@ -323,14 +308,10 @@ public class MetricWidget extends Composite {
 						if (result.size() > 0) {
 							RootPanel.get("GWTcontainer").clear();
 							// cualquier otro caso sera enviado al login
-							RootPanel.get("GWTcontainer").add(
-									new BreadWidget("METRIC"));
-							RootPanel.get("GWTcontainer").add(
-									new ResultsWidget(IDUSER, result,
-											"Generational-Distance"));
+							RootPanel.get("GWTcontainer").add(new BreadWidget("METRIC"));
+							RootPanel.get("GWTcontainer").add(new ResultsWidget(IDUSER, result,"Generational-Distance"));
 						} else {
-							String Message = "No data returned";
-							Window.alert(Message);
+							ErrorVerify.getErrorAlert("baddimension");
 						}
 
 					}
@@ -338,7 +319,7 @@ public class MetricWidget extends Composite {
 	}
 
 	private void SMetric(String iduser) {
-
+		Window.alert("Metric not available");
 	}
 
 	/* SELECT METRIC INFO */
@@ -390,26 +371,41 @@ public class MetricWidget extends Composite {
 	/* METRIC CALCULATE */
 	@UiHandler("EntropyBtn")
 	void onEntropyBtnClick(ClickEvent event) {
-		SMetric(this.IDUSER);
+		if(table.getRowCount()>0)
+			SMetric(this.IDUSER);
+		else
+			ErrorVerify.getErrorAlert("nofiles");
 	}
 
 	@UiHandler("SpacingBtn")
 	void onSpacingBtnClick(ClickEvent event) {
-		Spacing(this.IDUSER);
+		if(table.getRowCount()>0)
+			Spacing(this.IDUSER);
+		else
+			ErrorVerify.getErrorAlert("nofiles");
 	}
 
 	@UiHandler("ERBtn")
 	void onERBtnClick(ClickEvent event) {
-		ERatio(this.IDUSER);
+		if(table.getRowCount()>0)
+			ERatio(this.IDUSER);
+		else
+			ErrorVerify.getErrorAlert("nofiles");
 	}
 
 	@UiHandler("GDistanceBtn")
 	void onGDistanceBtnClick(ClickEvent event) {
-		GDistance(this.IDUSER);
+		if(table.getRowCount()>0)
+			GDistance(this.IDUSER);
+		else
+			ErrorVerify.getErrorAlert("nofiles");
 	}
 
 	@UiHandler("CoverBtn")
 	void onCoverBtnClick(ClickEvent event) {
-		CMetric(this.IDUSER);
+		if(table.getRowCount()>0)
+			CMetric(this.IDUSER);
+		else
+			ErrorVerify.getErrorAlert("nofiles");
 	}
 }

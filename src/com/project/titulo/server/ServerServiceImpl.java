@@ -51,7 +51,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	// private String status;
 	private String url = "jdbc:mysql://127.0.0.1:3306/asmop_bd";
 	private String user = "root";
-	private String pass = "";// "z-AoDaFII2Hp";
+	private String pass =  "z-AoDaFII2Hp";
 
 	// Constructor
 	public ServerServiceImpl() {
@@ -96,7 +96,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 				Query = "SELECT * FROM account_user ORDER BY cod_user DESC";
 			} else {
 				Query = "SELECT * FROM account_user WHERE ";
-				Query += "name_user = '%" + opcion + "%'  OR lastname_user = '%" + opcion
+				Query += "name_user LIKE '%" + opcion + "%'  OR lastname_user LIKE '%" + opcion
 						+ "%' ORDER BY cod_user ASC";
 			}
 
@@ -598,7 +598,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 		try {
 			// consultamos a base de datos SELECT * FROM table WHERE Column LIKE
 			// '%test%';
-			String Query = "SELECT * FROM topic_resume_view WHERE title LIKE '%"
+			String Query = "SELECT * FROM topic_resume_view WHERE title_topic LIKE '%"
 					+ specialword + "%' ORDER BY creation DESC";
 			PreparedStatement ps = conn.prepareStatement(Query);
 			ResultSet result = ps.executeQuery();

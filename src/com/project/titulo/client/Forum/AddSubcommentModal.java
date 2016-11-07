@@ -41,8 +41,8 @@ public class AddSubcommentModal extends DialogBox {
 			.create(ServerService.class);
 
 	// topic full
-	private String idcomment;
-	private String iduser;
+	private String IDCOMMENT;
+	private String IDUSER;
 
 	// widget
 	private static AddCommentModalUiBinder uiBinder = GWT
@@ -52,8 +52,8 @@ public class AddSubcommentModal extends DialogBox {
 	}
 
 	public AddSubcommentModal(String idcomment, String iduser) {
-		this.idcomment = idcomment;
-		this.iduser = iduser;
+		this.IDCOMMENT = idcomment;
+		this.IDUSER = iduser;
 
 		setWidget(uiBinder.createAndBindUi(this));
 		this.center();
@@ -87,7 +87,7 @@ public class AddSubcommentModal extends DialogBox {
 	private void CreateComment() {
 		// validar algo escrito
 		if (descriptionInput.getText().length() > 3) {
-			SubAnswer myanswer = new SubAnswer(descriptionInput.getText(),this.idcomment, this.iduser);
+			SubAnswer myanswer = new SubAnswer(descriptionInput.getText(),this.IDCOMMENT, this.IDUSER);
 			// call service update
 			serverService.addNewSubComment(myanswer, new AsyncCallback<Boolean>() {
 
@@ -100,7 +100,7 @@ public class AddSubcommentModal extends DialogBox {
 				public void onSuccess(Boolean result) {
 					if (result) {
 						ErrorVerify.getErrorAlert("successadd");
-						url.GoTo("TOPIC");
+						url.GoTo("TOPIC",IDUSER,null);
 						dialogBox.hide();
 					} else {
 						ErrorVerify.getErrorAlert("failadd");

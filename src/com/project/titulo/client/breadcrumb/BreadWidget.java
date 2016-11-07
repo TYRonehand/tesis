@@ -1,8 +1,6 @@
 package com.project.titulo.client.breadcrumb;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -10,7 +8,6 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.InlineHyperlink;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.project.titulo.client.GoToUrl;
 
 public class BreadWidget extends Composite {
 
@@ -19,8 +16,6 @@ public class BreadWidget extends Composite {
 	@UiField
 	FlowPanel breadPanel;
 
-	// goto url
-	public GoToUrl url = new GoToUrl();
 
 	private static BreadWidgetUiBinder uiBinder = GWT
 			.create(BreadWidgetUiBinder.class);
@@ -34,7 +29,6 @@ public class BreadWidget extends Composite {
 		BreadSelection(option);
 	}
 
-	@SuppressWarnings("deprecation")
 	private void BreadSelection(String option) {
 
 		// clean breadpanel
@@ -42,15 +36,8 @@ public class BreadWidget extends Composite {
 
 		// home link
 		InlineHyperlink HOME = new InlineHyperlink();
-		HOME.setTargetHistoryToken("");
+		HOME.setTargetHistoryToken("home");
 		HOME.setText(">Home");
-		HOME.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				url.GoTo("HOME");
-			}
-		});
 
 		// opciones url
 		switch (option) {
@@ -58,15 +45,8 @@ public class BreadWidget extends Composite {
 		case "PROFILE":
 			breadPanel.add(HOME);
 			InlineHyperlink profile = new InlineHyperlink();
-			profile.setTargetHistoryToken("");
+			profile.setTargetHistoryToken("profile");
 			profile.setText(">Profile");
-			profile.addClickHandler(new ClickHandler() {
-
-				@Override
-				public void onClick(ClickEvent event) {
-					url.GoTo("PROFILE");
-				}
-			});
 			breadPanel.add(profile);
 			break;
 
@@ -78,15 +58,8 @@ public class BreadWidget extends Composite {
 		case "ADMIN":
 			// home link
 			InlineHyperlink ADMIN = new InlineHyperlink();
-			ADMIN.setTargetHistoryToken("");
+			ADMIN.setTargetHistoryToken("admin");
 			ADMIN.setText(">Administration");
-			ADMIN.addClickHandler(new ClickHandler() {
-
-				@Override
-				public void onClick(ClickEvent event) {
-					url.GoTo("ADMIN");
-				}
-			});
 			breadPanel.add(ADMIN);
 
 			break;
@@ -95,15 +68,8 @@ public class BreadWidget extends Composite {
 			breadPanel.add(HOME);
 
 			InlineHyperlink FILES = new InlineHyperlink();
-			FILES.setTargetHistoryToken("");
+			FILES.setTargetHistoryToken("files");
 			FILES.setText(">My Files");
-			FILES.addClickHandler(new ClickHandler() {
-
-				@Override
-				public void onClick(ClickEvent event) {
-					url.GoTo("FILES");
-				}
-			});
 			breadPanel.add(FILES);
 
 			break;
@@ -112,15 +78,8 @@ public class BreadWidget extends Composite {
 			breadPanel.add(HOME);
 
 			InlineHyperlink PLOT = new InlineHyperlink();
-			PLOT.setTargetHistoryToken("");
+			PLOT.setTargetHistoryToken("plot");
 			PLOT.setText(">Plot");
-			PLOT.addClickHandler(new ClickHandler() {
-
-				@Override
-				public void onClick(ClickEvent event) {
-					url.GoTo("PLOT");
-				}
-			});
 			breadPanel.add(PLOT);
 
 			break;
@@ -129,15 +88,8 @@ public class BreadWidget extends Composite {
 			breadPanel.add(HOME);
 
 			InlineHyperlink METRIC = new InlineHyperlink();
-			METRIC.setTargetHistoryToken("");
+			METRIC.setTargetHistoryToken("metric");
 			METRIC.setText(">Metric");
-			METRIC.addClickHandler(new ClickHandler() {
-
-				@Override
-				public void onClick(ClickEvent event) {
-					url.GoTo("METRIC");
-				}
-			});
 			breadPanel.add(METRIC);
 
 			break;
@@ -146,15 +98,8 @@ public class BreadWidget extends Composite {
 			breadPanel.add(HOME);
 
 			InlineHyperlink FORUM = new InlineHyperlink();
-			FORUM.setTargetHistoryToken("");
+			FORUM.setTargetHistoryToken("forum");
 			FORUM.setText(">Forum");
-			FORUM.addClickHandler(new ClickHandler() {
-
-				@Override
-				public void onClick(ClickEvent event) {
-					url.GoTo("FORUM");
-				}
-			});
 			breadPanel.add(FORUM);
 
 			break;
@@ -163,15 +108,8 @@ public class BreadWidget extends Composite {
 			breadPanel.add(HOME);
 
 			InlineHyperlink FAQ = new InlineHyperlink();
-			FAQ.setTargetHistoryToken("");
+			FAQ.setTargetHistoryToken("faq");
 			FAQ.setText(">FAQ");
-			FAQ.addClickHandler(new ClickHandler() {
-
-				@Override
-				public void onClick(ClickEvent event) {
-					url.GoTo("FAQ");
-				}
-			});
 			breadPanel.add(FAQ);
 
 			break;
@@ -180,27 +118,13 @@ public class BreadWidget extends Composite {
 			breadPanel.add(HOME);
 
 			InlineHyperlink FORUM2 = new InlineHyperlink();
-			FORUM2.setTargetHistoryToken("");
+			FORUM2.setTargetHistoryToken("forum");
 			FORUM2.setText(">Forum");
-			FORUM2.addClickHandler(new ClickHandler() {
-
-				@Override
-				public void onClick(ClickEvent event) {
-					url.GoTo("FORUM");
-				}
-			});
 			breadPanel.add(FORUM2);
 
 			InlineHyperlink TOPIC = new InlineHyperlink();
-			TOPIC.setTargetHistoryToken("");
+			TOPIC.setTargetHistoryToken("topic");
 			TOPIC.setText(">Read Topic");
-			TOPIC.addClickHandler(new ClickHandler() {
-
-				@Override
-				public void onClick(ClickEvent event) {
-					url.GoTo("TOPIC");
-				}
-			});
 			breadPanel.add(TOPIC);
 
 			break;

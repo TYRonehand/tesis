@@ -124,6 +124,12 @@ public class ErrorVerify {
 		case "failexport":
 			Window.alert("File export failure");
 			break;
+		case "nofiles":
+			Window.alert("No files selected");
+			break;
+		case "baddimension":
+			Window.alert("Invalid dimension File");
+			break;
 		default:
 			Window.alert("Unknow error!!");
 			break;

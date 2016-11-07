@@ -81,50 +81,27 @@ public class ErrorRatio {
 	}
 
 	// calculate one file at time
-	private String Calculate(List<Points> paretoDataList,
-			List<Points> paretoOptime) {
-		System.err.print("\nevaluating...");
-
-		// count equals points
+	
+	private String Calculate(List<Points> paretoDataList, List<Points> paretoOptime) {
 		float errori = 0;
-		if (paretoOptime.size() > 0) {
-			// pareto front optime points
 			for (Points po : paretoOptime) {
-				// pareto front true points
 				for (Points pf : paretoDataList) {
-					// same dimension for axies
-					if (po.getDimension() == pf.getDimension()) {
 						int conterr = 0;
-						// elements from axies
 						for (int i = 0; i < po.getDimension(); i++) {
-							// if x!=X y!=Y ...z!=Z
 							if (po.getAxieIndex(i) != pf.getAxieIndex(i)) {
-								conterr++;// all axies aren't equal
+								conterr++;
 							}
 						}
-
-						// if axies arent equal +1 error
-						if (conterr < po.getDimension()) {
+						if (conterr < po.getDimension()) 
 							errori++;
-						}
-					} else// diferent dimension error to calculate
-					{
-						System.err.println("calculate dimension error");
-					}
 				}
 			}
-
-			// formula
 			double Nsize = paretoOptime.size();
 			double ER = (1 - (errori / Nsize));
-
-			System.err.print("\nready!");
 			return String.format("%.6f", ER);
-
-		}
-		return null;
 	}
 
+	
 	public List<MetricResults> getResults() {
 		return this.ResultList;
 	}

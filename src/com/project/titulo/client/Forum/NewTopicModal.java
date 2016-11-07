@@ -110,7 +110,7 @@ public class NewTopicModal extends DialogBox {
 
 						ErrorVerify.getErrorAlert("successadd");
 						dialogBox.setVisible(false);
-						url.GoTo("FORUM");
+						url.GoTo("FORUM",IDUSER,null);
 					} else {
 						ErrorVerify.getErrorAlert("failadd");
 					}

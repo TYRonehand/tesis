@@ -1,0 +1,48 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+	.panel404{
+		padding:28px;
+	}
+	.title404{
+		color: black;
+		font-family: 'Raleway', sans-serif;
+		font-size: 36px;
+		font-weight: 800;
+		line-height: 36px;
+		margin: 0 0 24px;
+		text-align: center;
+	}
+	.text404{
+		color: black;
+		font-family: 'Raleway', sans-serif;
+		font-size: 24px;
+		font-weight: 600;
+		line-height: 36px;
+		margin: 0 0 24px;
+		text-align: center;
+	}
+	</ui:style>
+	<g:HTMLPanel>
+	<div class="row">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<section class="panel">
+				<div class="panel-body">
+
+					<div class="btn-group btn-group-justified">
+						
+						<g:VerticalPanel ui:field="panel404" width="100%" addStyleNames='{style.panel404}' horizontalAlignment="ALIGN_CENTER" height="100%">
+							<g:Image url="assets/img/logo.png"/>
+							<g:Label addStyleNames='{style.title404}' horizontalAlignment="ALIGN_CENTER" width="100%" text="404 Not Found"></g:Label>
+							<g:Label addStyleNames='{style.text404}' horizontalAlignment="ALIGN_CENTER" width="100%" text="Oops... Looks like the page you we&apos;re looking for does not exist. Sorry about that."></g:Label>
+						</g:VerticalPanel>
+						
+			
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+	</g:HTMLPanel>
+</ui:UiBinder> 

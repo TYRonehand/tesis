@@ -192,7 +192,7 @@ public class UploadModal extends DialogBox {
 														if (result) {
 															// file added
 															dialogBox.hide();
-															url.GoTo("FILES");
+															url.GoTo("FILES",IDUSER,null);
 															ErrorVerify
 																	.getErrorAlert("successadd");
 														} else {

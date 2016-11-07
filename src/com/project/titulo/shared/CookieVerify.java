@@ -106,9 +106,11 @@ public class CookieVerify {
 
 	// delete cookie
 	public void delCookiesInfo() {
+
 		this.setCookieUser("");
 		this.setCookieIdurl("LOGIN");
 		this.setCookieMail("");
+		this.setCookieITopic("");
 	}
 
 }

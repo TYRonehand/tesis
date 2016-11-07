@@ -25,6 +25,8 @@ public class ResultsWidget extends Composite {
 
 	/* style */
 	private MyStyle ms = new MyStyle();
+	//url control
+	private GoToUrl url = new GoToUrl();
 
 	/* variables */
 	// uifields---------------
@@ -40,8 +42,6 @@ public class ResultsWidget extends Composite {
 	// my results--------------------
 	private List<MetricResults> RESULTS = null;
 	private String IDUSER = null;
-	// goto url------------------
-	private GoToUrl url = new GoToUrl();
 	// RPC
 	private final ServerServiceAsync serverService = GWT
 			.create(ServerService.class);
@@ -108,7 +108,7 @@ public class ResultsWidget extends Composite {
 	// click go back
 	@UiHandler("backBtn")
 	void onRegisteLinkClick(ClickEvent event) {
-		url.GoTo("METRIC");
+		url.GoTo("metric", IDUSER, null);
 	}
 
 	// click upload

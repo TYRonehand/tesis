@@ -163,6 +163,8 @@
 			</div>
 		</div>
 
+		
+
 		<!-- Frameworks info -->
 		<div class="row">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -220,7 +222,7 @@
 						<h3 class="panel-title">
 							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
 								href="#collapse7">
-								Who i am?
+								Who we are?
 							</a>
 						</h3>
 					</div>
@@ -230,12 +232,43 @@
 						<div class="panel-body">
 							<div class="panel-text" align="justify">
 
-								<p>Hi I'm Carlos Gutierrez Acevedo, thesis student at the
+								<p>Hi, I'm Carlos Gutierrez Acevedo, thesis student at the
 									Universidad Católica Santísima Concepción , Chile. The present
 									system is my thesis project called "Web Application Analysis
 									results multi objective optimization.", and my guide is the
 									academic Pedro Gómez Meneses</p>
 
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		
+		<!--  fuente literaria metricas e indicadores -->
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="panel ">
+
+					<!--Titulo -->
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
+								href="#collapse8">
+								Bibliography?
+							</a>
+						</h3>
+					</div>
+
+					<!--Texto -->
+					<div id="collapse8" class="panel-collapse collapse ">
+						<div class="panel-body">
+							<div class="panel-text" align="justify">
+
+								<p>
+									Here all information contained in the mathematical aspect is contained in the literature "Evolutionary Algorithms for Solving Multi-Objective Problems" second edition, authors Carlos A. Coello Coello, Gary B. Lamont and David A. Van Veldhuizen.
+								</p>
 							</div>
 						</div>
 					</div>

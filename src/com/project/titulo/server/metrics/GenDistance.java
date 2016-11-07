@@ -80,54 +80,32 @@ public class GenDistance {
 	}
 
 	// calculate one file at time
-	private String Calculate(List<Points> paretoDataList,
-			List<Points> aproximationDataList) {
-		System.err.print("\nevaluating...");
+	private String Calculate(List<Points> paretoDataList, List<Points> aproximationDataList) {
 
 		double D, F, G, flag;
-		D = 0.00000;
-		G = 0.00000;
-		F = -1.00000;
+		D = 0.0;
+		G = 0.0;
+		F = -1.0;
 		flag = 0.00000;
 		for (int i = 0; i < aproximationDataList.size(); i++) {
 			for (int j = 0; j < paretoDataList.size(); j++) {
 				Points pareto = paretoDataList.get(j);
 				Points optimo = aproximationDataList.get(i);
-
 				for (int k = 0; k < optimo.getDimension(); k++) {
-					D = (Math.pow(
-							optimo.getAxieIndex(k) - pareto.getAxieIndex(k), 2));
-					// System.err.print(String.format("\nD POW + = %.6f",D));
+					D = (Math.pow(optimo.getAxieIndex(k) - pareto.getAxieIndex(k), 2));
 				}
-
 				D = Math.sqrt(D);
-				// System.err.print(String.format("\nD SQRT + = %.6f",D));
 				if (flag == 0) {
 					F = D;
 					flag = 1;
 				}
-				if (F > D) {
-					F = D;
-				}
+				if (F > D) {F = D;}
 			}
 			G = (G + Math.pow(F, 2));
 			flag = 0;
 		}
-		System.err.print(String.format("\nG ante POW + = %.6f", G));
-
 		G = (Math.pow(G, 0.5));
-
-		System.err.print(String.format("\nG POW + = %.6f", G));
-
 		G = (G / aproximationDataList.size());
-
-		System.err.print(String.format("\nG DIVIDE + = %.6f", G));
-
-		// G = Math.rint(G * 100) / 100;
-
-		System.err.print(String.format("\nG FINAL + = %.6f", G));
-
-		System.err.print("\nready!");
 		return String.format("%.6f", G);
 	}
 

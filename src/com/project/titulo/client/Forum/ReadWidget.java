@@ -21,9 +21,6 @@ import com.google.gwt.user.client.ui.Widget;
 import com.project.titulo.client.GoToUrl;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
-import com.project.titulo.client.UserProfile.UserProfile;
-import com.project.titulo.client.UserProfile.ViewProfile;
-import com.project.titulo.client.breadcrumb.BreadWidget;
 import com.project.titulo.shared.ErrorVerify;
 import com.project.titulo.shared.model.Answer;
 import com.project.titulo.shared.model.SubAnswer;
@@ -118,22 +115,14 @@ public class ReadWidget extends Composite {
 	
 							Hyperlink username = new Hyperlink();
 							username.setText(myuser.getName()+" "+myuser.getLastname());
-							username.setTargetHistoryToken("");
 							// clic user
-							username.addHandler(new ClickHandler() {
-								@Override
-								public void onClick(ClickEvent event) {
-									RootPanel.get("GWTcontainer").clear();
-									RootPanel.get("GWTcontainer").add(new BreadWidget("PROFILE"));
-									if (IDUSER.equals(localiduser)) {
-										// if  is  me
-										RootPanel.get("GWTcontainer").add(new UserProfile( localiduser));
-									} else {
-										// if is other
-										RootPanel.get("GWTcontainer").add(new ViewProfile(localiduser));
-									}
-								}
-							}, ClickEvent.getType());
+							if (IDUSER.equals(localiduser)) {
+								// if  is  me
+								username.setTargetHistoryToken("profile");
+							} else {
+								// if is other
+								username.setTargetHistoryToken("uid="+localiduser);
+							}
 	
 							InlineLabel ocupation = new InlineLabel(myuser.getOcupation());
 							InlineLabel creation = new InlineLabel(TOPICINFO.getCreation());
@@ -161,7 +150,6 @@ public class ReadWidget extends Composite {
 							// if topic is from user this is add
 							if (IDUSER.equals(myuser.getId())) 
 							{
-								
 								if(Integer.parseInt(TOPICINFO.getNumcomments())==0)
 								{
 									Button editBtn = new Button("Edit");
@@ -173,10 +161,8 @@ public class ReadWidget extends Composite {
 											RootPanel.get().add(new EditTopicModal(TOPICINFO));
 										}
 									});
-
 									hpan3.add(editBtn);
 								}
-	
 							}
 							//NEW COMMENT
 							Button responseBtn = new Button("New Comment");
@@ -321,22 +307,14 @@ public class ReadWidget extends Composite {
 
 		Hyperlink username = new Hyperlink();
 		username.setText(owner.getName()+" "+owner.getLastname());
-		username.setTargetHistoryToken("");
 		// clic user NAME
-		username.addHandler(new ClickHandler() {
-				@Override
-				public void onClick(ClickEvent event) {
-					RootPanel.get("GWTcontainer").clear();
-					RootPanel.get("GWTcontainer").add(new BreadWidget("PROFILE"));
-					if (IDUSER.equals(owner.getId())) {
-						// if is me
-						RootPanel.get("GWTcontainer").add(new UserProfile(owner.getId()));
-					} else {
-						// if  is other
-						RootPanel.get("GWTcontainer").add(new ViewProfile(owner.getId()));
-					}
-				}
-			},ClickEvent.getType());
+		if (IDUSER.equals(owner.getId())) {
+			// if is me
+			username.setTargetHistoryToken("profile");
+		} else {
+			// if  is other
+			username.setTargetHistoryToken("uid="+owner.getId());
+		}
 
 		InlineLabel ocupation = new InlineLabel(owner.getOcupation());
 		InlineLabel creation = new InlineLabel(comment.getCreation());
@@ -430,23 +408,14 @@ public class ReadWidget extends Composite {
 
 		Hyperlink username = new Hyperlink();
 		username.setText(owner.getName()+" "+owner.getLastname());
-		username.setTargetHistoryToken("");
 		// clic user
-		username.addHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) 
-			{
-				RootPanel.get("GWTcontainer").clear();
-				RootPanel.get("GWTcontainer").add(new BreadWidget("PROFILE"));
-				if (IDUSER.equals(localiduser)) {
-					// if is me
-					RootPanel.get("GWTcontainer").add(new UserProfile(localiduser));
-				} else {
-					// if is other
-					RootPanel.get("GWTcontainer").add(new ViewProfile(localiduser));
-				}
-			}
-		}, ClickEvent.getType());
+		if (IDUSER.equals(localiduser)) {
+			// if is me
+			username.setTargetHistoryToken("profile");
+		} else {
+			// if is other
+			username.setTargetHistoryToken("uid="+localiduser);
+		}
 
 		InlineLabel ocupation = new InlineLabel(owner.getOcupation());
 		InlineLabel creation = new InlineLabel(subcomment.getCreation());

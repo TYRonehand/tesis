@@ -16,7 +16,6 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.project.titulo.client.GoToUrl;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
 import com.project.titulo.shared.ErrorVerify;
@@ -55,20 +54,17 @@ public class RecoveryWidget extends Composite {
 	@UiField
 	Button codeBTN;
 
-	// goto url
-	public GoToUrl url = new GoToUrl();
 	// RPC
-	private final ServerServiceAsync serverService = GWT
-			.create(ServerService.class);
+	private final ServerServiceAsync serverService = GWT.create(ServerService.class);
 
-	private static recoveryWidgetUiBinder uiBinder = GWT
-			.create(recoveryWidgetUiBinder.class);
+	private static recoveryWidgetUiBinder uiBinder = GWT.create(recoveryWidgetUiBinder.class);
 
 	interface recoveryWidgetUiBinder extends UiBinder<Widget, RecoveryWidget> {
 	}
 
 	public RecoveryWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
+		backLink.setTargetHistoryToken("login");
 		// set style to buttons from bootstrap
 		submitBTN.addStyleName("btn btn-primary");
 		passwordBTN.addStyleName("btn btn-primary");
@@ -77,71 +73,71 @@ public class RecoveryWidget extends Composite {
 
 	// sen email with code
 	private void SendCode() {
-		serverService.sendEmailVerify(this.mailInput.getText(),
-				new AsyncCallback<String>() {
+		serverService.sendEmailVerify(this.mailInput.getText(), new AsyncCallback<String>() 
+		{
 
-					@Override
-					public void onFailure(Throwable caught) {
-						ErrorVerify.getErrorAlert("offline");
-					}
+			@Override
+			public void onFailure(Throwable caught) {
+				ErrorVerify.getErrorAlert("offline");
+			}
 
-					@Override
-					public void onSuccess(String result) {
-						if (!result.isEmpty())
-							ErrorVerify.getErrorAlert(result);
+			@Override
+			public void onSuccess(String result) {
+				if (!result.isEmpty())
+					ErrorVerify.getErrorAlert(result);
 
-						if (result.equals("goodsendmail")) {
-							panelRecovery.setVisible(false);
-							panelNewCode.setVisible(true);
-						}
+				if (result.equals("goodsendmail")) {
+					panelRecovery.setVisible(false);
+					panelNewCode.setVisible(true);
+				}
 
-					}
-				});
+			}
+		});
 	}
 
 	// submit code
 	private void ReceiveCode() {
-		serverService.userRecovery(this.mailInput.getText(),
-				this.codeInput.getText(), new AsyncCallback<Boolean>() {
+		serverService.userRecovery(this.mailInput.getText(), this.codeInput.getText(), new AsyncCallback<Boolean>() 
+		{
 
-					@Override
-					public void onFailure(Throwable caught) {
-						ErrorVerify.getErrorAlert("offline");
-					}
+			@Override
+			public void onFailure(Throwable caught) {
+				ErrorVerify.getErrorAlert("offline");
+			}
 
-					@Override
-					public void onSuccess(Boolean result) {
-						if (result) {
-							panelNewCode.setVisible(false);
-							panelNewPassword.setVisible(true);
-						} else {
-							ErrorVerify.getErrorAlert("badcode");
-						}
-					}
-				});
+			@Override
+			public void onSuccess(Boolean result) {
+				if (result) {
+					panelNewCode.setVisible(false);
+					panelNewPassword.setVisible(true);
+				} else {
+					ErrorVerify.getErrorAlert("badcode");
+				}
+			}
+		});
 	}
 
 	// change password
 	private void ChangePass() {
-		serverService.changeUserPassword(this.mailInput.getText(),
-				this.password1Input.getText(), new AsyncCallback<Boolean>() {
+		serverService.changeUserPassword(this.mailInput.getText(), this.password1Input.getText(), new AsyncCallback<Boolean>() 
+		{
 
-					@Override
-					public void onFailure(Throwable caught) {
-						ErrorVerify.getErrorAlert("offline");
-					}
+			@Override
+			public void onFailure(Throwable caught) {
+				ErrorVerify.getErrorAlert("offline");
+			}
 
-					@Override
-					public void onSuccess(Boolean result) {
-						if (result) {
-							ErrorVerify.getErrorAlert("goodnewpass");
-							url.GoTo("LOGIN");
-						} else {
-							ErrorVerify.getErrorAlert("fatal");
-						}
+			@Override
+			public void onSuccess(Boolean result) {
+				if (result) {
+					ErrorVerify.getErrorAlert("goodnewpass");
+					Window.Location.reload();
+				} else {
+					ErrorVerify.getErrorAlert("fatal");
+				}
 
-					}
-				});
+			}
+		});
 	}
 
 	/* EVENTS */
@@ -191,12 +187,6 @@ public class RecoveryWidget extends Composite {
 			labelError4.setText("");
 			labelError4.setVisible(false);
 		}
-	}
-
-	// click registro link
-	@UiHandler("backLink")
-	void onRegisteLinkClick(ClickEvent event) {
-		url.GoTo("LOGIN");
 	}
 
 	/* Evento click SEND CODE */

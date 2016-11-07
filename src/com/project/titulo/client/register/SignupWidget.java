@@ -16,7 +16,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.project.titulo.client.GoToUrl;
 import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
@@ -30,10 +29,7 @@ public class SignupWidget extends Composite {
 
 	/* style */
 	private MyStyle ms = new MyStyle();
-
 	/* variables */
-	// goto url
-	public GoToUrl url = new GoToUrl();
 
 	@UiField
 	Label labelError1;
@@ -67,8 +63,7 @@ public class SignupWidget extends Composite {
 			.create(ServerService.class);
 
 	// widget
-	private static SignupWidgetUiBinder uiBinder = GWT
-			.create(SignupWidgetUiBinder.class);
+	private static SignupWidgetUiBinder uiBinder = GWT.create(SignupWidgetUiBinder.class);
 
 	interface SignupWidgetUiBinder extends UiBinder<Widget, SignupWidget> {
 	}
@@ -77,8 +72,8 @@ public class SignupWidget extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 		// set style to buttons from bootstrap
 		registerBtn.addStyleName(ms.getButtonStyle(0));
-		// set styles for css
-
+		//recovery link
+		recoveryLink.setTargetHistoryToken("recovery");
 		// load country to combobox
 		addCountry();
 	}
@@ -105,7 +100,7 @@ public class SignupWidget extends Composite {
 			public void onSuccess(Boolean result) {
 				if (result) {
 					ErrorVerify.getErrorAlert("successadd");
-					url.GoTo("LOGIN");
+					Window.Location.reload();
 				} else {
 					ErrorVerify.getErrorAlert("failadd");
 				}
@@ -258,11 +253,6 @@ public class SignupWidget extends Composite {
 		SignUp();
 	}
 
-	// click recuperar link
-	@UiHandler("recoveryLink")
-	void onRecoveryLinkClick(ClickEvent event) {
-		url.GoTo("RECOVERY");
-	}
 
 	@UiHandler("pass2Input")
 	void onPass2InputKeyDown(KeyDownEvent event) {

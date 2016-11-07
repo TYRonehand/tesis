@@ -15,6 +15,7 @@ import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.SimplePager.TextLocation;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -212,7 +213,7 @@ public class ForumWidget extends Composite {
 							CookieVerify mycookie = new CookieVerify(false);
 							mycookie.setCookieITopic(selected.getIdtopic());
 							// redirect
-							url.GoTo("TOPIC");
+							History.newItem("topic");
 						}
 					}
 				});
@@ -252,7 +253,7 @@ public class ForumWidget extends Composite {
 	@UiHandler("modalNewTopic")
 	void onModalCallClick(ClickEvent event) {
 		// cualquier otro caso sera enviado al login
-		url.GoTo("MODALNEWTOPIC");
+		url.GoTo("MODALNEWTOPIC",IDUSER,null);
 	}
 
 	// load table and topics

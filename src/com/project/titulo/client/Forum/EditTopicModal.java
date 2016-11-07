@@ -110,7 +110,7 @@ public class EditTopicModal extends DialogBox {
 				public void onSuccess(Boolean result) {
 					if (result) {
 						ErrorVerify.getErrorAlert("successupdate");
-						url.GoTo("TOPIC");
+						url.GoTo("TOPIC",updatedTopic.getIduser(),updatedTopic.getIdtopic());
 						dialogBox.hide();
 					} else {
 						ErrorVerify.getErrorAlert("fatal");

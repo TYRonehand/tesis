@@ -27,7 +27,6 @@ import com.google.gwt.user.client.ui.SimpleCheckBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.project.titulo.client.GoToUrl;
 import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
@@ -93,8 +92,6 @@ public class PlotWidget extends Composite {
 
 	// Create a CellTable.
 	private CellTable<UserFile> table = null;
-	// goto url
-	public GoToUrl url = new GoToUrl();
 	// RPC
 	private final ServerServiceAsync serverService = GWT
 			.create(ServerService.class);
@@ -281,11 +278,8 @@ public class PlotWidget extends Composite {
 						@Override
 						public void onSuccess(String result) {
 							if (!result.isEmpty()) {
-								// Window.Location.assign(GWT.getHostPageBaseURL()+result);
 								ErrorVerify.getErrorAlert("successadd");
-								// Window.open(GWT.getHostPageBaseURL()+result,"_blank",window);
-								Window.Location.assign(GWT.getHostPageBaseURL()
-										+ result);
+								Window.open(GWT.getHostPageBaseURL()+ result, "_blank", "disable");
 							} else {
 								ErrorVerify.getErrorAlert("nofileplot");
 							}
@@ -307,10 +301,8 @@ public class PlotWidget extends Composite {
 						@Override
 						public void onSuccess(String result) {
 							if (!result.isEmpty()) {
-								// Window.Location.assign(GWT.getHostPageBaseURL()+result);
 								ErrorVerify.getErrorAlert("successadd");
-								Window.Location.assign(GWT.getHostPageBaseURL()
-										+ result);
+								Window.open(GWT.getHostPageBaseURL()+ result, "_blank", "enabled");
 							} else {
 								ErrorVerify.getErrorAlert("nofileplot");
 							}
@@ -325,31 +317,46 @@ public class PlotWidget extends Composite {
 	// plot live
 	@UiHandler("plotBtn")
 	void onPlotBtnClick(ClickEvent event) {
-		SaveImg("html");
+		if(table.getRowCount()>0)
+			SaveImg("html");
+		else
+			ErrorVerify.getErrorAlert("nofiles");
 	}
 
 	// guarda imagen en png
 	@UiHandler("pngBtn")
 	void onPngBtnClick(ClickEvent event) {
-		SaveImg("png");
+		if(table.getRowCount()>0)
+			SaveImg("png");
+		else
+			ErrorVerify.getErrorAlert("nofiles");
 	}
 
 	// guarda imagen en eps
 	@UiHandler("epsBtn")
 	void onEpsBtnClick(ClickEvent event) {
-		SaveImg("eps");
+		if(table.getRowCount()>0)
+			SaveImg("eps");
+		else
+			ErrorVerify.getErrorAlert("nofiles");
 	}
 
 	// guarda imagen en svg
 	@UiHandler("svgBtn")
 	void onSvgBtnClick(ClickEvent event) {
-		SaveImg("svg");
+		if(table.getRowCount()>0)
+			SaveImg("svg");
+		else
+			ErrorVerify.getErrorAlert("nofiles");
 	}
 
 	// guarda imagen en pdf
 	@UiHandler("pdfBtn")
 	void onPdfBtnClick(ClickEvent event) {
-		SaveImg("pdf");
+		if(table.getRowCount()>0)
+			SaveImg("pdf");
+		else
+			ErrorVerify.getErrorAlert("nofiles");
 	}
 
 }
