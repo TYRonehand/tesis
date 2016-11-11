@@ -76,8 +76,6 @@
 					<gwt:FlowPanel addStyleNames='{style.flowPanel}'>
 						<gwt:Button ui:field="usersBTN" text="Users"
 							addStyleNames='{style.btnMenu}'>Users</gwt:Button>
-						<gwt:Button ui:field="topicsBTN" text="Topics"
-							addStyleNames='{style.btnMenu}'>Topics</gwt:Button>
 					</gwt:FlowPanel>
 				</div>
 			</div>

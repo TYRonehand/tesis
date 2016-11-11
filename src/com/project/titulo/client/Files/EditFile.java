@@ -5,7 +5,6 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -14,6 +13,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.project.titulo.client.GoToUrl;
 import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
@@ -50,6 +50,8 @@ public class EditFile extends Composite {
 	Button cancelBtn;
 	/* style */
 	private MyStyle ms = new MyStyle();
+	//url control
+	private GoToUrl url = new GoToUrl();
 
 	// id for data file
 	private String IDDATAFILE;
@@ -216,7 +218,7 @@ public class EditFile extends Composite {
 			public void onSuccess(Boolean result) {
 				if (result) {
 					ErrorVerify.getErrorAlert("successupdate");
-					History.back();
+					url.GoTo("files", USERFILE.getIduser(), null);
 				} else {
 					ErrorVerify.getErrorAlert("failupdate");
 				}
@@ -227,7 +229,7 @@ public class EditFile extends Composite {
 	// cancel button event
 	@UiHandler("cancelBtn")
 	void onCancelBtnClick(ClickEvent event) {
-		History.back();
+		url.GoTo("files", USERFILE.getIduser(), null);
 	}
 
 	// save button event

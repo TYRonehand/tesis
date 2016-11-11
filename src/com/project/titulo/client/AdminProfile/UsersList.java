@@ -5,6 +5,8 @@ import java.util.List;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -212,5 +214,16 @@ public class UsersList extends Composite {
 			LoadData(this.searchInput.getText());
 		else
 			ErrorVerify.getErrorAlert("empty");
+	}
+
+	@UiHandler("searchInput")
+	void onPassInputKeyDown(KeyDownEvent event) {
+
+		if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+			if (this.searchInput.getText().length() > 0)
+				LoadData(this.searchInput.getText());
+			else
+				ErrorVerify.getErrorAlert("empty");
+		}
 	}
 }

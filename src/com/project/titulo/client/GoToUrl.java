@@ -1,6 +1,7 @@
 package com.project.titulo.client;
 
 import com.google.gwt.user.client.ui.RootPanel;
+import com.project.titulo.client.AdminProfile.AdminLogin;
 import com.project.titulo.client.AdminProfile.UsersList;
 import com.project.titulo.client.Files.FileWidget;
 import com.project.titulo.client.Files.HelpModal;
@@ -29,7 +30,7 @@ public class GoToUrl {
 
 	public void GoTo(String option, String IDUSER, String IDTOPIC) {
 
-		//Window.alert("Option: "+option);
+		//Window.alert("iduser: "+IDUSER);
 		// opciones url
 		switch (option.toUpperCase()) 
 		{
@@ -94,8 +95,8 @@ public class GoToUrl {
 				RootPanel.get("GWTcontainer").add(new BreadWidget(option));
 				RootPanel.get("GWTcontainer").add(new HomeWidget());
 				break;
-	
-			case "ADMIN":
+
+			case "ADMINDASHBOARD":
 				// widget close session
 				RootPanel.get("GWTmenu").clear();
 				RootPanel.get("GWTmenu").add(new MenuUser());
@@ -104,6 +105,15 @@ public class GoToUrl {
 				// cualquier otro caso sera enviado al login
 				RootPanel.get("GWTcontainer").add(new BreadWidget(option));
 				RootPanel.get("GWTcontainer").add(new UsersList());
+				break;
+				
+			case "ADMIN":
+				// widget close session
+				RootPanel.get("GWTmenu").clear();
+				// widget close session
+				RootPanel.get("GWTcontainer").clear();
+				// cualquier otro caso sera enviado al login
+				RootPanel.get("GWTcontainer").add(new AdminLogin());
 				break;
 	
 			case "FILES":

@@ -20,6 +20,9 @@ public interface ServerServiceAsync {
 	void getUserList(String opcion, AsyncCallback<List<User>> callback)
 			throws IllegalArgumentException;
 
+	void authenticateAdmin(String user, String pass, AsyncCallback<User> callback)
+			throws IllegalArgumentException;
+
 	// user
 	void userExist(String mail, AsyncCallback<Boolean> callback)
 			throws IllegalArgumentException;
@@ -158,6 +161,8 @@ public interface ServerServiceAsync {
 	void CalculateE(String iduser, AsyncCallback<List<MetricResults>> callback)
 			throws IllegalArgumentException;
 
+	void CalculateGNVG(String iduser, AsyncCallback<List<MetricResults>> callback)
+			throws IllegalArgumentException;
 	/*------------EXPORT RESULTS---------------*/
 	void ExportResults(String iduser, List<MetricResults> Results,
 			AsyncCallback<Boolean> callback) throws IllegalArgumentException;

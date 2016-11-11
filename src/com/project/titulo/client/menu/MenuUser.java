@@ -4,7 +4,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
@@ -33,18 +32,10 @@ public class MenuUser extends Composite {
 	@UiHandler("exitLink")
 	void onExitLinkClick(ClickEvent event) {
 		mycookie.delCookiesInfo();
-		for(String name:Cookies.getCookieNames()){
-			Cookies.removeCookie(name);
-		}
 		// load profile
 		Window.Location.reload();
 	}
 
-	// push files button
-	@UiHandler("topicsBTN")
-	void onButtonClick(ClickEvent event) {
-		History.newItem("topic");
-	}
 
 	// push home button
 	@UiHandler("usersBTN")

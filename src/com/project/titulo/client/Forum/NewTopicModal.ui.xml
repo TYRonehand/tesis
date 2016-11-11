@@ -2,6 +2,9 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
+		.observation{
+			font-size: 10pt;
+		}
 		.submitBtn{
 			padding-top:5px;
 			width:100%;
@@ -51,22 +54,23 @@
 	<g:HTMLPanel  addStyleNames='{style.HTMLheader}' >
 	
     
-	<g:DialogBox ui:field="dialogBox"  width="100%" addStyleNames='{style.dialogBox}'>
+	<g:DialogBox ui:field="dialogBox"  width="100%" addStyleNames='{style.dialogBox}' animationEnabled="true" autoHideEnabled="true" autoHideOnHistoryEventsEnabled="true">
     	
 	
 		<g:VerticalPanel ui:field="dialogVPanel" addStyleNames='{style.verticalPanel}' height="100%"  borderWidth="0" verticalAlignment="ALIGN_MIDDLE">
 		
-			<g:Label text="Title" direction="LTR"/>
+			<g:Label text="*Title" direction="LTR"/>
 			<g:TextBox ui:field="titleInput"  addStyleNames='{style.myFields}' height="16px" width="100%" direction="LTR" textAlignment="ALIGN_CENTER" focus="true" maxLength="250" ></g:TextBox>
 			
-			<g:Label text="Description"/>
-			<g:TextArea ui:field="descriptionInput"  addStyleNames='{style.myFields}' textAlignment="ALIGN_JUSTIFY" width="100%" height="200px"/>
+			<g:Label text="*Description"/>
+			<g:TextArea ui:field="descriptionInput"  addStyleNames='{style.myFields}' textAlignment="ALIGN_JUSTIFY" width="100%" height="" visibleLines="6"/>
 			<g:Label text="(max 800 characters)"/>
 			
 			<g:VerticalPanel ui:field="buttonPanel" horizontalAlignment="ALIGN_CENTER">
 				<g:Button ui:field="createBtn" addStyleNames='{style.submitBtn}' width="100%" >Post Topic</g:Button>	
 				<g:Button ui:field="cancelBtn" addStyleNames='{style.submitBtn}' width="100%" >Cancel</g:Button>	
 			</g:VerticalPanel>
+			<g:Label addStyleNames='{style.observation}' text="(*) Obligatory field." horizontalAlignment="ALIGN_LEFT"></g:Label>
 		</g:VerticalPanel>
 		
 		

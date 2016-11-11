@@ -16,6 +16,7 @@ import javax.servlet.ServletContext;
 
 import com.project.titulo.client.ServerService;
 import com.project.titulo.server.metrics.ErrorRatio;
+import com.project.titulo.server.metrics.GNVG;
 import com.project.titulo.server.metrics.GenDistance;
 import com.project.titulo.server.metrics.Spacing;
 import com.project.titulo.shared.ExportDataResult;
@@ -124,10 +125,46 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 		}
 		return allusers;
 	}
+	
+	// user info validation
+		@Override
+		public User authenticateAdmin(String user, String pass) throws IllegalArgumentException {
+			User miuser = null;
+
+			try {
+				// consultamos a base de datos
+				String Query = "SELECT * FROM account_administrator WHERE mail_admin = '"
+						+ user.toUpperCase() + "' AND password_admin = '" + pass+"' LIMIT 1";
+				
+				PreparedStatement ps = conn.prepareStatement(Query);
+				ResultSet result = ps.executeQuery();
+				// recorremos resultado
+				while (result.next()) {
+
+					miuser = new User(result.getString("cod_admin"), 
+							result.getString("mail_admin"), 
+							result.getString("name_admin"), 
+							result.getString("lastname_admin"), 
+							null,
+							"Administrator", 
+							null,
+							"ASMOP", 
+							result.getString("password_admin"), 
+							null, 
+							null);
+				}
+				result.close();
+				ps.close();
+			} catch (SQLException sqle) {
+				GWT.log(sqle.toString());
+				sqle.printStackTrace();
+			}
+			return miuser;
+		}
+	
 
 	/*
 	 * USER----------------------------------------------------------------------
-	 * --------
 	 */
 	// consulta si existe usuario
 	@Override
@@ -541,8 +578,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			ResultSet result = ps.executeQuery();
 			// recorremos resultado
 			while (result.next()) {
-				// create (String id,String title,String user,String total, Date
-				// created)
+				// create (String id,String title,String user,String total, Date created)
 				// add element to list
 				resumetopic.add(new ResumeTopic(result.getString("cod_topic"),
 						result.getString("title_topic"), result.getString("cod_user"),
@@ -572,8 +608,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			ResultSet result = ps.executeQuery();
 			// recorremos resultado
 			while (result.next()) {
-				// create (String id,String title,String user,String total, Date
-				// created)
+				// (String id,String title,String user,String total, Date created)
 				// add element to list
 				resumetopic.add(new ResumeTopic(result.getString("cod_topic"),
 						result.getString("title_topic"), result.getString("cod_user"),
@@ -598,14 +633,14 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 		try {
 			// consultamos a base de datos SELECT * FROM table WHERE Column LIKE
 			// '%test%';
-			String Query = "SELECT * FROM topic_resume_view WHERE title_topic LIKE '%"
-					+ specialword + "%' ORDER BY creation DESC";
+			String Query = "SELECT * FROM topic_resume_view "
+							+" WHERE UPPER(title_topic) LIKE '%"+specialword.toUpperCase()+"%' "
+							+" ORDER BY creation_topic DESC";
 			PreparedStatement ps = conn.prepareStatement(Query);
 			ResultSet result = ps.executeQuery();
 			// recorremos resultado
 			while (result.next()) {
-				// create (String id,String title,String user,String total, Date
-				// created)
+				//  (String id,String title,String user,String total, Date created)
 				// add element to list
 				resumetopic.add(new ResumeTopic(result.getString("cod_topic"),
 						result.getString("title_topic"), result.getString("cod_user"),
@@ -704,7 +739,6 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	}
 	/*
 	 * FORUM-SUB-ANSWER--------------------------------------------------------------
-	 * -----------
 	 */
 	// add new answer to topic
 	@Override
@@ -784,38 +818,22 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	public Boolean addNewFile(UserFile myFile) throws IllegalArgumentException {
 		// return fail
 		Boolean res = false;
-
 		PreparedStatement pstmt = null;
 		try {
-
 			// consultamos a base de datos
-			String Query = "INSERT INTO user_file (title_file,dimension_file,labelx_file,labely_file,labelz_file,description_file,cod_user,data_file) VALUES ('"
-					+ myFile.getTitle()
-					+ "','"
-					+ myFile.getDimension()
-					+ "','"
-					+ myFile.getLabelx()
-					+ "','"
-					+ myFile.getLabely()
-					+ "','"
-					+ myFile.getLabelz()
-					+ "','"
-					+ myFile.getDescription()
-					+ "','"
-					+ myFile.getIduser()
-					+ "','"
-					+ myFile.getData()
-					+ "')";
+			String Query = "INSERT INTO `user_file` (`cod_file`, `title_file`, `description_file`, `creation_file`, `dimension_file`, `labelx_file`, `labely_file`, `labelz_file`, `plot_file`, `metric_file`, `data_file`, `cod_user`)  "
+					+ "VALUES (NULL, '"+myFile.getTitle()+"', '"+myFile.getDescription()+"', CURRENT_TIMESTAMP, '"+myFile.getDimension()+"', '"+myFile.getLabelx()+"', '"+myFile.getLabely()+"', '"+myFile.getLabely()+"', '0', '0', '"+myFile.getData().replaceAll("[;,]", " ")+"', '"+myFile.getIduser()+"');";
+			
 			pstmt = conn.prepareStatement(Query);
 			int state = pstmt.executeUpdate();
+
 			// succes
 			if (state == 1) {
 				res = true;
 			}
 			pstmt.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
-			sqle.printStackTrace();
+			System.err.println("INSERT: "+sqle.toString());
 			res = false;
 		}
 		return res;
@@ -844,8 +862,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			result.close();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
-			sqle.printStackTrace();
+			System.err.println(sqle.toString());
 			return false;
 		}
 		return true;
@@ -868,8 +885,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			// recorremos resultado
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
-			sqle.printStackTrace();
+			System.err.println(sqle.toString());
 			return false;
 		}
 		return true;
@@ -908,8 +924,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			result.close();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
-			sqle.printStackTrace();
+			System.err.println(sqle.toString());
 		}
 		return myFile;
 	}
@@ -1502,6 +1517,34 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 
 		} catch (Exception e) {
 			System.err.print("\nImpl error: " + e.toString());
+		}
+		System.err.print("\nretorna resultado");
+		return results;
+	}
+	
+	@Override
+	public List<MetricResults> CalculateGNVG(String iduser) throws IllegalArgumentException {
+
+		System.err.print("\nMetric GNVG");
+
+		// result object
+		List<MetricResults> results = new ArrayList<MetricResults>();
+		try {
+			// search files from user in metric selected
+			List<UserFile> myfiles = getFullFilesMetric(iduser);
+
+			// control exist both objects
+			if (!myfiles.isEmpty() && myfiles != null) {
+				// start calculation
+				GNVG gnvg = new GNVG(myfiles);
+				results = gnvg.getResults();
+			} else {
+				System.err.print("\nerror: null files");
+			}
+
+		} catch (Exception e) {
+			System.err.print("\nerror: " + e.toString());
+
 		}
 		System.err.print("\nretorna resultado");
 		return results;

@@ -82,9 +82,7 @@ public class FileWidget extends Composite {
 
 	// load data from database
 	private void LoadFilesData() {
-		serverService.getUserFiles(this.IDUSER,
-				new AsyncCallback<List<UserFile>>() {
-
+		serverService.getUserFiles(this.IDUSER, new AsyncCallback<List<UserFile>>() {
 					@Override
 					public void onFailure(Throwable caught) {
 						ErrorVerify.getErrorAlert("offline");
@@ -280,7 +278,7 @@ public class FileWidget extends Composite {
 					// widget close session
 					RootPanel.get("GWTcontainer").clear();
 					// cualquier otro caso sera enviado al login
-					RootPanel.get("GWTcontainer").add(new BreadWidget("FILES"));
+					RootPanel.get("GWTcontainer").add(new BreadWidget("files"));
 					RootPanel.get("GWTcontainer").add(
 							new EditFile(object.getIdfile()));
 				//}
@@ -373,7 +371,7 @@ public class FileWidget extends Composite {
 	// click upload
 	@UiHandler("uploadBtn")
 	void onRegisteLinkClick(ClickEvent event) {
-		url.GoTo("MODALUPLOAD",null,null);
+		url.GoTo("MODALUPLOAD",this.IDUSER,null);
 	}
 
 	// click Help

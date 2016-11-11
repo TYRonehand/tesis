@@ -40,7 +40,7 @@ public class BreadWidget extends Composite {
 		HOME.setText(">Home");
 
 		// opciones url
-		switch (option) {
+		switch (option.toUpperCase()) {
 
 		case "PROFILE":
 			breadPanel.add(HOME);

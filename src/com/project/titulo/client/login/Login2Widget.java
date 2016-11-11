@@ -67,16 +67,6 @@ public class Login2Widget extends Composite {
 		if (passInput.getText().length() >= 6
 				&& mailInput.getText().length() >= 6) {
 			if (FieldVerifier.isValidMail(mailInput.getText())) {
-				// admin test
-				if (mailInput.getText().equals("Administr@tor")
-						&& passInput.getText().equals("741admin963")) {
-					// guardamos las cookies con info
-					mycookie.setCookieMail("cagutierrez@ing.ucsc.cl");
-					mycookie.setCookieUser("Admin");
-
-					// go to home first time
-					History.newItem("admin");
-				} else {
 					// consulta datos usuario normal
 					serverService.authenticateUser(mailInput.getText(),passInput.getText(), new AsyncCallback<User>() 
 					{
@@ -105,7 +95,6 @@ public class Login2Widget extends Composite {
 							}
 						}
 					});
-				}
 			} else {
 				ErrorVerify.getErrorAlert("invalidmail");
 			}

@@ -2,6 +2,9 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:gwt="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
+	.observation{
+		font-size: 10pt;
+	}
 	.editInput {
 		width: 100%;
 	}
@@ -111,7 +114,7 @@
 
 												<div class="col-lg-12">
 													<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-														<label class="col-lg-6" align="left">Name</label>
+														<label class="col-lg-6" align="left">*Name</label>
 														<gwt:TextBox ui:field="nameInput"
 															addStyleNames='{style.editInput}' maxLength="50"
 															visibleLength="50"></gwt:TextBox>
@@ -120,7 +123,7 @@
 															visible="false" />
 													</div>
 													<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-														<label class="col-lg-6" align="left">Lastname</label>
+														<label class="col-lg-6" align="left">*Lastname</label>
 														<gwt:TextBox ui:field="lastnameInput"
 															addStyleNames='{style.editInput}' maxLength="50"
 															visibleLength="50"></gwt:TextBox>
@@ -145,7 +148,7 @@
 															visibleLength="80"></gwt:TextBox>
 													</div>
 													<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-														<label class="col-lg-6" align="left">Country</label>
+														<label class="col-lg-6" align="left">*Country</label>
 														<gwt:ListBox ui:field="countryBox"
 															addStyleNames='{style.editInput}' />
 													</div>
@@ -155,7 +158,10 @@
 												<div class="col-lg-12">
 													<gwt:Button ui:field="submitBTN">Save</gwt:Button>
 													<gwt:Button ui:field="cancelBTN">Reset</gwt:Button>
+				<gwt:Label addStyleNames='{style.observation}' text="(*) Obligatory field." horizontalAlignment="ALIGN_LEFT"></gwt:Label>
+													
 												</div>
+												
 											</div>
 										</div>
 									</div>
@@ -174,7 +180,7 @@
 
 												<div class="col-lg-12">
 													<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-														<label class="col-lg-6 " align="left">Current Password</label>
+														<label class="col-lg-6 " align="left">*Current Password</label>
 														<gwt:PasswordTextBox ui:field="currentPassword1"
 															alignment="JUSTIFY" width="100%" textAlignment="ALIGN_CENTER"
 															maxLength="30" visibleLength="30" focus="true" direction="LTR" />
@@ -186,7 +192,7 @@
 
 												<div class="col-lg-12">
 													<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-														<label class="col-lg-6 " align="left">New Email</label>
+														<label class="col-lg-6 " align="left">*New Email</label>
 														<gwt:TextBox ui:field="newEmail" alignment="JUSTIFY"
 															width="100%" textAlignment="ALIGN_CENTER" maxLength="30"
 															visibleLength="30" focus="true" direction="LTR" />
@@ -195,7 +201,7 @@
 															visible="false" />
 													</div>
 													<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-														<label class="col-lg-6 " align="left">Repeat Email</label>
+														<label class="col-lg-6 " align="left">*Repeat Email</label>
 														<gwt:TextBox ui:field="newEmailRepeat"
 															alignment="JUSTIFY" width="100%" textAlignment="ALIGN_CENTER"
 															maxLength="30" visibleLength="30" focus="true" direction="LTR" />
@@ -208,8 +214,10 @@
 												<label class="col-lg-2 " align="left"></label>
 												<div class="col-lg-12">
 													<gwt:Button ui:field="changeEmailBTN" text="Change Email" />
+				<gwt:Label addStyleNames='{style.observation}' text="(*) Obligatory field." horizontalAlignment="ALIGN_LEFT"></gwt:Label>
+													
 												</div>
-
+												
 											</div>
 										</div>
 									</div>
@@ -227,7 +235,7 @@
 
 												<div class="col-lg-12">
 													<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-														<label class="col-lg-6 " align="left">Current Password</label>
+														<label class="col-lg-6 " align="left">*Current Password</label>
 														<gwt:PasswordTextBox ui:field="currentPassword2"
 															alignment="JUSTIFY" width="100%" textAlignment="ALIGN_CENTER"
 															maxLength="30" visibleLength="30" focus="true" direction="LTR" />
@@ -239,7 +247,7 @@
 
 												<div class="col-lg-12">
 													<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-														<label class="col-lg-6 " align="left">New Password</label>
+														<label class="col-lg-6 " align="left">*New Password</label>
 														<gwt:PasswordTextBox ui:field="newPassword"
 															alignment="JUSTIFY" width="100%" textAlignment="ALIGN_CENTER"
 															maxLength="30" visibleLength="30" focus="true" direction="LTR" />
@@ -248,7 +256,7 @@
 															visible="false" />
 													</div>
 													<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-														<label class="col-lg-6 " align="left">Repeat Password</label>
+														<label class="col-lg-6 " align="left">*Repeat Password</label>
 														<gwt:PasswordTextBox ui:field="newPasswordRepeat"
 															alignment="JUSTIFY" width="100%" textAlignment="ALIGN_CENTER"
 															maxLength="30" visibleLength="30" focus="true" direction="LTR" />
@@ -261,6 +269,8 @@
 												<label class="col-lg-2 " align="left"></label>
 												<div class="col-lg-12">
 													<gwt:Button ui:field="changePasswordBTN" text="Change Password" />
+				<gwt:Label addStyleNames='{style.observation}' text="(*) Obligatory field." horizontalAlignment="ALIGN_LEFT"></gwt:Label>
+													
 												</div>
 
 											</div>

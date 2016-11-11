@@ -75,8 +75,8 @@ public class UploadModal extends DialogBox {
 	}
 
 	public UploadModal(String iduser) {
-		this.IDUSER = iduser;
 		setWidget(uiBinder.createAndBindUi(this));
+		this.IDUSER = iduser;
 		this.center();
 		// load properties
 		LoadModal();
@@ -95,6 +95,7 @@ public class UploadModal extends DialogBox {
 		dimensionList.addItem("8");
 		dimensionList.addItem("9");
 		dimensionList.addItem("10");
+		dimensionList.setItemSelected(2, true);
 		dimensionList.addChangeHandler(new ChangeHandler() {
 			public void onChange(ChangeEvent event) {
 				if (dimensionList.getValue(dimensionList.getSelectedIndex())
@@ -148,67 +149,63 @@ public class UploadModal extends DialogBox {
 
 	// create file and upload
 	private void CreateDataFile() {
-		if (this.dataInput.getText().isEmpty())
+		int dimension = Integer.parseInt(this.dimensionList.getItemText(this.dimensionList.getSelectedIndex()));
+		
+		if (this.dataInput.getText().isEmpty()){
 			ErrorVerify.getErrorAlert("empty");
-		else {
+		}else if(FieldVerifier.checkDataDimension(dimension, this.dataInput.getText())){
+			ErrorVerify.getErrorAlert("baddimension");
+		}else {
 			// verify format
-			if (FieldVerifier.checkDataFormat(this.dataInput.getText())) {
+			if (FieldVerifier.isString(this.dataInput.getText())) {
 				// verify user has less than 8 files
-				serverService.getCountUserFiles(this.IDUSER,
-						new AsyncCallback<Integer>() {
+				serverService.getCountUserFiles(this.IDUSER, new AsyncCallback<Integer>() {
 							@Override
 							public void onFailure(Throwable caught) {
 								ErrorVerify.getErrorAlert("offline");
 							}
-
 							@Override
 							public void onSuccess(Integer result) {
 								if (result != null) {
 									// user has less than 8 files
 									if (result >= 0 && result < 8) {
 										// upload data
-										UserFile userfile = new UserFile(
-												titleInput.getText(),
-												dimensionList
-														.getItemText(dimensionList
-																.getSelectedIndex()),
-												labelxInput.getText(),
-												labelyInput.getText(),
-												labelzInput.getText(),
-												descriptionInput.getText(),
-												IDUSER, dataInput.getText());
-										serverService.addNewFile(userfile,
-												new AsyncCallback<Boolean>() {
-													@Override
-													public void onFailure(
-															Throwable caught) {
-														ErrorVerify
-																.getErrorAlert("offline");
-													}
-
-													@Override
-													public void onSuccess(
-															Boolean result) {
-														if (result) {
-															// file added
-															dialogBox.hide();
-															url.GoTo("FILES",IDUSER,null);
-															ErrorVerify
-																	.getErrorAlert("successadd");
-														} else {
-															ErrorVerify
-																	.getErrorAlert("failadd");
-															dialogBox.hide();
-														}
-													}
-												});
+										UserFile userfile = new UserFile(titleInput.getText(), 
+																dimensionList.getItemText(dimensionList.getSelectedIndex()),
+																labelxInput.getText(),
+																labelyInput.getText(),
+																labelzInput.getText(),
+																descriptionInput.getText(),
+																IDUSER, 
+																dataInput.getText());
+										//service
+										serverService.addNewFile(userfile, new AsyncCallback<Boolean>() 
+										{
+											@Override
+											public void onFailure(Throwable caught) {
+												ErrorVerify.getErrorAlert("offline");
+											}
+											@Override
+											public void onSuccess(Boolean result) {
+												if (result) {
+													// file added
+													dialogBox.hide();
+													url.GoTo("FILES",IDUSER,null);
+													ErrorVerify.getErrorAlert("successadd");
+												} else {
+													ErrorVerify.getErrorAlert("failadd");
+													dialogBox.hide();
+												}
+											}
+										});
+										
 									} else if (result < 0) {
 										ErrorVerify.getErrorAlert("fatal");
 										dialogBox.hide();
-									} else// user has 8 or more files
+									} 
+									else// user has 8 or more files
 									{
 										ErrorVerify.getErrorAlert("limitfiles");
-
 										dialogBox.hide();
 									}
 								}

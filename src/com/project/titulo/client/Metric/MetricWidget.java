@@ -51,6 +51,8 @@ public class MetricWidget extends Composite {
 	Button metric4Btn;
 	@UiField
 	Button metric5Btn;
+	@UiField
+	Button metric6Btn;
 
 	@UiField
 	Button EntropyBtn;
@@ -62,6 +64,8 @@ public class MetricWidget extends Composite {
 	Button GDistanceBtn;
 	@UiField
 	Button CoverBtn;
+	@UiField
+	Button gnvgBtn;
 
 	@UiField
 	VerticalPanel panel;
@@ -75,6 +79,8 @@ public class MetricWidget extends Composite {
 	VerticalPanel GDistancePanel;
 	@UiField
 	VerticalPanel CoverPanel;
+	@UiField
+	VerticalPanel gnvgPanel;
 
 	// Create a CellTable.
 	private CellTable<UserFile> table = null;
@@ -98,11 +104,13 @@ public class MetricWidget extends Composite {
 		this.metric3Btn.addStyleName(ms.getButtonStyle(0));
 		this.metric4Btn.addStyleName(ms.getButtonStyle(0));
 		this.metric5Btn.addStyleName(ms.getButtonStyle(0));
+		this.metric6Btn.addStyleName(ms.getButtonStyle(0));
 		this.SpacingBtn.addStyleName(ms.getOkStyle());
 		this.EntropyBtn.addStyleName(ms.getCancelStyle());
 		this.ERBtn.addStyleName(ms.getOkStyle());
 		this.GDistanceBtn.addStyleName(ms.getOkStyle());
 		this.CoverBtn.addStyleName(ms.getOkStyle());
+		this.gnvgBtn.addStyleName(ms.getOkStyle());
 		// load data table
 		LoadFilesData();
 	}
@@ -209,7 +217,6 @@ public class MetricWidget extends Composite {
 		panel.setBorderWidth(0);
 		panel.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
 		panel.setWidth("350");
-		panel.add(new Label("*Press to select Pareto Front True (PFtrue)"));
 		panel.add(table);
 		panel.add(pager);
 		Button reload = new Button("Reload Table");
@@ -322,6 +329,31 @@ public class MetricWidget extends Composite {
 		Window.alert("Metric not available");
 	}
 
+	private void gnvgMetric(String iduser) {
+		serverService.CalculateGNVG(iduser,
+				new AsyncCallback<List<MetricResults>>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						ErrorVerify.getErrorAlert("offline");
+					}
+
+					@Override
+					public void onSuccess(List<MetricResults> result) {
+
+						if (result.size() > 0) {
+							RootPanel.get("GWTcontainer").clear();
+							// cualquier otro caso sera enviado al login
+							RootPanel.get("GWTcontainer").add(new BreadWidget("METRIC"));
+							RootPanel.get("GWTcontainer").add(new ResultsWidget(IDUSER, result,"Generational Nondominated Vector Generation"));
+						} else {
+							ErrorVerify.getErrorAlert("baddimension");
+						}
+					}
+				});
+	}
+	
+	
 	/* SELECT METRIC INFO */
 	@UiHandler("metric1Btn")
 	void onMetric1BtnClick(ClickEvent event) {
@@ -330,6 +362,7 @@ public class MetricWidget extends Composite {
 		this.ERPanel.setVisible(false);
 		this.GDistancePanel.setVisible(false);
 		this.CoverPanel.setVisible(false);
+		this.gnvgPanel.setVisible(false);
 	}
 
 	@UiHandler("metric2Btn")
@@ -339,6 +372,7 @@ public class MetricWidget extends Composite {
 		this.ERPanel.setVisible(false);
 		this.GDistancePanel.setVisible(false);
 		this.CoverPanel.setVisible(false);
+		this.gnvgPanel.setVisible(false);
 	}
 
 	@UiHandler("metric3Btn")
@@ -348,6 +382,7 @@ public class MetricWidget extends Composite {
 		this.ERPanel.setVisible(true);
 		this.GDistancePanel.setVisible(false);
 		this.CoverPanel.setVisible(false);
+		this.gnvgPanel.setVisible(false);
 	}
 
 	@UiHandler("metric4Btn")
@@ -357,6 +392,7 @@ public class MetricWidget extends Composite {
 		this.ERPanel.setVisible(false);
 		this.GDistancePanel.setVisible(true);
 		this.CoverPanel.setVisible(false);
+		this.gnvgPanel.setVisible(false);
 	}
 
 	@UiHandler("metric5Btn")
@@ -366,6 +402,17 @@ public class MetricWidget extends Composite {
 		this.ERPanel.setVisible(false);
 		this.GDistancePanel.setVisible(false);
 		this.CoverPanel.setVisible(true);
+		this.gnvgPanel.setVisible(false);
+	}
+	
+	@UiHandler("metric6Btn")
+	void onMetric6BtnClick(ClickEvent event) {
+		this.EntropyPanel.setVisible(false);
+		this.SpacingPanel.setVisible(false);
+		this.ERPanel.setVisible(false);
+		this.GDistancePanel.setVisible(false);
+		this.CoverPanel.setVisible(false);
+		this.gnvgPanel.setVisible(true);
 	}
 
 	/* METRIC CALCULATE */
@@ -405,6 +452,14 @@ public class MetricWidget extends Composite {
 	void onCoverBtnClick(ClickEvent event) {
 		if(table.getRowCount()>0)
 			CMetric(this.IDUSER);
+		else
+			ErrorVerify.getErrorAlert("nofiles");
+	}
+	
+	@UiHandler("gnvgBtn")
+	void onGnvgBtnClick(ClickEvent event) {
+		if(table.getRowCount()>0)
+			gnvgMetric(this.IDUSER);
 		else
 			ErrorVerify.getErrorAlert("nofiles");
 	}

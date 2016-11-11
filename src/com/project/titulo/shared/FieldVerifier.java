@@ -40,7 +40,7 @@ public class FieldVerifier {
 
 	}
 
-	// validation password
+	// validation equals password
 	public static Boolean isEqualPasswords(String pass, String passRepeat) {
 
 		if (pass.equals(passRepeat)) {
@@ -50,17 +50,34 @@ public class FieldVerifier {
 
 	}
 
-	// validation password
-	public static Boolean checkDataFormat(String data) {
+	// validation only letters
+	public static Boolean isString(String text) {
 		RegExp regExp = RegExp.compile("[a-zA-Z]");
-		boolean matchFound = regExp.test(data);
+		boolean matchFound = regExp.test(text);
 
 		if (!matchFound)
 			return true;
 		return false;
 
 	}
-
-	// validation only numbers
-
+	
+	//validation dimension files
+	public static boolean checkDataDimension(int dimension, String data){
+		int errorDimension = 0;
+		String[] points = data.split("\n");
+		for(String point:points){
+			String[] axies = point.split("[;, ]");
+			if(dimension!=axies.length)
+			{
+				errorDimension++;
+			}
+		}
+		if(errorDimension>0)
+			return true;
+		return false;
+	}
+	
+	
+	
+	
 }

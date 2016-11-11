@@ -2,6 +2,9 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
+		.observation{
+			font-size: 10pt;
+		}
 	.submitBtn {
 		padding-top: 5px;
 		width: 100%;
@@ -60,9 +63,9 @@
 				addStyleNames='{style.verticalPanel}' height="100%" borderWidth="0"
 				verticalAlignment="ALIGN_MIDDLE">
 
-				<g:Label text="Response" />
+				<g:Label text="*Response" />
 				<g:TextArea ui:field="descriptionInput" addStyleNames='{style.myFields}'
-					width="100%" />
+					width="100%" visibleLines="6" />
 				<g:Label text="(max 500 characters)" />
 
 				<g:VerticalPanel ui:field="buttonPanel">
@@ -71,8 +74,8 @@
 					<g:Button ui:field="cancelBtn" addStyleNames='{style.submitBtn}'
 						width="100%">Cancel</g:Button>
 				</g:VerticalPanel>
+			<g:Label addStyleNames='{style.observation}' text="(*) Obligatory field." horizontalAlignment="ALIGN_LEFT"></g:Label>
 			</g:VerticalPanel>
-
 
 		</g:DialogBox>
 

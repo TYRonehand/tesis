@@ -56,6 +56,8 @@
 									width="100%">C-Metric</g:Button>
 								<g:Button ui:field="metric1Btn" addStyleNames='{style.submitBtn}'
 									width="100%">S-Metric</g:Button>
+								<g:Button ui:field="metric6Btn" addStyleNames='{style.submitBtn}'
+									width="100%">GNVG</g:Button>
 							</g:VerticalPanel>
 						</div>
 
@@ -187,6 +189,8 @@
 							</g:VerticalPanel>
 						</g:VerticalPanel>
 
+
+
 						<g:VerticalPanel ui:field="EntropyPanel"
 							addStyleNames='{style.panel}' width="100%" horizontalAlignment="ALIGN_CENTER"
 							visible="false">
@@ -211,6 +215,21 @@
 
 							<g:VerticalPanel addStyleNames='{style.calculateBtn}'>
 								<g:Button ui:field="EntropyBtn" text="Calculate"></g:Button>
+							</g:VerticalPanel>
+						</g:VerticalPanel>
+
+
+						<g:VerticalPanel ui:field="gnvgPanel" width="100%" horizontalAlignment="ALIGN_CENTER" visible="false">
+							<g:VerticalPanel width="100%">
+								<g:Label width="100%">Generational Nondominated Vector Generation (GNVG), this Pareto noncompliant metric tracks how many nondominated vectors are produced at each MOEA generation and is defined as:</g:Label>
+							</g:VerticalPanel>
+							<g:VerticalPanel horizontalAlignment="ALIGN_CENTER"
+								width="100%">
+								<g:Image url="assets/img/metric/gnvg.png" width="233px" ></g:Image>
+							</g:VerticalPanel>
+							
+							<g:VerticalPanel addStyleNames='{style.calculateBtn}'>
+								<g:Button ui:field="gnvgBtn" text="Calculate"></g:Button>
 							</g:VerticalPanel>
 						</g:VerticalPanel>
 

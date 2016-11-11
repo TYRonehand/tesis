@@ -22,6 +22,10 @@ public interface ServerService extends RemoteService {
 	// list of users
 	List<User> getUserList(String opcion) throws IllegalArgumentException;
 
+	// autenticacion
+	User authenticateAdmin(String user, String pass)
+			throws IllegalArgumentException;
+	
 	/* USER */
 
 	// recovery account
@@ -165,6 +169,8 @@ public interface ServerService extends RemoteService {
 	List<MetricResults> CalculateE(String iduser)
 			throws IllegalArgumentException;
 
+	List<MetricResults> CalculateGNVG(String iduser)
+			throws IllegalArgumentException;
 	/*------------EXPORT RESULTS---------------*/
 	Boolean ExportResults(String iduser, List<MetricResults> Results)
 			throws IllegalArgumentException;

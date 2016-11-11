@@ -7,7 +7,9 @@
 		width: 100%;
 		margin: 2px;
 	}
-	
+	.observation{
+		font-size: 10pt;
+	}
 	.myFields {
 		display: block;
 		font-size: 12pt;
@@ -55,12 +57,10 @@
 		<g:DialogBox ui:field="dialogBox" width="100%"
 			addStyleNames='{style.dialogBox}'>
 
-			<g:VerticalPanel ui:field="dialogVPanel"
-				addStyleNames='{style.verticalPanel}' height="95%" borderWidth="0"
-				verticalAlignment="ALIGN_MIDDLE">
+			<g:VerticalPanel ui:field="dialogVPanel" addStyleNames='{style.verticalPanel}' height="95%" borderWidth="0" verticalAlignment="ALIGN_MIDDLE">
 
 				<g:VerticalPanel ui:field="panel1">
-					<g:Label text="Title file" direction="LTR" />
+					<g:Label text="*Title file" direction="LTR" />
 					<g:TextBox ui:field="titleInput" addStyleNames='{style.myFields}'
 						height="16px" width="100%" direction="LTR" textAlignment="ALIGN_CENTER"
 						focus="true" maxLength="49"></g:TextBox>
@@ -98,7 +98,7 @@
 							maxLength="12"></g:TextBox>
 					</g:VerticalPanel>
 
-					<g:Label text="Pareto Optimal Set" direction="LTR" />
+					<g:Label text="*Pareto Optimal Set" direction="LTR" />
 					<g:RichTextArea ui:field="dataInput" addStyleNames='{style.myFields}'
 						width="100%"></g:RichTextArea>
 
@@ -110,7 +110,8 @@
 					<g:Button ui:field="cancelBtn" addStyleNames='{style.submitBtn}'
 						width="100%">Cancel</g:Button>
 				</g:VerticalPanel>
-
+				
+				<g:Label addStyleNames='{style.observation}' text="(*) Obligatory field." horizontalAlignment="ALIGN_LEFT"></g:Label>
 			</g:VerticalPanel>
 		</g:DialogBox>
 

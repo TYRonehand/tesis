@@ -156,7 +156,6 @@ public class ForumWidget extends Composite {
 	private void LoadTable(List<ResumeTopic> DATAINFO) {
 		panel.clear();
 		table = new CellTable<ResumeTopic>();
-
 		table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 		table.addStyleName("cellTable");
 		table.setSize("100%", "25px");
