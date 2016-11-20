@@ -1,5 +1,5 @@
-;lsa-0 fit;lsa-20 fit;lsa-30 fit;lsa-40 fit
-lsa-0 fit;0,000000;Wronge dimension;0,207606;Wronge dimension
-lsa-20 fit;Wronge dimension;0,000000;Wronge dimension;Wronge dimension
-lsa-30 fit;0,038546;Wronge dimension;0,000000;Wronge dimension
-lsa-40 fit;Wronge dimension;Wronge dimension;Wronge dimension;0,000000
+;Results
+lsa-0 fit;96
+lsa-20 fit;490
+lsa-30 fit;330
+lsa-40 fit;603

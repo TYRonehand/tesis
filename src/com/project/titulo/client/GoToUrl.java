@@ -1,5 +1,6 @@
 package com.project.titulo.client;
 
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.project.titulo.client.AdminProfile.AdminLogin;
 import com.project.titulo.client.AdminProfile.UsersList;
@@ -15,6 +16,8 @@ import com.project.titulo.client.UserProfile.UserProfile;
 import com.project.titulo.client.UserProfile.ViewProfile;
 import com.project.titulo.client.breadcrumb.BreadWidget;
 import com.project.titulo.client.faq.FAQWidget;
+import com.project.titulo.client.footer.FooterLoginWidget;
+import com.project.titulo.client.footer.FooterWidget;
 import com.project.titulo.client.home.HomeWidget;
 import com.project.titulo.client.login.Login2Widget;
 import com.project.titulo.client.menu.MenuDropdown;
@@ -22,25 +25,43 @@ import com.project.titulo.client.menu.MenuUser;
 import com.project.titulo.client.notfound.NotfoundWidget;
 import com.project.titulo.client.recovery.RecoveryWidget;
 import com.project.titulo.client.register.SignupWidget;
+import com.project.titulo.shared.CookieVerify;
 
 public class GoToUrl {
 
+	// cookie
+	private CookieVerify mycookie=new CookieVerify(false);
+	
 	public GoToUrl() {
 	}
 
 	public void GoTo(String option, String IDUSER, String IDTOPIC) {
 
+		if(Cookies.getCookieNames().size()==0)
+			mycookie=new CookieVerify(true);
+		
+		mycookie.setCookieIdurl(option);
+		
 		//Window.alert("iduser: "+IDUSER);
 		// opciones url
 		switch (option.toUpperCase()) 
 		{
 			case "LOGIN":
-				// widget close session
+				mycookie=new CookieVerify(true);
+				//login
 				RootPanel.get("GWTmenu").clear();
-				RootPanel.get("GWTcontainer").clear();
-				// cualquier otro caso sera enviado al login
 				RootPanel.get("GWTmenu").add(new Login2Widget());
+				//registro
+				RootPanel.get("GWTcontainer").clear();
 				RootPanel.get("GWTcontainer").add(new SignupWidget());
+				//footer
+				RootPanel.get("GWTfooter").clear();
+				RootPanel.get("GWTfooter").add(new FooterWidget());
+				break;
+			
+			case "FOOTER":
+				RootPanel.get("GWTfooter").clear();
+				RootPanel.get("GWTfooter").add(new FooterWidget());
 				break;
 	
 			case "MENU":
@@ -58,6 +79,7 @@ public class GoToUrl {
 				break;
 	
 			case "RECOVERY":
+				RootPanel.get("GWTfooter").clear();
 				// widget close session
 				RootPanel.get("GWTmenu").clear();
 				RootPanel.get("GWTcontainer").clear();
@@ -94,6 +116,9 @@ public class GoToUrl {
 				// cualquier otro caso sera enviado al login
 				RootPanel.get("GWTcontainer").add(new BreadWidget(option));
 				RootPanel.get("GWTcontainer").add(new HomeWidget());
+				//footer
+				RootPanel.get("GWTfooter").clear();
+				RootPanel.get("GWTfooter").add(new FooterLoginWidget());
 				break;
 
 			case "ADMINDASHBOARD":

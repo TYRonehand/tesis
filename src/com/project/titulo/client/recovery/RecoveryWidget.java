@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
 import com.project.titulo.shared.ErrorVerify;
@@ -54,6 +55,8 @@ public class RecoveryWidget extends Composite {
 	@UiField
 	Button codeBTN;
 
+	/* style */
+	private MyStyle ms = new MyStyle();
 	// RPC
 	private final ServerServiceAsync serverService = GWT.create(ServerService.class);
 
@@ -66,9 +69,9 @@ public class RecoveryWidget extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 		backLink.setTargetHistoryToken("login");
 		// set style to buttons from bootstrap
-		submitBTN.addStyleName("btn btn-primary");
-		passwordBTN.addStyleName("btn btn-primary");
-		codeBTN.addStyleName("btn btn-primary");
+		submitBTN.addStyleName(ms.getButtonStyle(0));
+		passwordBTN.addStyleName(ms.getButtonStyle(0));
+		codeBTN.addStyleName(ms.getButtonStyle(0));
 	}
 
 	// sen email with code

@@ -75,8 +75,8 @@ public class EditFile extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 
 		// bootstrap style
-		saveBtn.setStyleName(ms.getButtonStyle(2));
-		cancelBtn.setStyleName(ms.getButtonStyle(1));
+		saveBtn.setStyleName(ms.getButtonStyle(0));
+		cancelBtn.setStyleName(ms.getButtonStyle(0));
 
 		// load data from file into inputs
 		getFileData();

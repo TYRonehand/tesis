@@ -16,6 +16,7 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.project.titulo.client.GoToUrl;
+import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
 import com.project.titulo.shared.ErrorVerify;
@@ -65,6 +66,8 @@ public class UploadModal extends DialogBox {
 	TextBox labelyInput;
 	@UiField
 	TextBox labelzInput;
+	/* style */
+	private MyStyle ms = new MyStyle();
 	// control url
 	public GoToUrl url = new GoToUrl();
 	// RPC
@@ -137,13 +140,14 @@ public class UploadModal extends DialogBox {
 		// VerticalPanel
 		dialogVPanel.addStyleName("dialogVPanel");
 		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
+		
 		// style
 		buttonPanel.addStyleName("btn-group btn-group-justified");
 
 		// set style to buttons from bootstrap
-		nextBtn.addStyleName("btn btn-primary");
-		createBtn.addStyleName("btn btn-success");
-		cancelBtn.addStyleName("btn btn-danger");
+		nextBtn.addStyleName(ms.getButtonStyle(0));
+		createBtn.addStyleName(ms.getButtonStyle(0));
+		cancelBtn.addStyleName(ms.getButtonStyle(0));
 
 	}
 

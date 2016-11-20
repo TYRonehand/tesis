@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.project.titulo.client.GoToUrl;
 import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
@@ -38,6 +39,8 @@ public class Login2Widget extends Composite {
 
 	// cookie
 	private CookieVerify mycookie = new CookieVerify(false);
+	//url goto
+	GoToUrl url = new GoToUrl();
 	// RPC
 	private final ServerServiceAsync serverService = GWT
 			.create(ServerService.class);
@@ -89,7 +92,10 @@ public class Login2Widget extends Composite {
 								mycookie.setCookieUser(result.getId());
 
 								// go to home first time
-								History.newItem("home");
+								if(!History.getToken().equals("login"))
+									url.GoTo("home", result.getId(), null);
+								else
+									History.newItem("home");
 							} else {
 								clearInputs();
 							}

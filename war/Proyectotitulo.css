@@ -7,16 +7,32 @@ h1 {
 	margin: 40px 0px 70px;
 	text-align: center;
 }
+a,a:link,a:visited, a:hover, a:active{    
+	color: #d6092c;
+    text-decoration: none;
+    cursor: auto;
+}
 
+input, select, input:focus, select:focus{
+	border-color: #d6092c;
+    background: #fff;
+    font-size: 16px;
+    color:#333;
+}
+
+.gwt-Hyperlink {
+    color: #d6092c;
+    text-decoration: none;
+}
 .sendButton {
 	display: block;
 	font-size: 16pt;
 }
 
 .body {
-	background: #ffffff url("assets/img/wallpaper/wallpaper.png") no-repeat
-		right top;
+	/*background: #ffffff url("assets/img/wallpaper/wallpaper.png") no-repeat right top;*/
 }
+
 
 /** Most GWT widgets already have a style name defined */
 .gwt-DialogBox {
@@ -24,7 +40,7 @@ h1 {
 }
 
 .gwt-TextButton {
-	background: #428bca;
+	color: #d6092c;
 }
 
 .dialogVPanel {
@@ -42,13 +58,12 @@ h1 {
 
 /*init page*/
 .beginpaper {
-	background: #ffffff url("assets/img/wallpaper/home.png") no-repeat right
-		top;
+	background: #ffffff url("assets/img/wallpaper/home.png") no-repeat right top;
 }
 /*forum style*/
 .titlePanel {
 	background: #5cb85c;
-	border-bottom: solid 1px #BBBBBB;
+	border-bottom: solid 1px #333;
 }
 
 .titleTopic {
@@ -56,7 +71,7 @@ h1 {
 	color: white;
 	background: #5cb85c;
 	padding: 6px;
-	border-bottom: solid 1px #BBBBBB;
+	border-bottom: solid 1px #333;
 }
 
 .panel-heading {
@@ -82,11 +97,11 @@ h1 {
 .commentInfo {
 	font-weight: bold;
 	padding: 3px;
-	border: solid 1px #BBBBBB;
+	border: solid 1px #333;
 }
 
 .infoPanel {
-	border-bottom: solid 1px #BBBBBB;
+	border-bottom: solid 1px #333;
 	font-weight: bold;
 }
 
@@ -108,13 +123,13 @@ h1 {
 }
 /*tables*/
 table thead {
-	background: #a3d781;
-	color: #284315;
-	border-color: #79c447;
+	background: #f0f0f0;
+	color: white;
+	border-color: #d6092c;
 }
 
 celltable tbody tr {
-	border: solid 1px #284315;
+	border: solid 1px #d6092c;
 }
 
 .panel-body {
@@ -129,17 +144,35 @@ celltable tbody tr {
 /*breadcrumbs*/
 .breadcrumb {
 	padding: 5px;
+	border:none;
 }
 
 .breadcrumb tbody {
-	background: #646567;
+	background: #d6092c;
+	border: solid #d6092c;
 }
 
 .breadcrumb tbody tr td div a {
 	padding: 8px;
 	color: white;
-	font-weight: bold;
+    font-family: Roboto,sans-serif;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 36px;
+	margin: 0 0 24px;
+	text-align: center;
 }
 /*signup page*/
 /*popups*/
 /*icons */
+/*buttons*/
+.mybuttonstyle{
+    background-color: #d6092c;
+    color: #fff;
+    border: none;
+    padding: 8px 13px;
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-family: Roboto,'Helvetica Neue',Helvetica,Arial,sans-serif;
+}

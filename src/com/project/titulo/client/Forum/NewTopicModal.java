@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.project.titulo.client.GoToUrl;
+import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
 import com.project.titulo.shared.ErrorVerify;
@@ -23,8 +24,8 @@ public class NewTopicModal extends DialogBox {
 	private String IDUSER = null;
 
 	// goto url
-	public GoToUrl url = new GoToUrl();
-
+	private GoToUrl url = new GoToUrl();
+	private MyStyle ms = new MyStyle();
 	// elementos uibinder
 	@UiField
 	TextBox titleInput;
@@ -72,8 +73,8 @@ public class NewTopicModal extends DialogBox {
 		dialogBox.addStyleName("panel-body");
 
 		// set style to buttons from bootstrap
-		createBtn.addStyleName("btn btn-success");
-		cancelBtn.addStyleName("btn btn-danger");
+		createBtn.addStyleName(ms.getButtonStyle(0));
+		cancelBtn.addStyleName(ms.getButtonStyle(0));
 
 		// VerticalPanel
 		dialogVPanel.addStyleName("dialogVPanel");

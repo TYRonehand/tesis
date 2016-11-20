@@ -3,17 +3,16 @@
 	xmlns:gwt="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.google.gwt.widget.client">
 	<ui:style>
 	.HTMLheader {
-		padding-top: 70px
+		padding-top: 120px;
 	}
 	</ui:style>
 	<gwt:HTMLPanel addStyleNames='{style.HTMLheader}'>
 
-
-		<gwt:VerticalPanel ui:field="backbreadPanel" width="100%"
-			verticalAlignment="ALIGN_MIDDLE">
+		<gwt:VerticalPanel ui:field="backbreadPanel"  width="100%" verticalAlignment="ALIGN_MIDDLE">
+		
 			<gwt:FlowPanel ui:field="breadPanel">
-
-			</gwt:FlowPanel>
+				<gwt:Image url="assets/img/icons/home_red.png" width="25px" height="25px"/> </gwt:FlowPanel>
+			
 		</gwt:VerticalPanel>
 
 

@@ -2,19 +2,22 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
-	.image-logo {
-		padding-bottom: 15px;
-		border: none;
-		margin-bottom: 4px;
-		height: 200px;
-	}
+	
+		.image-logo {
+			padding-bottom: 15px;
+			border: none;
+			margin-bottom: 4px;
+			height: 200px;
+		}
+		
 	</ui:style>
+	
 	<g:HTMLPanel>
 
 		<!-- PANELE INICIO -->
 		<div class="row">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<div class="panel">
+				<div class="panel" >
 
 					<!--Titulo -->
 					<div class="panel-heading" align="left">
@@ -31,22 +34,8 @@
 						<div class="panel-body">
 
 							<div class="panel-text" align="justify">
-								<p>Today there are various techniques of multi-objective
-									optimization study areas regarding Operations Research.
-									However, in most of these it is considered as a guide base for
-									the analysis of Pareto fronts with certain characteristics and
-									typically require a starting point for starting your searches.
-									Some of this lonely ABLE son of one solution: give for each
-									execution. On the other hand there are areas of research Newest
-									revolving around metrics and population dynamics that deliver
-									evolutionary algorithms, is here Where Wanted: deliver capable
-									of generating a graphical representation of the solutions or
-									Pareto fronts Tool, delivered by algorithms and metrics to
-									facilitate study campaign performance.
-									: In addition to the above, in the current project seeks to
-									develop a robust and scalable tool that allows a future
-									incorporate features that belong to the area of ​​operations
-									and generate academic community.
+								<p>Today there are various techniques of multi-objective optimization study areas regarding operations research. However, most of these are considered as the basis for analysis guide the Pareto fronts with certain characteristics and often require an initial point for starting your searches. Besides this they are only able to deliver a single solution for each run. On the other hand there are areas of recent research that revolve around metrics and dynamic population that deliver evolutionary algorithms, this is where it seeks to provide a tool capable of generating a graphical representation of the solutions or Pareto fronts delivered by algorithms and metrics that facilitate performance of this study.
+In addition to the above, in the current project seeks to develop a robust and scalable tool that allows future incorporate more features belonging to the area of ​​operations and generate an academic community.
 								</p>
 							</div>
 
@@ -65,5 +54,6 @@
 				</div>
 			</div>
 		</div>
+	
 	</g:HTMLPanel>
 </ui:UiBinder> 

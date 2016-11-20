@@ -155,11 +155,16 @@
 												</div>
 
 												<label class="col-lg-2 " align="left"></label>
+												
+												<div class="col-lg-6">
+													<gwt:Button ui:field="submitBTN" width="210px">Save</gwt:Button>
+												</div>
+												<div class="col-lg-6">
+													<gwt:Button ui:field="cancelBTN" width="210px">Reset</gwt:Button>
+												</div>
 												<div class="col-lg-12">
-													<gwt:Button ui:field="submitBTN">Save</gwt:Button>
-													<gwt:Button ui:field="cancelBTN">Reset</gwt:Button>
-				<gwt:Label addStyleNames='{style.observation}' text="(*) Obligatory field." horizontalAlignment="ALIGN_LEFT"></gwt:Label>
-													
+													<gwt:Label addStyleNames='{style.observation}' 
+														text="(*) Obligatory field." horizontalAlignment="ALIGN_LEFT"></gwt:Label>
 												</div>
 												
 											</div>
@@ -212,9 +217,11 @@
 												</div>
 
 												<label class="col-lg-2 " align="left"></label>
+												
 												<div class="col-lg-12">
-													<gwt:Button ui:field="changeEmailBTN" text="Change Email" />
-				<gwt:Label addStyleNames='{style.observation}' text="(*) Obligatory field." horizontalAlignment="ALIGN_LEFT"></gwt:Label>
+													<gwt:Button ui:field="changeEmailBTN" text="Change Email" width="210px" />
+													<gwt:Label addStyleNames='{style.observation}' 
+															text="(*) Obligatory field." horizontalAlignment="ALIGN_LEFT"></gwt:Label>
 													
 												</div>
 												
@@ -268,7 +275,7 @@
 
 												<label class="col-lg-2 " align="left"></label>
 												<div class="col-lg-12">
-													<gwt:Button ui:field="changePasswordBTN" text="Change Password" />
+													<gwt:Button ui:field="changePasswordBTN" text="Change Password" width="210px" />
 				<gwt:Label addStyleNames='{style.observation}' text="(*) Obligatory field." horizontalAlignment="ALIGN_LEFT"></gwt:Label>
 													
 												</div>
@@ -312,7 +319,7 @@
 												</div>
 
 												<div class="col-lg-12">
-													<gwt:Button ui:field="closeAccountBTN" text="Close Account Forever" />
+													<gwt:Button ui:field="closeAccountBTN" text="Close Account Forever" width="210px" />
 												</div>
 
 											</div>

@@ -11,7 +11,7 @@ public class MyStyle {
 	public String getButtonStyle(int option) {
 		switch (option) {
 		case 0:
-			return "btn btn-primary";
+			return "mybuttonstyle";
 		case 1:
 			return "btn btn-danger";
 		case 2:

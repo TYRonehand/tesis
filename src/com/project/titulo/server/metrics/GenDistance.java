@@ -11,38 +11,23 @@ import com.project.titulo.shared.model.UserFile;
 public class GenDistance {
 	private int axis_size;
 	private List<UserFile> aproxFileList;
-
-	private List<MetricResults> ResultList = new ArrayList<MetricResults>();// result
-																			// are
-																			// added
-																			// here
-
+	private List<MetricResults> ResultList = new ArrayList<MetricResults>();
+	
 	// load files for metric
 	public GenDistance(List<UserFile> listPFcalc, int axis_size) {
 		this.aproxFileList = listPFcalc;
 		this.axis_size = axis_size;
-
 		Start();
 	}
 
-	// go throw list
 	private void Start() {
-		System.err.print("\nStart");
-		List<UserFile> auxFileList = this.aproxFileList;
-		System.err.print("\nauxFileSize: " + auxFileList.size());
-		// files
 		for (UserFile file : this.aproxFileList) {
 			// text to double points
 			TextToDouble paretoOptime = new TextToDouble();
 			paretoOptime.create(file.getData(), this.axis_size);
-
-			System.err.print("\nparetoOptime POINT Size: "
-					+ paretoOptime.getListPoints().size());
-
 			// set object results
 			MetricResults mr = new MetricResults();
-			mr.setAproximationNameFile(file.getTitle());// name POknow
-
+			mr.setAproximationNameFile(file.getTitle());// name PFknow
 			// files to compare with
 			for (UserFile auxfile : this.aproxFileList) {
 				mr.addParetoNameFile(auxfile.getTitle());// name PFtrue
@@ -53,35 +38,25 @@ public class GenDistance {
 					TextToDouble paretoFrontPoint = new TextToDouble();
 					paretoFrontPoint.create(auxfile.getData(), this.axis_size);
 
-					System.err.print("\nparetoFrontPoint POINT Size: "
-							+ paretoFrontPoint.getListPoints().size());
-
 					// calculate metric
 					String value = Calculate(paretoFrontPoint.getListPoints(),
 							paretoOptime.getListPoints());
-					System.err.print("\nCalculated VALUE:" + value);
 
 					if (!value.isEmpty() && value != null)
 						mr.addResult(value);
 					else
 						mr.addResult("Error");
 				} else {
-					System.err.println("different dimension");
 					// fail dimension
 					mr.addResult("Wronge dimension");
 				}
 			}
-
-			System.err.print("result added!");
 			this.ResultList.add(mr);
-
 		}
-
 	}
 
 	// calculate one file at time
 	private String Calculate(List<Points> paretoDataList, List<Points> aproximationDataList) {
-
 		double D, F, G, flag;
 		D = 0.0;
 		G = 0.0;

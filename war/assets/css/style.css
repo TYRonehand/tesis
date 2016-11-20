@@ -133,6 +133,7 @@ table tr th {
 
 #main-content {
     padding-top: 0px;
+	background: #f0f0f0;
 }
 
 .header,
@@ -173,7 +174,7 @@ table tr th {
 .wrapper {
     display: inline-block;
     margin-top: 60px;
-    padding: 15px;
+    padding: 15px 0 20px 0;
     width: 100%;
 }
 
@@ -605,6 +606,7 @@ div[data-role="editor-toolbar"] {
 }
 
 .white-bg {
+	padding:20px 20px 0px 20px;
     color: #768399;
     background: #fff;
     background-color: #fff;
@@ -623,7 +625,6 @@ div[data-role="editor-toolbar"] {
     -moz-box-shadow: none;
     box-shadow: none;
     margin-bottom: 30px;
-    
 }
 
 .panel .panel-heading {
@@ -1869,7 +1870,7 @@ ul.ft-link li a i {
 
 /*profile-widget*/
 .profile-widget {
-    color: #fff;
+    color: #d6092c;
     text-align: center;
 }
 
@@ -1967,7 +1968,7 @@ ul.ft-link li a i {
 .profile-widget h6 {
     margin: 0px;
     font-size: 12px;
-    color: rgba(255, 255, 255, 0.9);
+    color: #d6092c;
     font-weight: 300;
 }
 .profile-widget h6 span i {
@@ -2769,7 +2770,8 @@ ul.inbox-pagination li {
 
 /*profile-widget color bg*/
 .profile-widget-info {
-    background: #337ab7 !important;
+    background: #e8e1e1 !important;
+	border: solid #d6092c;
 }
 .profile-widget-success {
     background: #4cd964 !important;
@@ -3188,7 +3190,7 @@ ul.amounts li {
     border-bottom: none;
 }
 .tab-bg-info {
-    background: #337ab7;
+    background: #d6092c;
     border-bottom: none;
 }
 .tab-bg-info.panel-heading .nav > li.active > a,

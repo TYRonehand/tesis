@@ -4,19 +4,13 @@
 	<ui:style>
 	.observation{
 		font-size: 10pt;
-		color:white;
+		color: #333;
 	}
 	.panel {
 		padding: 15px;
-		background: black;
-		border: 8px solid rgba(0, 0, 0, .5);
-		-webkit-background-clip: padding-box; /* for Safari */
-		background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
-		filter: alpha(opacity = 60);
-		/* IE */
-		-moz-opacity: 0.6;
-		/* Mozilla */
-		opacity: 0.6;
+		background: white;
+		border: 8px solid white;
+		height:78vh;
 	}
 	
 	.panelmargin {
@@ -24,7 +18,7 @@
 	}
 	
 	.HTMLheader {
-		padding-top: 78px
+		padding-top: 110px
 	}
 	
 	.input {
@@ -32,7 +26,7 @@
 	}
 	
 	.label {
-		color: white;
+		color: #333;
 	}
 	
 	.labelwarning {
@@ -40,8 +34,9 @@
 	}
 	
 	.titleText {
-		color: #ffffff;
-		font-family: 'Raleway', sans-serif;
+		text-transform: uppercase;
+		color: #333;
+	    font-family: Roboto,sans-serif;
 		font-size: 24px;
 		font-weight: 800;
 		line-height: 36px;
@@ -49,12 +44,12 @@
 		text-align: center;
 	}
 	
-	.resumeText {
-		color: #f8f8f8;
+	.resumeText {   
 		padding: 20px 10% 40px 10%;
-		font-family: 'Raleway', sans-serif;
-		font-size: 18px;
-		font-weight: 500;
+		color: #333;
+	    font-size: 18px;
+	    font-family: Roboto,sans-serif;
+		font-weight: 700;
 		line-height: 32px;
 		margin: 0 0 24px;
 	}
@@ -64,13 +59,15 @@
 		height: 54px;
 	}
 	
-	.iconText {
-		color: #f8f8f8;
-		font-family: 'Raleway', sans-serif;
-		font-size: 18px;
-		font-weight: 500;
+	.iconText {    
+		padding: 20px 10% 40px 10%;
+		color: #333;
+	    font-size: 18px;
+	    font-family: Roboto,sans-serif;
+		font-weight: 700;
 		line-height: 32px;
-		margin: 5px 0 0 25px;
+		margin: 0 0 24px;
+	    
 	}
 	
 	.iconsPanel {
@@ -80,10 +77,10 @@
 	.logoucsc {
 		padding-bottom: 15px;
 	}
+	
 	</ui:style>
 	<gwt:HTMLPanel addStyleNames='{style.HTMLheader}'>
 		<div class="row">
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
 				<div class="col-lg-8 col-md-6 col-sm-12 col-xs-12">
 					<gwt:VerticalPanel addStyleNames='{style.panel}'
@@ -133,7 +130,7 @@
 
 
 					<gwt:VerticalPanel addStyleNames='{style.panel}'
-						horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_MIDDLE"
+						horizontalAlignment="ALIGN_LEFT" verticalAlignment="ALIGN_TOP"
 						width="100%">
 
 						<gwt:VerticalPanel addStyleNames='{style.panelmargin}'
@@ -218,8 +215,8 @@
 							</gwt:HorizontalPanel>
 							
 							<gwt:FlowPanel addStyleNames='{style.input}'>
-								<gwt:Button ui:field="registerBtn" text="Register"
-									width="96%" height="42px" tabIndex="6">Sign Up</gwt:Button>
+								<gwt:Button ui:field="registerBtn" text="Sign Up"
+									width="96%" height="42px" tabIndex="6"></gwt:Button>
 							</gwt:FlowPanel>
 
 							<gwt:VerticalPanel height="28px" width="100%" >
@@ -228,8 +225,7 @@
 							
 							<gwt:InlineLabel addStyleNames='{style.titleText}'
 								text="Lost Password?" horizontalAlignment="ALIGN_CENTER" width="100%" />
-							<gwt:Hyperlink ui:field="recoveryLink" text="I forgot my password"
-								targetHistoryToken="" width="100%" />
+							<gwt:Hyperlink ui:field="recoveryLink" text="I forgot my password" targetHistoryToken="recovery" width="100%" />
 
 						</gwt:VerticalPanel>
 
@@ -240,6 +236,6 @@
 
 				</div>
 			</div>
-		</div>
+
 	</gwt:HTMLPanel>
 </ui:UiBinder> 

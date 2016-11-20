@@ -105,12 +105,15 @@ public class MetricWidget extends Composite {
 		this.metric4Btn.addStyleName(ms.getButtonStyle(0));
 		this.metric5Btn.addStyleName(ms.getButtonStyle(0));
 		this.metric6Btn.addStyleName(ms.getButtonStyle(0));
+		/*
 		this.SpacingBtn.addStyleName(ms.getOkStyle());
 		this.EntropyBtn.addStyleName(ms.getCancelStyle());
 		this.ERBtn.addStyleName(ms.getOkStyle());
 		this.GDistanceBtn.addStyleName(ms.getOkStyle());
 		this.CoverBtn.addStyleName(ms.getOkStyle());
 		this.gnvgBtn.addStyleName(ms.getOkStyle());
+		*/
+		
 		// load data table
 		LoadFilesData();
 	}

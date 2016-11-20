@@ -113,11 +113,11 @@ public class UserProfile extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 		getUser(iduser);
 		/* Boostrap style */
-		this.submitBTN.setStyleName(ms.getButtonStyle(2));
-		this.cancelBTN.setStyleName(ms.getButtonStyle(1));
-		this.changeEmailBTN.setStyleName(ms.getButtonStyle(2));
-		this.changePasswordBTN.setStyleName(ms.getButtonStyle(2));
-		this.closeAccountBTN.setStyleName(ms.getButtonStyle(3));
+		this.submitBTN.setStyleName(ms.getButtonStyle(0));
+		this.cancelBTN.setStyleName(ms.getButtonStyle(0));
+		this.changeEmailBTN.setStyleName(ms.getButtonStyle(0));
+		this.changePasswordBTN.setStyleName(ms.getButtonStyle(0));
+		this.closeAccountBTN.setStyleName(ms.getButtonStyle(0));
 		/* combobox */
 		addCountry();
 	}

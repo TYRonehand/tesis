@@ -3,7 +3,7 @@
 	xmlns:gwt="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
 	.sessionlink {
-		color: #646567;
+		color: #d6092c;
 	}
 	
 	.btnMenu {
@@ -18,22 +18,22 @@
 		font-size: 20px;
 		background-color: white;
 		border: 0.5px solid white;
-		color: #646567;
+		color: #474747;
 	}
 	
 	.btnMenu:active {
-		border-bottom: 5px solid #337ab7;
-		color: #337ab7;
+		border-bottom: 5px solid #d6092c;
+		color: #d6092c;
 	}
 	
 	.btnMenu:hover {
-		border-bottom: 5px solid #337ab7;
-		color: #337ab7;
+		border-bottom: 5px solid #d6092c;
+		color: #d6092c;
 	}
 	
 	.btnMenu2 {
 		padding: 15px;
-		border: 1px solid #646567;
+		border: 1px solid #474747;
 		width: 60px;
 		height: 70px;
 		cursor: pointer;
@@ -41,13 +41,13 @@
 		font-weight: bold;
 		font-size: 15px;
 		align: center;
-		background: #0d0d0d;
+		background: #474747;
 		color: white;
 	}
 	
 	.btnMenu2:hover {
-		color: #646567;
-		border-bottom: 5px solid #337ab7;
+		color: white;
+		border-bottom: 5px solid #d6092c;
 	}
 	
 	.flowPanel {
@@ -60,70 +60,79 @@
 		left: 0px;
 		z-index: 99999;
 	}
+	.panelMenu{
+		padding-top:10px;
+	}
 	
-	.userstyleBtns {
-		background: white;
-		padding-bottom: 10px;
-		border: none;
-		font-weight: bold;
-		color: #337ab7;
+	.userstyleBtns { 
+		background-color: #d6092c;
+	    color: #fff;
+	    border: none;
+	    padding: 8px 13px;
+	    font-size: 11px;
+	    text-transform: uppercase;
+	    font-weight: 700;
+	    font-family: Roboto,'Helvetica Neue',Helvetica,Arial,sans-serif;   
+    	z-index: 9999;
 	}
 	</ui:style>
 
 	<gwt:HTMLPanel>
-
+		
+		
 		<header class="header white-bg">
-
-			<div class="col-lg-6 col-md-6 col-sm-9 col-xs-9">
-				<!--logotipo o nombre aplicacion inicia -->
-				<a href="" class="logo">
-					<span class="lite"></span>
-				</a>
+		
+			<gwt:VerticalPanel width="94%" horizontalAlignment="ALIGN_RIGHT">
+				<gwt:HorizontalPanel addStyleNames='{style.userstyleBtns}'
+					width="160px">
+					<gwt:Button addStyleNames='{style.userstyleBtns}'
+						ui:field="profileLink" text="Profile" width="100px" />
+					<gwt:Button addStyleNames='{style.userstyleBtns}'
+						ui:field="exitLink" text="Exit" width="60px" />
+				</gwt:HorizontalPanel>
+			</gwt:VerticalPanel>
+			
+			
+			<div class="col-lg-3 col-md-3 hidden-sm hidden-xs">
+				<gwt:Image url="assets/img/logo_ucsc_init.png" width="100%"/>
 			</div>
-
+			
+			<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+				<gwt:VerticalPanel horizontalAlignment="ALIGN_CENTER" width="100%">
+					<gwt:Image url="assets/img/banner3.png" width="300px"/>
+				</gwt:VerticalPanel>
+			</div>
 
 
 			<!--seccion menu de usuario -->
 			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<div align="center" class="panel-menu-user">
+				
+				<gwt:VerticalPanel addStyleNames='{style.panelMenu}' width="100%" horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_BOTTOM" height="80px">
+				
+					<gwt:MenuBar width="100%" animationEnabled="true"
+						autoOpen="true" height="50px">
+						<gwt:MenuItem ui:field="homeBTN" addStyleNames='{style.btnMenu}'
+							text="Home" height="50px" width="60px" />
+						<gwt:MenuItem addStyleNames='{style.btnMenu}' text="Tools"
+							height="50px" width="60px">
+							<gwt:MenuBar addStyleNames='{style.panelItem}'
+								vertical="true" autoOpen="true" animationEnabled="true">
+								<gwt:MenuItem ui:field="filesBTN" addStyleNames='{style.btnMenu2}'
+									text="Files" width="45px" height="28px" />
+								<gwt:MenuItem ui:field="plotBTN" addStyleNames='{style.btnMenu2}'
+									text="Plot" width="45px" height="28px" />
+								<gwt:MenuItem ui:field="metricBTN" addStyleNames='{style.btnMenu2}'
+									text="Metric" width="45px" height="28px" />
+							</gwt:MenuBar>
+						</gwt:MenuItem>
+						<gwt:MenuItem ui:field="communityBTN" addStyleNames='{style.btnMenu}'
+							text="Forum" height="50px" width="60px" />
+						<gwt:MenuItem ui:field="faqBTN" addStyleNames='{style.btnMenu}'
+							text="FAQ" height="50px" width="60px" />
+					</gwt:MenuBar>
+					
+				</gwt:VerticalPanel>
 
-					<gwt:VerticalPanel width="100%"
-						horizontalAlignment="ALIGN_RIGHT">
-						<gwt:HorizontalPanel addStyleNames='{style.userstyleBtns}'
-							width="160px">
-							<gwt:Button addStyleNames='{style.userstyleBtns}'
-								ui:field="profileLink" text="User X" width="100px" />
-							<gwt:Button addStyleNames='{style.userstyleBtns}'
-								ui:field="exitLink" text="Exit" width="60px" />
-						</gwt:HorizontalPanel>
-					</gwt:VerticalPanel>
-
-					<gwt:VerticalPanel width="100%"
-						horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE"
-						spacing="10" height="40px">
-						<gwt:MenuBar width="100%" animationEnabled="true"
-							autoOpen="true" height="50px">
-							<gwt:MenuItem ui:field="homeBTN" addStyleNames='{style.btnMenu}'
-								text="Home" height="50px" width="60px" />
-							<gwt:MenuItem addStyleNames='{style.btnMenu}' text="Tools"
-								height="50px" width="60px">
-								<gwt:MenuBar addStyleNames='{style.panelItem}'
-									vertical="true" autoOpen="true" animationEnabled="true">
-									<gwt:MenuItem ui:field="filesBTN" addStyleNames='{style.btnMenu2}'
-										text="Files" width="45px" height="28px" />
-									<gwt:MenuItem ui:field="plotBTN" addStyleNames='{style.btnMenu2}'
-										text="Plot" width="45px" height="28px" />
-									<gwt:MenuItem ui:field="metricBTN" addStyleNames='{style.btnMenu2}'
-										text="Metric" width="45px" height="28px" />
-								</gwt:MenuBar>
-							</gwt:MenuItem>
-							<gwt:MenuItem ui:field="communityBTN" addStyleNames='{style.btnMenu}'
-								text="Forum" height="50px" width="60px" />
-							<gwt:MenuItem ui:field="faqBTN" addStyleNames='{style.btnMenu}'
-								text="FAQ" height="50px" width="60px" />
-						</gwt:MenuBar>
-					</gwt:VerticalPanel>
-				</div>
 			</div>
 		</header>
 

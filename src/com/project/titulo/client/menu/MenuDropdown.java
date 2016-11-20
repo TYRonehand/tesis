@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.Widget;
+import com.project.titulo.shared.CookieVerify;
 
 public class MenuDropdown extends Composite {
 
@@ -42,7 +43,6 @@ public class MenuDropdown extends Composite {
 
 	public MenuDropdown() {
 		initWidget(uiBinder.createAndBindUi(this));
-		profileLink.setText("User Profile");
 		LoadMenuItem();
 	}
 
@@ -117,6 +117,11 @@ public class MenuDropdown extends Composite {
 	// click profile
 	@UiHandler("exitLink")
 	void onCloseLinkClick(ClickEvent event) {
+
+		// cookie
+		CookieVerify mycookie=new CookieVerify(true);
+		mycookie.delCookiesInfo();
+		History.newItem("login");
 		// load profile
 		Window.Location.reload();
 	}
