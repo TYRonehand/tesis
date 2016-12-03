@@ -9,9 +9,10 @@
 	<gwt:HTMLPanel addStyleNames='{style.HTMLheader}'>
 
 		<gwt:VerticalPanel ui:field="backbreadPanel"  width="100%" verticalAlignment="ALIGN_MIDDLE">
-		
-			<gwt:FlowPanel ui:field="breadPanel">
-				<gwt:Image url="assets/img/icons/home_red.png" width="25px" height="25px"/> </gwt:FlowPanel>
+			<gwt:HorizontalPanel verticalAlignment="ALIGN_MIDDLE" spacing="4">
+				<gwt:Image url="assets/img/icons/home_white.png" width="25px" height="25px"/>
+				<gwt:FlowPanel ui:field="breadPanel"/>
+			</gwt:HorizontalPanel>
 			
 		</gwt:VerticalPanel>
 

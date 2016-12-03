@@ -3,6 +3,8 @@ package com.project.titulo.client;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.project.titulo.shared.model.AdminChartResume;
+import com.project.titulo.shared.model.AdminResume;
 import com.project.titulo.shared.model.Answer;
 import com.project.titulo.shared.model.MetricResults;
 import com.project.titulo.shared.model.ResumeTopic;
@@ -17,6 +19,15 @@ import com.project.titulo.shared.model.UserFile;
 public interface ServerServiceAsync {
 
 	// admin
+	void getResumeInfo(AsyncCallback<AdminResume> callback) 
+			throws IllegalArgumentException;
+	
+	void getChartUsers(AsyncCallback<AdminChartResume> callback) 
+			throws IllegalArgumentException;
+	
+	void getChartTopics(AsyncCallback<AdminChartResume> callback) 
+			throws IllegalArgumentException;
+	
 	void getUserList(String opcion, AsyncCallback<List<User>> callback)
 			throws IllegalArgumentException;
 
@@ -128,10 +139,6 @@ public interface ServerServiceAsync {
 			throws IllegalArgumentException;
 
 	/*------------PLOT---------------*/
-
-	// live plot
-	void LivePlot(String iduser, List<String> idfiles,
-			AsyncCallback<Boolean> callback) throws IllegalArgumentException;
 
 	// create image
 	void CreateImage2D(Boolean points, Boolean lines, String fileFormat,

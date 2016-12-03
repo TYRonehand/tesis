@@ -1,0 +1,100 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:gwt="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.titlelabel {
+			display: inline;
+			width: 100%;
+			height: 50px;
+			cursor: pointer;
+			cursor: hand;
+			font-weight: bold;
+			font-size: 28px;
+			color: white;
+		}
+		
+		.sessionlink {
+			color: #646567;
+		}
+		
+		.btnMenu {
+			padding: 12px;
+			display: inline;
+			width: 16.66%;
+			height: 50px;
+			cursor: pointer;
+			cursor: hand;
+			font-weight: bold;
+			font-size: 16px;
+			background-color: #000;
+			border: 0.5px solid #333;
+			color: #fff;
+		}
+		
+		.btnMenu:active {
+			border-bottom: 5px solid #d6092c;
+		}
+		
+		.btnMenu:hover {
+			border-bottom: 5px solid #d6092c;
+		}
+		.flowPanel {
+			width: 100%;
+		}
+		
+		.userstyleBtns { 
+			background-color: #d6092c;
+		    color: #fff;
+		    border: none;
+		    padding: 8px 13px;
+		    font-size: 11px;
+		    text-transform: uppercase;
+		    font-weight: 700;
+		    font-family: Roboto,'Helvetica Neue',Helvetica,Arial,sans-serif;   
+	    	z-index: 9999;
+		}
+	</ui:style>
+	<gwt:HTMLPanel>
+
+		<header class="header dark-bg">
+
+			<gwt:VerticalPanel width="94%" horizontalAlignment="ALIGN_RIGHT">
+				<gwt:HorizontalPanel addStyleNames='{style.userstyleBtns}'
+					width="62px">
+					<gwt:Button addStyleNames='{style.userstyleBtns}'
+						ui:field="exitLink" text="Exit" width="60px" />
+				</gwt:HorizontalPanel>
+			</gwt:VerticalPanel>
+			
+			
+			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+				<gwt:VerticalPanel horizontalAlignment="ALIGN_LEFT" width="100%" height="100px" spacing="10">
+					<gwt:Image url="assets/img/logo_ucsc_init.png" width="250px" height="76px"/>
+				</gwt:VerticalPanel>
+			</div>
+			
+			<div class="col-lg-2 col-md-3 col-sm-4 hidden-xs ">
+				<gwt:VerticalPanel horizontalAlignment="ALIGN_CENTER" width="100%" spacing="10">
+					<gwt:Image url="assets/img/banner2.png" width="250px" height=""/>
+				</gwt:VerticalPanel>
+			</div>
+
+			<!--seccion menu de usuario -->
+			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+					<gwt:VerticalPanel width="100%" height="80px" horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_BOTTOM">
+									
+					<gwt:MenuBar width="100%" animationEnabled="true"
+						autoOpen="true" height="50px">
+						<gwt:MenuItem ui:field="homeBTN" addStyleNames='{style.btnMenu}'
+							text="Home" height="50px" width="60px" />
+						<gwt:MenuItem ui:field="usersBTN" addStyleNames='{style.btnMenu}'
+							text="Users" height="50px" width="60px" />
+					</gwt:MenuBar>				
+										
+										
+					</gwt:VerticalPanel>
+			</div>
+		</header>
+
+	</gwt:HTMLPanel>
+</ui:UiBinder> 

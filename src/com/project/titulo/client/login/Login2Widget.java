@@ -88,7 +88,6 @@ public class Login2Widget extends Composite {
 							else if (!result.getId().isEmpty()) 
 							{
 								// guardamos las cookies con info
-								mycookie.setCookieMail(result.getMail());
 								mycookie.setCookieUser(result.getId());
 
 								// go to home first time

@@ -25,9 +25,11 @@
 	<!-- <inherits name='com.google.gwt.user.theme.clean.Clean'/>     -->
 
 	<!-- Other module inherits                                      -->
-
+	<inherits name="org.moxieapps.gwt.highcharts.Highcharts"/>
+	
 	<!-- Specify the app entry point class.                         -->
 	<entry-point class='com.project.titulo.client.Proyectotitulo' />
+	
 	<!-- Specify the paths for translatable code                    -->
 	<source path='client' />
 	<source path='shared' />

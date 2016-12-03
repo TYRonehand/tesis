@@ -24,6 +24,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
+import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
 import com.project.titulo.shared.ErrorVerify;
@@ -43,6 +44,8 @@ public class UsersList extends Composite {
 	@UiField
 	Button modalOldestTopic;
 
+	/* style */
+	private MyStyle ms = new MyStyle();	
 	// Create a CellTable.
 	private CellTable<User> table = null;
 	// RPC
@@ -51,8 +54,7 @@ public class UsersList extends Composite {
 
 	// ------------------------------------
 	// creation binder
-	private static UsersListUiBinder uiBinder = GWT
-			.create(UsersListUiBinder.class);
+	private static UsersListUiBinder uiBinder = GWT.create(UsersListUiBinder.class);
 
 	// binder widget
 	interface UsersListUiBinder extends UiBinder<Widget, UsersList> {
@@ -61,11 +63,11 @@ public class UsersList extends Composite {
 	public UsersList() {
 		initWidget(uiBinder.createAndBindUi(this));
 		// set style to buttons from bootstrap
-		modalSearchTopic.addStyleName("btn btn-success");
-		modalNewestTopic.addStyleName("btn btn-success");
-		modalOldestTopic.addStyleName("btn btn-success");
+		modalSearchTopic.addStyleName(ms.getButtonStyle(0));
+		modalNewestTopic.addStyleName(ms.getButtonStyle(0));
+		modalOldestTopic.addStyleName(ms.getButtonStyle(0));
 		// load data and table (ASC, USER, COMENTED)
-		LoadData("all");
+		LoadData("new");
 	}
 
 	// ------------------------------------
@@ -189,7 +191,7 @@ public class UsersList extends Composite {
 		reloadBtn.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				LoadData("all");
+				LoadData("new");
 			}
 		});
 
@@ -200,7 +202,7 @@ public class UsersList extends Composite {
 
 	@UiHandler("modalNewestTopic")
 	void onModalNewestTopicClick(ClickEvent event) {
-		LoadData("all");
+		LoadData("new");
 	}
 
 	@UiHandler("modalOldestTopic")

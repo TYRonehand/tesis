@@ -1,0 +1,152 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:gwt="urn:import:com.google.gwt.user.client.ui" xmlns:o="urn:import:com.sun.org.apache.xpath.internal.operations">
+	<ui:style>
+	.resumePanel{ 
+	    color: #d6092c;
+	    border: none;
+	    font-size: 18px;
+	    text-transform: uppercase;
+	    font-weight: 700;
+	    font-family: Roboto,'Helvetica Neue',Helvetica,Arial,sans-serif;   
+    	z-index: 9999;
+    	padding:25px;
+	}
+	.HTMLpanel{
+		padding-top: 20px;
+	}
+	</ui:style>
+	<gwt:HTMLPanel addStyleNames='{style.HTMLpanel}'>
+	
+		<div class="row">
+		
+			<div class="col-lg-4 col-xs-6">
+				<section class="panel">
+					<header class="panel-heading">
+						<h3 class="panel-title">Total Users</h3>
+					</header>
+					<div class="panel-body">
+					
+							<gwt:VerticalPanel addStyleNames='{style.resumePanel}' width="100%" spacing="10" horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE">
+								<gwt:Label ui:field="totalusers" text="8" width="" horizontalAlignment="ALIGN_CENTER"/>
+							</gwt:VerticalPanel>
+							
+					</div>
+				</section>
+			</div>
+			
+			
+			<div class="col-lg-4 col-xs-6">
+				<section class="panel">
+					<header class="panel-heading">
+						<h3 class="panel-title">Online This Month</h3>
+					</header>
+					<div class="panel-body">
+					
+							<gwt:VerticalPanel addStyleNames='{style.resumePanel}' width="100%" spacing="10" horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE">
+								<gwt:Label ui:field="onlineusers" text="8" width="" horizontalAlignment="ALIGN_CENTER"/>
+							</gwt:VerticalPanel>
+							
+					</div>
+				</section>
+			</div>
+			
+			
+			
+			<div class="col-lg-4 col-xs-6">
+				<section class="panel">
+					<header class="panel-heading">
+						<h3 class="panel-title">Topics</h3>
+					</header>
+					<div class="panel-body">
+					
+							<gwt:VerticalPanel addStyleNames='{style.resumePanel}' width="100%" spacing="10" horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE">
+								<gwt:Label ui:field="totaltopics" text="2" width="" horizontalAlignment="ALIGN_CENTER"/>
+							</gwt:VerticalPanel>
+							
+					</div>
+				</section>
+			</div>
+			
+			<div class="col-lg-4 col-xs-6">
+				<section class="panel">
+					<header class="panel-heading">
+						<h3 class="panel-title">Files</h3>
+					</header>
+					<div class="panel-body">
+					
+							<gwt:VerticalPanel addStyleNames='{style.resumePanel}' width="100%" spacing="10" horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE">
+								<gwt:Label ui:field="totalfiles" text="10" width="" horizontalAlignment="ALIGN_CENTER"/>
+							</gwt:VerticalPanel>
+							
+					</div>
+				</section>
+			</div>
+			
+			<div class="col-lg-4 col-xs-6">
+				<section class="panel">
+					<header class="panel-heading">
+						<h3 class="panel-title">Size Of Files</h3>
+					</header>
+					<div class="panel-body">
+					
+							<gwt:VerticalPanel addStyleNames='{style.resumePanel}' width="100%" spacing="10" horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE">
+								<gwt:Label ui:field="totalsizefiles" text="10" width="" horizontalAlignment="ALIGN_CENTER"/>
+							</gwt:VerticalPanel>
+							
+					</div>
+				</section>
+			</div>
+			
+			<div class="col-lg-4 col-xs-6">
+				<section class="panel">
+					<header class="panel-heading">
+						<h3 class="panel-title">Average Size File</h3>
+					</header>
+					<div class="panel-body">
+					
+							<gwt:VerticalPanel addStyleNames='{style.resumePanel}' width="100%" spacing="10" horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE">
+								<gwt:Label ui:field="avgsizefiles" text="~7 KB" width="" horizontalAlignment="ALIGN_CENTER"/>
+							</gwt:VerticalPanel>
+							
+					</div>
+				</section>
+			</div>
+			
+			
+			
+			
+			<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+				<section class="panel">
+					<header class="panel-heading">
+						<h3 class="panel-title">Last 6 Month Users</h3>
+					</header>
+					<div class="panel-body">
+					
+						<gwt:VerticalPanel ui:field="lastmonthusers" addStyleNames='{style.resumePanel}' width="100%" height="" spacing="10" horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE">
+						</gwt:VerticalPanel>
+						
+					</div>
+				</section>
+			</div>
+			
+			
+			<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+				<section class="panel">
+					<header class="panel-heading">
+						<h3 class="panel-title">Last 6 Month Topics</h3>
+					</header>
+					<div class="panel-body">
+					
+						<gwt:VerticalPanel ui:field="lastmonthtopics" addStyleNames='{style.resumePanel}' width="100%" height="" spacing="10" horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE">
+						</gwt:VerticalPanel>
+						
+					</div>
+				</section>
+			</div>
+			
+			
+		</div>
+		
+	</gwt:HTMLPanel>
+</ui:UiBinder> 

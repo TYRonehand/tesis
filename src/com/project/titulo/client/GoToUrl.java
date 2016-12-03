@@ -3,7 +3,10 @@ package com.project.titulo.client;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.project.titulo.client.AdminProfile.AdminLogin;
+import com.project.titulo.client.AdminProfile.MenuAdmin;
+import com.project.titulo.client.AdminProfile.ResumeUser;
 import com.project.titulo.client.AdminProfile.UsersList;
+import com.project.titulo.client.AdminProfile.Welcome;
 import com.project.titulo.client.Files.FileWidget;
 import com.project.titulo.client.Files.HelpModal;
 import com.project.titulo.client.Files.UploadModal;
@@ -21,7 +24,6 @@ import com.project.titulo.client.footer.FooterWidget;
 import com.project.titulo.client.home.HomeWidget;
 import com.project.titulo.client.login.Login2Widget;
 import com.project.titulo.client.menu.MenuDropdown;
-import com.project.titulo.client.menu.MenuUser;
 import com.project.titulo.client.notfound.NotfoundWidget;
 import com.project.titulo.client.recovery.RecoveryWidget;
 import com.project.titulo.client.register.SignupWidget;
@@ -37,12 +39,13 @@ public class GoToUrl {
 
 	public void GoTo(String option, String IDUSER, String IDTOPIC) {
 
+		//no cookies => rebuild new and clean cookies
 		if(Cookies.getCookieNames().size()==0)
 			mycookie=new CookieVerify(true);
 		
 		mycookie.setCookieIdurl(option);
 		
-		//Window.alert("iduser: "+IDUSER);
+		
 		// opciones url
 		switch (option.toUpperCase()) 
 		{
@@ -75,7 +78,7 @@ public class GoToUrl {
 				// widget close session
 				RootPanel.get("GWTmenu").clear();
 				// menu widget
-				RootPanel.get("GWTmenu").add(new MenuUser());
+				RootPanel.get("GWTmenu").add(new MenuAdmin());
 				break;
 	
 			case "RECOVERY":
@@ -95,6 +98,9 @@ public class GoToUrl {
 				RootPanel.get("GWTcontainer").clear();
 				RootPanel.get("GWTcontainer").add(new BreadWidget("PROFILE"));
 				RootPanel.get("GWTcontainer").add(new ViewProfile(IDUSER));
+				//footer
+				RootPanel.get("GWTfooter").clear();
+				RootPanel.get("GWTfooter").add(new FooterLoginWidget());
 				break;
 				
 			case "PROFILE":
@@ -124,12 +130,31 @@ public class GoToUrl {
 			case "ADMINDASHBOARD":
 				// widget close session
 				RootPanel.get("GWTmenu").clear();
-				RootPanel.get("GWTmenu").add(new MenuUser());
+				RootPanel.get("GWTmenu").add(new MenuAdmin());
 				// widget close session
 				RootPanel.get("GWTcontainer").clear();
 				// cualquier otro caso sera enviado al login
 				RootPanel.get("GWTcontainer").add(new BreadWidget(option));
+				RootPanel.get("GWTcontainer").add(new Welcome());
+				RootPanel.get("GWTcontainer").add(new ResumeUser());
+				//footer
+				RootPanel.get("GWTfooter").clear();
+				RootPanel.get("GWTfooter").add(new FooterWidget());
+				break;
+				
+			case "USERS":
+				// widget close session
+				RootPanel.get("GWTmenu").clear();
+				RootPanel.get("GWTmenu").add(new MenuAdmin());
+				// widget close session
+				RootPanel.get("GWTcontainer").clear();
+				// cualquier otro caso sera enviado al login
+				RootPanel.get("GWTcontainer").add(new BreadWidget(option));
+				RootPanel.get("GWTcontainer").add(new Welcome());
 				RootPanel.get("GWTcontainer").add(new UsersList());
+				//footer
+				RootPanel.get("GWTfooter").clear();
+				RootPanel.get("GWTfooter").add(new FooterWidget());
 				break;
 				
 			case "ADMIN":
@@ -139,6 +164,8 @@ public class GoToUrl {
 				RootPanel.get("GWTcontainer").clear();
 				// cualquier otro caso sera enviado al login
 				RootPanel.get("GWTcontainer").add(new AdminLogin());
+				//footer
+				RootPanel.get("GWTfooter").clear();
 				break;
 	
 			case "FILES":
@@ -150,6 +177,9 @@ public class GoToUrl {
 				// cualquier otro caso sera enviado al login
 				RootPanel.get("GWTcontainer").add(new BreadWidget(option));
 				RootPanel.get("GWTcontainer").add(new FileWidget(IDUSER));
+				//footer
+				RootPanel.get("GWTfooter").clear();
+				RootPanel.get("GWTfooter").add(new FooterLoginWidget());
 				break;
 	
 			case "PLOT":
@@ -161,6 +191,9 @@ public class GoToUrl {
 				// cualquier otro caso sera enviado al login
 				RootPanel.get("GWTcontainer").add(new BreadWidget(option));
 				RootPanel.get("GWTcontainer").add(new PlotWidget(IDUSER));
+				//footer
+				RootPanel.get("GWTfooter").clear();
+				RootPanel.get("GWTfooter").add(new FooterLoginWidget());
 				break;
 	
 			case "METRIC":
@@ -172,6 +205,9 @@ public class GoToUrl {
 				// cualquier otro caso sera enviado al login
 				RootPanel.get("GWTcontainer").add(new BreadWidget(option));
 				RootPanel.get("GWTcontainer").add(new MetricWidget(IDUSER));
+				//footer
+				RootPanel.get("GWTfooter").clear();
+				RootPanel.get("GWTfooter").add(new FooterLoginWidget());
 				break;
 	
 			case "FORUM":
@@ -183,6 +219,9 @@ public class GoToUrl {
 				// cualquier otro caso sera enviado al login
 				RootPanel.get("GWTcontainer").add(new BreadWidget(option));
 				RootPanel.get("GWTcontainer").add(new ForumWidget(IDUSER));
+				//footer
+				RootPanel.get("GWTfooter").clear();
+				RootPanel.get("GWTfooter").add(new FooterLoginWidget());
 				break;
 	
 			case "FAQ":
@@ -194,6 +233,9 @@ public class GoToUrl {
 				// cualquier otro caso sera enviado al login
 				RootPanel.get("GWTcontainer").add(new BreadWidget(option));
 				RootPanel.get("GWTcontainer").add(new FAQWidget());
+				//footer
+				RootPanel.get("GWTfooter").clear();
+				RootPanel.get("GWTfooter").add(new FooterLoginWidget());
 				break;
 	
 			case "TOPIC":
@@ -205,6 +247,9 @@ public class GoToUrl {
 				// cualquier otro caso sera enviado al login
 				RootPanel.get("GWTcontainer").add(new BreadWidget(option));
 				RootPanel.get("GWTcontainer").add(new ReadWidget(IDTOPIC, IDUSER));
+				//footer
+				RootPanel.get("GWTfooter").clear();
+				RootPanel.get("GWTfooter").add(new FooterLoginWidget());
 				break;
 				
 			case "404":
@@ -213,6 +258,9 @@ public class GoToUrl {
 				RootPanel.get("GWTcontainer").clear();
 				// cualquier otro caso sera enviado al login
 				RootPanel.get("GWTcontainer").add(new NotfoundWidget());
+				//footer
+				RootPanel.get("GWTfooter").clear();
+				RootPanel.get("GWTfooter").add(new FooterWidget());
 				break;
 	
 			case "MODALNEWTOPIC":
@@ -233,6 +281,9 @@ public class GoToUrl {
 				RootPanel.get("GWTcontainer").clear();
 				// cualquier otro caso sera enviado al login
 				RootPanel.get("GWTcontainer").add(new NotfoundWidget());
+				//footer
+				RootPanel.get("GWTfooter").clear();
+				RootPanel.get("GWTfooter").add(new FooterWidget());
 				break;
 		}
 	}

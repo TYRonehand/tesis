@@ -88,7 +88,7 @@
 						<gwt:VerticalPanel horizontalAlignment="ALIGN_CENTER"
 							verticalAlignment="ALIGN_MIDDLE" width="100%">
 
-							<gwt:Label addStyleNames='{style.resumeText}' width="100%">
+							<gwt:Label addStyleNames='{style.resumeText}' width="100%" text="ASMOP WEBTOOL is a system that seeks to provide solutions to academics or researchers in the area of ​​multi-objective optimization. Delivering graphic tools and indicators of differentiation for solutions that consider the basis of Pareto optimality. Try it now.">
 								ASMOP WEBTOOL is a system that seeks to provide solutions to
 								academics or researchers in the area of ​​multi-objective
 								optimization. Delivering graphic tools and indicators of

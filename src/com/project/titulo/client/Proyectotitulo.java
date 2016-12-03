@@ -26,7 +26,7 @@ public class Proyectotitulo implements EntryPoint {
 			   }   
 			});
 		
-		if(Cookies.getCookieNames().size()==0){
+		if(Cookies.getCookieNames().size()<=1){
 			 mycookie=new CookieVerify(true);
 		}
 		
@@ -42,7 +42,7 @@ public class Proyectotitulo implements EntryPoint {
 	private void TokenLoader(String historyToken){
 		CookieVerify mycookieaux=new CookieVerify(false);
 		//token known
-		if(historyToken.length()>0)
+		if(historyToken.length()>1)
 		{	
 			if(historyToken.equals("home") 
 					|| historyToken.equals("files") 
@@ -55,34 +55,37 @@ public class Proyectotitulo implements EntryPoint {
 				    || historyToken.equals("recovery")  
 				    || historyToken.equals("profile")   
 				    || historyToken.equals("admindashboard")  
-				    || historyToken.equals("admin")  
+				    || historyToken.equals("admin")    
+				    || historyToken.equals("users")  
 				    || historyToken.contains(History.encodeHistoryToken("uid=")))
 			{
-				//recovery account
+				//recovery account and administration login
 			    if(historyToken.equals("recovery") || historyToken.equals("admin"))
 			    {
 				    url.GoTo(historyToken, null, null);
 			    }
 			    else//anyone else
 			    {
-						    //cookie
-						    if(mycookieaux.getCookieUser().length()>0)
+					    //cookie user exist => user loged
+					    if(mycookieaux.getCookieUser().length()>0)
+					    {
+					    	//viewprofile id user
+					    	if(historyToken.contains("uid="))
 						    {
-						    	//viewprofile id user
-						    	if(historyToken.contains("uid="))
-							    {
-						    		//profile view
-							    	String iduser = historyToken.substring(4);
-							    	url.GoTo("user", iduser, null);
-							    }else{
-							    	//exist user
-							    	String IDUSER = mycookieaux.getCookieUser();
-							    	url.GoTo(historyToken, IDUSER, mycookieaux.getCookieTopic());
-							    }
+					    		//profile view
+						    	String iduser = historyToken.substring(4);
+						    	url.GoTo("user", iduser, null);
 						    }else{
-							    //empty user
-							    url.GoTo("login", null, null);
+						    	//user user
+						    	String IDUSER = mycookieaux.getCookieUser();
+						    	url.GoTo(historyToken, IDUSER, mycookieaux.getCookieTopic());
 						    }
+					    }else if(mycookieaux.getCookieUser().length()<=0){
+						    url.GoTo("login", null, null);
+					    }else{
+						    //empty user
+					    	History.newItem("login");
+					    }
 				    	
 			    }
 		    }else{
@@ -91,10 +94,7 @@ public class Proyectotitulo implements EntryPoint {
 			    url.GoTo("404", null, null);
 		    }
 		}else{
-			if(mycookieaux.getCookieIdurl().length()>0)
-				url.GoTo(mycookieaux.getCookieIdurl(), mycookieaux.getCookieUser(), mycookieaux.getCookieTopic());
-			else	
-				url.GoTo("login", null, null);
+				History.newItem("login");
 			
 		}
 	}

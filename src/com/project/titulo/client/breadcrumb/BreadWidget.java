@@ -37,7 +37,7 @@ public class BreadWidget extends Composite {
 		// home link
 		InlineHyperlink HOME = new InlineHyperlink();
 		HOME.setTargetHistoryToken("home");
-		HOME.setText(">Home");
+		HOME.setText(" Home");
 
 		// opciones url
 		switch (option.toUpperCase()) {
@@ -46,7 +46,7 @@ public class BreadWidget extends Composite {
 			breadPanel.add(HOME);
 			InlineHyperlink profile = new InlineHyperlink();
 			profile.setTargetHistoryToken("profile");
-			profile.setText(">Profile");
+			profile.setText("| Profile");
 			breadPanel.add(profile);
 			break;
 
@@ -55,21 +55,34 @@ public class BreadWidget extends Composite {
 
 			break;
 
-		case "ADMIN":
+		case "ADMINDASHBOARD":
 			// home link
 			InlineHyperlink ADMIN = new InlineHyperlink();
-			ADMIN.setTargetHistoryToken("admin");
-			ADMIN.setText(">Administration");
+			ADMIN.setTargetHistoryToken("admindashboard");
+			ADMIN.setText("| Home");
 			breadPanel.add(ADMIN);
 
 			break;
+			
+		case "USERS":
+			// home link
+			InlineHyperlink ADMIN2 = new InlineHyperlink();
+			ADMIN2.setTargetHistoryToken("admindashboard");
+			ADMIN2.setText("| Home");
+			breadPanel.add(ADMIN2);
+			// home link
+			InlineHyperlink USERS = new InlineHyperlink();
+			USERS.setTargetHistoryToken("users");
+			USERS.setText("| Users");
+			breadPanel.add(USERS);
 
+			break;
 		case "FILES":
 			breadPanel.add(HOME);
 
 			InlineHyperlink FILES = new InlineHyperlink();
 			FILES.setTargetHistoryToken("files");
-			FILES.setText(">My Files");
+			FILES.setText("| My Files");
 			breadPanel.add(FILES);
 
 			break;
@@ -79,7 +92,7 @@ public class BreadWidget extends Composite {
 
 			InlineHyperlink PLOT = new InlineHyperlink();
 			PLOT.setTargetHistoryToken("plot");
-			PLOT.setText(">Plot");
+			PLOT.setText("| Plot");
 			breadPanel.add(PLOT);
 
 			break;
@@ -89,7 +102,7 @@ public class BreadWidget extends Composite {
 
 			InlineHyperlink METRIC = new InlineHyperlink();
 			METRIC.setTargetHistoryToken("metric");
-			METRIC.setText(">Metric");
+			METRIC.setText("| Metric");
 			breadPanel.add(METRIC);
 
 			break;
@@ -99,7 +112,7 @@ public class BreadWidget extends Composite {
 
 			InlineHyperlink FORUM = new InlineHyperlink();
 			FORUM.setTargetHistoryToken("forum");
-			FORUM.setText(">Forum");
+			FORUM.setText("| Forum");
 			breadPanel.add(FORUM);
 
 			break;
@@ -109,7 +122,7 @@ public class BreadWidget extends Composite {
 
 			InlineHyperlink FAQ = new InlineHyperlink();
 			FAQ.setTargetHistoryToken("faq");
-			FAQ.setText(">FAQ");
+			FAQ.setText("| FAQ");
 			breadPanel.add(FAQ);
 
 			break;
@@ -119,12 +132,12 @@ public class BreadWidget extends Composite {
 
 			InlineHyperlink FORUM2 = new InlineHyperlink();
 			FORUM2.setTargetHistoryToken("forum");
-			FORUM2.setText(">Forum");
+			FORUM2.setText("| Forum");
 			breadPanel.add(FORUM2);
 
 			InlineHyperlink TOPIC = new InlineHyperlink();
 			TOPIC.setTargetHistoryToken("topic");
-			TOPIC.setText(">Read Topic");
+			TOPIC.setText("| Read Topic");
 			breadPanel.add(TOPIC);
 
 			break;

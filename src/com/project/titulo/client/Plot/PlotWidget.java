@@ -23,6 +23,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DoubleBox;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimpleCheckBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -30,6 +31,8 @@ import com.google.gwt.user.client.ui.Widget;
 import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
+import com.project.titulo.client.breadcrumb.BreadWidget;
+import com.project.titulo.client.menu.MenuDropdown;
 import com.project.titulo.shared.ErrorVerify;
 import com.project.titulo.shared.model.UserFile;
 
@@ -285,7 +288,8 @@ public class PlotWidget extends Composite {
 							}
 						}
 					});
-		} else// 3Dimension plot
+		} 
+		else// 3Dimension plot
 		{
 			// draw img
 			serverService.CreateImage3D(this.pointsGrid.getValue(),
@@ -318,8 +322,24 @@ public class PlotWidget extends Composite {
 	@UiHandler("plotBtn")
 	void onPlotBtnClick(ClickEvent event) {
 		if(table.getRowCount()>0)
-			SaveImg("html");
-		else
+		{
+			if(this.dimensionCheckbox.getValue())//3d
+				SaveImg("html");
+			else//2D
+			{
+				List<String> labelxyz = new ArrayList<String>();
+				labelxyz.add(this.labelxBox.getText());
+				labelxyz.add(this.labelyBox.getText());
+				labelxyz.add(this.labelzBox.getText());// menu user
+				RootPanel.get("GWTmenu").clear();
+				RootPanel.get("GWTmenu").add(new MenuDropdown());
+				// widget close session
+				RootPanel.get("GWTcontainer").clear();
+				// cualquier otro caso sera enviado al login
+				RootPanel.get("GWTcontainer").add(new BreadWidget("plot"));
+				RootPanel.get("GWTcontainer").add(new PlotLive(2, this.titleBox.getText(), labelxyz, this.IDUSER));
+			}
+		}else
 			ErrorVerify.getErrorAlert("nofiles");
 	}
 

@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import com.project.titulo.shared.model.AdminChartResume;
+import com.project.titulo.shared.model.AdminResume;
 import com.project.titulo.shared.model.Answer;
 import com.project.titulo.shared.model.MetricResults;
 import com.project.titulo.shared.model.ResumeTopic;
@@ -19,6 +21,17 @@ import com.project.titulo.shared.model.UserFile;
 public interface ServerService extends RemoteService {
 
 	/* ADMIN */
+	//dashboar resume info
+	AdminResume getResumeInfo() throws IllegalArgumentException;
+	
+	//dashboar chart resume users
+	AdminChartResume getChartUsers() throws IllegalArgumentException;
+	
+	//dashboar chart resume topics
+	AdminChartResume getChartTopics() throws IllegalArgumentException;
+	
+	
+	
 	// list of users
 	List<User> getUserList(String opcion) throws IllegalArgumentException;
 
@@ -139,9 +152,6 @@ public interface ServerService extends RemoteService {
 
 	/*------------PLOT---------------*/
 
-	// Live Plot
-	Boolean LivePlot(String iduser, List<String> idfiles)
-			throws IllegalArgumentException;
 
 	// create image
 	String CreateImage2D(Boolean points, Boolean lines, String fileFormat,

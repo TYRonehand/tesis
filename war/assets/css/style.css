@@ -597,6 +597,7 @@ div[data-role="editor-toolbar"] {
 /*----------------	color------------------------*/
 
 .dark-heading-bg {
+	padding:20px 20px 0px 20px;
     background: #000;
     border: 1px solid #000;
 }
@@ -609,9 +610,12 @@ div[data-role="editor-toolbar"] {
 	padding:20px 20px 0px 20px;
     color: #768399;
     background: #fff;
-    background-color: #fff;
 }
-
+.dark-bg {
+	padding:20px 20px 0px 20px;
+    color: #768399;
+    background: #000;
+}
 
 
 /*----------------------	panel-----------------*/

@@ -62,7 +62,7 @@
 						<div class="panel-body">
 							<div class="btn-group btn-group-justified">
 								<gwt:Button ui:field="plotBtn" addStyleNames='{style.submitBtn}'
-									width="100%">Plot Files</gwt:Button>
+									width="100%">Plot Live</gwt:Button>
 							</div>
 						</div>
 					</div>
@@ -75,7 +75,7 @@
 						<h3 class="panel-title">
 							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
 								href="#collapseTwo">
-								Save Image
+								GNUPLOT
 							</a>
 						</h3>
 					</div>

@@ -21,6 +21,8 @@ import com.project.titulo.server.metrics.GenDistance;
 import com.project.titulo.server.metrics.Spacing;
 import com.project.titulo.shared.ExportDataResult;
 import com.project.titulo.shared.SecretCode;
+import com.project.titulo.shared.model.AdminChartResume;
+import com.project.titulo.shared.model.AdminResume;
 import com.project.titulo.shared.model.Answer;
 import com.project.titulo.shared.model.MetricResults;
 import com.project.titulo.shared.model.ResumeTopic;
@@ -83,6 +85,90 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	/*--------------RPC FUNCTIONS---------------*/
 
 	/* ADMIN------------------------------------------------------------- */
+	//get resumen db
+	@Override
+	public AdminResume getResumeInfo() throws IllegalArgumentException {
+		AdminResume info = new AdminResume();
+		try {
+			String Query = "select * from admin_info_resume";
+			PreparedStatement ps = conn.prepareStatement(Query);
+			ResultSet result = ps.executeQuery();
+			// recorremos resultado
+			result.next();
+			info.setLastMonthUsers(result.getInt("value"));
+			result.next();
+			info.setOnlineUsers(result.getInt("value"));
+			result.next();
+			info.setTotalUsers(result.getInt("value"));
+			result.next();
+			info.setTotalTopics(result.getInt("value"));
+			result.next();
+			info.setLastMonthTopic(result.getInt("value"));
+			result.next();
+			info.setTotaFiles(result.getInt("value"));
+			result.next();
+			info.setTotalSizeFiles(result.getDouble("value"));
+			result.close();
+			ps.close();
+		} catch (SQLException sqle) {
+			GWT.log(sqle.toString());
+			sqle.printStackTrace();
+		}
+		return info;
+	}
+	
+	//get last 6 month user chart
+	@Override
+	public AdminChartResume getChartUsers() throws IllegalArgumentException {
+		AdminChartResume info = new AdminChartResume();
+		try {
+			String Query = "select * from admin_chart_users";
+			
+			PreparedStatement ps = conn.prepareStatement(Query);
+			ResultSet result = ps.executeQuery();
+			//get values
+			int i=6;
+			while (result.next()) {
+				info.months[i] = result.getString("month");
+				info.totals[i] = result.getInt("users");
+				i--;
+			}
+			ps.close();
+			
+		} catch (SQLException sqle) {
+			GWT.log(sqle.toString());
+			sqle.printStackTrace();
+		}
+		return info;
+	}
+	
+	//get last 6 month topic chart
+	@Override
+	public AdminChartResume getChartTopics() throws IllegalArgumentException {
+		AdminChartResume info = new AdminChartResume();
+		try {
+			String Query = "select * from admin_chart_topics";
+			
+			PreparedStatement ps = conn.prepareStatement(Query);
+			ResultSet result = ps.executeQuery();
+			//get values
+			int i=6;
+			while (result.next()) {
+				info.months[i] = result.getString("month");
+				info.totals[i] = result.getInt("topics");
+				i--;
+			}
+			ps.close();
+			
+		} catch (SQLException sqle) {
+			GWT.log(sqle.toString());
+			sqle.printStackTrace();
+		}
+		
+		
+		return info;
+	}
+	
 	// get users list
 	@Override
 	public List<User> getUserList(String opcion)
@@ -91,10 +177,10 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 		try {
 			String Query = "";
 
-			if (opcion.equals("all")) {
-				Query = "SELECT * FROM account_user ORDER BY cod_user ASC";
-			} else if (opcion.equals("old")) {
+			if (opcion.equals("new")) {
 				Query = "SELECT * FROM account_user ORDER BY cod_user DESC";
+			} else if (opcion.equals("old")) {
+				Query = "SELECT * FROM account_user ORDER BY cod_user ASC";
 			} else {
 				Query = "SELECT * FROM account_user WHERE ";
 				Query += "name_user LIKE '%" + opcion + "%'  OR lastname_user LIKE '%" + opcion
@@ -127,40 +213,42 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	}
 	
 	// user info validation
-		@Override
-		public User authenticateAdmin(String user, String pass) throws IllegalArgumentException {
-			User miuser = null;
+	@Override
+	public User authenticateAdmin(String user, String pass) throws IllegalArgumentException {
+		User miuser = null;
 
-			try {
-				// consultamos a base de datos
-				String Query = "SELECT * FROM account_administrator WHERE mail_admin = '"
-						+ user.toUpperCase() + "' AND password_admin = '" + pass+"' LIMIT 1";
-				
-				PreparedStatement ps = conn.prepareStatement(Query);
-				ResultSet result = ps.executeQuery();
-				// recorremos resultado
-				while (result.next()) {
+		try {
+			// consultamos a base de datos
+			String Query = "SELECT * FROM account_administrator WHERE mail_admin = '"
+					+ user.toUpperCase() + "' AND password_admin = '" + pass+"' LIMIT 1";
+			
+			PreparedStatement ps = conn.prepareStatement(Query);
+			ResultSet result = ps.executeQuery();
+			// recorremos resultado
+			while (result.next()) {
 
-					miuser = new User(result.getString("cod_admin"), 
-							result.getString("mail_admin"), 
-							result.getString("name_admin"), 
-							result.getString("lastname_admin"), 
-							null,
-							"Administrator", 
-							null,
-							"ASMOP", 
-							result.getString("password_admin"), 
-							null, 
-							null);
-				}
-				result.close();
-				ps.close();
-			} catch (SQLException sqle) {
-				GWT.log(sqle.toString());
-				sqle.printStackTrace();
+				miuser = new User(result.getString("cod_admin"), 
+						result.getString("mail_admin"), 
+						result.getString("name_admin"), 
+						result.getString("lastname_admin"), 
+						null,
+						"Administrator", 
+						null,
+						"ASMOP", 
+						result.getString("password_admin"), 
+						null, 
+						null);
 			}
-			return miuser;
+			result.close();
+			ps.close();
+		} catch (SQLException sqle) {
+			GWT.log(sqle.toString());
+			sqle.printStackTrace();
 		}
+
+		
+		return miuser;
+	}
 	
 
 	/*
@@ -255,6 +343,9 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			GWT.log(sqle.toString());
 			sqle.printStackTrace();
 		}
+		//log date connection
+		if(miuser!=null)
+			saveDateLogin(miuser.getId()); 
 		return miuser;
 	}
 
@@ -1168,33 +1259,6 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	 * FILES----------------------------------------------------------------
 	 * --------------
 	 */
-	// Live Plot
-	@Override
-	public Boolean LivePlot(String iduser, List<String> idfiles)
-			throws IllegalArgumentException {
-		// servlet context to find path
-		ServletContext context = this.getServletContext();
-		// files configuration
-		List<UserFile> files = this.getUserFilesPlot(iduser);
-
-		// set command for terminal
-		String commandTerminal = "set terminal canvas jsdir './js/'  mousing;"
-				+ "set output '" + context.getRealPath("plots") + "/" + iduser
-				+ ".html';" + "set autoscale;";
-		// plot files
-		int cont = 0;
-		commandTerminal += "plot ";
-		for (UserFile f : files) {
-			commandTerminal += " '" + context.getRealPath("files") + "/"
-					+ f.getIdfile() + ".txt' title '" + f.getTitle()
-					+ "' with dots";
-			if (cont < files.size() - 1)
-				commandTerminal += ",";
-			cont++;
-		}
-		return GnuplotLoad.setCommand(commandTerminal, context);
-
-	}
 
 	// create image in
 	// 2d-------------------------------------------------------------------------------------------------------
@@ -1659,6 +1723,27 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 		}
 	}
 
+	// save login date from user
+	private void saveDateLogin(String cod_user) {
+		System.err.println("UPDATE DATE USER LOGGED");
+		// set new date to login
+		try {
+			// actualizamos usuario
+			String Query = " UPDATE account_user SET lastconnection_user = CURRENT_TIMESTAMP WHERE cod_user='" + cod_user + "'";
+			// execute query
+			PreparedStatement ps = conn.prepareStatement(Query);
+			ResultSet result = ps.executeQuery();
+
+			result.close();
+			ps.close();
+		} catch (SQLException sqle) {
+			GWT.log(sqle.toString());
+			sqle.printStackTrace();
+		}
+	}
+	
+	
+	
 	// get user files selecterd for metrics
 	private List<UserFile> getFullFilesMetric(String user) {
 		List<UserFile> listFiles = new ArrayList<UserFile>();
@@ -1705,5 +1790,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 		}
 		return listFiles;
 	}
+
+	
 
 }// end class

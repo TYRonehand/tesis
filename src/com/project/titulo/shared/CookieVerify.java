@@ -5,18 +5,16 @@ import com.google.gwt.user.client.Cookies;
 
 public class CookieVerify {
 	// variable names
-	private Date time = new Date(new Date().getTime() + (1000 * 60 * 60 * 2));
-	private String iduser = "MOPuser";
-	private String idmail = "MOPmail";
-	private String idurl = "MOPurl";
-	private String idtopic = "MOPtopic";
+	private Date time = new Date(new Date().getTime() + (1000 * 60 * 60 * (1)));//milisecond*second*minutes*hour
+	private String iduser = "iux";
+	private String idurl = "url";
+	private String idtopic = "itx";
 
 	public CookieVerify(Boolean init) {
 		// inicializa cookie
 		if (init) {
 			this.setCookieUser("");
-			this.setCookieIdurl("LOGIN");
-			this.setCookieMail("");
+			this.setCookieIdurl("login");
 			this.setCookieITopic("");
 		}
 
@@ -31,11 +29,6 @@ public class CookieVerify {
 		return this.iduser;
 	}
 
-	private String getIdmail() {
-		return this.idmail;
-	}
-
-
 	private String getIdurl() {
 		return idurl;
 	}
@@ -44,17 +37,10 @@ public class CookieVerify {
 		return idtopic;
 	}
 
-
 	// cookie id
 	public void setCookieUser(String value) {
 		Cookies.setCookie(getIduser(), value, getTime());
 	}
-
-	// cookie mail
-	public void setCookieMail(String value) {
-		Cookies.setCookie(getIdmail(), value, getTime());
-	}
-
 
 	// cookieurl
 	public void setCookieIdurl(String value) {
@@ -66,18 +52,10 @@ public class CookieVerify {
 		Cookies.setCookie(getIdtopic(), value, getTime());
 	}
 
-
 	// cookie id
 	public String getCookieUser() {
 		return Cookies.getCookie(getIduser());
 	}
-
-	// cookie mail
-	public String getCookieMail() {
-		return Cookies.getCookie(getIdmail());
-	}
-
-
 
 	// cookie topic
 	public String getCookieTopic() {
@@ -89,12 +67,10 @@ public class CookieVerify {
 		return Cookies.getCookie(getIdurl());
 	}
 
-
 	// exist cookie created
 	public Boolean CookieExist() {
 		// if all cookies are not empty -> true
-		if (!Cookies.getCookie(getIduser()).isEmpty()
-				&& !Cookies.getCookie(getIdmail()).isEmpty()) {
+		if (!Cookies.getCookie(getIduser()).isEmpty()) {
 			return true;
 		} else// if there is any one empty -> false
 		{
@@ -109,7 +85,6 @@ public class CookieVerify {
 
 		this.setCookieUser("");
 		this.setCookieIdurl("LOGIN");
-		this.setCookieMail("");
 		this.setCookieITopic("");
 	}
 

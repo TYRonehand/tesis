@@ -59,7 +59,6 @@ public class AdminLogin extends Composite {
 				{
 					CookieVerify cok = new CookieVerify(false);
 					cok.setCookieIdurl("admindashboard");
-					cok.setCookieMail(result.getMail());
 					cok.setCookieUser(result.getId());
 					History.newItem("admindashboard");
 				}else{
