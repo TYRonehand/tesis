@@ -170,6 +170,12 @@ public interface ServerService extends RemoteService {
 	List<MetricResults> CalculateSP(String iduser)
 			throws IllegalArgumentException;
 
+	List<MetricResults> CalculateHA(String iduser)
+			throws IllegalArgumentException;
+	
+	List<MetricResults> CalculateHR(String iduser)
+			throws IllegalArgumentException;
+	
 	List<MetricResults> CalculateGD(String iduser)
 			throws IllegalArgumentException;
 

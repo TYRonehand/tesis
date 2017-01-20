@@ -24,12 +24,12 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.project.titulo.client.GoToUrl;
-import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
 import com.project.titulo.client.breadcrumb.BreadWidget;
 import com.project.titulo.shared.ErrorVerify;
+import com.project.titulo.shared.GoToUrl;
+import com.project.titulo.shared.MyStyle;
 import com.project.titulo.shared.model.UserFile;
 
 public class FileWidget extends Composite {
@@ -138,8 +138,7 @@ public class FileWidget extends Composite {
 
 		/* ADD TO PLOT BUTTONCELL */
 		ButtonCell buttonPlot = new ButtonCell();
-		Column<UserFile, String> buttonPlotColumn = new Column<UserFile, String>(
-				buttonPlot) {
+		Column<UserFile, String> buttonPlotColumn = new Column<UserFile, String>( buttonPlot) {
 			@Override
 			public String getValue(UserFile object) {
 				if (object.getPlot() == "1")

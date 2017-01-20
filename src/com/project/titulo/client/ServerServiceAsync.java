@@ -159,6 +159,12 @@ public interface ServerServiceAsync {
 	void CalculateSP(String iduser, AsyncCallback<List<MetricResults>> callback)
 			throws IllegalArgumentException;
 
+	void CalculateHA(String iduser, AsyncCallback<List<MetricResults>> callback)
+			throws IllegalArgumentException;
+
+	void CalculateHR(String iduser, AsyncCallback<List<MetricResults>> callback)
+			throws IllegalArgumentException;
+	
 	void CalculateGD(String iduser, AsyncCallback<List<MetricResults>> callback)
 			throws IllegalArgumentException;
 

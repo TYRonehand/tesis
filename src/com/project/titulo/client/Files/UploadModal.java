@@ -15,12 +15,12 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.project.titulo.client.GoToUrl;
-import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
 import com.project.titulo.shared.ErrorVerify;
 import com.project.titulo.shared.FieldVerifier;
+import com.project.titulo.shared.GoToUrl;
+import com.project.titulo.shared.MyStyle;
 import com.project.titulo.shared.model.UserFile;
 
 public class UploadModal extends DialogBox {

@@ -36,7 +36,7 @@ public class GNVG {
 			mr.setAproximationNameFile(file.getTitle());
 
 			// calculate metric
-			mr.addResult(Calculate(paretoOptime.getListPoints()));// calculate file data
+			mr.addResult(Double.toString(Calculate(paretoOptime.getListPoints())));// calculate file data
 
 			this.ResultList.add(mr);
 
@@ -45,9 +45,9 @@ public class GNVG {
 
 	// calculate one file at time
 	
-	private String Calculate(List<Points> aproximationDataList) {
+	private static double Calculate(List<Points> aproximationDataList) {
 		
-		return String.valueOf(aproximationDataList.size());
+		return aproximationDataList.size();
 	}
 	
 	// get result calculated

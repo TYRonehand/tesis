@@ -25,12 +25,12 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
-import com.project.titulo.client.GoToUrl;
-import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
 import com.project.titulo.shared.CookieVerify;
 import com.project.titulo.shared.ErrorVerify;
+import com.project.titulo.shared.GoToUrl;
+import com.project.titulo.shared.MyStyle;
 import com.project.titulo.shared.model.ResumeTopic;
 
 public class ForumWidget extends Composite {

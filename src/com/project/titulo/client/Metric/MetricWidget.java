@@ -15,7 +15,6 @@ import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.SimplePager.TextLocation;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -23,11 +22,11 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
 import com.project.titulo.client.breadcrumb.BreadWidget;
 import com.project.titulo.shared.ErrorVerify;
+import com.project.titulo.shared.MyStyle;
 import com.project.titulo.shared.model.MetricResults;
 import com.project.titulo.shared.model.UserFile;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -42,35 +41,39 @@ public class MetricWidget extends Composite {
 
 	// uifields
 	@UiField
-	Button metric1Btn;
+	Button spBtn;
 	@UiField
-	Button metric2Btn;
+	Button erBtn;
 	@UiField
-	Button metric3Btn;
+	Button gdBtn;
 	@UiField
-	Button metric4Btn;
+	Button haBtn;
 	@UiField
-	Button metric5Btn;
+	Button hrBtn;
 	@UiField
-	Button metric6Btn;
+	Button onBtn;
+	@UiField
+	Button cmBtn;
 
 	@UiField
-	Button EntropyBtn;
+	Button CalculateHyperAreaBtn;
 	@UiField
-	Button SpacingBtn;
+	Button CalculateSpacingBtn;
 	@UiField
-	Button ERBtn;
+	Button CalculateERBtn;
 	@UiField
-	Button GDistanceBtn;
+	Button CalculateGDistanceBtn;
 	@UiField
-	Button CoverBtn;
+	Button CalculateCoverBtn;
 	@UiField
-	Button gnvgBtn;
+	Button CalculateOnvgBtn;
 
 	@UiField
 	VerticalPanel panel;
 	@UiField
-	VerticalPanel EntropyPanel;
+	VerticalPanel HAreaPanel;
+	@UiField
+	VerticalPanel HAreaRatioPanel;
 	@UiField
 	VerticalPanel SpacingPanel;
 	@UiField
@@ -80,7 +83,7 @@ public class MetricWidget extends Composite {
 	@UiField
 	VerticalPanel CoverPanel;
 	@UiField
-	VerticalPanel gnvgPanel;
+	VerticalPanel onvgPanel;
 
 	// Create a CellTable.
 	private CellTable<UserFile> table = null;
@@ -99,12 +102,13 @@ public class MetricWidget extends Composite {
 		this.IDUSER = iduser;
 		initWidget(uiBinder.createAndBindUi(this));
 		// set style to buttons from bootstrap
-		this.metric1Btn.addStyleName(ms.getButtonStyle(0));
-		this.metric2Btn.addStyleName(ms.getButtonStyle(0));
-		this.metric3Btn.addStyleName(ms.getButtonStyle(0));
-		this.metric4Btn.addStyleName(ms.getButtonStyle(0));
-		this.metric5Btn.addStyleName(ms.getButtonStyle(0));
-		this.metric6Btn.addStyleName(ms.getButtonStyle(0));
+		this.spBtn.addStyleName(ms.getButtonStyle(0));
+		this.erBtn.addStyleName(ms.getButtonStyle(0));
+		this.gdBtn.addStyleName(ms.getButtonStyle(0));
+		this.haBtn.addStyleName(ms.getButtonStyle(0));
+		this.hrBtn.addStyleName(ms.getButtonStyle(0));
+		this.onBtn.addStyleName(ms.getButtonStyle(0));
+		this.cmBtn.addStyleName(ms.getButtonStyle(0));
 		/*
 		this.SpacingBtn.addStyleName(ms.getOkStyle());
 		this.EntropyBtn.addStyleName(ms.getCancelStyle());
@@ -328,10 +332,54 @@ public class MetricWidget extends Composite {
 				});
 	}
 
-	private void SMetric(String iduser) {
-		Window.alert("Metric not available");
+	private void HA(String iduser) {
+
+		serverService.CalculateHA(iduser,
+				new AsyncCallback<List<MetricResults>>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						ErrorVerify.getErrorAlert("offline");
+					}
+
+					@Override
+					public void onSuccess(List<MetricResults> result) {
+
+						if (result.size() > 0) {
+							RootPanel.get("GWTcontainer").clear();
+							// cualquier otro caso sera enviado al login
+							RootPanel.get("GWTcontainer").add(new BreadWidget("METRIC"));
+							RootPanel.get("GWTcontainer").add(new ResultsWidget(IDUSER, result,"Hyper-Area"));
+						} else {
+							ErrorVerify.getErrorAlert("baddimension");
+						}
+					}
+				});
 	}
 
+	private void HR(String iduser) {
+		serverService.CalculateHR(iduser,
+				new AsyncCallback<List<MetricResults>>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						ErrorVerify.getErrorAlert("offline");
+					}
+
+					@Override
+					public void onSuccess(List<MetricResults> result) {
+						if (result.size() > 0) {
+							RootPanel.get("GWTcontainer").clear();
+							// cualquier otro caso sera enviado al login
+							RootPanel.get("GWTcontainer").add(new BreadWidget("METRIC"));
+							RootPanel.get("GWTcontainer").add(new ResultsWidget(IDUSER, result,"Error-Ratio"));
+						} else {
+							ErrorVerify.getErrorAlert("baddimension");
+						}
+					}
+				});
+	}
+	
 	private void gnvgMetric(String iduser) {
 		serverService.CalculateGNVG(iduser,
 				new AsyncCallback<List<MetricResults>>() {
@@ -358,109 +406,134 @@ public class MetricWidget extends Composite {
 	
 	
 	/* SELECT METRIC INFO */
-	@UiHandler("metric1Btn")
-	void onMetric1BtnClick(ClickEvent event) {
-		this.EntropyPanel.setVisible(true);
+	@UiHandler("haBtn")
+	void onhaBtnClick(ClickEvent event) {
+		this.HAreaPanel.setVisible(true);
+		this.HAreaRatioPanel.setVisible(false);
 		this.SpacingPanel.setVisible(false);
 		this.ERPanel.setVisible(false);
 		this.GDistancePanel.setVisible(false);
 		this.CoverPanel.setVisible(false);
-		this.gnvgPanel.setVisible(false);
+		this.onvgPanel.setVisible(false);
 	}
-
-	@UiHandler("metric2Btn")
-	void onMetric2BtnClick(ClickEvent event) {
-		this.EntropyPanel.setVisible(false);
+	
+	@UiHandler("hrBtn")
+	void onHrBtnClick(ClickEvent event) {
+		this.HAreaPanel.setVisible(false);
+		this.HAreaRatioPanel.setVisible(true);
+		this.SpacingPanel.setVisible(false);
+		this.ERPanel.setVisible(false);
+		this.GDistancePanel.setVisible(false);
+		this.CoverPanel.setVisible(false);
+		this.onvgPanel.setVisible(false);
+	}
+	
+	@UiHandler("spBtn")
+	void onspBtnClick(ClickEvent event) {
+		this.HAreaPanel.setVisible(false);
+		this.HAreaRatioPanel.setVisible(false);
 		this.SpacingPanel.setVisible(true);
 		this.ERPanel.setVisible(false);
 		this.GDistancePanel.setVisible(false);
 		this.CoverPanel.setVisible(false);
-		this.gnvgPanel.setVisible(false);
+		this.onvgPanel.setVisible(false);
 	}
 
-	@UiHandler("metric3Btn")
-	void onMetric3BtnClick(ClickEvent event) {
-		this.EntropyPanel.setVisible(false);
+	@UiHandler("erBtn")
+	void onerBtnClick(ClickEvent event) {
+		this.HAreaPanel.setVisible(false);
+		this.HAreaRatioPanel.setVisible(false);
 		this.SpacingPanel.setVisible(false);
 		this.ERPanel.setVisible(true);
 		this.GDistancePanel.setVisible(false);
 		this.CoverPanel.setVisible(false);
-		this.gnvgPanel.setVisible(false);
+		this.onvgPanel.setVisible(false);
 	}
 
-	@UiHandler("metric4Btn")
-	void onMetric4BtnClick(ClickEvent event) {
-		this.EntropyPanel.setVisible(false);
+	@UiHandler("gdBtn")
+	void ongdBtnClick(ClickEvent event) {
+		this.HAreaPanel.setVisible(false);
+		this.HAreaRatioPanel.setVisible(false);
 		this.SpacingPanel.setVisible(false);
 		this.ERPanel.setVisible(false);
 		this.GDistancePanel.setVisible(true);
 		this.CoverPanel.setVisible(false);
-		this.gnvgPanel.setVisible(false);
+		this.onvgPanel.setVisible(false);
 	}
 
-	@UiHandler("metric5Btn")
-	void onMetric5BtnClick(ClickEvent event) {
-		this.EntropyPanel.setVisible(false);
+	@UiHandler("cmBtn")
+	void oncmBtnClick(ClickEvent event) {
+		this.HAreaPanel.setVisible(false);
+		this.HAreaRatioPanel.setVisible(false);
 		this.SpacingPanel.setVisible(false);
 		this.ERPanel.setVisible(false);
 		this.GDistancePanel.setVisible(false);
 		this.CoverPanel.setVisible(true);
-		this.gnvgPanel.setVisible(false);
+		this.onvgPanel.setVisible(false);
 	}
 	
-	@UiHandler("metric6Btn")
-	void onMetric6BtnClick(ClickEvent event) {
-		this.EntropyPanel.setVisible(false);
+	@UiHandler("onBtn")
+	void ongnBtnClick(ClickEvent event) {
+		this.HAreaPanel.setVisible(false);
+		this.HAreaRatioPanel.setVisible(false);
 		this.SpacingPanel.setVisible(false);
 		this.ERPanel.setVisible(false);
 		this.GDistancePanel.setVisible(false);
 		this.CoverPanel.setVisible(false);
-		this.gnvgPanel.setVisible(true);
+		this.onvgPanel.setVisible(true);
 	}
 
 	/* METRIC CALCULATE */
-	@UiHandler("EntropyBtn")
-	void onEntropyBtnClick(ClickEvent event) {
+	@UiHandler("CalculateHyperAreaBtn")
+	void onCalculateHyperAreaBtnClick(ClickEvent event) {
 		if(table.getRowCount()>0)
-			SMetric(this.IDUSER);
+			HA(this.IDUSER);
 		else
 			ErrorVerify.getErrorAlert("nofiles");
 	}
-
-	@UiHandler("SpacingBtn")
-	void onSpacingBtnClick(ClickEvent event) {
+	
+	@UiHandler("CalculateHyperAreaRatioBtn")
+	void onCalculateHyperAreaRatioBtnClick(ClickEvent event) {
+		if(table.getRowCount()>0)
+			HR(this.IDUSER);
+		else
+			ErrorVerify.getErrorAlert("nofiles");
+	}
+	
+	@UiHandler("CalculateSpacingBtn")
+	void onCalculateSpacingBtnClick(ClickEvent event) {
 		if(table.getRowCount()>0)
 			Spacing(this.IDUSER);
 		else
 			ErrorVerify.getErrorAlert("nofiles");
 	}
 
-	@UiHandler("ERBtn")
-	void onERBtnClick(ClickEvent event) {
+	@UiHandler("CalculateERBtn")
+	void onCalculateERBtnClick(ClickEvent event) {
 		if(table.getRowCount()>0)
 			ERatio(this.IDUSER);
 		else
 			ErrorVerify.getErrorAlert("nofiles");
 	}
 
-	@UiHandler("GDistanceBtn")
-	void onGDistanceBtnClick(ClickEvent event) {
+	@UiHandler("CalculateGDistanceBtn")
+	void onCalculateGDistanceBtnClick(ClickEvent event) {
 		if(table.getRowCount()>0)
 			GDistance(this.IDUSER);
 		else
 			ErrorVerify.getErrorAlert("nofiles");
 	}
 
-	@UiHandler("CoverBtn")
-	void onCoverBtnClick(ClickEvent event) {
+	@UiHandler("CalculateCoverBtn")
+	void onCalculateCoverBtnClick(ClickEvent event) {
 		if(table.getRowCount()>0)
 			CMetric(this.IDUSER);
 		else
 			ErrorVerify.getErrorAlert("nofiles");
 	}
 	
-	@UiHandler("gnvgBtn")
-	void onGnvgBtnClick(ClickEvent event) {
+	@UiHandler("CalculateOnvgBtn")
+	void onCalculateGnvgBtnClick(ClickEvent event) {
 		if(table.getRowCount()>0)
 			gnvgMetric(this.IDUSER);
 		else

@@ -12,10 +12,8 @@ public class Spacing {
 
 	private List<UserFile> FileList;
 
-	private List<MetricResults> ResultList = new ArrayList<MetricResults>();// result
-																			// are
-																			// added
-																			// here
+	// result are added here
+	private List<MetricResults> ResultList = new ArrayList<MetricResults>();
 
 	// load files for metric
 	public Spacing(List<UserFile> listPFcalc) {
@@ -40,8 +38,7 @@ public class Spacing {
 			mr.setAproximationNameFile(file.getTitle());
 
 			// calculate metric
-			mr.addResult(Calculate(paretoOptime.getListPoints()));// calculate
-																	// file data
+			mr.addResult(Double.toString(Calculate(paretoOptime.getListPoints())));// calculate file data
 
 			this.ResultList.add(mr);
 
@@ -50,7 +47,7 @@ public class Spacing {
 
 	// calculate one file at time
 	
-	private String Calculate(List<Points> aproximationDataList) {
+	private static double Calculate(List<Points> aproximationDataList) {
 		List<Points> auxDataList = aproximationDataList;
 		double flag = 0.0, F = 0.0, D = 0.0, pro = 0.0, dif = 0.0;
 		double d[] = new double[aproximationDataList.size()];
@@ -82,7 +79,7 @@ public class Spacing {
 		}
 		dif = dif / (aproximationDataList.size() - 1);
 		dif = Math.sqrt(dif);
-		return String.format("%.6f", dif);
+		return dif;
 	}
 	
 	// get result calculated

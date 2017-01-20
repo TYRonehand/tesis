@@ -176,3 +176,12 @@ celltable tbody tr {
     font-weight: 700;
     font-family: Roboto,'Helvetica Neue',Helvetica,Arial,sans-serif;
 }
+
+.buttonAdd{
+	height:22px;
+	width:22px;
+    background: /assets/img/tables/add.png;
+    border: none;
+}
+
+

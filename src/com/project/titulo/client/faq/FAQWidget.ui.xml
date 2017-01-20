@@ -119,6 +119,15 @@
 									you deside just click in "plot" button. Well that's all Folks!!
 								</p>
 							</div>
+							
+							
+							<g:VerticalPanel horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" width="100%" spacing="10">
+								<g:Image url="assets/img/home_example.svg"  width="60%" ></g:Image>
+							</g:VerticalPanel>
+
+							
+							
+							
 						</div>
 					</div>
 

@@ -28,17 +28,11 @@ public class ErrorRatio {
 
 	// go throw list
 	private void Start() {
-		System.err.print("\nStart");
-		List<UserFile> auxFileList = this.aproxFileList;
-		System.err.print("\nauxFileSize: " + auxFileList.size());
 		// files
 		for (UserFile file : this.aproxFileList) {
 			// text to double points
 			TextToDouble paretoOptime = new TextToDouble();
 			paretoOptime.create(file.getData(), this.axis_size);
-
-			System.err.print("\nparetoOptime POINT Size: "
-					+ paretoOptime.getListPoints().size());
 
 			// set object results
 			MetricResults mr = new MetricResults();
@@ -54,26 +48,19 @@ public class ErrorRatio {
 					TextToDouble paretoFrontPoint = new TextToDouble();
 					paretoFrontPoint.create(auxfile.getData(), this.axis_size);
 
-					System.err.print("\nparetoFrontPoint POINT Size: "
-							+ paretoFrontPoint.getListPoints().size());
-
 					// calculate metric
-					String value = Calculate(paretoFrontPoint.getListPoints(),
-							paretoOptime.getListPoints());
-					System.err.print("\nCalculated VALUE:" + value);
+					String value = Double.toString(Calculate(paretoFrontPoint.getListPoints(), paretoOptime.getListPoints()));
 
 					if (!value.isEmpty() && value != null)
 						mr.addResult(value);
 					else
 						mr.addResult("Error");
 				} else {
-					System.err.println("different dimension");
 					// fail dimension
 					mr.addResult("Wronge dimension");
 				}
 			}
 
-			System.err.print("result added!");
 			this.ResultList.add(mr);
 
 		}
@@ -82,7 +69,7 @@ public class ErrorRatio {
 
 	// calculate one file at time
 	
-	private String Calculate(List<Points> paretoDataList, List<Points> paretoOptime) {
+	private static double Calculate(List<Points> paretoDataList, List<Points> paretoOptime) {
 		float errori = 0;
 			for (Points po : paretoOptime) {
 				for (Points pf : paretoDataList) {
@@ -98,7 +85,7 @@ public class ErrorRatio {
 			}
 			double Nsize = paretoOptime.size();
 			double ER = (1 - (errori / Nsize));
-			return String.format("%.6f", ER);
+			return ER;
 	}
 
 	

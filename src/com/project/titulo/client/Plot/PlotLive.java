@@ -9,6 +9,7 @@ import java.util.List;
 
 
 
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -19,10 +20,10 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
 import com.project.titulo.shared.ErrorVerify;
+import com.project.titulo.shared.MyStyle;
 import com.project.titulo.shared.TextToDouble;
 import com.project.titulo.shared.model.UserFile;
 import com.google.gwt.uibinder.client.UiHandler;

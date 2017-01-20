@@ -17,42 +17,92 @@
 		<!-- PANELE INICIO -->
 		<div class="row">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<div class="panel" >
-
-					<!--Titulo -->
-					<div class="panel-heading" align="left">
-						<h3 class="panel-title">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
-								href="#collapseOne">
-								Welcome to ASMOP web.
-							</a>
-						</h3>
-					</div>
-
-					<!--Texto -->
-					<div id="collapseOne" class="panel-collapse collapse in">
-						<div class="panel-body">
-
-							<div class="panel-text" align="justify">
-								<p>Today there are various techniques of multi-objective optimization study areas regarding operations research. However, most of these are considered as the basis for analysis guide the Pareto fronts with certain characteristics and often require an initial point for starting your searches. Besides this they are only able to deliver a single solution for each run. On the other hand there are areas of recent research that revolve around metrics and dynamic population that deliver evolutionary algorithms, this is where it seeks to provide a tool capable of generating a graphical representation of the solutions or Pareto fronts delivered by algorithms and metrics that facilitate performance of this study.
+			<section class="panel">
+				<header class="panel-heading">
+					<h3 class="panel-title"> Welcome to ASMOP.</h3>
+				</header>
+				<div class="panel-body">
+					
+					<div class="panel-text" align="justify">
+						<p>Today there are various techniques of multi-objective optimization study areas regarding operations research. However, most of these are considered as the basis for analysis guide the Pareto fronts with certain characteristics and often require an initial point for starting your searches. Besides this they are only able to deliver a single solution for each run. On the other hand there are areas of recent research that revolve around metrics and dynamic population that deliver evolutionary algorithms, this is where it seeks to provide a tool capable of generating a graphical representation of the solutions or Pareto fronts delivered by algorithms and metrics that facilitate performance of this study.
 In addition to the above, in the current project seeks to develop a robust and scalable tool that allows future incorporate more features belonging to the area of ​​operations and generate an academic community.
-								</p>
-							</div>
-
-
-							<div class="panel-image">
-								<g:Image url="assets/img/logo.png" addStyleNames='{style.image-logo}'
-									width="270px" height="270px"></g:Image>
-							</div>
-
-							<div class="panel-text" align="center">
-								<p align="center">@2016</p>
-							</div>
-						</div>
+						</p>
 					</div>
-
+					
 				</div>
+
+			</section>
+			
 			</div>
+			
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+				<section class="panel">
+					<header class="panel-heading">
+						<h3 class="panel-title"> GnuPlot.</h3>
+					</header>
+					<div class="panel-body">
+						
+						<div class="panel-image">
+							<g:Image url="assets/img/examples/gnuplot.svg" addStyleNames='{style.image-logo}'
+								width="270px" height="270px"></g:Image>
+						</div>
+						
+						<div class="panel-text" align="justify">
+							<p>Gnuplot is a command-line program that can generate two- and three-dimensional plots of functions, data, and data fits. It is frequently used for publication-quality graphics as well as education.</p>
+						</div>
+						
+	
+					</div>
+	
+				</section>
+			</div>
+			
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+				<section class="panel">
+					<header class="panel-heading">
+						<h3 class="panel-title"> GWT Highcharts.</h3>
+					</header>
+					<div class="panel-body">
+						
+						<div class="panel-image">
+							<g:Image url="assets/img/examples/chart.svg" addStyleNames='{style.image-logo}'
+								width="270px" height="270px"></g:Image>
+						</div>
+						
+						<div class="panel-text" align="justify">
+							<p>Gwt Hichcharts is a freely available open source library that provides an elegant and feature complete approach for including Highcharts and Highstock visualizations within a GWT application using pure Java code (including GWT widget libraries, such as SmartGWT or Ext GWT.)</p>
+						</div>
+						
+	
+					</div>
+	
+				</section>
+			</div>
+			
+			
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+				<section class="panel">
+					<header class="panel-heading">
+						<h3 class="panel-title"> Metrics.</h3>
+					</header>
+					<div class="panel-body">
+						
+						<div class="panel-image">
+							<g:Image url="assets/img/metric/spacing.png" addStyleNames='{style.image-logo}'
+								width="270px" ></g:Image>
+						</div>
+						
+						<div class="panel-text" align="justify">
+							<p>The metrics allow to evaluate and obtain meaningful comparisons to certain approach algorithms that seek deliver solutions to multi-objective operation problems. Should consider that a metric alone can not express which solution is of better quality, for which often helps along with others in order to determine the efficiency or performance of a set of Pareto Optimo solutions</p>
+						</div>
+						
+	
+					</div>
+	
+				</section>
+			</div>
+			
+			
 		</div>
 	
 	</g:HTMLPanel>

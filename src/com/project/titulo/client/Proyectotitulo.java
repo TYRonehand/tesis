@@ -6,17 +6,22 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 import com.project.titulo.shared.CookieVerify;
+import com.project.titulo.shared.GoToUrl;
 
-//Entry Point
+/**
+ * 
+ * @author Carlos Alfredo Gutierrez Acevedo
+ * @version 2.0.1
+ * 
+ */
 public class Proyectotitulo implements EntryPoint {
-	// cookie
+	
 	private CookieVerify mycookie=new CookieVerify(false);
 	private GoToUrl url = new GoToUrl();
 	
 	public void onModuleLoad() 
 	{
 		History.fireCurrentHistoryState();
-		//change token event
 		History.addValueChangeHandler(new ValueChangeHandler<String>() {
 			   @Override
 			   public void onValueChange(ValueChangeEvent<String> event) {
@@ -38,9 +43,14 @@ public class Proyectotitulo implements EntryPoint {
 		
 		
 	}
-	
+	/**
+	 * Validate the token in the url exist and load the correct place in the website.
+	 * @param historyToken This parameter is a token used to recognize where is located de user in the website.
+	 * @return this dont return anything just load the correspondig widgets.
+	 */
 	private void TokenLoader(String historyToken){
 		CookieVerify mycookieaux=new CookieVerify(false);
+		
 		//token known
 		if(historyToken.length()>1)
 		{	

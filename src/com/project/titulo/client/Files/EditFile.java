@@ -13,11 +13,12 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.project.titulo.client.GoToUrl;
-import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
 import com.project.titulo.shared.ErrorVerify;
+import com.project.titulo.shared.FieldVerifier;
+import com.project.titulo.shared.GoToUrl;
+import com.project.titulo.shared.MyStyle;
 import com.project.titulo.shared.model.UserFile;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -196,34 +197,51 @@ public class EditFile extends Composite {
 		}
 	}
 
-	private void EditDataFile(UserFile file) {
-		UserFile edited = file;
-		edited.setTitle(this.titleBox.getText());
-		edited.setDimension(this.dimensionList.getItemText(
-				this.dimensionList.getSelectedIndex()).toString());
-		edited.setLabelx(this.labelxBox.getText());
-		edited.setLabely(this.labelyBox.getText());
-		edited.setLabelz(this.labelzBox.getText());
-		edited.setDescription(this.descriptionBox.getText());
-		edited.setData(this.paretoSetBox.getText());
-
-		// update request
-		serverService.setFile(edited, new AsyncCallback<Boolean>() {
-			@Override
-			public void onFailure(Throwable caught) {
-				ErrorVerify.getErrorAlert("offline");
+	private void EditDataFile(UserFile file) 
+	{
+		int dimension = Integer.parseInt(this.dimensionList.getItemText(this.dimensionList.getSelectedIndex()));
+		
+		//validation
+		if (this.paretoSetBox.getText().isEmpty()){
+			ErrorVerify.getErrorAlert("empty");
+		}else if(FieldVerifier.checkDataDimension(dimension, this.paretoSetBox.getText())){
+			ErrorVerify.getErrorAlert("baddimension");
+		}else {
+			// verify format
+			if (FieldVerifier.isString(this.paretoSetBox.getText())) {
+		
+				UserFile edited = file;
+				edited.setTitle(this.titleBox.getText());
+				edited.setDimension(this.dimensionList.getItemText(
+						this.dimensionList.getSelectedIndex()).toString());
+				edited.setLabelx(this.labelxBox.getText());
+				edited.setLabely(this.labelyBox.getText());
+				edited.setLabelz(this.labelzBox.getText());
+				edited.setDescription(this.descriptionBox.getText());
+				edited.setData(this.paretoSetBox.getText());
+				
+				// update request
+				serverService.setFile(edited, new AsyncCallback<Boolean>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						ErrorVerify.getErrorAlert("offline");
+					}
+		
+					@Override
+					public void onSuccess(Boolean result) {
+						if (result) {
+							ErrorVerify.getErrorAlert("successupdate");
+							url.GoTo("files", USERFILE.getIduser(), null);
+						} else {
+							ErrorVerify.getErrorAlert("failupdate");
+						}
+					}
+				});
+			} else {
+				ErrorVerify.getErrorAlert("noletters");
 			}
 
-			@Override
-			public void onSuccess(Boolean result) {
-				if (result) {
-					ErrorVerify.getErrorAlert("successupdate");
-					url.GoTo("files", USERFILE.getIduser(), null);
-				} else {
-					ErrorVerify.getErrorAlert("failupdate");
-				}
-			}
-		});
+		}
 	}
 
 	// cancel button event

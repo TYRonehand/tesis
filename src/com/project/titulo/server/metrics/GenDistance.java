@@ -39,8 +39,7 @@ public class GenDistance {
 					paretoFrontPoint.create(auxfile.getData(), this.axis_size);
 
 					// calculate metric
-					String value = Calculate(paretoFrontPoint.getListPoints(),
-							paretoOptime.getListPoints());
+					String value = Double.toString(Calculate(paretoFrontPoint.getListPoints(), paretoOptime.getListPoints()));
 
 					if (!value.isEmpty() && value != null)
 						mr.addResult(value);
@@ -56,7 +55,7 @@ public class GenDistance {
 	}
 
 	// calculate one file at time
-	private String Calculate(List<Points> paretoDataList, List<Points> aproximationDataList) {
+	private static double Calculate(List<Points> paretoDataList, List<Points> aproximationDataList) {
 		double D, F, G, flag;
 		D = 0.0;
 		G = 0.0;
@@ -81,7 +80,7 @@ public class GenDistance {
 		}
 		G = (Math.pow(G, 0.5));
 		G = (G / aproximationDataList.size());
-		return String.format("%.6f", G);
+		return  G;
 	}
 
 	// get result calculated

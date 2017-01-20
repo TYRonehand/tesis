@@ -6,17 +6,17 @@
 		padding:28px;
 	}
 	.title404{
-		color: black;
-		font-family: 'Raleway', sans-serif;
-		font-size: 36px;
-		font-weight: 800;
-		line-height: 36px;
-		margin: 0 0 24px;
-		text-align: center;
+		color: #333;
+		font-family: Roboto,'Helvetica Neue',Helvetica,Arial,sans-serif;  
+		font-size: 45px;
+		margin: 0 0 10px;
+    	font-weight: 700;
+    	line-height: 1.1;
+    	color: inherit;
 	}
 	.text404{
-		color: black;
-		font-family: 'Raleway', sans-serif;
+		color: #333;
+		font-family: Lato,sans-serif;;  
 		font-size: 24px;
 		font-weight: 600;
 		line-height: 36px;
@@ -33,9 +33,10 @@
 					<div class="btn-group btn-group-justified">
 						
 						<g:VerticalPanel ui:field="panel404" width="100%" addStyleNames='{style.panel404}' horizontalAlignment="ALIGN_CENTER" height="100%">
-							<g:Image url="assets/img/logo.png"/>
-							<g:Label addStyleNames='{style.title404}' horizontalAlignment="ALIGN_CENTER" width="100%" text="404 Not Found"></g:Label>
-							<g:Label addStyleNames='{style.text404}' horizontalAlignment="ALIGN_CENTER" width="100%" text="Oops... Looks like the page you we&apos;re looking for does not exist. Sorry about that."></g:Label>
+							<g:Image url="assets/img/logofix2.svg" width= "65%"/>
+							<g:Image url="assets/img/warning.png" width= "290px"/>
+							<g:Label addStyleNames='{style.title404}' horizontalAlignment="ALIGN_CENTER" width="100%" text="Error 404"></g:Label>
+							<g:Label addStyleNames='{style.text404}' horizontalAlignment="ALIGN_CENTER" width="100%" text="This page is not available on the site. You probably entered a broken link or the page you are looking for is outdated (error 404)."></g:Label>
 						</g:VerticalPanel>
 						
 			

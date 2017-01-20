@@ -16,7 +16,7 @@
 	<g:HTMLPanel>
 		<g:VerticalPanel width="100%" horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" height="">
 			<g:VerticalPanel  addStyleNames='{style.loginPanel}' horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" height="295px" width="287px" >
-				<g:Image url="assets/img/banner3.png" width="90%"/>
+				<g:Image url="assets/img/logofix2.svg" width="100%"/>
 				<g:Label text="Administration"  addStyleNames='{style.title}' height="41px"/>
 				<g:Label text="User"/>
 				<g:TextBox ui:field="userBox" width="84%" maxLength="30"/>

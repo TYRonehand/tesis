@@ -46,18 +46,20 @@
 						<div class="btn-group btn-group-justified">
 							<g:VerticalPanel ui:field="menu" addStyleNames='{style.panel}'
 								width="100%">
-								<g:Button ui:field="metric2Btn" addStyleNames='{style.submitBtn}'
+								<g:Button ui:field="spBtn" addStyleNames='{style.submitBtn}'
 									width="100%">Spacing</g:Button>
-								<g:Button ui:field="metric3Btn" addStyleNames='{style.submitBtn}'
+								<g:Button ui:field="erBtn" addStyleNames='{style.submitBtn}'
 									width="100%">Error-Ratio</g:Button>
-								<g:Button ui:field="metric4Btn" addStyleNames='{style.submitBtn}'
+								<g:Button ui:field="gdBtn" addStyleNames='{style.submitBtn}'
 									width="100%">Gen-Distance</g:Button>
-								<g:Button ui:field="metric5Btn" addStyleNames='{style.submitBtn}'
+								<g:Button ui:field="cmBtn" addStyleNames='{style.submitBtn}'
 									width="100%">C-Metric</g:Button>
-								<g:Button ui:field="metric1Btn" addStyleNames='{style.submitBtn}'
-									width="100%">S-Metric</g:Button>
-								<g:Button ui:field="metric6Btn" addStyleNames='{style.submitBtn}'
-									width="100%">GNVG</g:Button>
+								<g:Button ui:field="haBtn" addStyleNames='{style.submitBtn}'
+									width="100%">Hyper-Area</g:Button>
+								<g:Button ui:field="hrBtn" addStyleNames='{style.submitBtn}'
+									width="100%">Hyper-Area Ratio</g:Button>
+								<g:Button ui:field="onBtn" addStyleNames='{style.submitBtn}'
+									width="100%">ONVG</g:Button>
 							</g:VerticalPanel>
 						</div>
 
@@ -79,13 +81,23 @@
 									describes the spread of the vectors in PFknown. This Pareto
 									noncompliant metric measures the distance variance of
 									neighboring vectors in PFknown. Equations define this metric.</g:Label>
-							</g:VerticalPanel>
-							<g:VerticalPanel horizontalAlignment="ALIGN_CENTER"
-								width="100%">
-								<g:Image url="assets/img/metric/spacing.png" width="233px"
-									height="140px"></g:Image>
-							</g:VerticalPanel>
-							<g:VerticalPanel width="100%">
+							
+								<g:HTMLPanel>
+									<div class="hidden-lg hidden-md hidden-sm col-xs-12">
+										<g:VerticalPanel width="100%" verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER">
+											<g:Image url="assets/img/metric/spacing.svg" width="90%"></g:Image>
+										</g:VerticalPanel>
+									</div>
+									
+									<div class="col-lg-12 col-md-12 col-sm-12 hidden-xs">
+										<g:VerticalPanel width="100%" verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER">
+											<g:Image url="assets/img/metric/spacing.svg" width="360px"></g:Image>
+										</g:VerticalPanel>
+									</div>
+								</g:HTMLPanel>
+							
+								
+									
 								<g:Label width="100%" horizontalAlignment="ALIGN_LEFT">where di is
 									the mean of all di, and n is the number of vectors in PFknown .
 									When S = 0, all members are spaced evenly apart. Note that this
@@ -100,7 +112,7 @@
 									defined metric judges how well PFknown is distributed.</g:Label>
 							</g:VerticalPanel>
 							<g:VerticalPanel addStyleNames='{style.calculateBtn}'>
-								<g:Button ui:field="SpacingBtn" text="Calculate"></g:Button>
+								<g:Button ui:field="CalculateSpacingBtn" text="Calculate"></g:Button>
 							</g:VerticalPanel>
 						</g:VerticalPanel>
 
@@ -114,12 +126,22 @@
 									This metric which is Pareto compliant, requires that PFtrue is
 									known and that the MOEA approaches the Pareto front.
 									Mathematically, this metric is represented in equation.</g:Label>
-							</g:VerticalPanel>
-							<g:VerticalPanel horizontalAlignment="ALIGN_CENTER"
-								width="100%">
-								<g:Image url="assets/img/metric/eratio.png" width="233px"></g:Image>
-							</g:VerticalPanel>
-							<g:VerticalPanel width="100%">
+									
+								<g:HTMLPanel>
+									<div class="hidden-lg hidden-md hidden-sm col-xs-12">
+										<g:VerticalPanel width="100%" verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER">
+											<g:Image url="assets/img/metric/errorratio.svg" width="90%"></g:Image>
+										</g:VerticalPanel>
+									</div>
+									
+									<div class="col-lg-12 col-md-12 col-sm-12 hidden-xs">
+										<g:VerticalPanel width="100%" verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER">
+											<g:Image url="assets/img/metric/errorratio.svg" width="270px"></g:Image>
+										</g:VerticalPanel>
+									</div>
+								</g:HTMLPanel>
+								
+								
 								<g:Label width="100%">where ei is zero when the ith vector of
 									PFknown is an element of PFtrue or ei is one if the ith vector
 									of PFknown is not an element of PFtrue. If ER = 0, the PFknown
@@ -128,7 +150,7 @@
 									better.</g:Label>
 							</g:VerticalPanel>
 							<g:VerticalPanel addStyleNames='{style.calculateBtn}'>
-								<g:Button ui:field="ERBtn" text="Calculate"></g:Button>
+								<g:Button ui:field="CalculateERBtn" text="Calculate"></g:Button>
 							</g:VerticalPanel>
 						</g:VerticalPanel>
 
@@ -141,19 +163,28 @@
 									how far, on average, PFknown is from PFtrue. This metric which
 									is Pareto noncompliant requires that the PFtrue be known. It is
 									mathematically defined in equation.</g:Label>
-							</g:VerticalPanel>
-							<g:VerticalPanel horizontalAlignment="ALIGN_CENTER"
-								width="100%">
-								<g:Image url="assets/img/metric/gdistance.png" width="233px"></g:Image>
-							</g:VerticalPanel>
-							<g:VerticalPanel width="100%">
+									
+								<g:HTMLPanel>
+									<div class="hidden-lg hidden-md hidden-sm col-xs-12">
+										<g:VerticalPanel width="100%" verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER">
+											<g:Image url="assets/img/metric/gdistance.svg" width="90%"></g:Image>
+										</g:VerticalPanel>
+									</div>
+									
+									<div class="col-lg-12 col-md-12 col-sm-12 hidden-xs">
+										<g:VerticalPanel width="100%" verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER">
+											<g:Image url="assets/img/metric/gdistance.svg" width="270px"></g:Image>
+										</g:VerticalPanel>
+									</div>
+								</g:HTMLPanel>	
+									
 								<g:Label width="100%">where |PFknown| is the number of vectors
 									in PFknown, p = 2, and di is the Euclidean phenotypic distance
 									between each member, i, of PFknown and the closest member in
 									PFtrue to that member, i. When GD = 0, PFknown = PFtrue.</g:Label>
 							</g:VerticalPanel>
 							<g:VerticalPanel addStyleNames='{style.calculateBtn}'>
-								<g:Button ui:field="GDistanceBtn" text="Calculate"></g:Button>
+								<g:Button ui:field="CalculateGDistanceBtn" text="Calculate"></g:Button>
 							</g:VerticalPanel>
 						</g:VerticalPanel>
 
@@ -169,12 +200,23 @@
 									solutions. Consider that X', X'' are contained in X and are two
 									sets of decision variables . The function of coverage ( C )
 									will map the ordered pair (X', X'') to the interval [0,1].</g:Label>
-							</g:VerticalPanel>
-							<g:VerticalPanel horizontalAlignment="ALIGN_CENTER"
-								width="100%">
-								<g:Image url="assets/img/metric/cmetric.png" width="233px" height=""></g:Image>
-							</g:VerticalPanel>
-							<g:VerticalPanel width="100%">
+								
+							
+								<g:HTMLPanel>
+									<div class="hidden-lg hidden-md hidden-sm col-xs-12">
+										<g:VerticalPanel width="100%" verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER">
+											<g:Image url="assets/img/metric/covertwosets.svg" width="90%"></g:Image>
+										</g:VerticalPanel>
+									</div>
+									
+									<div class="col-lg-12 col-md-12 col-sm-12 hidden-xs">
+										<g:VerticalPanel width="100%" verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER">
+											<g:Image url="assets/img/metric/covertwosets.svg" width="360px"></g:Image>
+										</g:VerticalPanel>
+									</div>
+								</g:HTMLPanel>		
+
+
 								<g:Label>C = 1 , then it means that all points in X' are
 									dominated by or are equal to the points in X'.</g:Label>
 								<g:Label>C = 0 , then it means that none of the points X'' are
@@ -185,51 +227,123 @@
 									uniformity of solutions along the Pareto front.</g:Label>
 							</g:VerticalPanel>
 							<g:VerticalPanel addStyleNames='{style.calculateBtn}'>
-								<g:Button ui:field="CoverBtn" text="Calculate"></g:Button>
+								<g:Button ui:field="CalculateCoverBtn" text="Calculate"></g:Button>
 							</g:VerticalPanel>
 						</g:VerticalPanel>
 
 
 
-						<g:VerticalPanel ui:field="EntropyPanel"
+						<g:VerticalPanel ui:field="HAreaPanel"
 							addStyleNames='{style.panel}' width="100%" horizontalAlignment="ALIGN_CENTER"
 							visible="false">
 							<g:VerticalPanel width="100%">
-								<g:Label>The entropy (E) metric, is responsible for studying the
-									divergence in a Pareto front . It is based on the definition of
-									a niche solution S , this represents all solutions that are
-									close to or in the vicinity of the solution S. This metric is
-									given by :</g:Label>
-							</g:VerticalPanel>
-							<g:VerticalPanel horizontalAlignment="ALIGN_CENTER"
-								width="100%">
-								<g:Image url="assets/img/metric/E1.png" width="277px"
-									height="65px"></g:Image>
-							</g:VerticalPanel>
-							<g:VerticalPanel width="100%">
-								<g:Label>The result values ​​of entropy vary between 0 and 1 ,
-									if the value is closer to 1 this means that will be better
-									diversified Pareto solution set .
+								<g:Label>The Hyper-Area (HA) metric which are Pareto compliant relate to the area of coverage
+											of PFknown with respect to the objective space for a two-objective
+											MOP. This equates to the summation of all the rectangular areas,
+											bounded by some reference point and (f1(x), f2(x)). Mathematically, this is
+											described in equation:
+								</g:Label>
+								
+								
+								<g:HTMLPanel>
+									<div class="hidden-lg hidden-md hidden-sm col-xs-12">
+										<g:VerticalPanel width="100%" verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER">
+											<g:Image url="assets/img/metric/hyperarea.svg" width="90%"></g:Image>
+										</g:VerticalPanel>
+									</div>
+									
+									<div class="col-lg-12 col-md-12 col-sm-12 hidden-xs">
+										<g:VerticalPanel width="100%" verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER">
+											<g:Image url="assets/img/metric/hyperarea.svg" width="300px"></g:Image>
+										</g:VerticalPanel>
+									</div>
+								</g:HTMLPanel>	
+								
+
+								<g:Label>where veci is a nondominated vector in PFknown and areai is the area
+										 between the origin and vector veci.It is important to note that if PFknown is not convex,
+										 the results may be misleading. It is assumed that the reference
+										 point for the hyperarea is the minimum value for each objective.
 								</g:Label>
 							</g:VerticalPanel>
 
 							<g:VerticalPanel addStyleNames='{style.calculateBtn}'>
-								<g:Button ui:field="EntropyBtn" text="Calculate"></g:Button>
+								<g:Button ui:field="CalculateHyperAreaBtn" text="Calculate"></g:Button>
 							</g:VerticalPanel>
 						</g:VerticalPanel>
 
 
-						<g:VerticalPanel ui:field="gnvgPanel" width="100%" horizontalAlignment="ALIGN_CENTER" visible="false">
+
+
+						<g:VerticalPanel ui:field="HAreaRatioPanel"
+							addStyleNames='{style.panel}' width="100%" horizontalAlignment="ALIGN_CENTER"
+							visible="false">
 							<g:VerticalPanel width="100%">
-								<g:Label width="100%">Generational Nondominated Vector Generation (GNVG), this Pareto noncompliant metric tracks how many nondominated vectors are produced at each MOEA generation and is defined as:</g:Label>
-							</g:VerticalPanel>
-							<g:VerticalPanel horizontalAlignment="ALIGN_CENTER"
-								width="100%">
-								<g:Image url="assets/img/metric/gnvg.png" width="233px" ></g:Image>
+								<g:Label>The Hyper Area Ratio (HR)  metric which are Pareto compliant relate to the area of coverage
+											of PFknown with respect to the objective space for a two-objective
+											MOP. This equates to the summation of all the rectangular areas,
+											bounded by some reference point and (f1(x), f2(x)). Mathematically, this is
+											described in equation:
+								</g:Label>
+								
+								
+								<g:HTMLPanel>
+									<div class="hidden-lg hidden-md hidden-sm col-xs-12">
+										<g:VerticalPanel width="100%" verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER">
+											<g:Image url="assets/img/metric/hyperarearatio.svg" width="48%"></g:Image>
+										</g:VerticalPanel>
+									</div>
+									
+									<div class="col-lg-12 col-md-12 col-sm-12 hidden-xs">
+										<g:VerticalPanel width="100%" verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER">
+											<g:Image url="assets/img/metric/hyperarearatio.svg" width="160px"></g:Image>
+										</g:VerticalPanel>
+									</div>
+								</g:HTMLPanel>	
+								
+
+
+								<g:Label>where H1 is the PFknown hyperarea and H2 is the hyperarea of PFtrue. 
+										Zitzler and Thiele do note that this metric may be misleading if
+										PFknown is non-convex. They also implicitly assume the MOP’s objective
+										space origin coordinates are (0, . . . , 0), but this is not always the case.
+										The vectors in PFknown can be translated to reflect a zero-centered origin, but
+										as each objective’s ranges may be radically different between MOPs, optimal
+										H values may vary widely.For the values less than one indicate a found Pareto front
+										that is not as good as the true Pareto front. When HR equals one, then
+										PFknown = PFtrue. Of course, this metric generally requires that PFtrue be
+										known.
+								</g:Label>
 							</g:VerticalPanel>
 							
 							<g:VerticalPanel addStyleNames='{style.calculateBtn}'>
-								<g:Button ui:field="gnvgBtn" text="Calculate"></g:Button>
+								<g:Button ui:field="CalculateHyperAreaRatioBtn" text="Calculate"></g:Button>
+							</g:VerticalPanel>
+						</g:VerticalPanel>
+
+
+
+						<g:VerticalPanel ui:field="onvgPanel" width="100%" horizontalAlignment="ALIGN_CENTER" visible="false">
+							<g:VerticalPanel width="100%">
+								<g:Label width="100%">The Overall Nondominated Vector Generation (ONVG), this metric measures the total number of nondominated vectors found during MOEA execution. This Pareto noncompliant metric is defined as:</g:Label>
+							
+								<g:HTMLPanel>
+									<div class="hidden-lg hidden-md hidden-sm col-xs-12">
+										<g:VerticalPanel width="100%" verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER">
+											<g:Image url="assets/img/metric/onvg.svg" width="90%"></g:Image>
+										</g:VerticalPanel>
+									</div>
+									
+									<div class="col-lg-12 col-md-12 col-sm-12 hidden-xs">
+										<g:VerticalPanel width="100%" verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER">
+											<g:Image url="assets/img/metric/onvg.svg" width="270px"></g:Image>
+										</g:VerticalPanel>
+									</div>
+								</g:HTMLPanel>	
+							
+							</g:VerticalPanel>
+							<g:VerticalPanel addStyleNames='{style.calculateBtn}'>
+								<g:Button ui:field="CalculateOnvgBtn" text="Calculate"></g:Button>
 							</g:VerticalPanel>
 						</g:VerticalPanel>
 

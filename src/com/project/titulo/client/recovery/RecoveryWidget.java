@@ -6,6 +6,7 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -16,11 +17,11 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.project.titulo.client.MyStyle;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
 import com.project.titulo.shared.ErrorVerify;
 import com.project.titulo.shared.FieldVerifier;
+import com.project.titulo.shared.MyStyle;
 
 public class RecoveryWidget extends Composite {
 
@@ -134,7 +135,7 @@ public class RecoveryWidget extends Composite {
 			public void onSuccess(Boolean result) {
 				if (result) {
 					ErrorVerify.getErrorAlert("goodnewpass");
-					Window.Location.reload();
+					History.back();
 				} else {
 					ErrorVerify.getErrorAlert("fatal");
 				}

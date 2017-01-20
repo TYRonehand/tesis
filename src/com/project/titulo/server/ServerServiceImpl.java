@@ -18,6 +18,8 @@ import com.project.titulo.client.ServerService;
 import com.project.titulo.server.metrics.ErrorRatio;
 import com.project.titulo.server.metrics.GNVG;
 import com.project.titulo.server.metrics.GenDistance;
+import com.project.titulo.server.metrics.HyperArea;
+import com.project.titulo.server.metrics.HyperAreaRatio;
 import com.project.titulo.server.metrics.Spacing;
 import com.project.titulo.shared.ExportDataResult;
 import com.project.titulo.shared.SecretCode;
@@ -54,7 +56,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	// private String status;
 	private String url = "jdbc:mysql://127.0.0.1:3306/asmop_bd";
 	private String user = "root";
-	private String pass =  "z-AoDaFII2Hp";
+	private String pass = "";//"z-AoDaFII2Hp";
 
 	// Constructor
 	public ServerServiceImpl() {
@@ -1557,6 +1559,63 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 		return results;
 	}
 
+	
+	@Override
+	public List<MetricResults> CalculateHA(String iduser)
+			throws IllegalArgumentException {
+
+		System.err.print("\nMetric HyperArea");
+
+		// result object
+		List<MetricResults> results = new ArrayList<MetricResults>();
+		try {
+			// search files from user in metric selected
+			List<UserFile> myfiles = getFullFilesMetric(iduser);
+
+			// control exist both objects
+			if (!myfiles.isEmpty() && myfiles != null) {
+				// start calculation
+				HyperArea ha = new HyperArea(myfiles);
+				results = ha.getResults();
+			} else {
+				System.err.print("\nerror: null files");
+			}
+
+		} catch (Exception e) {
+			System.err.print("\nerror: " + e.toString());
+
+		}
+		System.err.print("\nretorna resultado");
+		return results;
+	}
+	
+	@Override
+	public List<MetricResults> CalculateHR(String iduser)
+			throws IllegalArgumentException {
+
+		System.err.print("\nMetric Hyperarea Ratio");
+		// result object
+		List<MetricResults> results = new ArrayList<MetricResults>();
+
+		try {
+			// search files from user in metric selected
+			List<UserFile> userfiles = getFullFilesMetric(iduser);
+
+			// control exist both objects
+			if (!userfiles.isEmpty() && userfiles != null) {
+				// start calculation
+				HyperAreaRatio er = new HyperAreaRatio(userfiles,
+						Integer.parseInt(userfiles.get(0).getDimension()));
+				results = er.getResults();
+			}
+
+		} catch (Exception e) {
+			System.err.print("\nerror: " + e.toString());
+		}
+		System.err.print("\nretorna resultado");
+		return results;
+	}
+	
 	@Override
 	public List<MetricResults> CalculateGD(String iduser)
 			throws IllegalArgumentException {
