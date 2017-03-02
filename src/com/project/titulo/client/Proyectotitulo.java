@@ -1,10 +1,12 @@
 package com.project.titulo.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
 import com.project.titulo.shared.CookieVerify;
 import com.project.titulo.shared.GoToUrl;
 
@@ -21,7 +23,6 @@ public class Proyectotitulo implements EntryPoint {
 	
 	public void onModuleLoad() 
 	{
-		History.fireCurrentHistoryState();
 		History.addValueChangeHandler(new ValueChangeHandler<String>() {
 			   @Override
 			   public void onValueChange(ValueChangeEvent<String> event) {
@@ -104,7 +105,7 @@ public class Proyectotitulo implements EntryPoint {
 			    url.GoTo("404", null, null);
 		    }
 		}else{
-				History.newItem("login");
+			Window.Location.replace(GWT.getHostPageBaseURL()+"#login");
 			
 		}
 	}

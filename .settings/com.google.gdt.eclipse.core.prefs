@@ -1,4 +1,4 @@
 eclipse.preferences.version=1
-jarsExcludedFromWebInfLib=C\:/Users/gutie/Dropbox/proyectoGWT/tesis/lib/mysql-connector-java-3.0.17-ga-bin.jar|C\:/Users/gutie/Dropbox/proyectoGWT/tesis/lib/org.moxieapps.gwt.highcharts-1.7.0.jar
+jarsExcludedFromWebInfLib=C\:/Users/gutie/Dropbox/proyectoGWT/tesis/lib/org.moxieapps.gwt.highcharts-1.7.0.jar|C\:/Users/gutie/Dropbox/proyectoGWT/tesis/lib/mysql-connector-java-5.1.40-bin.jar
 warSrcDir=war
 warSrcDirIsOutput=true

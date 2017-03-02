@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -51,39 +50,17 @@ import javax.mail.internet.MimeMessage;
 @SuppressWarnings("serial")
 public class ServerServiceImpl extends RemoteServiceServlet implements
 		ServerService {
-	// datos conexion
+
+	/*-----------------CONECTION TO MYSQL---------------*/
 	private Connection conn = null;
-	// private String status;
-	private String url = "jdbc:mysql://127.0.0.1:3306/asmop_bd";
-	private String user = "root";
-	private String pass = "";//"z-AoDaFII2Hp";
 
 	// Constructor
 	public ServerServiceImpl() {
-		conn = CreateConn();
+		
+		conn = ServerConfig.CreateConn();
 	}
 
-	// create conection
-	public Connection CreateConn() {
-		Connection myconn = null;
-		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException e) {
-			GWT.log(e.toString());
-			e.printStackTrace();
-		}
-
-		try {
-			myconn = DriverManager.getConnection(url, user, pass);
-		} catch (SQLException e) {
-			GWT.log(e.toString());
-			e.printStackTrace();
-		}
-
-		return myconn;
-	}
-
+	
 	/*--------------RPC FUNCTIONS---------------*/
 
 	/* ADMIN------------------------------------------------------------- */
