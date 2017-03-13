@@ -7,9 +7,9 @@ import java.sql.SQLException;
 
 public class ServerConfig {
 		// private String status;
-		private static String url = "jdbc:mysql://127.0.0.1:3306/asmop_bd";
-		private static String user = "root";
-		private static String pass = "ubuntu16.04mysql";
+		private static String url	=	"jdbc:mysql://localhost:3306/asmop_bd";
+		private static String user	=	"root";
+		private static String pass	=	"ubuntu16.04mysql";
 
 		//constructor
 		public ServerConfig(){

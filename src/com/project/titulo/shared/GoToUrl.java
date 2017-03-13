@@ -44,7 +44,6 @@ public class GoToUrl {
 		
 		mycookie.setCookieIdurl(option);
 		
-		
 		// opciones url
 		switch (option.toUpperCase()) 
 		{

@@ -89,8 +89,7 @@ public class AddCommentModal extends DialogBox {
 	private void CreateComment() {
 		// validar algo escrito
 		if (descriptionInput.getText().length() > 3) {
-			Answer myanswer = new Answer(descriptionInput.getText(),
-					this.IDTOPIC, this.IDUSER);
+			Answer myanswer = new Answer(descriptionInput.getText(), this.IDTOPIC, this.IDUSER);
 			// call service update
 			serverService.addNewComment(myanswer, new AsyncCallback<Boolean>() {
 

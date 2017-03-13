@@ -49,15 +49,12 @@ public class ErrorRatio {
 					paretoFrontPoint.create(auxfile.getData(), this.axis_size);
 
 					// calculate metric
-					String value = Double.toString(Calculate(paretoFrontPoint.getListPoints(), paretoOptime.getListPoints()));
-
-					if (!value.isEmpty() && value != null)
-						mr.addResult(value);
-					else
-						mr.addResult("Error");
+					double value =Calculate(paretoFrontPoint.getListPoints(), paretoOptime.getListPoints());
+					mr.addResult(value);
 				} else {
 					// fail dimension
-					mr.addResult("Wronge dimension");
+					mr.addResult(null);
+					mr.setMessage("Wronge Dimension");
 				}
 			}
 
@@ -85,6 +82,7 @@ public class ErrorRatio {
 			}
 			double Nsize = paretoOptime.size();
 			double ER = (1 - (errori / Nsize));
+			
 			return ER;
 	}
 

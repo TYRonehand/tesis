@@ -12,6 +12,7 @@ import org.moxieapps.gwt.highcharts.client.plotOptions.ColumnPlotOptions;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
@@ -44,68 +45,85 @@ public class ResumeUser extends Composite {
 	public ResumeUser() {
 		initWidget(uiBinder.createAndBindUi(this));
 		
+		//carga
+		LoadInformation();
+		//crea crea timer
+		Timer ReloadPage = new Timer(){
+
+			@Override
+			public void run() {
+				LoadInformation();
+				
+			}
+			
+		};
+		ReloadPage.schedule(5*60000);
+		
+	}
+	
+	private void LoadInformation(){
 		//get info resume
-		serverService.getResumeInfo(new AsyncCallback<AdminResume>(){
-			@Override
-			public void onFailure(Throwable caught) {
-				totalusers.setText("-");
-				onlineusers.setText("-");
-				totaltopics.setText("-");
-				totalfiles.setText("-");
-				totalsizefiles.setText("-");
-				avgsizefiles.setText("-");
-			}
-			@Override
-			public void onSuccess(AdminResume result) {
-				totalusers.setText(Integer.toString(result.getTotalUsers()));
-				
-				onlineusers.setText(Integer.toString(result.getOnlineUsers()));
-				
-				totaltopics.setText(Integer.toString(result.getTotalTopics()));
-				
-				totalfiles.setText(Integer.toString(result.getTotaFiles()));
-				
-				totalsizefiles.setText(Double.toString(result.getTotalSizeFiles())+" KB");
-				
-				double avgsize = result.getTotalSizeFiles() / result.getTotaFiles();
-				avgsizefiles.setText("~ "+avgsize+" KB");
-				
-			}});
-		
-		
-		//clean elements
-		this.lastmonthusers.clear();
-		this.lastmonthtopics.clear();
-		
-		//load chart users
-		serverService.getChartUsers(new AsyncCallback<AdminChartResume>(){
+			serverService.getResumeInfo(new AsyncCallback<AdminResume>(){
+				@Override
+				public void onFailure(Throwable caught) {
+					totalusers.setText("-");
+					onlineusers.setText("-");
+					totaltopics.setText("-");
+					totalfiles.setText("-");
+					totalsizefiles.setText("-");
+					avgsizefiles.setText("-");
+				}
+				@Override
+				public void onSuccess(AdminResume result) {
+					totalusers.setText(Integer.toString(result.getTotalUsers()));
+					
+					onlineusers.setText(Integer.toString(result.getOnlineUsers()));
+					
+					totaltopics.setText(Integer.toString(result.getTotalTopics()));
+					
+					totalfiles.setText(Integer.toString(result.getTotaFiles()));
+					
+					totalsizefiles.setText(Double.toString(result.getTotalSizeFiles())+" KB");
+					
+					double avgsize = result.getTotalSizeFiles() / result.getTotaFiles();
+					avgsizefiles.setText("~ "+Math.round(avgsize*100)/100+" KB");
+					
+				}});
+			
+			
+			//clean elements
+			this.lastmonthusers.clear();
+			this.lastmonthtopics.clear();
+			
+			//load chart users
+			serverService.getChartUsers(new AsyncCallback<AdminChartResume>(){
 
-			@Override
-			public void onFailure(Throwable caught) {
-				lastmonthusers.add(new Label("Reload Page"));
-				
-			}
+				@Override
+				public void onFailure(Throwable caught) {
+					lastmonthusers.add(new Label("Reload Page"));
+					
+				}
 
-			@Override
-			public void onSuccess(AdminChartResume result) {
-				ChartLastYearUsers(result);
-			}});
-		
-		
+				@Override
+				public void onSuccess(AdminChartResume result) {
+					ChartLastYearUsers(result);
+				}});
+			
+			
 
-		//load chart topics
-		serverService.getChartTopics(new AsyncCallback<AdminChartResume>(){
+			//load chart topics
+			serverService.getChartTopics(new AsyncCallback<AdminChartResume>(){
 
-			@Override
-			public void onFailure(Throwable caught) {
-				lastmonthtopics.add(new Label("Reload Page"));
-				
-			}
+				@Override
+				public void onFailure(Throwable caught) {
+					lastmonthtopics.add(new Label("Reload Page"));
+					
+				}
 
-			@Override
-			public void onSuccess(AdminChartResume result) {
-				ChartLastYearTopics(result);
-			}});
+				@Override
+				public void onSuccess(AdminChartResume result) {
+					ChartLastYearTopics(result);
+				}});
 		
 	}
 	

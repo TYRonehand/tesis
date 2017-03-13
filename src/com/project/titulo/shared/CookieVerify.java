@@ -1,7 +1,9 @@
 package com.project.titulo.shared;
 
 import java.util.Date;
+
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Window;
 
 public class CookieVerify {
 	// variable names
@@ -84,8 +86,12 @@ public class CookieVerify {
 	public void delCookiesInfo() {
 
 		this.setCookieUser("");
-		this.setCookieIdurl("LOGIN");
+		this.setCookieIdurl("");
 		this.setCookieITopic("");
+		Cookies.removeCookie(this.getIdurl());
+		Cookies.removeCookie(this.getIdtopic());
+		Cookies.removeCookie(this.getIduser());
+		Window.Location.reload();
 	}
 
 }

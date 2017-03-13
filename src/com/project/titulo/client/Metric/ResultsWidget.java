@@ -52,8 +52,7 @@ public class ResultsWidget extends Composite {
 	interface ResultsWidgetUiBinder extends UiBinder<Widget, ResultsWidget> {
 	}
 
-	public ResultsWidget(String iduser, List<MetricResults> results,
-			String MetricName) {
+	public ResultsWidget(String iduser, List<MetricResults> results, String MetricName) {
 		initWidget(uiBinder.createAndBindUi(this));
 		// set style to buttons from bootstrap
 		backBtn.addStyleName(ms.getButtonStyle(0));
@@ -71,29 +70,30 @@ public class ResultsWidget extends Composite {
 
 	// Create data table
 	private void LoadTable() {
+		
+		//result format
+		
 		// start table
-		String htmlCodeTable = "<table style='width:100%;' border='1'>";
+		String htmlCodeTable = "The next values are rounded to 2 decimals to see full values export the results.<br><table style='width:100%;' border='1'>";
 
 		// title fields
 		htmlCodeTable += "<tr>";
 		htmlCodeTable += "<th>Files</th>";
 
 		for (int i = 0; i < RESULTS.get(0).getParetoNameFile().size(); i++) {
-			htmlCodeTable += "<th>" + RESULTS.get(0).getParetoNameFile().get(i)
-					+ "</th>";
+			htmlCodeTable += "<th>" + RESULTS.get(0).getParetoNameFile().get(i) + "</th>";
 		}
 		htmlCodeTable += "</tr>";
 
 		// data content
 		for (int vertical = 0; vertical < RESULTS.size(); vertical++) {
 			htmlCodeTable += "<tr>";
-			htmlCodeTable += "<th>"
-					+ RESULTS.get(vertical).getAproximationNameFile() + "</th>";
-			for (int horizontal = 0; horizontal < RESULTS.get(vertical)
-					.getResultsList().size(); horizontal++) {
-				htmlCodeTable += "<td>"
-						+ RESULTS.get(vertical).getResultsList()
-								.get(horizontal) + "</td>";
+			htmlCodeTable += "<th>"+ RESULTS.get(vertical).getAproximationNameFile() + "</th>";
+			
+			
+			for (int horizontal = 0; horizontal < RESULTS.get(vertical).getResultsList().size(); horizontal++) {
+				double rounded = Math.round(RESULTS.get(vertical).getResultsList().get(horizontal)*100.0)/100.0;
+				htmlCodeTable += "<td>"+  rounded + "</td>";
 			}
 			htmlCodeTable += "</tr>";
 

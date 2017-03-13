@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /download
+Disallow: /files
+Disallow: /gnuplot
+Disallow: /plots
+Disallow: /proyectotitulo
+Disallow: /WEB-INF
+Disallow: /logs

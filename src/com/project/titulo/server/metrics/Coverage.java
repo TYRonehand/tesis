@@ -50,17 +50,14 @@ public class Coverage {
 					paretoFrontPoint.create(auxfile.getData(), this.axis_size);
 
 					// calculate metric
-					String value = Calculate(paretoFrontPoint.getListPoints(),
+					double value = Calculate(paretoFrontPoint.getListPoints(),
 							paretoOptime.getListPoints());
-
-					if (!value.isEmpty() && value != null)
-						mr.addResult(value);
-					else
-						mr.addResult("Error");
+					mr.addResult(value);
 				} else {
 					System.err.println("different dimension");
 					// fail dimension
-					mr.addResult("Wronge dimension");
+					mr.addResult(null);
+					mr.setMessage("Wronge Dimension");
 				}
 			}
 
@@ -73,7 +70,7 @@ public class Coverage {
 
 	// calculate one file at time
 	
-	private String Calculate(List<Points> paretoDataList, List<Points> aproximationDataList) {
+	private double Calculate(List<Points> paretoDataList, List<Points> aproximationDataList) {
 		int dominated = 0;
 		for (Points po : aproximationDataList) {
 			for (Points pf : paretoDataList) {
@@ -90,7 +87,7 @@ public class Coverage {
 		}
 		double Nsize = aproximationDataList.size();
 		double CV = ((dominated / Nsize));
-		return String.format("%.6f", CV);
+		return CV;
 	}
 
 	// get result calculated

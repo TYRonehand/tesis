@@ -1,9 +1,6 @@
 package com.project.titulo.server;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +17,9 @@ import com.project.titulo.server.metrics.GenDistance;
 import com.project.titulo.server.metrics.HyperArea;
 import com.project.titulo.server.metrics.HyperAreaRatio;
 import com.project.titulo.server.metrics.Spacing;
+import com.project.titulo.shared.EmailAlert;
 import com.project.titulo.shared.ExportDataResult;
+import com.project.titulo.shared.FileWritter;
 import com.project.titulo.shared.SecretCode;
 import com.project.titulo.shared.model.AdminChartResume;
 import com.project.titulo.shared.model.AdminResume;
@@ -34,15 +33,6 @@ import com.project.titulo.shared.model.UserFile;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import java.util.Properties;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 /**
  * The server-side implementation of the RPC service.
@@ -56,17 +46,19 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 
 	// Constructor
 	public ServerServiceImpl() {
-		
+
 		conn = ServerConfig.CreateConn();
 	}
 
-	
 	/*--------------RPC FUNCTIONS---------------*/
 
 	/* ADMIN------------------------------------------------------------- */
-	//get resumen db
+	// get resumen db
 	@Override
 	public AdminResume getResumeInfo() throws IllegalArgumentException {
+		
+		System.err.println("Function: getResumeInfo");
+		
 		AdminResume info = new AdminResume();
 		try {
 			String Query = "select * from admin_info_resume";
@@ -90,68 +82,75 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			result.close();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 		}
 		return info;
 	}
-	
-	//get last 6 month user chart
+
+	// get last 6 month user chart
 	@Override
 	public AdminChartResume getChartUsers() throws IllegalArgumentException {
+		
+		System.err.println("Function: getChartUsers");
+		
 		AdminChartResume info = new AdminChartResume();
 		try {
 			String Query = "select * from admin_chart_users";
-			
+
 			PreparedStatement ps = conn.prepareStatement(Query);
 			ResultSet result = ps.executeQuery();
-			//get values
-			int i=6;
+			// get values
+			int i = 6;
 			while (result.next()) {
 				info.months[i] = result.getString("month");
 				info.totals[i] = result.getInt("users");
 				i--;
 			}
 			ps.close();
-			
+
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 		}
 		return info;
 	}
-	
-	//get last 6 month topic chart
+
+	// get last 6 month topic chart
 	@Override
 	public AdminChartResume getChartTopics() throws IllegalArgumentException {
+		
+		System.err.println("Function: getChartTopics");
+		
 		AdminChartResume info = new AdminChartResume();
 		try {
 			String Query = "select * from admin_chart_topics";
-			
+
 			PreparedStatement ps = conn.prepareStatement(Query);
 			ResultSet result = ps.executeQuery();
-			//get values
-			int i=6;
+			// get values
+			int i = 6;
 			while (result.next()) {
 				info.months[i] = result.getString("month");
 				info.totals[i] = result.getInt("topics");
 				i--;
 			}
 			ps.close();
-			
+
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 		}
-		
-		
+
 		return info;
 	}
-	
+
 	// get users list
 	@Override
-	public List<User> getUserList(String opcion)
-			throws IllegalArgumentException {
+	public List<User> getUserList(String opcion) throws IllegalArgumentException {
+		
+		System.err.println("Function: getUserList");
+		
 		List<User> allusers = new ArrayList<User>();
 		try {
 			String Query = "";
@@ -162,7 +161,8 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 				Query = "SELECT * FROM account_user ORDER BY cod_user ASC";
 			} else {
 				Query = "SELECT * FROM account_user WHERE ";
-				Query += "name_user LIKE '%" + opcion + "%'  OR lastname_user LIKE '%" + opcion
+				Query += "name_user LIKE '%" + opcion
+						+ "%'  OR lastname_user LIKE '%" + opcion
 						+ "%' ORDER BY cod_user ASC";
 			}
 
@@ -170,65 +170,64 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			ResultSet result = ps.executeQuery();
 			// recorremos resultado
 			while (result.next()) {
-				allusers.add(new User(result.getString("cod_user"), 
-									result.getString("email_user"), 
-									result.getString("name_user"), 
-									result.getString("lastname_user"), 
-									result.getString("country_user"),
-									result.getString("occupation_user"), 
-									result.getString("web_user"),
-									result.getString("institution_user"), 
-									result.getString("password_user"), 
-									result.getString("creation_user"), 
-									result.getString("securitycode_user")));
+				allusers.add(new User(result.getString("cod_user"), result
+						.getString("email_user"),
+						result.getString("name_user"), result
+								.getString("lastname_user"), result
+								.getString("country_user"), result
+								.getString("occupation_user"), result
+								.getString("web_user"), result
+								.getString("institution_user"), result
+								.getString("password_user"), result
+								.getString("creation_user"), result
+								.getString("securitycode_user")));
 			}
 			result.close();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 		}
 		return allusers;
 	}
-	
+
 	// user info validation
 	@Override
 	public User authenticateAdmin(String user, String pass) throws IllegalArgumentException {
+		
+		System.err.println("Function: authenticateAdmin");
+		
 		User miuser = null;
 
 		try {
 			// consultamos a base de datos
 			String Query = "SELECT * FROM account_administrator WHERE mail_admin = '"
-					+ user.toUpperCase() + "' AND password_admin = '" + pass+"' LIMIT 1";
-			
+					+ user.toUpperCase()
+					+ "' AND password_admin = '"
+					+ pass
+					+ "' LIMIT 1";
+
 			PreparedStatement ps = conn.prepareStatement(Query);
 			ResultSet result = ps.executeQuery();
 			// recorremos resultado
 			while (result.next()) {
 
-				miuser = new User(result.getString("cod_admin"), 
-						result.getString("mail_admin"), 
-						result.getString("name_admin"), 
-						result.getString("lastname_admin"), 
-						null,
-						"Administrator", 
-						null,
-						"ASMOP", 
-						result.getString("password_admin"), 
-						null, 
-						null);
+				miuser = new User(result.getString("cod_admin"),
+						result.getString("mail_admin"),
+						result.getString("name_admin"),
+						result.getString("lastname_admin"), null,
+						"Administrator", null, "ASMOP",
+						result.getString("password_admin"), null, null);
 			}
 			result.close();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 		}
 
-		
 		return miuser;
 	}
-	
 
 	/*
 	 * USER----------------------------------------------------------------------
@@ -236,10 +235,14 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	// consulta si existe usuario
 	@Override
 	public Boolean userExist(String mail) throws IllegalArgumentException {
+		
+		System.err.println("Function: userExist");
+		
 		int count = 0;
 		try {
 			PreparedStatement ps = conn
-					.prepareStatement("select * from account_user where email_user = '" + mail.toUpperCase() + "' limit 1");
+					.prepareStatement("select * from account_user where email_user = '"
+							+ mail.toUpperCase() + "' limit 1");
 			ResultSet result = ps.executeQuery();
 
 			while (result.next()) {
@@ -249,7 +252,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			ps.close();
 
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 		}
 
@@ -263,12 +266,16 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public Boolean userRecovery(String mail, String PIN)
 			throws IllegalArgumentException {
+		
+		System.err.println("Function: userRecovery");
+		
 		int count = 0;
 		try {
 			PreparedStatement ps = conn
 					.prepareStatement("SELECT * FROM account_user WHERE email_user = '"
-							+ mail.toUpperCase() + "' AND securitycode_user='" + PIN
-							+ "' limit 1");
+							+ mail.toUpperCase()
+							+ "' AND securitycode_user='"
+							+ PIN + "' limit 1");
 			ResultSet result = ps.executeQuery();
 			while (result.next()) {
 				count++;
@@ -277,7 +284,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			ps.close();
 
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 		}
 
@@ -292,6 +299,9 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public User authenticateUser(String user, String pass)
 			throws IllegalArgumentException {
+		
+		System.err.println("Function: authenticateUser");
+		
 		User miuser = null;
 
 		try {
@@ -304,58 +314,61 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			// recorremos resultado
 			while (result.next()) {
 
-				miuser = new User(result.getString("cod_user"), 
-						result.getString("email_user"), 
-						result.getString("name_user"), 
-						result.getString("lastname_user"), 
+				miuser = new User(result.getString("cod_user"),
+						result.getString("email_user"),
+						result.getString("name_user"),
+						result.getString("lastname_user"),
 						result.getString("country_user"),
-						result.getString("occupation_user"), 
+						result.getString("occupation_user"),
 						result.getString("web_user"),
-						result.getString("institution_user"), 
-						result.getString("password_user"), 
-						result.getString("creation_user"), 
+						result.getString("institution_user"),
+						result.getString("password_user"),
+						result.getString("creation_user"),
 						result.getString("securitycode_user"));
 			}
 			result.close();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 		}
-		//log date connection
-		if(miuser!=null)
-			saveDateLogin(miuser.getId()); 
+		// log date connection
+		if (miuser != null)
+			saveDateLogin(miuser.getId());
 		return miuser;
 	}
 
 	// user info no security
 	@Override
 	public User getUserInfo(String iduser) throws IllegalArgumentException {
+		
+		System.err.println("Function: getUserInfo");
+		
 		User miuser = null;
 		try {
 			// consultamos a base de datos
-			String Query = "SELECT * FROM account_user WHERE cod_user = '" + iduser
-					+ "' LIMIT 1";
+			String Query = "SELECT * FROM account_user WHERE cod_user = '"
+					+ iduser + "' LIMIT 1";
 			PreparedStatement ps = conn.prepareStatement(Query);
 			ResultSet result = ps.executeQuery();
 			// recorremos resultado
 			while (result.next()) {
-				miuser = new User(result.getString("cod_user"), 
-						result.getString("email_user"), 
-						result.getString("name_user"), 
-						result.getString("lastname_user"), 
+				miuser = new User(result.getString("cod_user"),
+						result.getString("email_user"),
+						result.getString("name_user"),
+						result.getString("lastname_user"),
 						result.getString("country_user"),
-						result.getString("occupation_user"), 
+						result.getString("occupation_user"),
 						result.getString("web_user"),
-						result.getString("institution_user"), 
-						result.getString("password_user"), 
-						result.getString("creation_user"), 
+						result.getString("institution_user"),
+						result.getString("password_user"),
+						result.getString("creation_user"),
 						result.getString("securitycode_user"));
 			}
 			result.close();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 		}
 		return miuser;
@@ -364,31 +377,35 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	// update info user
 	@Override
 	public Boolean setUserInfo(User myUser) throws IllegalArgumentException {
+		
+		System.err.println("Function: setUserInfo");
 
 		try {
 			// actualizamos usuario
-			String Query = " UPDATE account_user SET " + "name_user='" + myUser.getName()
-					+ "', " + "lastname_user='" + myUser.getLastname() + "', ";
+			String Query = " UPDATE account_user SET name_user='"
+					+ myUser.getName() + "', " + " lastname_user='"
+					+ myUser.getLastname() + "', ";
 
 			if (myUser.getMail().length() > 0)
-				Query += "email_user='" + myUser.getMail() + "',";
+				Query += " email_user='" + myUser.getMail() + "',";
 			if (myUser.getPassword().length() > 0)
-				Query += "password_user='" + myUser.getPassword() + "',";
+				Query += " password_user='" + myUser.getPassword() + "',";
 
-			Query += "country_user='" + myUser.getCountry() + "', " + "occupation_user='"
-					+ myUser.getOcupation() + "', " + "web_user='" + myUser.getWeb()
-					+ "'," + "institution_user='" + myUser.getInstitution() + "' "
-					+ "WHERE cod_user= " + myUser.getId() + "";
+			Query += " country_user='" + myUser.getCountry() + "', "
+					+ " occupation_user='" + myUser.getOcupation() + "', "
+					+ " web_user='" + myUser.getWeb() + "',"
+					+ " institution_user='" + myUser.getInstitution() + "' "
+					+ " WHERE cod_user= '" + myUser.getId() + "'";
+
+			System.err.println("QUERY UPDATE CLIENT: " + Query);
 
 			// execute query
 			PreparedStatement ps = conn.prepareStatement(Query);
+			ps.executeUpdate();
 
-			ResultSet result = ps.executeQuery();
-
-			result.close();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 			return false;
 		}
@@ -398,6 +415,8 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	// add new user in database
 	@Override
 	public Boolean addUserInfo(User newUser) throws IllegalArgumentException {
+		
+		System.err.println("Function: addUserInfo");
 
 		Boolean res = false;
 		try {
@@ -422,7 +441,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			ps.close();
 			res = true;
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 			res = false;
 		}
@@ -433,10 +452,14 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public Boolean changeUserPassword(String mail, String password)
 			throws IllegalArgumentException {
+		
+		System.err.println("Function: changeUserPassword");
+		
 		try {
 			// consultamos a base de datos
-			String Query = " UPDATE account_user SET password_user = '" + password
-					+ "' WHERE email_user='" + mail.toUpperCase() + "'";
+			String Query = " UPDATE account_user SET password_user = '"
+					+ password + "' WHERE email_user='" + mail.toUpperCase()
+					+ "'";
 
 			PreparedStatement ps = conn.prepareStatement(Query);
 			ResultSet result = ps.executeQuery();
@@ -446,7 +469,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			ps.close();
 
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 			return false;
 		}
@@ -458,6 +481,8 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public Boolean deleteUserInfo(String iduser)
 			throws IllegalArgumentException {
+		
+		System.err.println("Function: deleteUserInfo");
 		Boolean res = false;
 		try {
 			// consultamos a base de datos
@@ -469,7 +494,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			ps.close();
 			res = true;
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 			res = false;
 		}
@@ -479,6 +504,8 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	// get pin to user and Send email verify for lost password
 	@Override
 	public String sendEmailVerify(String email) throws IllegalArgumentException {
+		
+		System.err.println("Function: sendEmailVerify");
 
 		if (userExist(email)) {
 			SecretCode code = new SecretCode();
@@ -487,26 +514,24 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			// set user PIN
 			try {
 				// actualizamos usuario
-				String Query = " UPDATE account_user SET securitycode_user = '" + CODE
-						+ "' WHERE email_user='" + email.toUpperCase() + "'";
+				String Query = " UPDATE account_user SET securitycode_user = '"
+						+ CODE + "' WHERE email_user='" + email.toUpperCase()
+						+ "'";
 				// execute query
 				PreparedStatement ps = conn.prepareStatement(Query);
-				ResultSet result = ps.executeQuery();
+				ps.executeUpdate();
 
-				result.close();
 				ps.close();
 				valid = true;// can send email
 			} catch (SQLException sqle) {
-				GWT.log(sqle.toString());
+				System.err.println("Error: "+sqle.toString());
 				sqle.printStackTrace();
-				// System.err.print("*RECOVERY PASS ERROR:"+sqle.toString());
 				valid = false;// somthing bad
 			}
 			// true send email
 			if (valid == true) {
 				return SendEmail(
 						email,
-						"gutierr.carlos@gmail.com",
 						"You've requested a password recovery.",
 						"Petition for new password! \n Hi there!, recently received a request to change password. that is why we attach your PIN recovery ["
 								+ CODE
@@ -527,11 +552,19 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	// add new topic in database
 	@Override
 	public Boolean addNewTopic(Topic myTopic) throws IllegalArgumentException {
+		
+		System.err.println("Function: addNewTopic");
 
 		try {
 			// consultamos a base de datos
 			String Query = "INSERT INTO forum_topic (title_topic,description_topic,cod_user) "
-					+ "VALUES ('"+myTopic.getTitle()+"','"+myTopic.getDescription()+"','"+myTopic.getIduser()+"')";
+					+ "VALUES ('"
+					+ myTopic.getTitle()
+					+ "','"
+					+ myTopic.getDescription()
+					+ "','"
+					+ myTopic.getIduser()
+					+ "')";
 
 			PreparedStatement ps = conn.prepareStatement(Query);
 			ps.executeUpdate();
@@ -539,7 +572,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			// recorremos resultado
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 			return false;
 		}
@@ -549,16 +582,17 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	// get soome topic
 	@Override
 	public Topic getTopic(String idtopic) throws IllegalArgumentException {
+		
+		System.err.println("Function: getTopic");
+		
 		Topic mytopic = null;
 		try {
 			// consultamos a base de datos
-			String Query = "SELECT * FROM forum_topic WHERE cod_topic= '" + idtopic
-					+ "' LIMIT 1";
+			String Query = "SELECT * FROM forum_topic WHERE cod_topic= '" + idtopic + "' LIMIT 1";
 			PreparedStatement ps = conn.prepareStatement(Query);
 			ResultSet result = ps.executeQuery();
+			
 			// recorremos resultado
-			/*String idtopic, String Title, String Description, String Iduser,
-			String Creation, String Banned, String edited, String Numcomment*/
 			while (result.next()) {
 				mytopic = new Topic(result.getString("cod_topic"),
 						result.getString("title_topic"),
@@ -573,7 +607,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			result.close();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 		}
 		return mytopic;
@@ -582,23 +616,23 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	// update topic
 	@Override
 	public Boolean setTopic(Topic myTopic) throws IllegalArgumentException {
+		
+		System.err.println("Function: setTopic");
+		
 		try {
 			// actualizamos usuario
 			String Query = " UPDATE forum_topic SET " + "title_topic='"
 					+ myTopic.getTitle() + "', " + "description_topic='"
-					+ myTopic.getDescription() + "', " + "edition_topic='"
-					+ myTopic.getEdition() + "' " + "WHERE cod_topic= "
+					+ myTopic.getDescription() + "' WHERE cod_topic= "
 					+ myTopic.getIdtopic() + " ";
 
 			// execute query
 			PreparedStatement ps = conn.prepareStatement(Query);
+			ps.executeUpdate();
 
-			ResultSet result = ps.executeQuery();
-
-			result.close();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 			return false;
 		}
@@ -609,6 +643,8 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public List<ResumeTopic> NewestResumeTopic()
 			throws IllegalArgumentException {
+		
+		System.err.println("Function: NewestResumeTopic");
 
 		List<ResumeTopic> resumetopic = new ArrayList<ResumeTopic>();
 		try {
@@ -622,14 +658,16 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 				// created)
 				// add element to list
 				resumetopic.add(new ResumeTopic(result.getString("cod_topic"),
-						result.getString("title_topic"), result.getString("cod_user"),
-						result.getString("name_user"), result.getString("total"),
-						result.getString("creation_topic")));
+						result.getString("title_topic"), result
+								.getString("cod_user"), result
+								.getString("name_user"), result
+								.getString("total"), result
+								.getString("creation_topic")));
 			}
 			result.close();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 		}
 		return resumetopic;
@@ -639,6 +677,8 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public List<ResumeTopic> OldestResumeTopic()
 			throws IllegalArgumentException {
+		
+		System.err.println("Function: OldestResumeTopic");
 
 		List<ResumeTopic> resumetopic = new ArrayList<ResumeTopic>();
 		try {
@@ -648,17 +688,20 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			ResultSet result = ps.executeQuery();
 			// recorremos resultado
 			while (result.next()) {
-				// create (String id,String title,String user,String total, Date created)
+				// create (String id,String title,String user,String total, Date
+				// created)
 				// add element to list
 				resumetopic.add(new ResumeTopic(result.getString("cod_topic"),
-						result.getString("title_topic"), result.getString("cod_user"),
-						result.getString("name_user"), result.getString("total"),
-						result.getString("creation_topic")));
+						result.getString("title_topic"), result
+								.getString("cod_user"), result
+								.getString("name_user"), result
+								.getString("total"), result
+								.getString("creation_topic")));
 			}
 			result.close();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 		}
 		return resumetopic;
@@ -668,6 +711,8 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public List<ResumeTopic> MyResumeTopic(String iduser)
 			throws IllegalArgumentException {
+		
+		System.err.println("Function: MyResumeTopic");
 
 		List<ResumeTopic> resumetopic = new ArrayList<ResumeTopic>();
 		try {
@@ -678,17 +723,20 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			ResultSet result = ps.executeQuery();
 			// recorremos resultado
 			while (result.next()) {
-				// (String id,String title,String user,String total, Date created)
+				// (String id,String title,String user,String total, Date
+				// created)
 				// add element to list
 				resumetopic.add(new ResumeTopic(result.getString("cod_topic"),
-						result.getString("title_topic"), result.getString("cod_user"),
-						result.getString("name_user"), result.getString("total"),
-						result.getString("creation_topic")));
+						result.getString("title_topic"), result
+								.getString("cod_user"), result
+								.getString("name_user"), result
+								.getString("total"), result
+								.getString("creation_topic")));
 			}
 			result.close();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 		}
 		return resumetopic;
@@ -698,29 +746,35 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public List<ResumeTopic> SearchResumeTopic(String specialword)
 			throws IllegalArgumentException {
+		
+		System.err.println("Function: SearchResumeTopic");
 
 		List<ResumeTopic> resumetopic = new ArrayList<ResumeTopic>();
 		try {
 			// consultamos a base de datos SELECT * FROM table WHERE Column LIKE
 			// '%test%';
 			String Query = "SELECT * FROM topic_resume_view "
-							+" WHERE UPPER(title_topic) LIKE '%"+specialword.toUpperCase()+"%' "
-							+" ORDER BY creation_topic DESC";
+					+ " WHERE UPPER(title_topic) LIKE '%"
+					+ specialword.toUpperCase() + "%' "
+					+ " ORDER BY creation_topic DESC";
 			PreparedStatement ps = conn.prepareStatement(Query);
 			ResultSet result = ps.executeQuery();
 			// recorremos resultado
 			while (result.next()) {
-				//  (String id,String title,String user,String total, Date created)
+				// (String id,String title,String user,String total, Date
+				// created)
 				// add element to list
 				resumetopic.add(new ResumeTopic(result.getString("cod_topic"),
-						result.getString("title_topic"), result.getString("cod_user"),
-						result.getString("name_user"), result.getString("total"),
-						result.getString("creation_topic")));
+						result.getString("title_topic"), result
+								.getString("cod_user"), result
+								.getString("name_user"), result
+								.getString("total"), result
+								.getString("creation_topic")));
 			}
 			result.close();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 		}
 		return resumetopic;
@@ -734,6 +788,8 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public Boolean addNewComment(Answer myAnswer)
 			throws IllegalArgumentException {
+		
+		System.err.println("Function: addNewComment");
 
 		try {
 			// consultamos a base de datos
@@ -748,7 +804,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			// recorremos resultado
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 			return false;
 		}
@@ -757,30 +813,32 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 
 	// get some comment
 	@Override
-	public List<Answer> getComments(String idtopic) throws IllegalArgumentException {
+	public List<Answer> getComments(String idtopic)
+			throws IllegalArgumentException {
+		
+		System.err.println("Function: getComments");
 
 		List<Answer> myComments = new ArrayList<Answer>();
 		try {
 			// consultamos a base de datos
-			String Query = "SELECT * FROM forum_comment WHERE cod_topic=" + idtopic+ " ORDER BY creation_comment ASC";
+			String Query = "SELECT * FROM forum_comment WHERE cod_topic="
+					+ idtopic + " ORDER BY creation_comment ASC";
 			PreparedStatement ps = conn.prepareStatement(Query);
 			ResultSet result = ps.executeQuery();
 			// recorremos resultado
-			/*String idcomentary, String idtopic, String Description,
-			String creation, String modify, String Numsubcomment, String iduser*/
 			while (result.next()) {
-				myComments.add(new Answer( 	result.getString("cod_comment"),
-						  					result.getString("cod_topic"), 
-						  					result.getString("description_comment"), 
-											result.getString("creation_comment"), 
-											result.getString("edition_comment"), 
-											result.getString("response_comment"), 
-											result.getString("cod_user")));
+				myComments.add(new Answer(result.getString("cod_comment"),
+						result.getString("cod_topic"), result
+								.getString("description_comment"), result
+								.getString("creation_comment"), result
+								.getString("edition_comment"), result
+								.getString("response_comment"), result
+								.getString("cod_user")));
 			}
 			result.close();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 		}
 		return myComments;
@@ -789,42 +847,54 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	// set a comment
 	@Override
 	public Boolean setComment(Answer myAnswer) throws IllegalArgumentException {
+		
+		System.err.println("Function: setComment");
+		
 		try {
 			// actualizamos usuario
-			String Query = " UPDATE forum_comment SET " + "description_comment='"
-					+ myAnswer.getDescription() + "' WHERE  cod_comment= "
-					+ myAnswer.getIdcomentary() + " ";
+			String Query = " UPDATE forum_comment SET "
+					+ "description_comment='" + myAnswer.getDescription()
+					+ "' WHERE  cod_comment= " + myAnswer.getIdcomentary()
+					+ " ";
 			// execute query
 			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-
-			result.close();
+			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 			return false;
 		}
 		return true;
 	}
+
 	/*
-	 * FORUM-SUB-ANSWER--------------------------------------------------------------
+	 * FORUM-SUB-ANSWER----------------------------------------------------------
+	 * ----
 	 */
 	// add new answer to topic
 	@Override
-	public Boolean addNewSubComment(SubAnswer mySubComment) throws IllegalArgumentException {
+	public Boolean addNewSubComment(SubAnswer mySubComment)
+			throws IllegalArgumentException {
+		
+		System.err.println("Function: addNewSubComment");
 
 		try {
 			// consultamos a base de datos
 			String Query = "INSERT INTO forum_subcomment (description_subcomment, cod_comment, cod_user) "
-			+ "VALUES ('"+mySubComment.getDescription()+"',"+mySubComment.getIdcomment()+ "," + mySubComment.getIduser()+")";
+					+ "VALUES ('"
+					+ mySubComment.getDescription()
+					+ "',"
+					+ mySubComment.getIdcomment()
+					+ ","
+					+ mySubComment.getIduser() + ")";
 			PreparedStatement ps = conn.prepareStatement(Query);
 			ps.executeUpdate();
 
 			// recorremos resultado
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 			return false;
 		}
@@ -835,26 +905,33 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public List<SubAnswer> getSubComments(String idcomment)
 			throws IllegalArgumentException {
+		
+		System.err.println("Function: getSubComments");
 
 		List<SubAnswer> myComments = new ArrayList<SubAnswer>();
 		try {
 			// consultamos a base de datos
-			String Query = "SELECT * FROM forum_subcomment WHERE cod_comment=" + idcomment+ " ORDER BY creation_subcomment ASC";
+			String Query = "SELECT * FROM forum_subcomment WHERE cod_comment="
+					+ idcomment + " ORDER BY creation_subcomment ASC";
 			PreparedStatement ps = conn.prepareStatement(Query);
 			ResultSet result = ps.executeQuery();
 			// recorremos resultado
-			/*String idsubcomment, String Idcomment, String Description, String Creation, String Iduser*/
+			/*
+			 * String idsubcomment, String Idcomment, String Description, String
+			 * Creation, String Iduser
+			 */
 			while (result.next()) {
-				myComments.add(new SubAnswer( 	result.getString("cod_subcomment"),
-							  					result.getString("cod_comment"), 
-							  					result.getString("description_subcomment"), 
-												result.getString("creation_subcomment"),  
-												result.getString("cod_user")));
+				myComments.add(new SubAnswer(
+						result.getString("cod_subcomment"), result
+								.getString("cod_comment"), result
+								.getString("description_subcomment"), result
+								.getString("creation_subcomment"), result
+								.getString("cod_user")));
 			}
 			result.close();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 		}
 		return myComments;
@@ -862,38 +939,60 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 
 	// set a comment
 	@Override
-	public Boolean setSubComment(SubAnswer myAnswer) throws IllegalArgumentException {
+	public Boolean setSubComment(SubAnswer myAnswer)
+			throws IllegalArgumentException {
+		
+		System.err.println("Function: setSubComment");
+		
 		try {
 			// actualizamos usuario
-			String Query = " UPDATE forum_subcomment SET " 
-						+  " description_subcomment='"+ myAnswer.getDescription()
-						+ "' WHERE cod_subcomment = "+ myAnswer.getIdcomment();
+			String Query = " UPDATE forum_subcomment SET "
+					+ " description_subcomment='" + myAnswer.getDescription()
+					+ "' WHERE cod_subcomment = " + myAnswer.getIdcomment();
 			// execute query
 			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-
-			result.close();
+			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 			return false;
 		}
 		return true;
 	}
-	
-	/* FILES----------------------------------------------------------------------*/
+
+	/*
+	 * FILES----------------------------------------------------------------------
+	 */
 	// add new file
 	@Override
 	public Boolean addNewFile(UserFile myFile) throws IllegalArgumentException {
+		
+		System.err.println("Function: addNewFile");
+		
 		// return fail
 		Boolean res = false;
 		PreparedStatement pstmt = null;
 		try {
 			// consultamos a base de datos
 			String Query = "INSERT INTO `user_file` (`cod_file`, `title_file`, `description_file`, `creation_file`, `dimension_file`, `labelx_file`, `labely_file`, `labelz_file`, `plot_file`, `metric_file`, `data_file`, `cod_user`)  "
-					+ "VALUES (NULL, '"+myFile.getTitle()+"', '"+myFile.getDescription()+"', CURRENT_TIMESTAMP, '"+myFile.getDimension()+"', '"+myFile.getLabelx()+"', '"+myFile.getLabely()+"', '"+myFile.getLabely()+"', '0', '0', '"+myFile.getData().replaceAll("[;,]", " ")+"', '"+myFile.getIduser()+"');";
-			
+					+ "VALUES (NULL, '"
+					+ myFile.getTitle()
+					+ "', '"
+					+ myFile.getDescription()
+					+ "', CURRENT_TIMESTAMP, '"
+					+ myFile.getDimension()
+					+ "', '"
+					+ myFile.getLabelx()
+					+ "', '"
+					+ myFile.getLabely()
+					+ "', '"
+					+ myFile.getLabely()
+					+ "', '0', '0', '"
+					+ myFile.getData().replaceAll("[;,]", " ")
+					+ "', '"
+					+ myFile.getIduser() + "');";
+
 			pstmt = conn.prepareStatement(Query);
 			int state = pstmt.executeUpdate();
 
@@ -903,7 +1002,8 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			}
 			pstmt.close();
 		} catch (SQLException sqle) {
-			System.err.println("INSERT: "+sqle.toString());
+			System.err.println("Error: "+sqle.toString());
+			sqle.printStackTrace();
 			res = false;
 		}
 		return res;
@@ -912,27 +1012,28 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	// update a file
 	@Override
 	public Boolean setFile(UserFile myFile) throws IllegalArgumentException {
+		
+		System.err.println("Function: setFile");
+		
 		try {
 			// actualizamos usuario
-			String Query = " UPDATE user_file SET " 
-					+ "title_file='"+ myFile.getTitle() + "', " 
-					+ "description_file='"+ myFile.getDescription() + "', " 
-					+ "dimension_file='"+ myFile.getDimension() + "'," 
-					+ "labelx_file='"+ myFile.getLabelx() + "', " 
-					+ "labely_file='"+ myFile.getLabely() + "', " 
-					+ "labelz_file='"+ myFile.getLabelz() + "', " 
-					+ "data_file='" + myFile.getData()+ "' " 
-					+ " WHERE cod_file = " + myFile.getIdfile()+ "";
+			String Query = " UPDATE user_file SET " + "title_file='"
+					+ myFile.getTitle() + "', " + "description_file='"
+					+ myFile.getDescription() + "', " + "dimension_file='"
+					+ myFile.getDimension() + "'," + "labelx_file='"
+					+ myFile.getLabelx() + "', " + "labely_file='"
+					+ myFile.getLabely() + "', " + "labelz_file='"
+					+ myFile.getLabelz() + "', " + "data_file='"
+					+ myFile.getData() + "' " + " WHERE cod_file = "
+					+ myFile.getIdfile() + "";
 
 			// execute query
 			PreparedStatement ps = conn.prepareStatement(Query);
-
-			ResultSet result = ps.executeQuery();
-
-			result.close();
+			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException sqle) {
-			System.err.println(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
+			sqle.printStackTrace();
 			return false;
 		}
 		return true;
@@ -942,6 +1043,9 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public Boolean deleteFile(String iddatafile)
 			throws IllegalArgumentException {
+		
+		System.err.println("Function: deleteFile");
+		
 		try {
 			// consultamos a base de datos
 			String Query = "DELETE FROM user_file WHERE cod_file ="
@@ -955,7 +1059,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			// recorremos resultado
 			ps.close();
 		} catch (SQLException sqle) {
-			System.err.println(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			return false;
 		}
 		return true;
@@ -965,6 +1069,9 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public UserFile getDataFile(String iddatafile)
 			throws IllegalArgumentException {
+		
+		System.err.println("Function: getDataFile");
+		
 		UserFile myFile = null;
 		try {
 			// consultamos a base de datos
@@ -974,19 +1081,21 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			ResultSet result = ps.executeQuery();
 			// recorremos resultado
 			while (result.next()) {
-				/* String Idfile, String Title, String Dimension,
-				String Labelx, String Labely, String Labelz, String Description,
-				String Iduser, String Creation, String Data, String Plot,
-				String Metric*/
+				/*
+				 * String Idfile, String Title, String Dimension, String Labelx,
+				 * String Labely, String Labelz, String Description, String
+				 * Iduser, String Creation, String Data, String Plot, String
+				 * Metric
+				 */
 				myFile = new UserFile(result.getString("cod_file"),
 						result.getString("title_file"),
 						result.getString("dimension_file"),
-						result.getString("labelx_file"), 
+						result.getString("labelx_file"),
 						result.getString("labely_file"),
 						result.getString("labelz_file"),
 						result.getString("description_file"),
 						result.getString("cod_user"),
-						result.getString("creation_file"), 
+						result.getString("creation_file"),
 						result.getString("data_file"),
 						result.getString("plot_file"),
 						result.getString("metric_file"));
@@ -994,7 +1103,8 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			result.close();
 			ps.close();
 		} catch (SQLException sqle) {
-			System.err.println(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
+			sqle.printStackTrace();
 		}
 		return myFile;
 	}
@@ -1003,35 +1113,36 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public List<UserFile> getUserFiles(String iduser)
 			throws IllegalArgumentException {
+		
+		System.err.println("Function: getUserFiles");
 
 		List<UserFile> listFiles = new ArrayList<UserFile>();
 		try {
 			// consultamos a base de datos
-			String Query = "SELECT * FROM user_file WHERE cod_user = '" + iduser
-					+ "'";
+			String Query = "SELECT * FROM user_file WHERE cod_user = '"
+					+ iduser + "'";
 			PreparedStatement ps = conn.prepareStatement(Query);
 			ResultSet result = ps.executeQuery();
 			// recorremos resultado
 			while (result.next()) {
 				// add element to list String Idfile, String Title, String
 				// Description, String Iduser, String Creation
-				listFiles.add(new UserFile(	result.getString("cod_file"),
-											result.getString("title_file"),
-											result.getString("dimension_file"),
-											result.getString("labelx_file"), 
-											result.getString("labely_file"),
-											result.getString("labelz_file"),
-											result.getString("description_file"),
-											result.getString("cod_user"),
-											result.getString("creation_file"), 
-											result.getString("data_file"),
-											result.getString("plot_file"),
-											result.getString("metric_file")));
+				listFiles.add(new UserFile(result.getString("cod_file"), result
+						.getString("title_file"), result
+						.getString("dimension_file"), result
+						.getString("labelx_file"), result
+						.getString("labely_file"), result
+						.getString("labelz_file"), result
+						.getString("description_file"), result
+						.getString("cod_user"), result
+						.getString("creation_file"), result
+						.getString("data_file"), result.getString("plot_file"),
+						result.getString("metric_file")));
 			}
 			result.close();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 		}
 		return listFiles;
@@ -1039,13 +1150,15 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 
 	// get count of user files
 	@Override
-	public Integer getCountUserFiles(String iduser)
-			throws IllegalArgumentException {
+	public Integer getCountUserFiles(String iduser) throws IllegalArgumentException {
+		
+		System.err.println("Function: getCountUserFiles");
 
 		int totalfiles = 0;
 		try {
 			// consultamos a base de datos
-			String Query = "SELECT COUNT(cod_file) AS userfilecount FROM user_file WHERE cod_user = "+ iduser;
+			String Query = "SELECT COUNT(cod_file) AS userfilecount FROM user_file WHERE cod_user = "
+					+ iduser;
 			PreparedStatement ps = conn.prepareStatement(Query);
 			ResultSet result = ps.executeQuery();
 			// recorremos resultado
@@ -1055,7 +1168,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			result.close();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 			return -1;
 		}
@@ -1067,17 +1180,19 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public Boolean addPlotFile(String iddatafile)
 			throws IllegalArgumentException {
+		
+		System.err.println("Function: addPlotFile");
+		
 		try {
 			// actualizamos usuario
-			String Query = " UPDATE user_file SET plot_file = 1 WHERE cod_file='"+iddatafile+"'";
+			String Query = " UPDATE user_file SET plot_file = 1 WHERE cod_file='"
+					+ iddatafile + "'";
 			// execute query
 			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-
-			result.close();
+			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 			return false;
 		}
@@ -1089,17 +1204,19 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public Boolean removePlotFile(String iddatafile)
 			throws IllegalArgumentException {
+		
+		System.err.println("Function: removePlotFile");
+		
 		try {
 			// actualizamos usuario
-			String Query = " UPDATE user_file SET plot_file = 0 WHERE cod_file='"+ iddatafile + "'";
+			String Query = " UPDATE user_file SET plot_file = 0 WHERE cod_file='"
+					+ iddatafile + "'";
 			// execute query
 			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-
-			result.close();
+			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 			return false;
 		}
@@ -1110,17 +1227,19 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public Boolean addMetricFile(String iddatafile)
 			throws IllegalArgumentException {
+		
+		System.err.println("Function: addMetricFile");
+		
 		try {
 			// actualizamos usuario
-			String Query = " UPDATE user_file SET metric_file = 1 WHERE cod_file='"+iddatafile + "'";
+			String Query = " UPDATE user_file SET metric_file = 1 WHERE cod_file='"
+					+ iddatafile + "'";
 			// execute query
 			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-
-			result.close();
+			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 			return false;
 		}
@@ -1131,17 +1250,19 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public Boolean removeMetricFile(String iddatafile)
 			throws IllegalArgumentException {
+		
+		System.err.println("Function: removeMetricFile");
+		
 		try {
 			// actualizamos usuario
-			String Query = " UPDATE user_file SET metric_file = 0 WHERE cod_file='"+iddatafile + "'";
+			String Query = " UPDATE user_file SET metric_file = 0 WHERE cod_file='"
+					+ iddatafile + "'";
 			// execute query
 			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-
-			result.close();
+			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 			return false;
 		}
@@ -1152,45 +1273,38 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public List<UserFile> getUserFilesPlot(String iduser)
 			throws IllegalArgumentException {
+		
+		System.err.println("Function: getUserFilesPlot");
 
 		List<UserFile> listFiles = new ArrayList<UserFile>();
+		
 		try {
 			// consultamos a base de datos
-			String Query = "SELECT * FROM plot_file_view WHERE cod_user = '" + iduser
-					+ "'";
+			String Query = "SELECT * FROM plot_file_view WHERE cod_user = '"
+					+ iduser + "'";
 			PreparedStatement ps = conn.prepareStatement(Query);
 			ResultSet result = ps.executeQuery();
 			// recorremos resultado
 			while (result.next()) {
 				// add element to list String Idfile, String Title, String
 				// Description, String Iduser, String Creation
-				listFiles.add(new UserFile(	result.getString("cod_file"),
-											result.getString("title_file"),
-											result.getString("dimension_file"),
-											"", 
-											"",
-											"",
-											result.getString("description_file"),
-											result.getString("cod_user"),
-											result.getString("creation_file"), 
-											result.getString("data_file"),
-											"",
-											""));
+				listFiles.add(new UserFile(result.getString("cod_file"), result
+						.getString("title_file"), result
+						.getString("dimension_file"), "", "", "", result
+						.getString("description_file"), result
+						.getString("cod_user"), result
+						.getString("creation_file"), result
+						.getString("data_file"), "", ""));
 
 				// create user files in directory files
 				ServletContext context = this.getServletContext();
-				try (PrintStream out = new PrintStream(new FileOutputStream(
-						context.getRealPath("files") + "/"
-								+ result.getString("cod_file") + ".txt"))) {
-					out.print(result.getString("data_file"));
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				}
+				//create file
+				FileWritter.Write(context.getRealPath("files"), result.getString("cod_file"), result.getString("data_file"));
 			}
 			result.close();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 		}
 		return listFiles;
@@ -1200,34 +1314,32 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public List<UserFile> getUserFilesMetric(String iduser)
 			throws IllegalArgumentException {
+		
+		System.err.println("Function: getUserFilesMetric");
 
 		List<UserFile> listFiles = new ArrayList<UserFile>();
 		try {
 			// consultamos a base de datos
-			String Query = "SELECT * FROM metric_file_view WHERE cod_user = '"+iduser+"'";
+			String Query = "SELECT * FROM metric_file_view WHERE cod_user = '"
+					+ iduser + "'";
 			PreparedStatement ps = conn.prepareStatement(Query);
 			ResultSet result = ps.executeQuery();
 			// recorremos resultado
 			while (result.next()) {
 				// add element to list String Idfile, String Title, String
 				// Description, String Iduser, String Creation
-				listFiles.add(new UserFile(	result.getString("cod_file"),
-						result.getString("title_file"),
-						result.getString("dimension_file"),
-						"", 
-						"",
-						"",
-						result.getString("description_file"),
-						result.getString("cod_user"),
-						result.getString("creation_file"), 
-						result.getString("data_file"),
-						"",
-						""));
+				listFiles.add(new UserFile(result.getString("cod_file"), result
+						.getString("title_file"), result
+						.getString("dimension_file"), "", "", "", result
+						.getString("description_file"), result
+						.getString("cod_user"), result
+						.getString("creation_file"), result
+						.getString("data_file"), "", ""));
 			}
 			result.close();
 			ps.close();
 		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
+			System.err.println("Error: "+sqle.toString());
 			sqle.printStackTrace();
 		}
 		return listFiles;
@@ -1246,6 +1358,9 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			String fileFormat, String title, List<String> labelxyz,
 			List<String> limitxyz, String iduser)
 			throws IllegalArgumentException {
+
+		System.err.println("Function: CreateImage2D");
+
 		// servlet context to find path
 		ServletContext context = this.getServletContext();
 
@@ -1336,8 +1451,8 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			commandTerminal += "plot ";
 			for (UserFile f : files) {
 				commandTerminal += " '" + context.getRealPath("files") + "/"
-						+ f.getIdfile() + ".txt' title '" + f.getTitle()
-						+ "' " + pointlineadding;
+						+ f.getIdfile() + ".txt' title '" + f.getTitle() + "' "
+						+ pointlineadding;
 				if (cont < files.size() - 1)
 					commandTerminal += ",";
 				cont++;
@@ -1360,6 +1475,9 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			String fileFormat, String title, List<String> labelxyz,
 			List<String> limitxyz, String iduser)
 			throws IllegalArgumentException {
+
+		System.err.println("Function: CreateImage3D");
+
 		// servlet context to find path
 		ServletContext context = this.getServletContext();
 
@@ -1459,8 +1577,8 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			commandTerminal += "splot ";
 			for (UserFile f : files) {
 				commandTerminal += " '" + context.getRealPath("files") + "/"
-						+ f.getIdfile() + ".txt' title '" + f.getTitle()
-						+ "' " + pointlineadding;
+						+ f.getIdfile() + ".txt' title '" + f.getTitle() + "' "
+						+ pointlineadding;
 				if (cont < files.size() - 1)
 					commandTerminal += ",";
 				cont++;
@@ -1485,6 +1603,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			throws IllegalArgumentException {
 
 		System.err.print("\nMetric Error Ratio");
+		
 		// result object
 		List<MetricResults> results = new ArrayList<MetricResults>();
 
@@ -1536,7 +1655,6 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 		return results;
 	}
 
-	
 	@Override
 	public List<MetricResults> CalculateHA(String iduser)
 			throws IllegalArgumentException {
@@ -1565,12 +1683,13 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 		System.err.print("\nretorna resultado");
 		return results;
 	}
-	
+
 	@Override
 	public List<MetricResults> CalculateHR(String iduser)
 			throws IllegalArgumentException {
 
 		System.err.print("\nMetric Hyperarea Ratio");
+		
 		// result object
 		List<MetricResults> results = new ArrayList<MetricResults>();
 
@@ -1592,12 +1711,13 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 		System.err.print("\nretorna resultado");
 		return results;
 	}
-	
+
 	@Override
 	public List<MetricResults> CalculateGD(String iduser)
 			throws IllegalArgumentException {
 
 		System.err.print("\nMetric Generational Distance");
+		
 		// result object
 		List<MetricResults> results = new ArrayList<MetricResults>();
 
@@ -1621,9 +1741,10 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 		System.err.print("\nretorna resultado");
 		return results;
 	}
-	
+
 	@Override
-	public List<MetricResults> CalculateGNVG(String iduser) throws IllegalArgumentException {
+	public List<MetricResults> CalculateGNVG(String iduser)
+			throws IllegalArgumentException {
 
 		System.err.print("\nMetric GNVG");
 
@@ -1653,7 +1774,9 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public List<MetricResults> CalculateC(String iduser)
 			throws IllegalArgumentException {
+		
 		System.err.print("\nMetric Coverage");
+		
 		// result object
 		List<MetricResults> results = new ArrayList<MetricResults>();
 
@@ -1693,6 +1816,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public Boolean ExportResults(String iduser, List<MetricResults> Results)
 			throws IllegalArgumentException {
+		System.err.println("Function: ExportResults");
 
 		// servlet context to find path
 		ServletContext context = this.getServletContext();
@@ -1703,45 +1827,16 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/* functions properly from server */
 	// send email
-	private String SendEmail(String to, String from, String Subjettext,
-			String Messagehtml) {
-		Properties props = new Properties();
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.socketFactory.port", "465");
-		props.put("mail.smtp.socketFactory.class",
-				"javax.net.ssl.SSLSocketFactory");
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.port", "465");
+	private String SendEmail(String to, String Subjettext, String Messagehtml) {
 
-		Session session = Session.getDefaultInstance(props,
-				new javax.mail.Authenticator() {
-					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication(
-								"gutierr.carlos@gmail.com",
-								"krgj fmuu plqh niaj");
-					}
-				});
-
-		try {
-
-			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("gutierr.carlos@gmail.com"));
-			message.setRecipients(Message.RecipientType.TO,
-					InternetAddress.parse(to));
-			message.setSubject(Subjettext);
-			message.setText(Messagehtml);
-
-			Transport.send(message);
-
-		} catch (MessagingException e) {
-			System.err.print("*SEND EMAIL ERROR: " + e.toString());
-			return "badsendmail";
-		}
-		return "goodsendmail";
+		return EmailAlert.SendEmail(to,Subjettext,Messagehtml);
 	}
 
 	// clear pin from user
 	private void eraseUserPin(String email) {
+
+		System.err.println("Function: eraseUserPin");
+
 		// set user PIN
 		try {
 			// actualizamos usuario
@@ -1749,9 +1844,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 					+ email.toUpperCase() + "'";
 			// execute query
 			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-
-			result.close();
+			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException sqle) {
 			GWT.log(sqle.toString());
@@ -1761,27 +1854,25 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 
 	// save login date from user
 	private void saveDateLogin(String cod_user) {
-		System.err.println("UPDATE DATE USER LOGGED");
+		System.err.println("Function: saveDateLogin");
 		// set new date to login
 		try {
 			// actualizamos usuario
-			String Query = " UPDATE account_user SET lastconnection_user = CURRENT_TIMESTAMP WHERE cod_user='" + cod_user + "'";
+			String Query = " UPDATE account_user SET lastconnection_user = CURRENT_TIMESTAMP WHERE cod_user='"
+					+ cod_user + "'";
 			// execute query
 			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-
-			result.close();
+			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException sqle) {
 			GWT.log(sqle.toString());
 			sqle.printStackTrace();
 		}
 	}
-	
-	
-	
+
 	// get user files selecterd for metrics
 	private List<UserFile> getFullFilesMetric(String user) {
+		System.err.println("Function: getFullFilesMetric");
 		List<UserFile> listFiles = new ArrayList<UserFile>();
 		try {
 			// consultamos a base de datos
@@ -1791,32 +1882,29 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			ResultSet result = ps.executeQuery();
 			// recorremos resultado
 			while (result.next()) {
-				/*String Idfile, String Title, String Dimension,
-				String Labelx, String Labely, String Labelz, String Description,
-				String Iduser, String Creation, String Data, String Plot,
-				String Metric*/
-				listFiles.add(new UserFile(	result.getString("cod_file"),
-											result.getString("title_file"), 
-											result.getString("dimension_file"), 
-											result.getString("labelx_file"),
-											result.getString("labely_file"),
-											result.getString("labelz_file"),
-											result.getString("description_file"), 
-											result.getString("cod_user"), 
-											result.getString("creation_file"), 
-											result.getString("data_file"), 
-											result.getString("plot_file"), 
-											result.getString("metric_file")));
+				/*
+				 * String Idfile, String Title, String Dimension, String Labelx,
+				 * String Labely, String Labelz, String Description, String
+				 * Iduser, String Creation, String Data, String Plot, String
+				 * Metric
+				 */
+				listFiles.add(new UserFile(result.getString("cod_file"), result
+						.getString("title_file"), result
+						.getString("dimension_file"), result
+						.getString("labelx_file"), result
+						.getString("labely_file"), result
+						.getString("labelz_file"), result
+						.getString("description_file"), result
+						.getString("cod_user"), result
+						.getString("creation_file"), result
+						.getString("data_file"), result.getString("plot_file"),
+						result.getString("metric_file")));
 
 				// create user files in directory files
+				
 				ServletContext context = this.getServletContext();
-				try (PrintStream out = new PrintStream(new FileOutputStream(
-						context.getRealPath("files") + "/"
-								+ result.getString("cod_file") + ".txt"))) {
-					out.print(result.getString("data_file"));
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				}
+				FileWritter.Write(context.getRealPath("files"), result.getString("cod_file"), result.getString("data_file"));
+				
 			}
 			result.close();
 			ps.close();
@@ -1826,7 +1914,5 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 		}
 		return listFiles;
 	}
-
-	
 
 }// end class

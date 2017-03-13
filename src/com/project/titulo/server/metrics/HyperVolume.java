@@ -47,7 +47,7 @@ public class HyperVolume {
 
 	// calculate one file at time
 	
-	private String Calculate(List<Points> aproximationDataSet) 
+	private Double Calculate(List<Points> aproximationDataSet) 
 	{
 		int Error=0;
 		
@@ -77,9 +77,9 @@ public class HyperVolume {
 		}
 		
 		if(Error==0){
-			return String.format("%.6f", HV);
+			return  HV;
 		}else{
-			return "Must be 3D Set";
+			return null;
 		}
 	}
 	

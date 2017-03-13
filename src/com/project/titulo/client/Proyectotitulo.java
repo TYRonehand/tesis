@@ -23,6 +23,10 @@ public class Proyectotitulo implements EntryPoint {
 	
 	public void onModuleLoad() 
 	{
+		//go up
+		Window.getScrollTop();
+		
+		//handler
 		History.addValueChangeHandler(new ValueChangeHandler<String>() {
 			   @Override
 			   public void onValueChange(ValueChangeEvent<String> event) {
@@ -32,43 +36,53 @@ public class Proyectotitulo implements EntryPoint {
 			   }   
 			});
 		
-		if(Cookies.getCookieNames().size()<=1){
+		//no cookies created
+		if(Cookies.getCookieNames().size()==0){
 			 mycookie=new CookieVerify(true);
+			 TokenLoader(mycookie.getCookieIdurl().toLowerCase());
+		}else{
+			//there's cookies created
+			if(!mycookie.getCookieIdurl().isEmpty() && !mycookie.getCookieUser().isEmpty()){
+				//url and user 
+				TokenLoader(mycookie.getCookieIdurl().toLowerCase());
+				
+			}else{
+				//empty cookies or no user conected
+				mycookie.delCookiesInfo();
+				
+			}
 		}
-		
-		if(!mycookie.getCookieIdurl().isEmpty() && !mycookie.getCookieUser().isEmpty())
-			TokenLoader(mycookie.getCookieIdurl().toLowerCase());
-		else{
-				TokenLoader(History.getToken());
-		}
-		
 		
 	}
+	
 	/**
 	 * Validate the token in the url exist and load the correct place in the website.
 	 * @param historyToken This parameter is a token used to recognize where is located de user in the website.
 	 * @return this dont return anything just load the correspondig widgets.
 	 */
 	private void TokenLoader(String historyToken){
+		
 		CookieVerify mycookieaux=new CookieVerify(false);
 		
+		Window.getScrollTop();
+
 		//token known
 		if(historyToken.length()>1)
 		{	
 			if(historyToken.equals("home") 
-					|| historyToken.equals("files") 
-				    || historyToken.equals("plot") 
-				    || historyToken.equals("metric")  
-				    || historyToken.equals("forum")  
-				    || historyToken.equals("faq")  
-				    || historyToken.equals("topic") 
-				    || historyToken.equals("login")
-				    || historyToken.equals("recovery")  
-				    || historyToken.equals("profile")   
-				    || historyToken.equals("admindashboard")  
-				    || historyToken.equals("admin")    
-				    || historyToken.equals("users")  
-				    || historyToken.contains(History.encodeHistoryToken("uid=")))
+				|| historyToken.equals("files") 
+			    || historyToken.equals("plot") 
+			    || historyToken.equals("metric")  
+			    || historyToken.equals("forum")  
+			    || historyToken.equals("faq")  
+			    || historyToken.equals("topic") 
+			    || historyToken.equals("login")
+			    || historyToken.equals("recovery")  
+			    || historyToken.equals("profile")   
+			    || historyToken.equals("admindashboard")  
+			    || historyToken.equals("admin")    
+			    || historyToken.equals("users")  
+			    || historyToken.contains(History.encodeHistoryToken("uid=")))
 			{
 				//recovery account and administration login
 			    if(historyToken.equals("recovery") || historyToken.equals("admin"))
@@ -94,19 +108,21 @@ public class Proyectotitulo implements EntryPoint {
 					    }else if(mycookieaux.getCookieUser().length()<=0){
 						    url.GoTo("login", null, null);
 					    }else{
+					    	mycookieaux.delCookiesInfo();
 						    //empty user
-					    	History.newItem("login");
+							Window.Location.replace(GWT.getHostPageBaseURL()+"#login");
 					    }
 				    	
 			    }
 		    }else{
+		    	mycookieaux.delCookiesInfo();
 		    	//token unknown
 			    //Window.alert("404");
 			    url.GoTo("404", null, null);
 		    }
 		}else{
+	    	mycookieaux.delCookiesInfo();
 			Window.Location.replace(GWT.getHostPageBaseURL()+"#login");
-			
 		}
 	}
 

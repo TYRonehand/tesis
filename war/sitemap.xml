@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	<url>
+		<loc>http://200.14.96.40/</loc>
+		<lastmod>2017-02-03</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+	</url>
+	<url>
+		<loc>http://200.14.96.40/#login</loc>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
+		<loc>http://200.14.96.40/#recovery</loc>
+		<lastmod>2008-12-23</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.2</priority>
+	</url>
+	<url>
+		<loc>http://200.14.96.40/#plot</loc>
+		<lastmod>2008-12-23</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.2</priority>
+	</url>
+	<url>
+		<loc>http://200.14.96.40/#metric</loc>
+		<lastmod>2008-12-23</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.2</priority>
+	</url>
+	<url>
+		<loc>http://200.14.96.40/#forum</loc>
+		<lastmod>2008-12-23</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.2</priority>
+	</url>
+	<url>
+		<loc>http://200.14.96.40/#faq</loc>
+		<lastmod>2008-12-23</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.2</priority>
+	</url>
+	
+</urlset>

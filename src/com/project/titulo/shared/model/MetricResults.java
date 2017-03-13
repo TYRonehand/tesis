@@ -8,7 +8,7 @@ import java.util.List;
 public class MetricResults implements Serializable {
 	private String Message;
 	private String aproximationNameFile;
-	private List<String> resultList = new ArrayList<String>();
+	private List<Double> resultList = new ArrayList<Double>();
 	private List<String> paretoNameFileList = new ArrayList<String>();;
 
 	public MetricResults() {
@@ -22,11 +22,11 @@ public class MetricResults implements Serializable {
 		Message = message;
 	}
 
-	public List<String> getResultsList() {
+	public List<Double> getResultsList() {
 		return resultList;
 	}
 
-	public void addResult(String result) {
+	public void addResult(Double result) {
 		this.resultList.add(result);
 	}
 

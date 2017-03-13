@@ -1,3 +1,4 @@
+@FinalFields, false
 com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException, true, true, true, true, com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException/3936916533, 3936916533
 com.google.gwt.user.client.rpc.RpcTokenException, true, true, false, false, com.google.gwt.user.client.rpc.RpcTokenException/2345075298, 2345075298
 com.google.gwt.user.client.rpc.XsrfToken, false, false, true, true, com.google.gwt.user.client.rpc.XsrfToken/4254043109, 4254043109
@@ -20,8 +21,8 @@ com.project.titulo.shared.model.UserFile, true, true, true, true, com.project.ti
 java.lang.Boolean, true, true, true, true, java.lang.Boolean/476441737, 476441737
 java.lang.Byte, true, true, false, false, java.lang.Byte/1571082439, 1571082439
 [Ljava.lang.Byte;, true, true, false, false, [Ljava.lang.Byte;/3053163818, 3053163818
-java.lang.Double, true, true, false, false, java.lang.Double/858496421, 858496421
-[Ljava.lang.Double;, true, true, false, false, [Ljava.lang.Double;/2857560407, 2857560407
+java.lang.Double, true, true, true, true, java.lang.Double/858496421, 858496421
+[Ljava.lang.Double;, true, true, true, true, [Ljava.lang.Double;/2857560407, 2857560407
 java.lang.Exception, true, false, true, false, java.lang.Exception/1920171873, 1920171873
 java.lang.Float, true, true, false, false, java.lang.Float/1718559123, 1718559123
 [Ljava.lang.Float;, true, true, false, false, [Ljava.lang.Float;/3956181278, 3956181278
@@ -30,7 +31,7 @@ java.lang.Integer, true, true, false, false, java.lang.Integer/3438268394, 34382
 [Ljava.lang.Integer;, true, true, false, false, [Ljava.lang.Integer;/1574882222, 1574882222
 java.lang.Long, true, true, false, false, java.lang.Long/4227064769, 4227064769
 [Ljava.lang.Long;, true, true, false, false, [Ljava.lang.Long;/97727328, 97727328
-java.lang.Number, true, false, false, false, java.lang.Number/300033342, 300033342
+java.lang.Number, true, false, true, false, java.lang.Number/300033342, 300033342
 java.lang.NumberFormatException, true, true, false, false, java.lang.NumberFormatException/3305228476, 3305228476
 [Ljava.lang.Number;, true, true, false, false, [Ljava.lang.Number;/1765439959, 1765439959
 java.lang.RuntimeException, true, false, true, false, java.lang.RuntimeException/515124647, 515124647

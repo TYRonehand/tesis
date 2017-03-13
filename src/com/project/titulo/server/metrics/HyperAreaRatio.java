@@ -50,16 +50,13 @@ public class HyperAreaRatio {
 					paretoFrontPoint.create(auxfile.getData(), this.axis_size);
 
 					// calculate metric
-					String value = Calculate(paretoFrontPoint.getListPoints(), paretoOptime.getListPoints());
-
-					if (!value.isEmpty() && value != null)
-						mr.addResult(value);
-					else
-						mr.addResult("Error");
+					double value = Calculate(paretoFrontPoint.getListPoints(), paretoOptime.getListPoints());
+					mr.addResult(value);
 					
 				} else {
 					// fail dimension
-					mr.addResult("Wronge dimension");
+					mr.addResult(null);
+					mr.setMessage("Wronge Dimension");
 				}
 			}
 
@@ -71,13 +68,12 @@ public class HyperAreaRatio {
 
 	// calculate one file at time
 	
-	private String Calculate(List<Points> pftrue, List<Points> pfknown) 
+	private double Calculate(List<Points> pftrue, List<Points> pfknown) 
 	{	
 			double HAtrue = HyperArea.Calculate(pftrue);
 			double HAknown = HyperArea.Calculate(pfknown);	
 			double HR = HAknown/HAtrue;
-			
-			return String.format("%.6f", HR);
+			return HR;
 	}
 
 	

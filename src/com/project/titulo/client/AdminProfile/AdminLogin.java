@@ -42,6 +42,8 @@ public class AdminLogin extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 		// set style to buttons from bootstrap
 		submitBtn.addStyleName(ms.getButtonStyle(0));
+		passBox.getElement().setAttribute("name", "password");
+		userBox.getElement().setAttribute("name", "user");
 	}
 
 	private void adminLogin(String mail,String password){

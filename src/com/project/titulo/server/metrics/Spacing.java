@@ -38,7 +38,7 @@ public class Spacing {
 			mr.setAproximationNameFile(file.getTitle());
 
 			// calculate metric
-			mr.addResult(Double.toString(Calculate(paretoOptime.getListPoints())));// calculate file data
+			mr.addResult(Calculate(paretoOptime.getListPoints()));// calculate file data
 
 			this.ResultList.add(mr);
 

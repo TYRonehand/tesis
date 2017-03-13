@@ -60,6 +60,7 @@ public class ExportDataResult {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			System.err.println("Export fail!");
+			EmailAlert.WarningEmail("ExportDataResult.java - WriteFile", "Message: "+e.toString());
 			return false;
 		}
 		System.err.println("Export Ok!");

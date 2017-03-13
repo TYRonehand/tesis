@@ -40,9 +40,9 @@ public class HyperArea implements IsSerializable{
 			// calculate metric
 			double value = Calculate(paretoOptime.getListPoints());
 			if(value==-1)
-				mr.addResult("Invalid Dimension");
+				mr.addResult(null);
 			else	
-				mr.addResult( Double.toString( value ));// calculate file data
+				mr.addResult( value );// calculate file data
 
 			this.ResultList.add(mr);
 

@@ -156,15 +156,19 @@
 
 												<label class="col-lg-2 " align="left"></label>
 												
-												<div class="col-lg-6">
-													<gwt:Button ui:field="submitBTN" width="210px">Save</gwt:Button>
-												</div>
-												<div class="col-lg-6">
-													<gwt:Button ui:field="cancelBTN" width="210px">Reset</gwt:Button>
-												</div>
+												
 												<div class="col-lg-12">
+												
+													<div class="col-lg-6">
+														<gwt:Button ui:field="submitBTN" width="210px">Save</gwt:Button>
+													</div>
+													<div class="col-lg-6">
+														<gwt:Button ui:field="cancelBTN" width="210px">Reset</gwt:Button>
+													</div>
+													
 													<gwt:Label addStyleNames='{style.observation}' 
-														text="(*) Obligatory field." horizontalAlignment="ALIGN_LEFT"></gwt:Label>
+														text="(*) Obligatory field." horizontalAlignment="ALIGN_LEFT">
+													</gwt:Label>
 												</div>
 												
 											</div>

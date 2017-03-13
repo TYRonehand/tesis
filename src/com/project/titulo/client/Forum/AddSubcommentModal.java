@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.project.titulo.client.ServerService;
 import com.project.titulo.client.ServerServiceAsync;
+import com.project.titulo.shared.CookieVerify;
 import com.project.titulo.shared.ErrorVerify;
 import com.project.titulo.shared.GoToUrl;
 import com.project.titulo.shared.MyStyle;
@@ -45,7 +46,7 @@ public class AddSubcommentModal extends DialogBox {
 	// topic full
 	private String IDCOMMENT;
 	private String IDUSER;
-
+	private String IDTOPIC;
 	// widget
 	private static AddCommentModalUiBinder uiBinder = GWT
 			.create(AddCommentModalUiBinder.class);
@@ -56,7 +57,8 @@ public class AddSubcommentModal extends DialogBox {
 	public AddSubcommentModal(String idcomment, String iduser) {
 		this.IDCOMMENT = idcomment;
 		this.IDUSER = iduser;
-
+		CookieVerify cook = new CookieVerify(false);
+		this.IDTOPIC = cook.getCookieTopic();
 		setWidget(uiBinder.createAndBindUi(this));
 		this.center();
 
@@ -102,7 +104,7 @@ public class AddSubcommentModal extends DialogBox {
 				public void onSuccess(Boolean result) {
 					if (result) {
 						ErrorVerify.getErrorAlert("successadd");
-						url.GoTo("TOPIC",IDUSER,null);
+						url.GoTo("TOPIC",IDUSER,IDTOPIC);
 						dialogBox.hide();
 					} else {
 						ErrorVerify.getErrorAlert("failadd");

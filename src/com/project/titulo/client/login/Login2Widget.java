@@ -54,6 +54,9 @@ public class Login2Widget extends Composite {
 
 	public Login2Widget() {
 		initWidget(uiBinder.createAndBindUi(this));
+		
+		passInput.getElement().setAttribute("name", "password");
+		mailInput.getElement().setAttribute("name", "email");
 
 		// set style to buttons from bootstrap
 		submitBTN.addStyleName(ms.getButtonStyle(0));
