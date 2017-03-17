@@ -15,6 +15,7 @@ public class User implements IsSerializable {
 	private String password;
 	private String creation;
 	private String pin;
+	private String login;
 
 	@SuppressWarnings("unused")
 	private User() {
@@ -23,7 +24,7 @@ public class User implements IsSerializable {
 
 	public User(String id, String mail, String name, String lastname,
 			String country, String ocupation, String web, String institution,
-			String password, String creation, String pin) {
+			String password, String creation, String pin, String last_login) {
 		this.setId(id);
 		this.setMail(mail);
 		this.setName(name);
@@ -35,6 +36,7 @@ public class User implements IsSerializable {
 		this.setPassword(password);
 		this.setCreation(creation);
 		this.setPin(pin);
+		this.setLogin(last_login);
 
 	}
 
@@ -124,6 +126,14 @@ public class User implements IsSerializable {
 
 	public void setPin(String pin) {
 		this.pin = pin;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
 	}
 
 }

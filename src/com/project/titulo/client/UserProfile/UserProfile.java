@@ -153,7 +153,7 @@ public class UserProfile extends Composite {
 					UserInfo.getName(), UserInfo.getLastname(),
 					UserInfo.getCountry(), UserInfo.getOcupation(),
 					UserInfo.getWeb(), UserInfo.getInstitution(), "",
-					UserInfo.getCreation(), "");
+					UserInfo.getCreation(), "",UserInfo.getLogin());
 
 			aux.setName(this.nameInput.getValue());
 			aux.setLastname(this.lastnameInput.getValue());
@@ -324,7 +324,8 @@ public class UserProfile extends Composite {
 														UserInfo.getInstitution(), 
 														"",
 														UserInfo.getCreation(), 
-														"");
+														"",
+														UserInfo.getLogin());
 									// connect to servlet and send user
 									updateUserInfo(aux);// update
 								} else {// not equals emails
@@ -371,7 +372,8 @@ public class UserProfile extends Composite {
 												result.getInstitution(),
 												newPassword.getText(), 
 												result.getCreation(), 
-												result.getPin());
+												result.getPin(),
+												result.getLogin());
 										// connect to servlet and send user
 										updateUserInfo(aux);// update
 									} else {// not equals emails

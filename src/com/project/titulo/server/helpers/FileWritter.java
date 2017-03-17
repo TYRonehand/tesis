@@ -1,11 +1,11 @@
-package com.project.titulo.shared;
+package com.project.titulo.server.helpers;
 
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 
 public class FileWritter {
 
-	public static Boolean Write(String realpath, String name, String resume){
+	public static String Write(String realpath, String name, String resume){
 		
 		String fullpath = realpath + "/" +name.toLowerCase() +".txt";
 		
@@ -13,11 +13,10 @@ public class FileWritter {
 			out.print(resume);
 			
 		} catch (Exception e) {
-			EmailAlert.WarningEmail("filewritter.java - Write", "Message: "+e.toString());
 			System.err.println("FileWritter: fail creating file");
-			return false;
+			return e.toString();
 		}
 		
-		return true;
+		return null;
 	}
 }

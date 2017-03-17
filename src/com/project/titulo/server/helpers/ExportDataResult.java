@@ -1,4 +1,4 @@
-package com.project.titulo.shared;
+package com.project.titulo.server.helpers;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

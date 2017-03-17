@@ -1,6 +1,7 @@
 package com.project.titulo.shared;
 
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.project.titulo.client.AdminProfile.AdminLogin;
 import com.project.titulo.client.AdminProfile.MenuAdmin;
@@ -37,6 +38,8 @@ public class GoToUrl {
 	}
 
 	public void GoTo(String option, String IDUSER, String IDTOPIC) {
+		//go up
+		Window.getScrollTop();
 
 		//no cookies => rebuild new and clean cookies
 		if(Cookies.getCookieNames().size()==0)

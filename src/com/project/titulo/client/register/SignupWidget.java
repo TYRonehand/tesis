@@ -138,8 +138,9 @@ public class SignupWidget extends Composite {
 														"", 
 														"", 
 														pass2Input.getText(),
-														null, 
-														"");
+														"NULL", 
+														"",
+														"NULL");
 								// call reguster user
 								registerUser(newUser);
 							} else {

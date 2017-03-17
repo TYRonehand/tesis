@@ -5,14 +5,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
-public class ServerConfig {
+public class DataBaseProperties {
+	
 		// private String status;
 		private static String url	=	"jdbc:mysql://localhost:3306/asmop_bd";
 		private static String user	=	"root";
 		private static String pass	=	"ubuntu16.04mysql";
 
 		//constructor
-		public ServerConfig(){
+		public DataBaseProperties(){
 			
 		}
 		

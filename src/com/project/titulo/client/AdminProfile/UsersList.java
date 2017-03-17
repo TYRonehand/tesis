@@ -136,7 +136,16 @@ public class UsersList extends Composite {
 				return object.getCreation();
 			}
 		};
-		table.addColumn(totalColumn, "Join");
+		table.addColumn(totalColumn, "Created");
+
+		// Add a text column to show the pin.
+		TextColumn<User> loginColumn = new TextColumn<User>() {
+			@Override
+			public String getValue(User object) {
+				return object.getLogin();
+			}
+		};
+		table.addColumn(loginColumn, "Log In");
 
 		// Add a text column to show the pin.
 		TextColumn<User> pinColumn = new TextColumn<User>() {

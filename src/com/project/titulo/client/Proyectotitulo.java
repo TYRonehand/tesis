@@ -18,13 +18,11 @@ import com.project.titulo.shared.GoToUrl;
  */
 public class Proyectotitulo implements EntryPoint {
 	
-	private CookieVerify mycookie=new CookieVerify(false);
+	private CookieVerify mycookieaux=new CookieVerify(false);
 	private GoToUrl url = new GoToUrl();
 	
 	public void onModuleLoad() 
 	{
-		//go up
-		Window.getScrollTop();
 		
 		//handler
 		History.addValueChangeHandler(new ValueChangeHandler<String>() {
@@ -38,17 +36,17 @@ public class Proyectotitulo implements EntryPoint {
 		
 		//no cookies created
 		if(Cookies.getCookieNames().size()==0){
-			 mycookie=new CookieVerify(true);
-			 TokenLoader(mycookie.getCookieIdurl().toLowerCase());
+			mycookieaux=new CookieVerify(true);
+			 TokenLoader(mycookieaux.getCookieIdurl().toLowerCase());
 		}else{
 			//there's cookies created
-			if(!mycookie.getCookieIdurl().isEmpty() && !mycookie.getCookieUser().isEmpty()){
-				//url and user 
-				TokenLoader(mycookie.getCookieIdurl().toLowerCase());
+			if(!mycookieaux.getCookieIdurl().isEmpty()){
+				//url
+				TokenLoader(mycookieaux.getCookieIdurl().toLowerCase());
 				
 			}else{
 				//empty cookies or no user conected
-				mycookie.delCookiesInfo();
+				mycookieaux.delCookiesInfo();
 				
 			}
 		}
@@ -62,10 +60,6 @@ public class Proyectotitulo implements EntryPoint {
 	 */
 	private void TokenLoader(String historyToken){
 		
-		CookieVerify mycookieaux=new CookieVerify(false);
-		
-		Window.getScrollTop();
-
 		//token known
 		if(historyToken.length()>1)
 		{	
@@ -81,11 +75,12 @@ public class Proyectotitulo implements EntryPoint {
 			    || historyToken.equals("profile")   
 			    || historyToken.equals("admindashboard")  
 			    || historyToken.equals("admin")    
-			    || historyToken.equals("users")  
+			    || historyToken.equals("users")   
+			    || historyToken.equals("404")  
 			    || historyToken.contains(History.encodeHistoryToken("uid=")))
 			{
 				//recovery account and administration login
-			    if(historyToken.equals("recovery") || historyToken.equals("admin"))
+			    if(historyToken.equals("recovery") || historyToken.equals("admin") || historyToken.equals("login") || historyToken.equals("404"))
 			    {
 				    url.GoTo(historyToken, null, null);
 			    }
@@ -100,28 +95,23 @@ public class Proyectotitulo implements EntryPoint {
 					    		//profile view
 						    	String iduser = historyToken.substring(4);
 						    	url.GoTo("user", iduser, null);
-						    }else{
+						    	
+						    }else if(!historyToken.isEmpty()){
 						    	//user user
 						    	String IDUSER = mycookieaux.getCookieUser();
 						    	url.GoTo(historyToken, IDUSER, mycookieaux.getCookieTopic());
 						    }
-					    }else if(mycookieaux.getCookieUser().length()<=0){
-						    url.GoTo("login", null, null);
+					    	
 					    }else{
-					    	mycookieaux.delCookiesInfo();
-						    //empty user
+					    	//cookie user not exist => user not loged
 							Window.Location.replace(GWT.getHostPageBaseURL()+"#login");
 					    }
-				    	
 			    }
 		    }else{
-		    	mycookieaux.delCookiesInfo();
 		    	//token unknown
-			    //Window.alert("404");
-			    url.GoTo("404", null, null);
+				Window.Location.replace(GWT.getHostPageBaseURL()+"#404");
 		    }
 		}else{
-	    	mycookieaux.delCookiesInfo();
 			Window.Location.replace(GWT.getHostPageBaseURL()+"#login");
 		}
 	}

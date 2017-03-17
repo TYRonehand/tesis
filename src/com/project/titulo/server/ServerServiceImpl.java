@@ -1,26 +1,25 @@
 package com.project.titulo.server;
 
-import java.io.File;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
 
 import com.project.titulo.client.ServerService;
+import com.project.titulo.server.crud.Admin_crud;
+import com.project.titulo.server.crud.Comment_crud;
+import com.project.titulo.server.crud.DataFile_crud;
+import com.project.titulo.server.crud.SubComment_crud;
+import com.project.titulo.server.crud.Topic_crud;
+import com.project.titulo.server.crud.User_crud;
+import com.project.titulo.server.helpers.ExportDataResult;
+import com.project.titulo.server.helpers.GnuplotLoad;
 import com.project.titulo.server.metrics.ErrorRatio;
 import com.project.titulo.server.metrics.GNVG;
 import com.project.titulo.server.metrics.GenDistance;
 import com.project.titulo.server.metrics.HyperArea;
 import com.project.titulo.server.metrics.HyperAreaRatio;
 import com.project.titulo.server.metrics.Spacing;
-import com.project.titulo.shared.EmailAlert;
-import com.project.titulo.shared.ExportDataResult;
-import com.project.titulo.shared.FileWritter;
-import com.project.titulo.shared.SecretCode;
 import com.project.titulo.shared.model.AdminChartResume;
 import com.project.titulo.shared.model.AdminResume;
 import com.project.titulo.shared.model.Answer;
@@ -30,9 +29,7 @@ import com.project.titulo.shared.model.SubAnswer;
 import com.project.titulo.shared.model.Topic;
 import com.project.titulo.shared.model.User;
 import com.project.titulo.shared.model.UserFile;
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-
 
 /**
  * The server-side implementation of the RPC service.
@@ -41,439 +38,125 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class ServerServiceImpl extends RemoteServiceServlet implements
 		ServerService {
 
-	/*-----------------CONECTION TO MYSQL---------------*/
-	private Connection conn = null;
-
 	// Constructor
 	public ServerServiceImpl() {
 
-		conn = ServerConfig.CreateConn();
 	}
 
-	/*--------------RPC FUNCTIONS---------------*/
+	/*--------------RemoteProceduralControl FUNCTIONS---------------*/
 
 	/* ADMIN------------------------------------------------------------- */
+	
 	// get resumen db
 	@Override
 	public AdminResume getResumeInfo() throws IllegalArgumentException {
-		
+
 		System.err.println("Function: getResumeInfo");
-		
-		AdminResume info = new AdminResume();
-		try {
-			String Query = "select * from admin_info_resume";
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			// recorremos resultado
-			result.next();
-			info.setLastMonthUsers(result.getInt("value"));
-			result.next();
-			info.setOnlineUsers(result.getInt("value"));
-			result.next();
-			info.setTotalUsers(result.getInt("value"));
-			result.next();
-			info.setTotalTopics(result.getInt("value"));
-			result.next();
-			info.setLastMonthTopic(result.getInt("value"));
-			result.next();
-			info.setTotaFiles(result.getInt("value"));
-			result.next();
-			info.setTotalSizeFiles(result.getDouble("value"));
-			result.close();
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-		}
-		return info;
+
+		return Admin_crud.ResumeInfo();
 	}
 
 	// get last 6 month user chart
 	@Override
 	public AdminChartResume getChartUsers() throws IllegalArgumentException {
-		
-		System.err.println("Function: getChartUsers");
-		
-		AdminChartResume info = new AdminChartResume();
-		try {
-			String Query = "select * from admin_chart_users";
 
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			// get values
-			int i = 6;
-			while (result.next()) {
-				info.months[i] = result.getString("month");
-				info.totals[i] = result.getInt("users");
-				i--;
-			}
-			ps.close();
-
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-		}
-		return info;
+		return Admin_crud.ChartUsers();
 	}
 
 	// get last 6 month topic chart
 	@Override
 	public AdminChartResume getChartTopics() throws IllegalArgumentException {
-		
+
 		System.err.println("Function: getChartTopics");
-		
-		AdminChartResume info = new AdminChartResume();
-		try {
-			String Query = "select * from admin_chart_topics";
 
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			// get values
-			int i = 6;
-			while (result.next()) {
-				info.months[i] = result.getString("month");
-				info.totals[i] = result.getInt("topics");
-				i--;
-			}
-			ps.close();
-
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-		}
-
-		return info;
+		return Admin_crud.ChartTopics();
 	}
 
 	// get users list
 	@Override
 	public List<User> getUserList(String opcion) throws IllegalArgumentException {
-		
+
 		System.err.println("Function: getUserList");
-		
-		List<User> allusers = new ArrayList<User>();
-		try {
-			String Query = "";
 
-			if (opcion.equals("new")) {
-				Query = "SELECT * FROM account_user ORDER BY cod_user DESC";
-			} else if (opcion.equals("old")) {
-				Query = "SELECT * FROM account_user ORDER BY cod_user ASC";
-			} else {
-				Query = "SELECT * FROM account_user WHERE ";
-				Query += "name_user LIKE '%" + opcion
-						+ "%'  OR lastname_user LIKE '%" + opcion
-						+ "%' ORDER BY cod_user ASC";
-			}
-
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			// recorremos resultado
-			while (result.next()) {
-				allusers.add(new User(result.getString("cod_user"), result
-						.getString("email_user"),
-						result.getString("name_user"), result
-								.getString("lastname_user"), result
-								.getString("country_user"), result
-								.getString("occupation_user"), result
-								.getString("web_user"), result
-								.getString("institution_user"), result
-								.getString("password_user"), result
-								.getString("creation_user"), result
-								.getString("securitycode_user")));
-			}
-			result.close();
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-		}
-		return allusers;
+		return User_crud.FindUserList(opcion);
 	}
 
 	// user info validation
 	@Override
 	public User authenticateAdmin(String user, String pass) throws IllegalArgumentException {
-		
+
 		System.err.println("Function: authenticateAdmin");
-		
-		User miuser = null;
 
-		try {
-			// consultamos a base de datos
-			String Query = "SELECT * FROM account_administrator WHERE mail_admin = '"
-					+ user.toUpperCase()
-					+ "' AND password_admin = '"
-					+ pass
-					+ "' LIMIT 1";
-
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			// recorremos resultado
-			while (result.next()) {
-
-				miuser = new User(result.getString("cod_admin"),
-						result.getString("mail_admin"),
-						result.getString("name_admin"),
-						result.getString("lastname_admin"), null,
-						"Administrator", null, "ASMOP",
-						result.getString("password_admin"), null, null);
-			}
-			result.close();
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-		}
-
-		return miuser;
+		return Admin_crud.authenticateAdmin(user, pass);
 	}
 
+	
 	/*
 	 * USER----------------------------------------------------------------------
 	 */
 	// consulta si existe usuario
 	@Override
 	public Boolean userExist(String mail) throws IllegalArgumentException {
-		
+
 		System.err.println("Function: userExist");
-		
-		int count = 0;
-		try {
-			PreparedStatement ps = conn
-					.prepareStatement("select * from account_user where email_user = '"
-							+ mail.toUpperCase() + "' limit 1");
-			ResultSet result = ps.executeQuery();
 
-			while (result.next()) {
-				count++;
-			}
-			result.close();
-			ps.close();
-
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-		}
-
-		if (count == 0) {
-			return false;
-		}
-		return true;
+		return User_crud.Exist(mail);
 	}
 
 	// valida pin
 	@Override
-	public Boolean userRecovery(String mail, String PIN)
-			throws IllegalArgumentException {
-		
+	public Boolean userRecovery(String mail, String PIN) throws IllegalArgumentException {
+
 		System.err.println("Function: userRecovery");
-		
-		int count = 0;
-		try {
-			PreparedStatement ps = conn
-					.prepareStatement("SELECT * FROM account_user WHERE email_user = '"
-							+ mail.toUpperCase()
-							+ "' AND securitycode_user='"
-							+ PIN + "' limit 1");
-			ResultSet result = ps.executeQuery();
-			while (result.next()) {
-				count++;
-			}
-			result.close();
-			ps.close();
 
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-		}
-
-		if (count > 0) {
-			eraseUserPin(mail);
-			return true;
-		}
-		return false;
+		return User_crud.userRecovery(mail, PIN);
 	}
 
 	// user info validation
 	@Override
 	public User authenticateUser(String user, String pass)
 			throws IllegalArgumentException {
-		
+
 		System.err.println("Function: authenticateUser");
-		
-		User miuser = null;
 
-		try {
-			// consultamos a base de datos
-			String Query = "SELECT * FROM account_user WHERE email_user = '"
-					+ user.toUpperCase() + "' AND password_user = '" + pass
-					+ "' OR securitycode_user ='" + pass + "' LIMIT 1";
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			// recorremos resultado
-			while (result.next()) {
-
-				miuser = new User(result.getString("cod_user"),
-						result.getString("email_user"),
-						result.getString("name_user"),
-						result.getString("lastname_user"),
-						result.getString("country_user"),
-						result.getString("occupation_user"),
-						result.getString("web_user"),
-						result.getString("institution_user"),
-						result.getString("password_user"),
-						result.getString("creation_user"),
-						result.getString("securitycode_user"));
-			}
-			result.close();
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-		}
-		// log date connection
-		if (miuser != null)
-			saveDateLogin(miuser.getId());
-		return miuser;
+		return User_crud.authenticateUser(user, pass);
 	}
 
 	// user info no security
 	@Override
 	public User getUserInfo(String iduser) throws IllegalArgumentException {
-		
+
 		System.err.println("Function: getUserInfo");
-		
-		User miuser = null;
-		try {
-			// consultamos a base de datos
-			String Query = "SELECT * FROM account_user WHERE cod_user = '"
-					+ iduser + "' LIMIT 1";
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			// recorremos resultado
-			while (result.next()) {
-				miuser = new User(result.getString("cod_user"),
-						result.getString("email_user"),
-						result.getString("name_user"),
-						result.getString("lastname_user"),
-						result.getString("country_user"),
-						result.getString("occupation_user"),
-						result.getString("web_user"),
-						result.getString("institution_user"),
-						result.getString("password_user"),
-						result.getString("creation_user"),
-						result.getString("securitycode_user"));
-			}
-			result.close();
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-		}
-		return miuser;
+
+		return User_crud.read(iduser);
 	}
 
 	// update info user
 	@Override
 	public Boolean setUserInfo(User myUser) throws IllegalArgumentException {
-		
+
 		System.err.println("Function: setUserInfo");
 
-		try {
-			// actualizamos usuario
-			String Query = " UPDATE account_user SET name_user='"
-					+ myUser.getName() + "', " + " lastname_user='"
-					+ myUser.getLastname() + "', ";
-
-			if (myUser.getMail().length() > 0)
-				Query += " email_user='" + myUser.getMail() + "',";
-			if (myUser.getPassword().length() > 0)
-				Query += " password_user='" + myUser.getPassword() + "',";
-
-			Query += " country_user='" + myUser.getCountry() + "', "
-					+ " occupation_user='" + myUser.getOcupation() + "', "
-					+ " web_user='" + myUser.getWeb() + "',"
-					+ " institution_user='" + myUser.getInstitution() + "' "
-					+ " WHERE cod_user= '" + myUser.getId() + "'";
-
-			System.err.println("QUERY UPDATE CLIENT: " + Query);
-
-			// execute query
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ps.executeUpdate();
-
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-			return false;
-		}
-		return true;
+		return User_crud.update(myUser);
 	}
 
 	// add new user in database
 	@Override
 	public Boolean addUserInfo(User newUser) throws IllegalArgumentException {
-		
+
 		System.err.println("Function: addUserInfo");
 
-		Boolean res = false;
-		try {
-			// consultamos a base de datos
-			String Query = "INSERT INTO account_user (email_user,name_user,lastname_user,country_user,password_user)"
-					+ "VALUES ('"
-					+ newUser.getMail().toUpperCase()
-					+ "','"
-					+ newUser.getName()
-					+ "','"
-					+ newUser.getLastname()
-					+ "','"
-					+ newUser.getCountry()
-					+ "','"
-					+ newUser.getPassword()
-					+ "');";
-
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ps.executeUpdate();
-
-			// recorremos resultado
-			ps.close();
-			res = true;
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-			res = false;
-		}
-		return res;
+		return User_crud.create(newUser);
 	}
 
 	// recovery account
 	@Override
 	public Boolean changeUserPassword(String mail, String password)
 			throws IllegalArgumentException {
-		
+
 		System.err.println("Function: changeUserPassword");
-		
-		try {
-			// consultamos a base de datos
-			String Query = " UPDATE account_user SET password_user = '"
-					+ password + "' WHERE email_user='" + mail.toUpperCase()
-					+ "'";
 
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-
-			// recorremos resultado
-			result.close();
-			ps.close();
-
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-			return false;
-		}
-		return true;
+		return User_crud.changeUserPassword(mail, password);
 	}
 
 	// delete a user
@@ -481,68 +164,19 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public Boolean deleteUserInfo(String iduser)
 			throws IllegalArgumentException {
-		
-		System.err.println("Function: deleteUserInfo");
-		Boolean res = false;
-		try {
-			// consultamos a base de datos
-			String Query = "DELETE FROM account_user WHERE cod_user=" + iduser;
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ps.executeUpdate();
 
-			// recorremos resultado
-			ps.close();
-			res = true;
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-			res = false;
-		}
-		return res;
+		System.err.println("Function: deleteUserInfo");
+		
+		return User_crud.delete(iduser);
 	}
 
 	// get pin to user and Send email verify for lost password
 	@Override
 	public String sendEmailVerify(String email) throws IllegalArgumentException {
-		
+
 		System.err.println("Function: sendEmailVerify");
 
-		if (userExist(email)) {
-			SecretCode code = new SecretCode();
-			String CODE = code.getCode();
-			Boolean valid = false;
-			// set user PIN
-			try {
-				// actualizamos usuario
-				String Query = " UPDATE account_user SET securitycode_user = '"
-						+ CODE + "' WHERE email_user='" + email.toUpperCase()
-						+ "'";
-				// execute query
-				PreparedStatement ps = conn.prepareStatement(Query);
-				ps.executeUpdate();
-
-				ps.close();
-				valid = true;// can send email
-			} catch (SQLException sqle) {
-				System.err.println("Error: "+sqle.toString());
-				sqle.printStackTrace();
-				valid = false;// somthing bad
-			}
-			// true send email
-			if (valid == true) {
-				return SendEmail(
-						email,
-						"You've requested a password recovery.",
-						"Petition for new password! \n Hi there!, recently received a request to change password. that is why we attach your PIN recovery ["
-								+ CODE
-								+ "]. \n Under any reason, if you did not request this change, forget this email. \n\nHave a nice day!!");
-				// true it was sended and all ok - false problem
-			}
-			// System.err.print("*RECOVERY PASS ERROR:create pin");
-			return "badpin";
-		}
-		// System.err.print("*RECOVERY PASS ERROR:mail dont exist");
-		return "mailnoexist";
+		return User_crud.sendEmailVerify(email);
 	}
 
 	/*
@@ -552,232 +186,64 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	// add new topic in database
 	@Override
 	public Boolean addNewTopic(Topic myTopic) throws IllegalArgumentException {
-		
+
 		System.err.println("Function: addNewTopic");
 
-		try {
-			// consultamos a base de datos
-			String Query = "INSERT INTO forum_topic (title_topic,description_topic,cod_user) "
-					+ "VALUES ('"
-					+ myTopic.getTitle()
-					+ "','"
-					+ myTopic.getDescription()
-					+ "','"
-					+ myTopic.getIduser()
-					+ "')";
-
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ps.executeUpdate();
-
-			// recorremos resultado
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-			return false;
-		}
-		return true;
+		return Topic_crud.create(myTopic);
 	}
 
 	// get soome topic
 	@Override
 	public Topic getTopic(String idtopic) throws IllegalArgumentException {
-		
+
 		System.err.println("Function: getTopic");
-		
-		Topic mytopic = null;
-		try {
-			// consultamos a base de datos
-			String Query = "SELECT * FROM forum_topic WHERE cod_topic= '" + idtopic + "' LIMIT 1";
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			
-			// recorremos resultado
-			while (result.next()) {
-				mytopic = new Topic(result.getString("cod_topic"),
-						result.getString("title_topic"),
-						result.getString("description_topic"),
-						result.getString("cod_user"),
-						result.getString("creation_topic"),
-						result.getString("banned_topic"),
-						result.getString("edition_topic"),
-						result.getString("comments_topic")
-						);
-			}
-			result.close();
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-		}
-		return mytopic;
+
+		return Topic_crud.read(idtopic);
 	}
 
 	// update topic
 	@Override
 	public Boolean setTopic(Topic myTopic) throws IllegalArgumentException {
-		
+
 		System.err.println("Function: setTopic");
-		
-		try {
-			// actualizamos usuario
-			String Query = " UPDATE forum_topic SET " + "title_topic='"
-					+ myTopic.getTitle() + "', " + "description_topic='"
-					+ myTopic.getDescription() + "' WHERE cod_topic= "
-					+ myTopic.getIdtopic() + " ";
 
-			// execute query
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ps.executeUpdate();
-
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-			return false;
-		}
-		return true;
+		return Topic_crud.update(myTopic);
 	}
 
 	// get all resume topic
 	@Override
-	public List<ResumeTopic> NewestResumeTopic()
-			throws IllegalArgumentException {
-		
+	public List<ResumeTopic> NewestResumeTopic() throws IllegalArgumentException {
+
 		System.err.println("Function: NewestResumeTopic");
 
-		List<ResumeTopic> resumetopic = new ArrayList<ResumeTopic>();
-		try {
-			// consultamos a base de datos
-			String Query = "SELECT * FROM topic_resume_view ORDER BY creation_topic DESC";
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			// recorremos resultado
-			while (result.next()) {
-				// create (String id,String title,String user,String total, Date
-				// created)
-				// add element to list
-				resumetopic.add(new ResumeTopic(result.getString("cod_topic"),
-						result.getString("title_topic"), result
-								.getString("cod_user"), result
-								.getString("name_user"), result
-								.getString("total"), result
-								.getString("creation_topic")));
-			}
-			result.close();
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-		}
-		return resumetopic;
+		return Topic_crud.NewestResumeTopic();
 	}
 
 	// get all resume topic
 	@Override
-	public List<ResumeTopic> OldestResumeTopic()
-			throws IllegalArgumentException {
-		
+	public List<ResumeTopic> OldestResumeTopic() throws IllegalArgumentException {
+
 		System.err.println("Function: OldestResumeTopic");
 
-		List<ResumeTopic> resumetopic = new ArrayList<ResumeTopic>();
-		try {
-			// consultamos a base de datos
-			String Query = "SELECT * FROM topic_resume_view ORDER BY creation_topic ASC";
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			// recorremos resultado
-			while (result.next()) {
-				// create (String id,String title,String user,String total, Date
-				// created)
-				// add element to list
-				resumetopic.add(new ResumeTopic(result.getString("cod_topic"),
-						result.getString("title_topic"), result
-								.getString("cod_user"), result
-								.getString("name_user"), result
-								.getString("total"), result
-								.getString("creation_topic")));
-			}
-			result.close();
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-		}
-		return resumetopic;
+		return Topic_crud.OldestResumeTopic();
 	}
 
 	// get all resume topic
 	@Override
-	public List<ResumeTopic> MyResumeTopic(String iduser)
-			throws IllegalArgumentException {
-		
+	public List<ResumeTopic> MyResumeTopic(String iduser) throws IllegalArgumentException {
+
 		System.err.println("Function: MyResumeTopic");
 
-		List<ResumeTopic> resumetopic = new ArrayList<ResumeTopic>();
-		try {
-			// consultamos a base de datos
-			String Query = "SELECT * FROM topic_resume_view WHERE cod_user = '"
-					+ iduser + "' ORDER BY creation_topic ASC";
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			// recorremos resultado
-			while (result.next()) {
-				// (String id,String title,String user,String total, Date
-				// created)
-				// add element to list
-				resumetopic.add(new ResumeTopic(result.getString("cod_topic"),
-						result.getString("title_topic"), result
-								.getString("cod_user"), result
-								.getString("name_user"), result
-								.getString("total"), result
-								.getString("creation_topic")));
-			}
-			result.close();
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-		}
-		return resumetopic;
+		return Topic_crud.MyResumeTopic(iduser);
 	}
 
 	// get all resume topic
 	@Override
-	public List<ResumeTopic> SearchResumeTopic(String specialword)
-			throws IllegalArgumentException {
-		
+	public List<ResumeTopic> SearchResumeTopic(String specialword) throws IllegalArgumentException {
+
 		System.err.println("Function: SearchResumeTopic");
 
-		List<ResumeTopic> resumetopic = new ArrayList<ResumeTopic>();
-		try {
-			// consultamos a base de datos SELECT * FROM table WHERE Column LIKE
-			// '%test%';
-			String Query = "SELECT * FROM topic_resume_view "
-					+ " WHERE UPPER(title_topic) LIKE '%"
-					+ specialword.toUpperCase() + "%' "
-					+ " ORDER BY creation_topic DESC";
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			// recorremos resultado
-			while (result.next()) {
-				// (String id,String title,String user,String total, Date
-				// created)
-				// add element to list
-				resumetopic.add(new ResumeTopic(result.getString("cod_topic"),
-						result.getString("title_topic"), result
-								.getString("cod_user"), result
-								.getString("name_user"), result
-								.getString("total"), result
-								.getString("creation_topic")));
-			}
-			result.close();
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-		}
-		return resumetopic;
+		return Topic_crud.SearchResumeTopic(specialword);
 	}
 
 	/*
@@ -786,86 +252,29 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	 */
 	// add new answer to topic
 	@Override
-	public Boolean addNewComment(Answer myAnswer)
-			throws IllegalArgumentException {
-		
+	public Boolean addNewComment(Answer myAnswer) throws IllegalArgumentException {
+
 		System.err.println("Function: addNewComment");
 
-		try {
-			// consultamos a base de datos
-			String Query = "INSERT INTO forum_comment (description_comment,cod_topic,cod_user) VALUES ('"
-					+ myAnswer.getDescription()
-					+ "','"
-					+ myAnswer.getIdtopic()
-					+ "','" + myAnswer.getIduser() + "')";
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ps.executeUpdate();
-
-			// recorremos resultado
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-			return false;
-		}
-		return true;
+		return Comment_crud.create(myAnswer);
 	}
 
 	// get some comment
 	@Override
-	public List<Answer> getComments(String idtopic)
-			throws IllegalArgumentException {
-		
+	public List<Answer> getComments(String idtopic) throws IllegalArgumentException {
+
 		System.err.println("Function: getComments");
 
-		List<Answer> myComments = new ArrayList<Answer>();
-		try {
-			// consultamos a base de datos
-			String Query = "SELECT * FROM forum_comment WHERE cod_topic="
-					+ idtopic + " ORDER BY creation_comment ASC";
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			// recorremos resultado
-			while (result.next()) {
-				myComments.add(new Answer(result.getString("cod_comment"),
-						result.getString("cod_topic"), result
-								.getString("description_comment"), result
-								.getString("creation_comment"), result
-								.getString("edition_comment"), result
-								.getString("response_comment"), result
-								.getString("cod_user")));
-			}
-			result.close();
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-		}
-		return myComments;
+		return Comment_crud.read(idtopic);
 	}
 
 	// set a comment
 	@Override
 	public Boolean setComment(Answer myAnswer) throws IllegalArgumentException {
-		
+
 		System.err.println("Function: setComment");
-		
-		try {
-			// actualizamos usuario
-			String Query = " UPDATE forum_comment SET "
-					+ "description_comment='" + myAnswer.getDescription()
-					+ "' WHERE  cod_comment= " + myAnswer.getIdcomentary()
-					+ " ";
-			// execute query
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ps.executeUpdate();
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-			return false;
-		}
-		return true;
+
+		return Comment_crud.update(myAnswer);
 	}
 
 	/*
@@ -874,91 +283,29 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	 */
 	// add new answer to topic
 	@Override
-	public Boolean addNewSubComment(SubAnswer mySubComment)
-			throws IllegalArgumentException {
-		
+	public Boolean addNewSubComment(SubAnswer mySubComment) throws IllegalArgumentException {
+
 		System.err.println("Function: addNewSubComment");
 
-		try {
-			// consultamos a base de datos
-			String Query = "INSERT INTO forum_subcomment (description_subcomment, cod_comment, cod_user) "
-					+ "VALUES ('"
-					+ mySubComment.getDescription()
-					+ "',"
-					+ mySubComment.getIdcomment()
-					+ ","
-					+ mySubComment.getIduser() + ")";
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ps.executeUpdate();
-
-			// recorremos resultado
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-			return false;
-		}
-		return true;
+		return SubComment_crud.create(mySubComment);
 	}
 
 	// get some comment
 	@Override
-	public List<SubAnswer> getSubComments(String idcomment)
-			throws IllegalArgumentException {
-		
+	public List<SubAnswer> getSubComments(String idcomment) throws IllegalArgumentException {
+
 		System.err.println("Function: getSubComments");
 
-		List<SubAnswer> myComments = new ArrayList<SubAnswer>();
-		try {
-			// consultamos a base de datos
-			String Query = "SELECT * FROM forum_subcomment WHERE cod_comment="
-					+ idcomment + " ORDER BY creation_subcomment ASC";
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			// recorremos resultado
-			/*
-			 * String idsubcomment, String Idcomment, String Description, String
-			 * Creation, String Iduser
-			 */
-			while (result.next()) {
-				myComments.add(new SubAnswer(
-						result.getString("cod_subcomment"), result
-								.getString("cod_comment"), result
-								.getString("description_subcomment"), result
-								.getString("creation_subcomment"), result
-								.getString("cod_user")));
-			}
-			result.close();
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-		}
-		return myComments;
+		return SubComment_crud.read(idcomment);
 	}
 
 	// set a comment
 	@Override
-	public Boolean setSubComment(SubAnswer myAnswer)
-			throws IllegalArgumentException {
-		
+	public Boolean setSubComment(SubAnswer myAnswer) throws IllegalArgumentException {
+
 		System.err.println("Function: setSubComment");
-		
-		try {
-			// actualizamos usuario
-			String Query = " UPDATE forum_subcomment SET "
-					+ " description_subcomment='" + myAnswer.getDescription()
-					+ "' WHERE cod_subcomment = " + myAnswer.getIdcomment();
-			// execute query
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ps.executeUpdate();
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-			return false;
-		}
-		return true;
+
+		return SubComment_crud.update(myAnswer);
 	}
 
 	/*
@@ -967,392 +314,121 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	// add new file
 	@Override
 	public Boolean addNewFile(UserFile myFile) throws IllegalArgumentException {
-		
+
 		System.err.println("Function: addNewFile");
-		
-		// return fail
-		Boolean res = false;
-		PreparedStatement pstmt = null;
-		try {
-			// consultamos a base de datos
-			String Query = "INSERT INTO `user_file` (`cod_file`, `title_file`, `description_file`, `creation_file`, `dimension_file`, `labelx_file`, `labely_file`, `labelz_file`, `plot_file`, `metric_file`, `data_file`, `cod_user`)  "
-					+ "VALUES (NULL, '"
-					+ myFile.getTitle()
-					+ "', '"
-					+ myFile.getDescription()
-					+ "', CURRENT_TIMESTAMP, '"
-					+ myFile.getDimension()
-					+ "', '"
-					+ myFile.getLabelx()
-					+ "', '"
-					+ myFile.getLabely()
-					+ "', '"
-					+ myFile.getLabely()
-					+ "', '0', '0', '"
-					+ myFile.getData().replaceAll("[;,]", " ")
-					+ "', '"
-					+ myFile.getIduser() + "');";
 
-			pstmt = conn.prepareStatement(Query);
-			int state = pstmt.executeUpdate();
-
-			// succes
-			if (state == 1) {
-				res = true;
-			}
-			pstmt.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-			res = false;
-		}
-		return res;
+		return DataFile_crud.create(myFile);
 	}
 
 	// update a file
 	@Override
 	public Boolean setFile(UserFile myFile) throws IllegalArgumentException {
-		
-		System.err.println("Function: setFile");
-		
-		try {
-			// actualizamos usuario
-			String Query = " UPDATE user_file SET " + "title_file='"
-					+ myFile.getTitle() + "', " + "description_file='"
-					+ myFile.getDescription() + "', " + "dimension_file='"
-					+ myFile.getDimension() + "'," + "labelx_file='"
-					+ myFile.getLabelx() + "', " + "labely_file='"
-					+ myFile.getLabely() + "', " + "labelz_file='"
-					+ myFile.getLabelz() + "', " + "data_file='"
-					+ myFile.getData() + "' " + " WHERE cod_file = "
-					+ myFile.getIdfile() + "";
 
-			// execute query
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ps.executeUpdate();
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-			return false;
-		}
-		return true;
+		System.err.println("Function: setFile");
+
+		return DataFile_crud.update(myFile);
 	}
 
 	// delete a file
 	@Override
-	public Boolean deleteFile(String iddatafile)
-			throws IllegalArgumentException {
-		
+	public Boolean deleteFile(String iddatafile) throws IllegalArgumentException {
+
 		System.err.println("Function: deleteFile");
-		
-		try {
-			// consultamos a base de datos
-			String Query = "DELETE FROM user_file WHERE cod_file ="
-					+ iddatafile + "";
-			PreparedStatement ps = conn.prepareStatement(Query);
-			int state = ps.executeUpdate();
-			if (state == 1) {
-				File file = new File("./files/" + iddatafile + ".txt");
-				file.delete();
-			}
-			// recorremos resultado
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			return false;
-		}
-		return true;
+
+		return DataFile_crud.delete(iddatafile);
 	}
 
 	// a file data
 	@Override
-	public UserFile getDataFile(String iddatafile)
-			throws IllegalArgumentException {
-		
+	public UserFile getDataFile(String iddatafile) throws IllegalArgumentException {
+
 		System.err.println("Function: getDataFile");
-		
-		UserFile myFile = null;
-		try {
-			// consultamos a base de datos
-			String Query = "SELECT * FROM user_file WHERE cod_file = '"
-					+ iddatafile + "' LIMIT 1";
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			// recorremos resultado
-			while (result.next()) {
-				/*
-				 * String Idfile, String Title, String Dimension, String Labelx,
-				 * String Labely, String Labelz, String Description, String
-				 * Iduser, String Creation, String Data, String Plot, String
-				 * Metric
-				 */
-				myFile = new UserFile(result.getString("cod_file"),
-						result.getString("title_file"),
-						result.getString("dimension_file"),
-						result.getString("labelx_file"),
-						result.getString("labely_file"),
-						result.getString("labelz_file"),
-						result.getString("description_file"),
-						result.getString("cod_user"),
-						result.getString("creation_file"),
-						result.getString("data_file"),
-						result.getString("plot_file"),
-						result.getString("metric_file"));
-			}
-			result.close();
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-		}
-		return myFile;
+
+		return DataFile_crud.read(iddatafile);
 	}
 
 	// all user files
 	@Override
-	public List<UserFile> getUserFiles(String iduser)
-			throws IllegalArgumentException {
-		
+	public List<UserFile> getUserFiles(String iduser) throws IllegalArgumentException {
+
 		System.err.println("Function: getUserFiles");
 
-		List<UserFile> listFiles = new ArrayList<UserFile>();
-		try {
-			// consultamos a base de datos
-			String Query = "SELECT * FROM user_file WHERE cod_user = '"
-					+ iduser + "'";
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			// recorremos resultado
-			while (result.next()) {
-				// add element to list String Idfile, String Title, String
-				// Description, String Iduser, String Creation
-				listFiles.add(new UserFile(result.getString("cod_file"), result
-						.getString("title_file"), result
-						.getString("dimension_file"), result
-						.getString("labelx_file"), result
-						.getString("labely_file"), result
-						.getString("labelz_file"), result
-						.getString("description_file"), result
-						.getString("cod_user"), result
-						.getString("creation_file"), result
-						.getString("data_file"), result.getString("plot_file"),
-						result.getString("metric_file")));
-			}
-			result.close();
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-		}
-		return listFiles;
+		return DataFile_crud.getUserFiles(iduser);
 	}
 
 	// get count of user files
 	@Override
 	public Integer getCountUserFiles(String iduser) throws IllegalArgumentException {
-		
+
 		System.err.println("Function: getCountUserFiles");
 
-		int totalfiles = 0;
-		try {
-			// consultamos a base de datos
-			String Query = "SELECT COUNT(cod_file) AS userfilecount FROM user_file WHERE cod_user = "
-					+ iduser;
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			// recorremos resultado
-			while (result.next())
-				totalfiles = result.getInt(1);
-
-			result.close();
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-			return -1;
-		}
-		return totalfiles;
+		return DataFile_crud.getCountUserFiles(iduser);
 
 	}
 
 	// select file for plot
 	@Override
-	public Boolean addPlotFile(String iddatafile)
-			throws IllegalArgumentException {
-		
-		System.err.println("Function: addPlotFile");
-		
-		try {
-			// actualizamos usuario
-			String Query = " UPDATE user_file SET plot_file = 1 WHERE cod_file='"
-					+ iddatafile + "'";
-			// execute query
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ps.executeUpdate();
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-			return false;
-		}
+	public Boolean addPlotFile(String iddatafile) throws IllegalArgumentException {
 
-		return true;
+		System.err.println("Function: addPlotFile");
+
+		return DataFile_crud.addPlotFile(iddatafile);
 	}
 
 	// remove plot file selected
 	@Override
-	public Boolean removePlotFile(String iddatafile)
-			throws IllegalArgumentException {
-		
+	public Boolean removePlotFile(String iddatafile) throws IllegalArgumentException {
+
 		System.err.println("Function: removePlotFile");
-		
-		try {
-			// actualizamos usuario
-			String Query = " UPDATE user_file SET plot_file = 0 WHERE cod_file='"
-					+ iddatafile + "'";
-			// execute query
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ps.executeUpdate();
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-			return false;
-		}
-		return true;
+
+		return DataFile_crud.removePlotFile(iddatafile);
 	}
 
 	// select files for metric
 	@Override
-	public Boolean addMetricFile(String iddatafile)
-			throws IllegalArgumentException {
-		
+	public Boolean addMetricFile(String iddatafile) throws IllegalArgumentException {
+
 		System.err.println("Function: addMetricFile");
-		
-		try {
-			// actualizamos usuario
-			String Query = " UPDATE user_file SET metric_file = 1 WHERE cod_file='"
-					+ iddatafile + "'";
-			// execute query
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ps.executeUpdate();
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-			return false;
-		}
-		return true;
+
+		return DataFile_crud.addMetricFile(iddatafile);
 	}
 
 	// remove metric files selected
 	@Override
-	public Boolean removeMetricFile(String iddatafile)
-			throws IllegalArgumentException {
-		
+	public Boolean removeMetricFile(String iddatafile) throws IllegalArgumentException {
+
 		System.err.println("Function: removeMetricFile");
-		
-		try {
-			// actualizamos usuario
-			String Query = " UPDATE user_file SET metric_file = 0 WHERE cod_file='"
-					+ iddatafile + "'";
-			// execute query
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ps.executeUpdate();
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-			return false;
-		}
-		return true;
+
+		return DataFile_crud.removeMetricFile(iddatafile);
 	}
 
 	// Get selected plot Files
 	@Override
-	public List<UserFile> getUserFilesPlot(String iduser)
-			throws IllegalArgumentException {
-		
+	public List<UserFile> getUserFilesPlot(String iduser) throws IllegalArgumentException {
+
 		System.err.println("Function: getUserFilesPlot");
-
-		List<UserFile> listFiles = new ArrayList<UserFile>();
 		
-		try {
-			// consultamos a base de datos
-			String Query = "SELECT * FROM plot_file_view WHERE cod_user = '"
-					+ iduser + "'";
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			// recorremos resultado
-			while (result.next()) {
-				// add element to list String Idfile, String Title, String
-				// Description, String Iduser, String Creation
-				listFiles.add(new UserFile(result.getString("cod_file"), result
-						.getString("title_file"), result
-						.getString("dimension_file"), "", "", "", result
-						.getString("description_file"), result
-						.getString("cod_user"), result
-						.getString("creation_file"), result
-						.getString("data_file"), "", ""));
-
-				// create user files in directory files
-				ServletContext context = this.getServletContext();
-				//create file
-				FileWritter.Write(context.getRealPath("files"), result.getString("cod_file"), result.getString("data_file"));
-			}
-			result.close();
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-		}
-		return listFiles;
+		// create user files in directory files
+		ServletContext context = this.getServletContext();
+		String path = context.getRealPath("files");
+		
+		return DataFile_crud.getUserFilesPlot(iduser, path);
 	}
 
 	// Get selected metric Files
 	@Override
-	public List<UserFile> getUserFilesMetric(String iduser)
-			throws IllegalArgumentException {
-		
+	public List<UserFile> getUserFilesMetric(String iduser) throws IllegalArgumentException {
+
 		System.err.println("Function: getUserFilesMetric");
 
-		List<UserFile> listFiles = new ArrayList<UserFile>();
-		try {
-			// consultamos a base de datos
-			String Query = "SELECT * FROM metric_file_view WHERE cod_user = '"
-					+ iduser + "'";
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			// recorremos resultado
-			while (result.next()) {
-				// add element to list String Idfile, String Title, String
-				// Description, String Iduser, String Creation
-				listFiles.add(new UserFile(result.getString("cod_file"), result
-						.getString("title_file"), result
-						.getString("dimension_file"), "", "", "", result
-						.getString("description_file"), result
-						.getString("cod_user"), result
-						.getString("creation_file"), result
-						.getString("data_file"), "", ""));
-			}
-			result.close();
-			ps.close();
-		} catch (SQLException sqle) {
-			System.err.println("Error: "+sqle.toString());
-			sqle.printStackTrace();
-		}
-		return listFiles;
+		return DataFile_crud.getUserFilesMetric(iduser);
 	}
 
 	/*
-	 * PLOT
-	 * FILES----------------------------------------------------------------
-	 * --------------
+	 * PLOT-FILES---------------------------------------------------------------------------
 	 */
 
-	// create image in
-	// 2d-------------------------------------------------------------------------------------------------------
+	// 2Dimension---------------------------------------------------------------------
 	@Override
 	public String CreateImage2D(Boolean points, Boolean lines,
 			String fileFormat, String title, List<String> labelxyz,
@@ -1468,8 +544,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 
 	}
 
-	// create image in
-	// 3d-------------------------------------------------------------------------------------------------------
+	// 3Dimension---------------------------------------------------------------------
 	@Override
 	public String CreateImage3D(Boolean points, Boolean lines,
 			String fileFormat, String title, List<String> labelxyz,
@@ -1594,22 +669,26 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	}
 
 	/*
-	 * CALCULATE
-	 * METRICS----------------------------------------------------------
-	 * --------------------
+	 * CALCULATE-METRICS----------------------------------------------------------
 	 */
 	@Override
 	public List<MetricResults> CalculateER(String iduser)
 			throws IllegalArgumentException {
 
 		System.err.print("\nMetric Error Ratio");
-		
+
 		// result object
 		List<MetricResults> results = new ArrayList<MetricResults>();
 
 		try {
+			
+
+			// create user files in directory files
+			ServletContext context = this.getServletContext();
+			String path = context.getRealPath("files");
+			
 			// search files from user in metric selected
-			List<UserFile> userfiles = getFullFilesMetric(iduser);
+			List<UserFile> userfiles = DataFile_crud.getFullFilesMetric(iduser,path);
 
 			// control exist both objects
 			if (!userfiles.isEmpty() && userfiles != null) {
@@ -1635,13 +714,17 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 		// result object
 		List<MetricResults> results = new ArrayList<MetricResults>();
 		try {
+			// create user files in directory files
+			ServletContext context = this.getServletContext();
+			String path = context.getRealPath("files");
+			
 			// search files from user in metric selected
-			List<UserFile> myfiles = getFullFilesMetric(iduser);
+			List<UserFile> userfiles = DataFile_crud.getFullFilesMetric(iduser,path);
 
 			// control exist both objects
-			if (!myfiles.isEmpty() && myfiles != null) {
+			if (!userfiles.isEmpty() && userfiles != null) {
 				// start calculation
-				Spacing sp = new Spacing(myfiles);
+				Spacing sp = new Spacing(userfiles);
 				results = sp.getResults();
 			} else {
 				System.err.print("\nerror: null files");
@@ -1664,13 +747,17 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 		// result object
 		List<MetricResults> results = new ArrayList<MetricResults>();
 		try {
+			// create user files in directory files
+			ServletContext context = this.getServletContext();
+			String path = context.getRealPath("files");
+			
 			// search files from user in metric selected
-			List<UserFile> myfiles = getFullFilesMetric(iduser);
+			List<UserFile> userfiles = DataFile_crud.getFullFilesMetric(iduser,path);
 
 			// control exist both objects
-			if (!myfiles.isEmpty() && myfiles != null) {
+			if (!userfiles.isEmpty() && userfiles != null) {
 				// start calculation
-				HyperArea ha = new HyperArea(myfiles);
+				HyperArea ha = new HyperArea(userfiles);
 				results = ha.getResults();
 			} else {
 				System.err.print("\nerror: null files");
@@ -1689,13 +776,17 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			throws IllegalArgumentException {
 
 		System.err.print("\nMetric Hyperarea Ratio");
-		
+
 		// result object
 		List<MetricResults> results = new ArrayList<MetricResults>();
 
 		try {
+			// create user files in directory files
+			ServletContext context = this.getServletContext();
+			String path = context.getRealPath("files");
+			
 			// search files from user in metric selected
-			List<UserFile> userfiles = getFullFilesMetric(iduser);
+			List<UserFile> userfiles = DataFile_crud.getFullFilesMetric(iduser,path);
 
 			// control exist both objects
 			if (!userfiles.isEmpty() && userfiles != null) {
@@ -1717,13 +808,17 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 			throws IllegalArgumentException {
 
 		System.err.print("\nMetric Generational Distance");
-		
+
 		// result object
 		List<MetricResults> results = new ArrayList<MetricResults>();
 
 		try {
+			// create user files in directory files
+			ServletContext context = this.getServletContext();
+			String path = context.getRealPath("files");
+			
 			// search files from user in metric selected
-			List<UserFile> userfiles = getFullFilesMetric(iduser);
+			List<UserFile> userfiles = DataFile_crud.getFullFilesMetric(iduser,path);
 
 			// control exist both objects
 			if (!userfiles.isEmpty() && userfiles != null) {
@@ -1751,13 +846,17 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 		// result object
 		List<MetricResults> results = new ArrayList<MetricResults>();
 		try {
+			// create user files in directory files
+			ServletContext context = this.getServletContext();
+			String path = context.getRealPath("files");
+			
 			// search files from user in metric selected
-			List<UserFile> myfiles = getFullFilesMetric(iduser);
+			List<UserFile> userfiles = DataFile_crud.getFullFilesMetric(iduser,path);
 
 			// control exist both objects
-			if (!myfiles.isEmpty() && myfiles != null) {
+			if (!userfiles.isEmpty() && userfiles != null) {
 				// start calculation
-				GNVG gnvg = new GNVG(myfiles);
+				GNVG gnvg = new GNVG(userfiles);
 				results = gnvg.getResults();
 			} else {
 				System.err.print("\nerror: null files");
@@ -1774,15 +873,19 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public List<MetricResults> CalculateC(String iduser)
 			throws IllegalArgumentException {
-		
+
 		System.err.print("\nMetric Coverage");
-		
+
 		// result object
 		List<MetricResults> results = new ArrayList<MetricResults>();
 
 		try {
+			// create user files in directory files
+			ServletContext context = this.getServletContext();
+			String path = context.getRealPath("files");
+			
 			// search files from user in metric selected
-			List<UserFile> userfiles = getFullFilesMetric(iduser);
+			List<UserFile> userfiles = DataFile_crud.getFullFilesMetric(iduser,path);
 
 			// control exist both objects
 			if (!userfiles.isEmpty() && userfiles != null) {
@@ -1809,13 +912,10 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 	}
 
 	/*
-	 * EXPORT
-	 * RESULTS------------------------------------------------------------
-	 * ------------------
+	 * EXPORT-RESULTS----------------------------------------------------------
 	 */
 	@Override
-	public Boolean ExportResults(String iduser, List<MetricResults> Results)
-			throws IllegalArgumentException {
+	public Boolean ExportResults(String iduser, List<MetricResults> Results) throws IllegalArgumentException {
 		System.err.println("Function: ExportResults");
 
 		// servlet context to find path
@@ -1824,95 +924,7 @@ public class ServerServiceImpl extends RemoteServiceServlet implements
 		return EDR.WriteFile();
 	}
 
-	// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/* functions properly from server */
-	// send email
-	private String SendEmail(String to, String Subjettext, String Messagehtml) {
 
-		return EmailAlert.SendEmail(to,Subjettext,Messagehtml);
-	}
-
-	// clear pin from user
-	private void eraseUserPin(String email) {
-
-		System.err.println("Function: eraseUserPin");
-
-		// set user PIN
-		try {
-			// actualizamos usuario
-			String Query = " UPDATE account_user SET securitycode_user = '' WHERE email_user='"
-					+ email.toUpperCase() + "'";
-			// execute query
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ps.executeUpdate();
-			ps.close();
-		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
-			sqle.printStackTrace();
-		}
-	}
-
-	// save login date from user
-	private void saveDateLogin(String cod_user) {
-		System.err.println("Function: saveDateLogin");
-		// set new date to login
-		try {
-			// actualizamos usuario
-			String Query = " UPDATE account_user SET lastconnection_user = CURRENT_TIMESTAMP WHERE cod_user='"
-					+ cod_user + "'";
-			// execute query
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ps.executeUpdate();
-			ps.close();
-		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
-			sqle.printStackTrace();
-		}
-	}
-
-	// get user files selecterd for metrics
-	private List<UserFile> getFullFilesMetric(String user) {
-		System.err.println("Function: getFullFilesMetric");
-		List<UserFile> listFiles = new ArrayList<UserFile>();
-		try {
-			// consultamos a base de datos
-			String Query = "SELECT * FROM user_file WHERE cod_user = '" + user
-					+ "' AND metric_file = 1";
-			PreparedStatement ps = conn.prepareStatement(Query);
-			ResultSet result = ps.executeQuery();
-			// recorremos resultado
-			while (result.next()) {
-				/*
-				 * String Idfile, String Title, String Dimension, String Labelx,
-				 * String Labely, String Labelz, String Description, String
-				 * Iduser, String Creation, String Data, String Plot, String
-				 * Metric
-				 */
-				listFiles.add(new UserFile(result.getString("cod_file"), result
-						.getString("title_file"), result
-						.getString("dimension_file"), result
-						.getString("labelx_file"), result
-						.getString("labely_file"), result
-						.getString("labelz_file"), result
-						.getString("description_file"), result
-						.getString("cod_user"), result
-						.getString("creation_file"), result
-						.getString("data_file"), result.getString("plot_file"),
-						result.getString("metric_file")));
-
-				// create user files in directory files
-				
-				ServletContext context = this.getServletContext();
-				FileWritter.Write(context.getRealPath("files"), result.getString("cod_file"), result.getString("data_file"));
-				
-			}
-			result.close();
-			ps.close();
-		} catch (SQLException sqle) {
-			GWT.log(sqle.toString());
-			sqle.printStackTrace();
-		}
-		return listFiles;
-	}
+	
 
 }// end class

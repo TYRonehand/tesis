@@ -1,4 +1,4 @@
-package com.project.titulo.shared;
+package com.project.titulo.server.helpers;
 
 import java.util.Random;
 

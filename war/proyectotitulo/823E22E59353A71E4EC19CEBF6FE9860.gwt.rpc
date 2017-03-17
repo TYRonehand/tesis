@@ -14,10 +14,10 @@ com.project.titulo.shared.model.ResumeTopic, true, true, false, false, com.proje
 com.project.titulo.shared.model.SubAnswer, true, true, true, true, com.project.titulo.shared.model.SubAnswer/1651472275, 1651472275
 [Lcom.project.titulo.shared.model.SubAnswer;, true, true, false, false, [Lcom.project.titulo.shared.model.SubAnswer;/4100711644, 4100711644
 com.project.titulo.shared.model.Topic, true, true, true, true, com.project.titulo.shared.model.Topic/4022489771, 4022489771
-com.project.titulo.shared.model.User, true, true, true, true, com.project.titulo.shared.model.User/2092938827, 2092938827
+com.project.titulo.shared.model.User, true, true, true, true, com.project.titulo.shared.model.User/3861290016, 3861290016
 com.project.titulo.shared.model.UserFile, true, true, true, true, com.project.titulo.shared.model.UserFile/508839345, 508839345
 [Lcom.project.titulo.shared.model.UserFile;, true, true, false, false, [Lcom.project.titulo.shared.model.UserFile;/1597456870, 1597456870
-[Lcom.project.titulo.shared.model.User;, true, true, false, false, [Lcom.project.titulo.shared.model.User;/2196544904, 2196544904
+[Lcom.project.titulo.shared.model.User;, true, true, false, false, [Lcom.project.titulo.shared.model.User;/4040569897, 4040569897
 java.lang.Boolean, true, true, true, true, java.lang.Boolean/476441737, 476441737
 java.lang.Byte, true, true, false, false, java.lang.Byte/1571082439, 1571082439
 [Ljava.lang.Byte;, true, true, false, false, [Ljava.lang.Byte;/3053163818, 3053163818

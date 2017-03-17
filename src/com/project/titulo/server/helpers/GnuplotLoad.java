@@ -1,13 +1,14 @@
-package com.project.titulo.server;
+package com.project.titulo.server.helpers;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
-import com.project.titulo.shared.EmailAlert;
 
 public class GnuplotLoad implements IsSerializable {
 
@@ -58,7 +59,7 @@ public class GnuplotLoad implements IsSerializable {
 	public static Boolean setCommand(String commandTerminal, ServletContext context) {
 		
 		System.err.println("gnuplot command:" + commandTerminal);
-		String ErrorSummary ="";
+		List<String> ErrorSummary = new ArrayList<>();
 		// server - GNUPLOT DIRECTORY
 		String[] s = { getDirectory(context), "-e", commandTerminal };
 		
@@ -72,11 +73,11 @@ public class GnuplotLoad implements IsSerializable {
 			String line = null;
 			while ((line = br.readLine()) != null){
 				System.err.println("gnuplot:" + line);
-				ErrorSummary += line+" \n";
+				ErrorSummary.add( line+" \n\t");
 			}
 			//envio sumario de avisos
-			if(ErrorSummary.length()>1){
-				EmailAlert.WarningEmail("GnuplotLoad.java - setCommand", "Summary: "+proc.getErrorStream().toString());
+			if(ErrorSummary.size()>0){
+				EmailAlert.WarningEmail("GnuplotLoad.java - setCommand", "Summary: "+proc.getErrorStream().toString()+" Lines: "+ErrorSummary.toString());
 			}
 			
 			int exitVal = proc.waitFor();
